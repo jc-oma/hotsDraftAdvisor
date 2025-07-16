@@ -92,11 +92,7 @@ fun MainActivityComposable(
     val sortState by viewModel.sortState.collectAsState(true)
     val searchQueryMaps by viewModel.filterMapsString.collectAsState()
     val searchQueryOwnTChamps by viewModel.filterOwnChampString.collectAsState()
-    val picksOwnTeam by viewModel.picksOwnTeam.collectAsState()
-    val picksTheirTeam by viewModel.picksTheirTeam.collectAsState()
     val roleFilter by viewModel.roleFilter.collectAsState()
-    val bansOwnTeam by viewModel.bansOwnTeam.collectAsState()
-    val bansTheirTeam by viewModel.bansTheirTeam.collectAsState()
     val ownPickScore by viewModel.ownPickScore.collectAsState()
     val theirPickScore by viewModel.theirPickScore.collectAsState()
 
@@ -200,7 +196,11 @@ fun MainActivityComposable(
                 .height(10.dp)
         ) { }
 
+        val picksOwnTeam = scoredChampData.filter { it.pickedBy == TeamSide.OWN }
+        val picksTheirTeam = scoredChampData.filter { it.pickedBy == TeamSide.THEIR }
+
         if (!(picksOwnTeam.isEmpty() && picksTheirTeam.isEmpty())) {
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -268,8 +268,16 @@ fun MainActivityComposable(
                 }
             }
             Row {
-                Text(modifier = Modifier.weight(1f), text = ownPickScore.toString(), textAlign = TextAlign.Right)
-                Text(modifier = Modifier.weight(1f), text = theirPickScore.toString(), textAlign = TextAlign.Right)
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = ownPickScore.toString(),
+                    textAlign = TextAlign.Right
+                )
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = theirPickScore.toString(),
+                    textAlign = TextAlign.Right
+                )
             }
         }
         Box(
@@ -456,7 +464,7 @@ fun MainActivityComposable(
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .border(1.dp, composeTextColor, shape = RoundedCornerShape(4.dp))
-                                .clickable { viewModel.setPickedOwnTeam(i) }
+                                .clickable { viewModel.pickChampForTeam(i, TeamSide.OWN) }
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
@@ -471,7 +479,7 @@ fun MainActivityComposable(
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .border(1.dp, composeTextColor, shape = RoundedCornerShape(4.dp))
-                                .clickable { viewModel.setPickedTheirTeam(i) }
+                                .clickable { viewModel.pickChampForTeam(i, TeamSide.THEIR) }
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
@@ -486,7 +494,7 @@ fun MainActivityComposable(
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .border(1.dp, composeTextColor, shape = RoundedCornerShape(4.dp))
-                                .clickable { viewModel.setBansOwnTeam(i) }
+                                .clickable { viewModel.setBansPerTeam(i, TeamSide.OWN) }
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
@@ -501,7 +509,7 @@ fun MainActivityComposable(
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .border(1.dp, composeTextColor, shape = RoundedCornerShape(4.dp))
-                                .clickable { viewModel.setBansTheirTeam(i) }
+                                .clickable { viewModel.setBansPerTeam(i, TeamSide.THEIR) }
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
