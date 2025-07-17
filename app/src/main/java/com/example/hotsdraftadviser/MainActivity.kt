@@ -88,13 +88,16 @@ fun MainActivityComposable(
 
     val mapList by viewModel.filteredMaps.collectAsState(emptyList())
     val choosenMap by viewModel.choosenMap.collectAsState("")
-    val scoredChampData by viewModel.champsWithCalculatedScores.collectAsState(emptyList())
+    val chosableChampList by viewModel.chosableChampList.collectAsState(emptyList())
     val sortState by viewModel.sortState.collectAsState(true)
     val searchQueryMaps by viewModel.filterMapsString.collectAsState()
     val searchQueryOwnTChamps by viewModel.filterOwnChampString.collectAsState()
     val roleFilter by viewModel.roleFilter.collectAsState()
     val ownPickScore by viewModel.ownPickScore.collectAsState()
     val theirPickScore by viewModel.theirPickScore.collectAsState()
+
+    val theirPickedChamps by viewModel.pickedTheirTeamChamps.collectAsState()
+    val ownPickedChamps by viewModel.pickedOwnTeamChamps.collectAsState()
 
     val screenBackgroundColor = "150e35ff"
     val textColor = "f8f8f9ff"
@@ -196,10 +199,7 @@ fun MainActivityComposable(
                 .height(10.dp)
         ) { }
 
-        val picksOwnTeam = scoredChampData.filter { it.pickedBy == TeamSide.OWN }
-        val picksTheirTeam = scoredChampData.filter { it.pickedBy == TeamSide.THEIR }
-
-        if (!(picksOwnTeam.isEmpty() && picksTheirTeam.isEmpty())) {
+        if (!(theirPickedChamps.isEmpty() && ownPickedChamps.isEmpty())) {
 
             Row(
                 modifier = Modifier
@@ -210,9 +210,9 @@ fun MainActivityComposable(
                 Text(modifier = Modifier.weight(1f), text = "Their Team")
             }
             LazyColumn {
-                items(picksOwnTeam.size.coerceAtLeast(picksTheirTeam.size)) { i ->
+                items(ownPickedChamps.size.coerceAtLeast(theirPickedChamps.size)) { i ->
                     Row(modifier = Modifier.fillMaxWidth()) {
-                        if (picksOwnTeam.size > i) {
+                        if (ownPickedChamps.size > i) {
                             Box(
                                 modifier = Modifier
                                     .weight(1f)
@@ -232,13 +232,13 @@ fun MainActivityComposable(
                             ) {
                                 Text(
                                     modifier = Modifier,
-                                    text = picksOwnTeam.get(i).ChampName
+                                    text = ownPickedChamps.get(i).ChampName
                                 )
                             }
                         } else {
                             Text(modifier = Modifier.weight(1f), text = "")
                         }
-                        if (picksTheirTeam.size > i) {
+                        if (theirPickedChamps.size > i) {
                             Box(
                                 modifier = Modifier
                                     .weight(1f)
@@ -258,7 +258,7 @@ fun MainActivityComposable(
                             ) {
                                 Text(
                                     modifier = Modifier,
-                                    text = picksTheirTeam.get(i).ChampName
+                                    text = theirPickedChamps.get(i).ChampName
                                 )
                             }
                         } else {
@@ -310,6 +310,7 @@ fun MainActivityComposable(
             Image(
                 modifier = Modifier
                     .weight(0.5f)
+                    .height(48.dp)
                     .padding(imagePadding)
                     .clickable {
                         viewModel.setRoleFilter(RoleEnum.Tank)
@@ -325,6 +326,7 @@ fun MainActivityComposable(
             Image(
                 modifier = Modifier
                     .weight(0.5f)
+                    .height(48.dp)
                     .padding(imagePadding)
                     .clickable {
                         viewModel.setRoleFilter(RoleEnum.Ranged)
@@ -340,6 +342,23 @@ fun MainActivityComposable(
             Image(
                 modifier = Modifier
                     .weight(0.5f)
+                    .height(48.dp)
+                    .padding(imagePadding)
+                    .clickable {
+                        viewModel.setRoleFilter(RoleEnum.Melee)
+                    },
+                painter = painterResource(id = R.drawable.melee),
+                colorFilter = if (roleFilter.contains(RoleEnum.Melee)) {
+                    ColorFilter.tint(Color.Yellow)
+                } else {
+                    ColorFilter.tint(composeTextColor)
+                },
+                contentDescription = "Description of your image"
+            )
+            Image(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .height(48.dp)
                     .padding(imagePadding)
                     .clickable {
                         viewModel.setRoleFilter(RoleEnum.Heal)
@@ -356,6 +375,7 @@ fun MainActivityComposable(
                 modifier = Modifier
                     .weight(0.5f)
                     .padding(imagePadding)
+                    .height(48.dp)
                     .clickable {
                         viewModel.setRoleFilter(RoleEnum.Bruiser)
                     },
@@ -386,7 +406,7 @@ fun MainActivityComposable(
 
         Box(modifier = Modifier.height(8.dp))
 
-        if (scoredChampData.isEmpty()) {
+        if (chosableChampList.isEmpty()) {
             Text("Lade Champs oder keine Champs gefunden...")
         } else {
             Row(
@@ -448,12 +468,12 @@ fun MainActivityComposable(
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(bottom = 80.dp) // Fügt Padding am unteren Rand hinzu
             ) {
-                items(scoredChampData.size) { i ->
-                    if (scoredChampData[i].isPicked) return@items
+                items(chosableChampList.size) { i ->
+                    if (chosableChampList[i].isPicked) return@items
                     Row(modifier = Modifier.height(32.dp)) {
                         Text(
                             modifier = Modifier.weight(1f),
-                            text = scoredChampData[i].ChampName
+                            text = chosableChampList[i].ChampName
                         )
                         Box(
                             modifier = Modifier
@@ -468,7 +488,7 @@ fun MainActivityComposable(
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(text = scoredChampData[i].ScoreOwn.toString())
+                            Text(text = chosableChampList[i].ScoreOwn.toString())
                         }
                         Box(
                             modifier = Modifier
@@ -483,7 +503,7 @@ fun MainActivityComposable(
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(text = scoredChampData[i].ScoreTheir.toString())
+                            Text(text = chosableChampList[i].ScoreTheir.toString())
                         }
                         Box(
                             modifier = Modifier

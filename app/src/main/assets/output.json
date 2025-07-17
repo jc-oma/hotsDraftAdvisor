@@ -5,6 +5,18 @@
     "ChampRoleAlt": "support",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 35
+      },
+      {
         "ChampName": "Tracer",
         "ScoreValue": 62
       },
@@ -1557,6 +1569,18 @@
     "ChampRole": "assassin",
     "ChampRoleAlt": "melee",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 45
+      },
       {
         "ChampName": "guldan",
         "ScoreValue": 89
@@ -3267,6 +3291,18 @@
     "ChampRoleAlt": "heal",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 17
+      },
+      {
         "ChampName": "Arthas",
         "ScoreValue": 57
       },
@@ -4175,6 +4211,18 @@
     "ChampRole": "support",
     "ChampRoleAlt": "heal",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 14
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 45
+      },
       {
         "ChampName": "Rehgar",
         "ScoreValue": 87
@@ -5445,6 +5493,18 @@
     "ChampRoleAlt": "heal",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 21
+      },
+      {
         "ChampName": "Garrosh",
         "ScoreValue": 80
       },
@@ -6353,6 +6413,18 @@
     "ChampRole": "warrior",
     "ChampRoleAlt": "tank",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 34
+      },
       {
         "ChampName": "LtMorales",
         "ScoreValue": 90
@@ -7930,6 +8002,18 @@
     "ChampRole": "warrior",
     "ChampRoleAlt": "bruiser",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 41
+      },
       {
         "ChampName": "SgtHammer",
         "ScoreValue": 87
@@ -9539,6 +9623,18 @@
     "ChampRole": "warrior",
     "ChampRoleAlt": "tank",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 24
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 31
+      },
       {
         "ChampName": "Zeratul",
         "ScoreValue": 87
@@ -11193,6 +11289,18 @@
     "ChampRoleAlt": "heal",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 14
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 23
+      },
+      {
         "ChampName": "ETC",
         "ScoreValue": 78
       },
@@ -12325,6 +12433,18 @@
     "ChampRole": "specialist",
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 41
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 21
+      },
       {
         "ChampName": "Abathur",
         "ScoreValue": 84
@@ -13711,6 +13831,18 @@
     "ChampRoleAlt": "tank",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 31
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 45
+      },
+      {
         "ChampName": "Zagara",
         "ScoreValue": 72
       },
@@ -14735,6 +14867,18 @@
     "ChampRole": "support",
     "ChampRoleAlt": "heal",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 31
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 12
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 34
+      },
       {
         "ChampName": "Illidan",
         "ScoreValue": 92
@@ -16321,6 +16465,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 48
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 43
+      },
+      {
         "ChampName": "Butcher",
         "ScoreValue": 86
       },
@@ -17617,6 +17773,18 @@
     "ChampRole": "warrior",
     "ChampRoleAlt": "bruiser",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 41
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 38
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 41
+      },
       {
         "ChampName": "Lunara",
         "ScoreValue": 87
@@ -19011,6 +19179,18 @@
     "ChampRoleAlt": "tank",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 41
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 21
+      },
+      {
         "ChampName": "Zeratul",
         "ScoreValue": 83
       },
@@ -20403,10 +20583,1595 @@
     ]
   },
   {
+    "ChampName": "Deathwing",
+    "ChampRole": "warrior",
+    "ChampRoleAlt": "bruiser",
+    "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Maiev",
+        "ScoreValue": 66
+      },
+      {
+        "ChampName": "Zeratul",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "zuljin",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Illidan",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "thebutcher",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Xul",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Greymane",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Thrall",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Samuro",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "ETC",
+        "ScoreValue": 70
+      },
+      {
+        "ChampName": "Nova",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Valla",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Valeera",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Kharazim",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Raynor",
+        "ScoreValue": 10
+      },
+      {
+        "ChampName": "Artanis",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "lili",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "ltmorales",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Diablo",
+        "ScoreValue": 66
+      },
+      {
+        "ChampName": "Jaina",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Sylvanas",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Sonya",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "sgthammer",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Fenix",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Uther",
+        "ScoreValue": 70
+      },
+      {
+        "ChampName": "Stitches",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Dehaka",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Gazlowe",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Muradin",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Chen",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "Tyrael",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Anubarak",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Falstad",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Tracer",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Lunara",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Tychus",
+        "ScoreValue": 5
+      },
+      {
+        "ChampName": "Azmodan",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Yrel",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Alarak",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Varian",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Zarya",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Kerrigan",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Anduin",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Malfurion",
+        "ScoreValue": 70
+      },
+      {
+        "ChampName": "Tyrande",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Genji",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Kaelthas",
+        "ScoreValue": 10
+      },
+      {
+        "ChampName": "Kelthuzad",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Whitemane",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Garrosh",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Chromie",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Zagara",
+        "ScoreValue": 5
+      },
+      {
+        "ChampName": "malganis",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Cassia",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Stukov",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Murky",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Arthas",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Li-Ming",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Medivh",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Cho'gall",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Hanzo",
+        "ScoreValue": 5
+      },
+      {
+        "ChampName": "Abathur",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Rehgar",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Leoric",
+        "ScoreValue": 5
+      },
+      {
+        "ChampName": "Brightwing",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Tassadar",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "dva",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "lucio",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Rexxar",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Malthael",
+        "ScoreValue": 5
+      },
+      {
+        "ChampName": "Imperius",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Nazeebo",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Blaze",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "thelostvikings",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Auriel",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Ana",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "guldan",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "thebutcher",
+        "ScoreValue": 86
+      },
+      {
+        "ChampName": "ETC",
+        "ScoreValue": 80
+      },
+      {
+        "ChampName": "Raynor",
+        "ScoreValue": 9
+      },
+      {
+        "ChampName": "Maiev",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "Xul",
+        "ScoreValue": 80
+      },
+      {
+        "ChampName": "Artanis",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "Sonya",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Greymane",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Valla",
+        "ScoreValue": 12
+      },
+      {
+        "ChampName": "zuljin",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Thrall",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Illidan",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Samuro",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "lili",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Kharazim",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Zeratul",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Fenix",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "ltmorales",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Diablo",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Tychus",
+        "ScoreValue": 5
+      },
+      {
+        "ChampName": "Alarak",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Valeera",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Yrel",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Jaina",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Muradin",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Varian",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Dehaka",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Anduin",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Falstad",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Sylvanas",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Tyrael",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Stitches",
+        "ScoreValue": 76
+      },
+      {
+        "ChampName": "Anubarak",
+        "ScoreValue": 70
+      },
+      {
+        "ChampName": "Tracer",
+        "ScoreValue": 36
+      },
+      {
+        "ChampName": "sgthammer",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Tyrande",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Kaelthas",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Uther",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "Whitemane",
+        "ScoreValue": 38
+      },
+      {
+        "ChampName": "Lunara",
+        "ScoreValue": 10
+      },
+      {
+        "ChampName": "Kelthuzad",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Azmodan",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Nova",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Genji",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Kerrigan",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Tassadar",
+        "ScoreValue": 24
+      },
+      {
+        "ChampName": "Cho'gall",
+        "ScoreValue": 56
+      },
+      {
+        "ChampName": "Cassia",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Imperius",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Chen",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "Gazlowe",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "malganis",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Garrosh",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Auriel",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Zagara",
+        "ScoreValue": 5
+      }
+    ],
+    "WeakAgainst": [
+      {
+        "ChampName": "Malthael",
+        "ScoreValue": 88
+      },
+      {
+        "ChampName": "Leoric",
+        "ScoreValue": 83
+      },
+      {
+        "ChampName": "Tychus",
+        "ScoreValue": 80
+      },
+      {
+        "ChampName": "Nazeebo",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Varian",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Lunara",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Zagara",
+        "ScoreValue": 84
+      },
+      {
+        "ChampName": "Jaina",
+        "ScoreValue": 70
+      },
+      {
+        "ChampName": "Rexxar",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Brightwing",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Arthas",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Kaelthas",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Raynor",
+        "ScoreValue": 76
+      },
+      {
+        "ChampName": "Alexstrasza",
+        "ScoreValue": 12
+      },
+      {
+        "ChampName": "Tracer",
+        "ScoreValue": 56
+      },
+      {
+        "ChampName": "Cho'gall",
+        "ScoreValue": 33
+      },
+      {
+        "ChampName": "Sonya",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Stukov",
+        "ScoreValue": 31
+      },
+      {
+        "ChampName": "lucio",
+        "ScoreValue": 31
+      },
+      {
+        "ChampName": "Hanzo",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "zuljin",
+        "ScoreValue": 68
+      },
+      {
+        "ChampName": "Sylvanas",
+        "ScoreValue": 68
+      },
+      {
+        "ChampName": "Valla",
+        "ScoreValue": 70
+      },
+      {
+        "ChampName": "Li-Ming",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "Anubarak",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Kharazim",
+        "ScoreValue": 86
+      },
+      {
+        "ChampName": "ETC",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Tyrande",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Rehgar",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Chromie",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Muradin",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Chen",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Alarak",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Kelthuzad",
+        "ScoreValue": 10
+      },
+      {
+        "ChampName": "thelostvikings",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Stitches",
+        "ScoreValue": 10
+      },
+      {
+        "ChampName": "Gazlowe",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Uther",
+        "ScoreValue": 14
+      },
+      {
+        "ChampName": "Tyrael",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Murky",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Azmodan",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Garrosh",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Tassadar",
+        "ScoreValue": 56
+      },
+      {
+        "ChampName": "Artanis",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Thrall",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Malfurion",
+        "ScoreValue": 10
+      },
+      {
+        "ChampName": "Nova",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Orphea",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Imperius",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Falstad",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "ltmorales",
+        "ScoreValue": 10
+      },
+      {
+        "ChampName": "guldan",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Valeera",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Probius",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Genji",
+        "ScoreValue": 66
+      },
+      {
+        "ChampName": "Fenix",
+        "ScoreValue": 56
+      },
+      {
+        "ChampName": "Yrel",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "sgthammer",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Greymane",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Zarya",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Kerrigan",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Xul",
+        "ScoreValue": 10
+      },
+      {
+        "ChampName": "thebutcher",
+        "ScoreValue": 10
+      },
+      {
+        "ChampName": "Diablo",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Abathur",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "lili",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Auriel",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Ragnaros",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Cassia",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Illidan",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Zeratul",
+        "ScoreValue": 12
+      },
+      {
+        "ChampName": "Malthael",
+        "ScoreValue": 89
+      },
+      {
+        "ChampName": "Leoric",
+        "ScoreValue": 84
+      },
+      {
+        "ChampName": "Nazeebo",
+        "ScoreValue": 73
+      },
+      {
+        "ChampName": "Tychus",
+        "ScoreValue": 82
+      },
+      {
+        "ChampName": "Lunara",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Varian",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Brightwing",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Tracer",
+        "ScoreValue": 57
+      },
+      {
+        "ChampName": "Arthas",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "thelostvikings",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Orphea",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Imperius",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Diablo",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Gazlowe",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Tassadar",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Valeera",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Zagara",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "Alexstrasza",
+        "ScoreValue": 8
+      },
+      {
+        "ChampName": "zuljin",
+        "ScoreValue": 76
+      },
+      {
+        "ChampName": "Stukov",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Alarak",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Rexxar",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Kaelthas",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Jaina",
+        "ScoreValue": 68
+      },
+      {
+        "ChampName": "lucio",
+        "ScoreValue": 12
+      }
+    ],
+    "GoodTeamWith": [
+      {
+        "ChampName": "Jaina",
+        "ScoreValue": 66
+      },
+      {
+        "ChampName": "Kaelthas",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Li-Ming",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Cassia",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Malfurion",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Alexstrasza",
+        "ScoreValue": 27
+      },
+      {
+        "ChampName": "Azmodan",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Nazeebo",
+        "ScoreValue": 36
+      },
+      {
+        "ChampName": "Maiev",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Rehgar",
+        "ScoreValue": 38
+      },
+      {
+        "ChampName": "Whitemane",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Abathur",
+        "ScoreValue": 10
+      },
+      {
+        "ChampName": "Kerrigan",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Orphea",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "sgthammer",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "lili",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Sonya",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Ragnaros",
+        "ScoreValue": 38
+      },
+      {
+        "ChampName": "thebutcher",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Leoric",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Gazlowe",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Tracer",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Sylvanas",
+        "ScoreValue": 28
+      },
+      {
+        "ChampName": "Kharazim",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "ltmorales",
+        "ScoreValue": 5
+      },
+      {
+        "ChampName": "Murky",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Zeratul",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Raynor",
+        "ScoreValue": 22
+      },
+      {
+        "ChampName": "Deckard",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Zagara",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Illidan",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Junkrat",
+        "ScoreValue": 12
+      },
+      {
+        "ChampName": "Chromie",
+        "ScoreValue": 46
+      },
+      {
+        "ChampName": "Tyrande",
+        "ScoreValue": 38
+      },
+      {
+        "ChampName": "Malthael",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Greymane",
+        "ScoreValue": 12
+      },
+      {
+        "ChampName": "Xul",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "Samuro",
+        "ScoreValue": 37
+      },
+      {
+        "ChampName": "Alarak",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Uther",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Kelthuzad",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Mephisto",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Nova",
+        "ScoreValue": 52
+      },
+      {
+        "ChampName": "Medivh",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Ana",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Brightwing",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Arthas",
+        "ScoreValue": 64
+      },
+      {
+        "ChampName": "Valla",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Varian",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Falstad",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Valeera",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "lucio",
+        "ScoreValue": 16
+      },
+      {
+        "ChampName": "Thrall",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "thelostvikings",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Tychus",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Lunara",
+        "ScoreValue": 29
+      },
+      {
+        "ChampName": "guldan",
+        "ScoreValue": 29
+      },
+      {
+        "ChampName": "Rexxar",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Fenix",
+        "ScoreValue": 22
+      },
+      {
+        "ChampName": "Tassadar",
+        "ScoreValue": 41
+      },
+      {
+        "ChampName": "Cho'gall",
+        "ScoreValue": 11
+      },
+      {
+        "ChampName": "Chen",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Zarya",
+        "ScoreValue": 70
+      },
+      {
+        "ChampName": "Artanis",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "ETC",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "Anubarak",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Stitches",
+        "ScoreValue": 61
+      },
+      {
+        "ChampName": "Dehaka",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Anduin",
+        "ScoreValue": 5
+      },
+      {
+        "ChampName": "Diablo",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Probius",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Auriel",
+        "ScoreValue": 10
+      },
+      {
+        "ChampName": "zuljin",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Hanzo",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Yrel",
+        "ScoreValue": 36
+      },
+      {
+        "ChampName": "Imperius",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Muradin",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Cassia",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Li-Ming",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Kaelthas",
+        "ScoreValue": 22
+      },
+      {
+        "ChampName": "Jaina",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Orphea",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Alexstrasza",
+        "ScoreValue": 16
+      },
+      {
+        "ChampName": "Maiev",
+        "ScoreValue": 69
+      },
+      {
+        "ChampName": "Rehgar",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Whitemane",
+        "ScoreValue": 13
+      },
+      {
+        "ChampName": "Abathur",
+        "ScoreValue": 12
+      },
+      {
+        "ChampName": "Kelthuzad",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Deckard",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Sylvanas",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Malfurion",
+        "ScoreValue": 37
+      },
+      {
+        "ChampName": "Azmodan",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Mephisto",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Valla",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Gazlowe",
+        "ScoreValue": 38
+      },
+      {
+        "ChampName": "Kerrigan",
+        "ScoreValue": 28
+      },
+      {
+        "ChampName": "Medivh",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Varian",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "lucio",
+        "ScoreValue": 8
+      },
+      {
+        "ChampName": "Murky",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Valeera",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Sonya",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Zeratul",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "guldan",
+        "ScoreValue": 24
+      },
+      {
+        "ChampName": "thebutcher",
+        "ScoreValue": 19
+      },
+      {
+        "ChampName": "Alarak",
+        "ScoreValue": 31
+      },
+      {
+        "ChampName": "Ana",
+        "ScoreValue": 16
+      },
+      {
+        "ChampName": "Anduin",
+        "ScoreValue": 9
+      },
+      {
+        "ChampName": "sgthammer",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Ragnaros",
+        "ScoreValue": 12
+      },
+      {
+        "ChampName": "Malthael",
+        "ScoreValue": 19
+      },
+      {
+        "ChampName": "Junkrat",
+        "ScoreValue": 9
+      },
+      {
+        "ChampName": "Arthas",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Tassadar",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Brightwing",
+        "ScoreValue": 8
+      },
+      {
+        "ChampName": "Zagara",
+        "ScoreValue": 19
+      },
+      {
+        "ChampName": "thelostvikings",
+        "ScoreValue": 5
+      },
+      {
+        "ChampName": "Kharazim",
+        "ScoreValue": 12
+      },
+      {
+        "ChampName": "ltmorales",
+        "ScoreValue": 6
+      },
+      {
+        "ChampName": "Lunara",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Chromie",
+        "ScoreValue": 37
+      },
+      {
+        "ChampName": "Imperius",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Tychus",
+        "ScoreValue": 19
+      },
+      {
+        "ChampName": "Nazeebo",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "lili",
+        "ScoreValue": 9
+      },
+      {
+        "ChampName": "Fenix",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Leoric",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Tracer",
+        "ScoreValue": 6
+      }
+    ],
+    "MapScore": [
+      {
+        "MapName": "Infernal Shrines",
+        "ScoreValue": 81
+      },
+      {
+        "MapName": "Braxis Holdout",
+        "ScoreValue": 69
+      },
+      {
+        "MapName": "Tomb of the Spider Queen",
+        "ScoreValue": 50
+      },
+      {
+        "MapName": "Garden of Terror",
+        "ScoreValue": 78
+      },
+      {
+        "MapName": "Haunted Mines",
+        "ScoreValue": 75
+      },
+      {
+        "MapName": "Dragonshire",
+        "ScoreValue": 79
+      },
+      {
+        "MapName": "Towers of Doom",
+        "ScoreValue": 68
+      },
+      {
+        "MapName": "Battlefield of Eternity",
+        "ScoreValue": 30
+      },
+      {
+        "MapName": "Black Hearts Bay",
+        "ScoreValue": 85
+      },
+      {
+        "MapName": "Sky Temple",
+        "ScoreValue": 79
+      },
+      {
+        "MapName": "Alterac Pass",
+        "ScoreValue": 89
+      },
+      {
+        "MapName": "Cursed Hollow",
+        "ScoreValue": 85
+      },
+      {
+        "MapName": "Hanamura",
+        "ScoreValue": 16
+      },
+      {
+        "MapName": "Lost Caverns",
+        "ScoreValue": 55
+      },
+      {
+        "MapName": "Warhead Junction",
+        "ScoreValue": 55
+      },
+      {
+        "MapName": "Volskaya Foundry",
+        "ScoreValue": 57
+      },
+      {
+        "MapName": "Infernal Shrines",
+        "ScoreValue": 89
+      },
+      {
+        "MapName": "Tomb of the Spider Queen",
+        "ScoreValue": 55
+      },
+      {
+        "MapName": "Alterac Pass",
+        "ScoreValue": 89
+      },
+      {
+        "MapName": "Braxis Holdout",
+        "ScoreValue": 85
+      },
+      {
+        "MapName": "Battlefield of Eternity",
+        "ScoreValue": 33
+      },
+      {
+        "MapName": "Garden of Terror",
+        "ScoreValue": 75
+      },
+      {
+        "MapName": "Hanamura",
+        "ScoreValue": 21
+      },
+      {
+        "MapName": "Towers of Doom",
+        "ScoreValue": 55
+      },
+      {
+        "MapName": "Dragonshire",
+        "ScoreValue": 56
+      },
+      {
+        "MapName": "Sky Temple",
+        "ScoreValue": 75
+      },
+      {
+        "MapName": "Black Hearts Bay",
+        "ScoreValue": 81
+      },
+      {
+        "MapName": "Cursed Hollow",
+        "ScoreValue": 75
+      },
+      {
+        "MapName": "Volskaya Foundry",
+        "ScoreValue": 38
+      },
+      {
+        "MapName": "Haunted Mines",
+        "ScoreValue": 67
+      },
+      {
+        "MapName": "Lost Caverns",
+        "ScoreValue": 15
+      },
+      {
+        "MapName": "Warhead Junction",
+        "ScoreValue": 45
+      }
+    ]
+  },
+  {
     "ChampName": "Chromie",
     "ChampRole": "assassin",
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 56
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 18
+      },
       {
         "ChampName": "SgtHammer",
         "ScoreValue": 95
@@ -21849,6 +23614,18 @@
     "ChampRoleAlt": "bruiser",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 37
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 31
+      },
+      {
         "ChampName": "LtMorales",
         "ScoreValue": 77
       },
@@ -23066,6 +24843,18 @@
     "ChampRoleAlt": "heal",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 12
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 10
+      },
+      {
         "ChampName": "Alexstrasza",
         "ScoreValue": 78
       },
@@ -24086,6 +25875,18 @@
     "ChampRole": "warrior",
     "ChampRoleAlt": "bruiser",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 26
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 63
+      },
       {
         "ChampName": "Abathur",
         "ScoreValue": 89
@@ -25467,6 +27268,18 @@
     "ChampRole": "warrior",
     "ChampRoleAlt": "tank",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 63
+      },
       {
         "ChampName": "LtMorales",
         "ScoreValue": 86
@@ -27185,6 +28998,18 @@
     "ChampRoleAlt": "tank",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 49
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 35
+      },
+      {
         "ChampName": "Chen",
         "ScoreValue": 86
       },
@@ -28782,6 +30607,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 32
+      },
+      {
         "ChampName": "ETC",
         "ScoreValue": 83
       },
@@ -30147,6 +31984,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 42
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 69
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 32
+      },
+      {
         "ChampName": "Azmodan",
         "ScoreValue": 79
       },
@@ -31323,6 +33172,18 @@
     "ChampRole": "assassin",
     "ChampRoleAlt": "tank",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 19
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 25
+      },
       {
         "ChampName": "Zeratul",
         "ScoreValue": 83
@@ -32720,6 +34581,18 @@
     "ChampRole": "warrior",
     "ChampRoleAlt": "tank",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 12
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 43
+      },
       {
         "ChampName": "Kerrigan",
         "ScoreValue": 83
@@ -34142,6 +36015,18 @@
     "ChampRoleAlt": "melee",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 56
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 45
+      },
+      {
         "ChampName": "ETC",
         "ScoreValue": 66
       },
@@ -35474,6 +37359,18 @@
     "ChampRole": "assassin",
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 72
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 72
+      },
       {
         "ChampName": "Kelthuzad",
         "ScoreValue": 93
@@ -36895,6 +38792,18 @@
     "ChampRole": "assassin",
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 48
+      },
       {
         "ChampName": "Chromie",
         "ScoreValue": 88
@@ -38453,6 +40362,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 48
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 24
+      },
+      {
         "ChampName": "Uther",
         "ScoreValue": 82
       },
@@ -39686,6 +41607,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 52
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 34
+      },
+      {
         "ChampName": "Garrosh",
         "ScoreValue": 80
       },
@@ -40693,6 +42626,14 @@
   "ChampRole": "warrior",
   "ChampRoleAlt": "bruiser",
   "StrongAgainst": [
+    {
+      "ChampName": "Deathwing",
+      "ScoreValue": 50
+    },
+    {
+      "ChampName": "Qhira",
+      "ScoreValue": 50
+    },
     {
       "ChampName": "Maiev",
       "ScoreValue": 30
@@ -42258,6 +44199,18 @@
     "ChampRole": "assassin",
     "ChampRoleAlt": "melee",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 46
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 61
+      },
       {
         "ChampName": "LtMorales",
         "ScoreValue": 90
@@ -43908,6 +45861,18 @@
     "ChampRoleAlt": "bruiser",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 41
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 41
+      },
+      {
         "ChampName": "Blaze",
         "ScoreValue": 64
       },
@@ -44916,6 +46881,18 @@
     "ChampRole": "assassin",
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Malfurion",
         "ScoreValue": 86
@@ -46562,6 +48539,18 @@
     "ChampRoleAlt": "tank",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 67
+      },
+      {
         "ChampName": "Maiev",
         "ScoreValue": 89
       },
@@ -48127,6 +50116,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 49
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 45
+      },
+      {
         "ChampName": "SgtHammer",
         "ScoreValue": 86
       },
@@ -49027,6 +51028,18 @@
     "ChampRole": "assassin",
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 43
+      },
       {
         "ChampName": "LostVikings",
         "ScoreValue": 89
@@ -50693,6 +52706,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 23
+      },
+      {
         "ChampName": "SgtHammer",
         "ScoreValue": 90
       },
@@ -52106,6 +54131,18 @@
     "ChampRoleAlt": "melee",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 39
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 50
+      },
+      {
         "ChampName": "LtMorales",
         "ScoreValue": 89
       },
@@ -52592,6 +54629,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
+      {
         "ChampName": "Uther",
         "ScoreValue": 84
       },
@@ -53037,6 +55086,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 31
+      },
       {
         "ChampName": "Abathur",
         "ScoreValue": 93
@@ -53671,6 +55732,18 @@
     "ChampRoleAlt": "heal",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 39
+      },
+      {
         "ChampName": "Chogall",
         "ScoreValue": 85
       },
@@ -54085,6 +56158,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 12
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
+      {
         "ChampName": "Lili",
         "ScoreValue": 83
       },
@@ -54438,6 +56523,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 56
+      },
       {
         "ChampName": "Illidan",
         "ScoreValue": 85
@@ -54983,6 +57080,18 @@
     "ChampRole": "warrior",
     "ChampRoleAlt": "bruiser",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 51
+      },
       {
         "ChampName": "Stitches",
         "ScoreValue": 92
@@ -55534,6 +57643,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 45
+      },
+      {
         "ChampName": "Tracer",
         "ScoreValue": 86
       },
@@ -56011,6 +58132,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 79
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 34
+      },
       {
         "ChampName": "Orphea",
         "ScoreValue": 90
@@ -56609,6 +58742,18 @@
     "ChampRoleAlt": "heal",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 12
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 21
+      },
+      {
         "ChampName": "Zuljin",
         "ScoreValue": 90
       },
@@ -57023,6 +59168,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 71
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 69
+      },
+      {
         "ChampName": "Anubarak",
         "ScoreValue": 86
       },
@@ -57419,7 +59576,18 @@
         "ScoreValue": 3
       }
     ],
-    "GoodTeamWith": [
+    "GoodTeamWith": [  {
+      "ChampName": "Hogger",
+      "ScoreValue": 25
+    },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 12
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 23
+      },
       {
         "ChampName": "Cassia",
         "ScoreValue": 90
@@ -57933,6 +60101,18 @@
     "ChampRole": "assassin",
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 64
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 31
+      },
       {
         "ChampName": "SgtHammer",
         "ScoreValue": 88
@@ -58452,6 +60632,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 67
+      },
+      {
         "ChampName": "Tracer",
         "ScoreValue": 90
       },
@@ -58949,6 +61141,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 37
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Johanna",
         "ScoreValue": 91
@@ -59523,6 +61727,18 @@
     "ChampRoleAlt": "heal",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 17
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 18
+      },
+      {
         "ChampName": "ETC",
         "ScoreValue": 46
       },
@@ -59860,6 +62076,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 79
+      },
       {
         "ChampName": "Tracer",
         "ScoreValue": 91
@@ -60378,6 +62606,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 2
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Raynor",
         "ScoreValue": 92
@@ -60972,6 +63212,18 @@
     "ChampRoleAlt": "heal",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 29
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 33
+      },
+      {
         "ChampName": "Leoric",
         "ScoreValue": 73
       },
@@ -61350,6 +63602,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 72
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 61
+      },
+      {
         "ChampName": "Varian",
         "ScoreValue": 80
       },
@@ -61659,6 +63923,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 68
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 12
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 61
+      },
       {
         "ChampName": "Arthas",
         "ScoreValue": 89
@@ -62252,6 +64528,18 @@
     "ChampRole": "assassin",
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 68
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 43
+      },
       {
         "ChampName": "Ragnaros",
         "ScoreValue": 89
@@ -62863,6 +65151,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
+      {
         "ChampName": "Chen",
         "ScoreValue": 87
       },
@@ -63336,6 +65636,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Auriel",
         "ScoreValue": 92
@@ -63882,6 +66194,18 @@
     "ChampRoleAlt": "melee",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 12
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 56
+      },
+      {
         "ChampName": "LostVikings",
         "ScoreValue": 82
       },
@@ -64255,6 +66579,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 48
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 34
+      },
       {
         "ChampName": "Johanna",
         "ScoreValue": 89
@@ -64649,6 +66985,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 71
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 58
+      },
       {
         "ChampName": "Kaelthas",
         "ScoreValue": 93
@@ -65283,6 +67631,18 @@
     "ChampRoleAlt": "tank",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 50
+      },
+      {
         "ChampName": "Chogall",
         "ScoreValue": 78
       },
@@ -65504,6 +67864,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Ana",
         "ScoreValue": 86
@@ -65798,6 +68170,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Abathur",
         "ScoreValue": 85
@@ -66164,6 +68548,18 @@
     "ChampRoleAlt": "heal",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 11
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 34
+      },
+      {
         "ChampName": "DVA",
         "ScoreValue": 71
       },
@@ -66513,6 +68909,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 68
+      },
       {
         "ChampName": "Kerrigan",
         "ScoreValue": 87
@@ -66967,6 +69375,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 71
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 69
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 87
+      },
       {
         "ChampName": "Jaina",
         "ScoreValue": 93
@@ -67601,6 +70021,18 @@
     "ChampRoleAlt": "bruiser",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 95
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 43
+      },
+      {
         "ChampName": "Diablo",
         "ScoreValue": 93
       },
@@ -68046,6 +70478,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 5
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 67
+      },
       {
         "ChampName": "Lunara",
         "ScoreValue": 88
@@ -68508,6 +70952,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Uther",
         "ScoreValue": 89
@@ -68974,6 +71430,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 61
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
+      {
         "ChampName": "Abathur",
         "ScoreValue": 82
       },
@@ -69327,6 +71795,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 55
+      },
       {
         "ChampName": "Lunara",
         "ScoreValue": 74
@@ -69721,6 +72201,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 78
+      },
       {
         "ChampName": "Illidan",
         "ScoreValue": 90
@@ -70307,6 +72799,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 23
+      },
+      {
         "ChampName": "LostVikings",
         "ScoreValue": 69
       },
@@ -70500,6 +73004,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 67
+      },
       {
         "ChampName": "Illidan",
         "ScoreValue": 79
@@ -70838,6 +73354,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 38
+      },
       {
         "ChampName": "Zarya",
         "ScoreValue": 93
@@ -71295,6 +73823,18 @@
     "ChampRole": "warrior",
     "ChampRoleAlt": "tank",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 68
+      },
       {
         "ChampName": "Illidan",
         "ScoreValue": 87
@@ -71818,6 +74358,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 56
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 54
+      },
+      {
         "ChampName": "Tychus",
         "ScoreValue": 86
       },
@@ -72143,6 +74695,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 67
+      },
       {
         "ChampName": "Kaelthas",
         "ScoreValue": 89
@@ -72681,6 +75245,18 @@
     "ChampRoleAlt": "melee",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
+      {
         "ChampName": "LtMorales",
         "ScoreValue": 78
       },
@@ -73142,6 +75718,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 68
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 56
+      },
       {
         "ChampName": "Tracer",
         "ScoreValue": 86
@@ -73684,6 +76272,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 27
+      },
       {
         "ChampName": "Tassadar",
         "ScoreValue": 80
@@ -74274,6 +76874,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 54
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 76
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 53
+      },
+      {
         "ChampName": "SgtHammer",
         "ScoreValue": 83
       },
@@ -74743,6 +77355,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 71
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Tracer",
         "ScoreValue": 84
@@ -75225,6 +77849,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 69
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Jaina",
         "ScoreValue": 89
@@ -75795,6 +78431,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 76
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 31
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 50
+      },
+      {
         "ChampName": "Kaelthas",
         "ScoreValue": 90
       },
@@ -76345,6 +78993,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 78
+      },
+      {
         "ChampName": "Tassadar",
         "ScoreValue": 86
       },
@@ -76826,6 +79486,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "ETC",
         "ScoreValue": 82
@@ -77324,6 +79996,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 56
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 74
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 43
+      },
+      {
         "ChampName": "Alexstrasza",
         "ScoreValue": 83
       },
@@ -77705,6 +80389,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 67
+      },
       {
         "ChampName": "Valeera",
         "ScoreValue": 87
@@ -78099,6 +80795,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 37
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "ETC",
         "ScoreValue": 94
@@ -78572,6 +81280,14 @@
   "ChampRoleAlt": "Bruiser",
   "StrongAgainst": [
     {
+      "ChampName": "Hogger",
+      "ScoreValue": 45
+    },
+    {
+      "ChampName": "Deathwing",
+      "ScoreValue": 49
+    },
+    {
       "ChampName": "Genji",
       "ScoreValue": 150
     },
@@ -78634,6 +81350,14 @@
   ],
   "WeakAgainst": [
     {
+      "ChampName": "Hogger",
+      "ScoreValue": 62
+    },
+    {
+      "ChampName": "Deathwing",
+      "ScoreValue": 34
+    },
+    {
       "ChampName": "Johanna",
       "ScoreValue": 160
     },
@@ -78695,6 +81419,14 @@
     }
   ],
   "GoodTeamWith": [
+    {
+      "ChampName": "Hogger",
+      "ScoreValue": 45
+    },
+    {
+      "ChampName": "Deathwing",
+      "ScoreValue": 60
+    },
     {
       "ChampName": "Uther",
       "ScoreValue": 170
@@ -78828,6 +81560,18 @@
     "ChampRole": "specialist",
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 61
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 21
+      },
       {
         "ChampName": "ETC",
         "ScoreValue": 66
@@ -79106,6 +81850,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 69
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 76
+      },
       {
         "ChampName": "Zeratul",
         "ScoreValue": 84
@@ -79400,6 +82156,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 56
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 71
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 41
+      },
       {
         "ChampName": "Arthas",
         "ScoreValue": 84
@@ -79794,6 +82562,18 @@
     "ChampRoleAlt": "melee",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 72
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 64
+      },
+      {
         "ChampName": "LostVikings",
         "ScoreValue": 75
       },
@@ -80063,6 +82843,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 72
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 67
+      },
       {
         "ChampName": "Lunara",
         "ScoreValue": 89
@@ -80518,6 +83310,18 @@
     ],
     "GoodTeamWith": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 19
+      },
+      {
         "ChampName": "Malfurion",
         "ScoreValue": 83
       },
@@ -80942,6 +83746,18 @@
     "ChampRole": "assassin",
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 81
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 32
+      },
       {
         "ChampName": "Leoric",
         "ScoreValue": 83
@@ -81421,6 +84237,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 39
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 19
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 78
+      },
+      {
         "ChampName": "Cassia",
         "ScoreValue": 85
       },
@@ -81862,6 +84690,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 39
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 43
+      },
       {
         "ChampName": "LtMorales",
         "ScoreValue": 92
@@ -82392,6 +85232,18 @@
     "ChampRoleAlt": "heal",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 31
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 27
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 32
+      },
+      {
         "ChampName": "Zeratul",
         "ScoreValue": 73
       },
@@ -82697,6 +85549,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 68
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 48
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 72
+      },
       {
         "ChampName": "Ana",
         "ScoreValue": 87
@@ -83067,6 +85931,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 81
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 36
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 78
+      },
       {
         "ChampName": "Illidan",
         "ScoreValue": 94
@@ -83621,6 +86497,18 @@
     "ChampRoleAlt": "bruiser",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 47
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 58
+      },
+      {
         "ChampName": "LtMorales",
         "ScoreValue": 76
       },
@@ -84114,6 +87002,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Illidan",
         "ScoreValue": 77
@@ -84628,6 +87528,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 31
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 32
+      },
       {
         "ChampName": "Rehgar",
         "ScoreValue": 82
@@ -85134,6 +88046,18 @@
     "ChampRoleAlt": "melee",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 61
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 52
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 64
+      },
+      {
         "ChampName": "LtMorales",
         "ScoreValue": 84
       },
@@ -85543,6 +88467,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 57
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 42
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 50
+      },
       {
         "ChampName": "Johanna",
         "ScoreValue": 84
@@ -86034,6 +88970,18 @@
     ],
     "GoodTeamWith": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 19
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 17
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 21
+      },
+      {
         "ChampName": "Abathur",
         "ScoreValue": 80
       },
@@ -86439,6 +89387,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 56
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 59
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 31
+      },
+      {
         "ChampName": "LostVikings",
         "ScoreValue": 76
       },
@@ -86812,6 +89772,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 56
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 61
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 71
+      },
       {
         "ChampName": "Chromie",
         "ScoreValue": 95
@@ -87334,6 +90306,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 68
+      },
       {
         "ChampName": "LtMorales",
         "ScoreValue": 92
@@ -87864,6 +90848,18 @@
     "ChampRoleAlt": "bruiser",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
+      {
         "ChampName": "Illidan",
         "ScoreValue": 83
       },
@@ -88358,6 +91354,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
+      {
         "ChampName": "Brightwing",
         "ScoreValue": 89
       },
@@ -88831,6 +91839,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 56
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 26
+      },
       {
         "ChampName": "Abathur",
         "ScoreValue": 92
@@ -89385,6 +92405,18 @@
     "ChampRoleAlt": "tank",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 19
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 47
+      },
+      {
         "ChampName": "SgtHammer",
         "ScoreValue": 91
       },
@@ -89811,6 +92843,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 74
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 57
+      },
+      {
         "ChampName": "Leoric",
         "ScoreValue": 92
       },
@@ -90232,6 +93276,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 76
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Medivh",
         "ScoreValue": 84
@@ -90822,6 +93878,18 @@
     "ChampRoleAlt": "heal",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 22
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 16
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 45
+      },
+      {
         "ChampName": "ETC",
         "ScoreValue": 84
       },
@@ -91184,6 +94252,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 64
+      },
+      {
         "ChampName": "Chromie",
         "ScoreValue": 85
       },
@@ -91509,6 +94589,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 51
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 62
+      },
       {
         "ChampName": "Maiev",
         "ScoreValue": 88
@@ -91942,6 +95034,18 @@
     "ChampRole": "specialist",
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 71
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 34
+      },
       {
         "ChampName": "LostVikings",
         "ScoreValue": 78
@@ -92380,6 +95484,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 26
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 61
+      },
       {
         "ChampName": "Valeera",
         "ScoreValue": 92
@@ -92862,6 +95978,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Valla",
         "ScoreValue": 84
@@ -93416,6 +96544,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 68
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 21
+      },
+      {
         "ChampName": "Nova",
         "ScoreValue": 86
       },
@@ -93745,6 +96885,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 73
+      },
       {
         "ChampName": "Varian",
         "ScoreValue": 84
@@ -94183,6 +97335,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 54
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 34
+      },
       {
         "ChampName": "Illidan",
         "ScoreValue": 94
@@ -94781,6 +97945,18 @@
     "ChampRoleAlt": "melee",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 39
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 45
+      },
+      {
         "ChampName": "LtMorales",
         "ScoreValue": 90
       },
@@ -95355,6 +98531,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 65
+      },
+      {
         "ChampName": "Brightwing",
         "ScoreValue": 87
       },
@@ -95880,6 +99068,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 76
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 65
+      },
       {
         "ChampName": "Abathur",
         "ScoreValue": 95
@@ -96598,6 +99798,18 @@
     "ChampRoleAlt": "support",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 18
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 17
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 38
+      },
+      {
         "ChampName": "Stitches",
         "ScoreValue": 65
       },
@@ -97136,6 +100348,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 67
+      },
+      {
         "ChampName": "Kaelthas",
         "ScoreValue": 89
       },
@@ -97637,6 +100861,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 24
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 38
+      },
       {
         "ChampName": "Brightwing",
         "ScoreValue": 86
@@ -98167,6 +101403,18 @@
     "ChampRoleAlt": "bruiser",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 49
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 68
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
+      {
         "ChampName": "LtMorales",
         "ScoreValue": 82
       },
@@ -98673,6 +101921,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 48
+      },
+      {
         "ChampName": "Johanna",
         "ScoreValue": 86
       },
@@ -99122,6 +102382,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 38
+      },
       {
         "ChampName": "Rehgar",
         "ScoreValue": 94
@@ -99691,6 +102963,18 @@
     "ChampRole": "assassin",
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 71
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 76
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Kelthuzad",
         "ScoreValue": 95
@@ -100342,6 +103626,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 51
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 28
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 43
+      },
+      {
         "ChampName": "Brightwing",
         "ScoreValue": 87
       },
@@ -100832,8 +104128,20 @@
     ],
     "GoodTeamWith": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 45
+      },
+      {
         "ChampName": "Tassadar",
-        "ScoreValue": 92
+        "ScoreValue": 78
       },
       {
         "ChampName": "Zarya",
@@ -101409,6 +104717,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 81
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 41
+      },
+      {
         "ChampName": "Stitches",
         "ScoreValue": 90
       },
@@ -101971,6 +105291,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 67
+      },
+      {
         "ChampName": "Tracer",
         "ScoreValue": 82
       },
@@ -102433,6 +105765,18 @@
     ],
     "GoodTeamWith": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 24
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 21
+      },
+      {
         "ChampName": "LtMorales",
         "ScoreValue": 88
       },
@@ -102878,6 +106222,18 @@
     "ChampRoleAlt": "tank",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 57
+      },
+      {
         "ChampName": "Kaelthas",
         "ScoreValue": 88
       },
@@ -103296,6 +106652,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 54
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 32
+      },
+      {
         "ChampName": "Tychus",
         "ScoreValue": 76
       },
@@ -103629,6 +106997,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 24
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Butcher",
         "ScoreValue": 87
@@ -104199,6 +107579,18 @@
     "ChampRoleAlt": "heal",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 19
+      },
+      {
         "ChampName": "ETC",
         "ScoreValue": 85
       },
@@ -104568,6 +107960,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 64
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 67
+      },
       {
         "ChampName": "Illidan",
         "ScoreValue": 85
@@ -104962,6 +108366,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 26
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 46
+      },
       {
         "ChampName": "Xul",
         "ScoreValue": 94
@@ -105556,6 +108972,18 @@
     "ChampRoleAlt": "heal",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 9
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 67
+      },
+      {
         "ChampName": "Genji",
         "ScoreValue": 89
       },
@@ -105942,6 +109370,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 45
+      },
+      {
         "ChampName": "Lunara",
         "ScoreValue": 89
       },
@@ -106311,6 +109751,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 37
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 67
+      },
       {
         "ChampName": "Kerrigan",
         "ScoreValue": 91
@@ -106937,6 +110389,18 @@
     "ChampRoleAlt": "melee",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 24
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 55
+      },
+      {
         "ChampName": "Kelthuzad",
         "ScoreValue": 92
       },
@@ -107611,6 +111075,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
+      {
         "ChampName": "Arthas",
         "ScoreValue": 87
       },
@@ -108120,6 +111596,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 34
+      },
       {
         "ChampName": "Abathur",
         "ScoreValue": 86
@@ -108710,6 +112198,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 72
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 43
+      },
+      {
         "ChampName": "Leoric",
         "ScoreValue": 85
       },
@@ -109135,6 +112635,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 14
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 65
+      },
       {
         "ChampName": "Zeratul",
         "ScoreValue": 90
@@ -109629,6 +113141,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 56
+      },
       {
         "ChampName": "LtMorales",
         "ScoreValue": 91
@@ -110158,6 +113682,18 @@
     "ChampRole": "warrior",
     "ChampRoleAlt": "bruiser",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Fenix",
         "ScoreValue": 88
@@ -110733,6 +114269,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 28
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 34
+      },
+      {
         "ChampName": "Arthas",
         "ScoreValue": 83
       },
@@ -111110,6 +114658,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 56
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 67
+      },
       {
         "ChampName": "Abathur",
         "ScoreValue": 90
@@ -111720,6 +115280,18 @@
     "ChampRoleAlt": "heal",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 4
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 67
+      },
+      {
         "ChampName": "Lunara",
         "ScoreValue": 60
       },
@@ -111893,6 +115465,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 56
+      },
       {
         "ChampName": "Ana",
         "ScoreValue": 80
@@ -112219,6 +115803,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 7
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 65
+      },
       {
         "ChampName": "Garrosh",
         "ScoreValue": 86
@@ -112596,6 +116192,18 @@
     "ChampRole": "specialist",
     "ChampRoleAlt": "bruiser",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 28
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Illidan",
         "ScoreValue": 84
@@ -113023,6 +116631,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 56
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 66
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 56
+      },
+      {
         "ChampName": "Johanna",
         "ScoreValue": 86
       },
@@ -113448,6 +117068,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 67
+      },
       {
         "ChampName": "Tyrande",
         "ScoreValue": 94
@@ -114046,6 +117678,18 @@
     "ChampRoleAlt": "bruiser",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 45
+      },
+      {
         "ChampName": "Alexstrasza",
         "ScoreValue": 85
       },
@@ -114375,6 +118019,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 67
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 45
+      },
       {
         "ChampName": "Brightwing",
         "ScoreValue": 78
@@ -114729,6 +118385,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 24
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 34
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
       {
         "ChampName": "Maiev",
         "ScoreValue": 79
@@ -115138,6 +118806,18 @@
     "ChampRole": "specialist",
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 81
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 34
+      },
       {
         "ChampName": "SgtHammer",
         "ScoreValue": 80
@@ -115560,6 +119240,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 56
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 67
+      },
       {
         "ChampName": "Valeera",
         "ScoreValue": 85
@@ -116035,6 +119727,18 @@
     ],
     "GoodTeamWith": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 24
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 43
+      },
+      {
         "ChampName": "ETC",
         "ScoreValue": 81
       },
@@ -116476,6 +120180,18 @@
     "ChampRoleAlt": "support",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 49
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 56
+      },
+      {
         "ChampName": "Jaina",
         "ScoreValue": 77
       },
@@ -116830,6 +120546,18 @@
     ],
     "WeakAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 52
+      },
+      {
         "ChampName": "Varian",
         "ScoreValue": 84
       },
@@ -117139,6 +120867,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 10
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 82
+      },
       {
         "ChampName": "Mephisto",
         "ScoreValue": 93
@@ -117769,6 +121509,18 @@
     "ChampRoleAlt": "melee",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 32
+      },
+      {
         "ChampName": "Kelthuzad",
         "ScoreValue": 92
       },
@@ -118274,6 +122026,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 56
+      },
       {
         "ChampName": "Johanna",
         "ScoreValue": 88
@@ -118788,6 +122552,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 32
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 61
+      },
       {
         "ChampName": "Abathur",
         "ScoreValue": 87
@@ -119362,6 +123138,18 @@
     "ChampRoleAlt": "ranged",
     "StrongAgainst": [
       {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 69
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 45
+      },
+      {
         "ChampName": "Ragnaros",
         "ScoreValue": 82
       },
@@ -119767,6 +123555,18 @@
       }
     ],
     "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 61
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 69
+      },
       {
         "ChampName": "Lili",
         "ScoreValue": 90
@@ -120185,6 +123985,18 @@
       }
     ],
     "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 32
+      },
       {
         "ChampName": "Auriel",
         "ScoreValue": 90

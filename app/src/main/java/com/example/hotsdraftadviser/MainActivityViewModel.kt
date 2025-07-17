@@ -26,17 +26,16 @@ import java.io.IOException
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _allChampsData = MutableStateFlow<List<ChampData>>(emptyList())
+
     private val _filterMapsString = MutableStateFlow<String>("")
     private val _filterChampString = MutableStateFlow<String>("")
     private val _choosenMap = MutableStateFlow<String>("")
     private val _sortState = MutableStateFlow<SortState>(SortState.OWNPOINTS)
-
     private val _roleFilter = MutableStateFlow<List<RoleEnum>>(emptyList())
 
     private val maxPicks = 5
-    private val allChamps: StateFlow<List<ChampData>> = _allChampsData.asStateFlow()
 
-
+    val allChampsData = _allChampsData.asStateFlow()
     val mapList: StateFlow<List<String>> = getSortedUniqueMaps()
     val filterMapsString: StateFlow<String> = _filterMapsString.asStateFlow()
     val filteredMaps: StateFlow<List<String>> = filterMapsByString(mapList, filterMapsString)
@@ -44,12 +43,18 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val filterOwnChampString: StateFlow<String> = _filterChampString.asStateFlow()
     val sortState: StateFlow<SortState> = _sortState.asStateFlow()
 
-    val champsWithCalculatedScores: StateFlow<List<ChampData>> =
-        dataFlowForChampListWithScores(
-            searchMapNameFlow = _choosenMap,
-            sortedByScoreOwn = _sortState,
-            filterString = _filterChampString
+    val pickedTheirTeamChamps: StateFlow<List<ChampData>> = getPickedTheirTeamChamps(TeamSide.THEIR)
+    val pickedOwnTeamChamps: StateFlow<List<ChampData>> = getPickedTheirTeamChamps(TeamSide.OWN)
+
+    private fun getPickedTheirTeamChamps(team: TeamSide): StateFlow<List<ChampData>> =
+        _allChampsData.map { champs -> champs.filter { it.pickedBy == team } }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = emptyList()
         )
+
+    val unfilteredChosableChampList: StateFlow<List<ChampData>> = dataFlowForChampListWithScores(false)
+    val chosableChampList: StateFlow<List<ChampData>> = dataFlowForChampListWithScores(true)
 
     val choosenMap: StateFlow<String> = _choosenMap
 
@@ -79,16 +84,18 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun pickChampForTeam(index: Int, teamSide: TeamSide) {
         viewModelScope.launch {
-            val currentChampList = champsWithCalculatedScores.first()
+            val currentChampList = chosableChampList.first()
             val alreadyPicked = currentChampList.filter { it.isPicked && it.pickedBy == teamSide }
 
             if (alreadyPicked.size < maxPicks) {
-                val pickedChamp =
-                    currentChampList.find { it.ChampName == currentChampList[index].ChampName }
-                        ?.copy(isPicked = true, pickedBy = teamSide)
-                        ?: return@launch // Frühzeitiger Ausstieg, falls der Champ nicht gefunden wird
-                _allChampsData.value =
-                    _allChampsData.value.map { if (it.ChampName == pickedChamp.ChampName) pickedChamp else it }
+                if (!(alreadyPicked.size > maxPicks - 1 && currentChampList[index].ChampName == "Chogall")) {
+                    val pickedChamp =
+                        currentChampList.find { it.ChampName == currentChampList[index].ChampName }
+                            ?.copy(isPicked = true, pickedBy = teamSide)
+                            ?: return@launch // Frühzeitiger Ausstieg, falls der Champ nicht gefunden wird
+                    _allChampsData.value =
+                        _allChampsData.value.map { if (it.ChampName == pickedChamp.ChampName) pickedChamp else it }
+                }
             }
         }
     }
@@ -96,7 +103,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     //TODO: Implement bans Teamside
     fun setBansPerTeam(i: Int, teamSide: TeamSide) {
         viewModelScope.launch {
-            val currentChampList = champsWithCalculatedScores.first()
+            val currentChampList = chosableChampList.first()
             val bannedChamp = currentChampList[i].copy(isPicked = true)
             updateChampDataWithPickStatus(bannedChamp, true, teamSide)
         }
@@ -114,7 +121,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 _allChampsData.value =
                     _allChampsData.value.map { if (it.ChampName == updatedChamp.ChampName) updatedChamp else it }
             } else {
-                Log.w("ViewModel", "Ungültiger Index zum Entfernen des Picks: $index für Team: $teamSide")
+                Log.w(
+                    "ViewModel",
+                    "Ungültiger Index zum Entfernen des Picks: $index für Team: $teamSide"
+                )
             }
         }
     }
@@ -133,29 +143,28 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    private fun dataFlowForChampListWithScores(
-        searchMapNameFlow: StateFlow<String>,
-        sortedByScoreOwn: MutableStateFlow<SortState>,
-        filterString: MutableStateFlow<String>
-    ): StateFlow<List<ChampData>> {
+    private fun dataFlowForChampListWithScores(isFiltered: Boolean): StateFlow<List<ChampData>> {
         var copy = calculateChampsPerPicks()
-        copy = filterChampsByRole(copy)
-
-        val list = combine(
+        var list = combine(
             copy,
-            searchMapNameFlow,
-            sortedByScoreOwn,
-            filterString
+            _choosenMap,
+            _sortState,
+            _filterChampString
         ) { champs, mapSearchString, doSortByOwn, filter ->
-            val availableChamps = champs
+
 
             val filteredByNameChamps = if (filter.isBlank()) {
-                availableChamps
+                champs
             } else {
-                availableChamps.filter { champ ->
-                    champ.ChampName.contains(filter, ignoreCase = true) && !champ.isPicked
+                if (isFiltered) {
+                    champs.filter { champ ->
+                        champ.ChampName.contains(filter, ignoreCase = true) && !champ.isPicked
+                    }
+                } else {
+                    champs
                 }
             }
+
 
             val lowerCaseSearchString = mapSearchString.lowercase()
 
@@ -186,6 +195,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             initialValue = emptyList()
         )
 
+        // Filter 2x
+        list = if (isFiltered) {
+            filterChampsByRole(list)
+        } else {
+            list
+        }
         return list
     }
 
@@ -207,42 +222,17 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         )
     }
 
-    private fun filterChampsfromList(
-        list: StateFlow<List<ChampData>>,
-        pick1: MutableStateFlow<List<ChampData>>,
-        pick2: MutableStateFlow<List<ChampData>>
-    ): StateFlow<List<ChampData>> {
-        return combine(list, pick1, pick2) { allChamps, currentOwnPicks, currentTheirPicks ->
-            // Diese Funktion wird nicht mehr zum direkten Entfernen verwendet, sondern setzt isPicked
-            val allPickedChampNames = (currentOwnPicks.map { it.ChampName } +
-                    currentTheirPicks.map { it.ChampName }).toSet()
-
-            allChamps.filter { champ -> !allPickedChampNames.contains(champ.ChampName) }
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Lazily,
-            initialValue = emptyList()
-        )
-    }
-
-    private fun calculateChampsPerPicks(
-    ): StateFlow<List<ChampData>> {
+    private fun calculateChampsPerPicks(): StateFlow<List<ChampData>> {
         val calculatedChampsPerPick = combine(
             _allChampsData
         ) { allChamps ->
-            val ownPickNames =
-                allChamps.first().filter { it.pickedBy == TeamSide.OWN }.map { it.ChampName }
-            val theirPickNames =
-                allChamps.first().filter { it.pickedBy == TeamSide.THEIR }.map { it.ChampName }
-            val allPickedNames = ownPickNames + theirPickNames
+            val ownPickNames = pickedOwnTeamChamps.first().map { it.ChampName }
+            val theirPickNames = pickedTheirTeamChamps.first().map { it.ChampName }
 
             allChamps.first().map { champ ->
-                if (allPickedNames.contains(champ.ChampName)) {
-                    return@map champ
-                }
 
-                var currentScoreOwn = champ.ScoreOwn
-                var currentScoreTheir = champ.ScoreTheir
+                var currentScoreOwn = 0
+                var currentScoreTheir = 0
 
                 champ.StrongAgainst.forEach { strongAgainstEntry ->
                     if (theirPickNames.contains(strongAgainstEntry.ChampName)) {
@@ -298,7 +288,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     @OptIn(ExperimentalCoroutinesApi::class)
     fun getSortedUniqueMaps(): StateFlow<List<String>> {
-        val list = allChamps.map { champs ->
+        val list = _allChampsData.map { champs ->
             champs.map { champ ->
                 champ.MapScore.map { map ->
                     map.MapName
@@ -388,7 +378,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             _allChampsData.value = _allChampsData.value.map {
                 it.copy(
                     isPicked = false,
-                    pickedBy = TeamSide.NONE
+                    pickedBy = TeamSide.NONE,
+                    ScoreOwn = 0,
+                    ScoreTheir = 0
                 )
             } // Setze isPicked für alle Champs zurück
         }
@@ -396,7 +388,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private fun getTeamAgregatedPoints(teamSide: TeamSide): StateFlow<Int> {
-        return combine(champsWithCalculatedScores) { champsWithScores ->
+        return combine(unfilteredChosableChampList) { champsWithScores ->
             var totalScore = 0
             val pickedChamp = champsWithScores.first().filter { it -> it.pickedBy == teamSide }
             pickedChamp.forEach { pickedChamp ->
