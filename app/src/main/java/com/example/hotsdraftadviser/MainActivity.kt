@@ -30,6 +30,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.material.icons.filled.Block
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -37,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.Icon
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -151,7 +154,7 @@ fun MainActivityComposable(
                     onValueChange = { newText ->
                         viewModel.updateMapsSearchQuery(newText)
                     },
-                    label = { Text("Maps suchen...") }
+                    label = { Text("\uD83D\uDD0D Maps suchen...") }
                 )
                 Box(
                     modifier = Modifier
@@ -290,12 +293,12 @@ fun MainActivityComposable(
             verticalAlignment = Alignment.CenterVertically
         ) {
             OutlinedTextField(
-                modifier = Modifier.weight(3f),
+                modifier = Modifier.weight(2.5f),
                 value = searchQueryOwnTChamps,
                 onValueChange = { newText ->
                     viewModel.updateOwnChampSearchQuery(newText)
                 },
-                label = { Text("Champ suchen...") },
+                label = { Text("\uD83D\uDD0D Champ") },
                 trailingIcon = {
                     if (searchQueryOwnTChamps.isNotEmpty()) {
                         Icon(
@@ -310,7 +313,7 @@ fun MainActivityComposable(
             Image(
                 modifier = Modifier
                     .weight(0.5f)
-                    .height(48.dp)
+                    .aspectRatio(1f)
                     .padding(imagePadding)
                     .clickable {
                         viewModel.setRoleFilter(RoleEnum.Tank)
@@ -321,12 +324,13 @@ fun MainActivityComposable(
                 } else {
                     ColorFilter.tint(composeTextColor)
                 },
-                contentDescription = "Description of your image"
+                contentDescription = "Description of your image",
+                contentScale = ContentScale.Fit
             )
             Image(
                 modifier = Modifier
                     .weight(0.5f)
-                    .height(48.dp)
+                    .aspectRatio(1f)
                     .padding(imagePadding)
                     .clickable {
                         viewModel.setRoleFilter(RoleEnum.Ranged)
@@ -337,12 +341,13 @@ fun MainActivityComposable(
                 } else {
                     ColorFilter.tint(composeTextColor)
                 },
-                contentDescription = "Description of your image"
+                contentDescription = "Description of your image",
+                contentScale = ContentScale.Fit
             )
             Image(
                 modifier = Modifier
                     .weight(0.5f)
-                    .height(48.dp)
+                    .aspectRatio(1f)
                     .padding(imagePadding)
                     .clickable {
                         viewModel.setRoleFilter(RoleEnum.Melee)
@@ -353,12 +358,13 @@ fun MainActivityComposable(
                 } else {
                     ColorFilter.tint(composeTextColor)
                 },
-                contentDescription = "Description of your image"
+                contentDescription = "Description of your image",
+                contentScale = ContentScale.Fit
             )
             Image(
                 modifier = Modifier
                     .weight(0.5f)
-                    .height(48.dp)
+                    .aspectRatio(1f)
                     .padding(imagePadding)
                     .clickable {
                         viewModel.setRoleFilter(RoleEnum.Heal)
@@ -369,13 +375,14 @@ fun MainActivityComposable(
                 } else {
                     ColorFilter.tint(composeTextColor)
                 },
-                contentDescription = "Description of your image"
+                contentDescription = "Description of your image",
+                contentScale = ContentScale.Fit
             )
             Image(
                 modifier = Modifier
                     .weight(0.5f)
+                    .aspectRatio(1f)
                     .padding(imagePadding)
-                    .height(48.dp)
                     .clickable {
                         viewModel.setRoleFilter(RoleEnum.Bruiser)
                     },
@@ -385,11 +392,13 @@ fun MainActivityComposable(
                 } else {
                     ColorFilter.tint(composeTextColor)
                 },
-                contentDescription = "Description of your image"
+                contentDescription = "Description of your image",
+                contentScale = ContentScale.Fit
             )
             Image(
                 modifier = Modifier
                     .weight(0.5f)
+                    .aspectRatio(1f)
                     .padding(imagePadding)
                     .clickable {
                         viewModel.setRoleFilter(RoleEnum.Support)
@@ -400,7 +409,8 @@ fun MainActivityComposable(
                 } else {
                     ColorFilter.tint(composeTextColor)
                 },
-                contentDescription = "Description of your image"
+                contentDescription = "Description of your image",
+                contentScale = ContentScale.Fit
             )
         }
 
@@ -510,7 +520,7 @@ fun MainActivityComposable(
                                 .weight(0.5f)
                                 .padding(2.dp)
                                 .background(
-                                    Color.DarkGray.copy(alpha = 0.5f),
+                                    composeOwnTeamColor.copy(alpha = 0.7f),
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .border(1.dp, composeTextColor, shape = RoundedCornerShape(4.dp))
@@ -518,14 +528,14 @@ fun MainActivityComposable(
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(text = "x")
+                            Icon(Icons.Default.Block, tint = Color.White, contentDescription = "Ban")
                         }
                         Box(
                             modifier = Modifier
                                 .weight(0.5f)
                                 .padding(2.dp)
                                 .background(
-                                    Color.DarkGray.copy(alpha = 0.5f),
+                                    composeTheirTeamColor.copy(alpha = 0.7f),
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .border(1.dp, composeTextColor, shape = RoundedCornerShape(4.dp))
@@ -533,7 +543,7 @@ fun MainActivityComposable(
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(text = "x")
+                            Icon(Icons.Default.Block, tint = Color.White, contentDescription = "Ban")
                         }
                     }
                 }
