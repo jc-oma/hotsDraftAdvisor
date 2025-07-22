@@ -1,10 +1,17 @@
 package com.example.hotsdraftadviser
 
+import android.Manifest
 import android.app.Application
+import android.content.Context
 import android.os.Bundle
+import android.content.pm.PackageManager
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.widget.LinearLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.camera.view.LifecycleCameraController
+import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,9 +25,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material.icons.Icons
@@ -33,11 +42,16 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.Icon
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -46,6 +60,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -72,9 +91,6 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 ) { innerPadding ->
-                    // Übergib das ViewModel an die MainActivityComposable
-                    // Beachte, dass innerPadding hier nicht explizit verwendet wird,
-                    // aber für die korrekte Funktionsweise von Scaffold benötigt wird.
                     MainActivityComposable()
                 }
             }
@@ -88,6 +104,31 @@ fun MainActivityComposable(
         factory = MainActivityViewModelFactory(LocalContext.current.applicationContext as Application)
     )
 ) {
+
+    val localLifeCycleContext = LocalContext.current
+    val localLifeCycleOwner = LocalLifecycleOwner.current
+    val cameraController = remember { LifecycleCameraController(localLifeCycleContext) }
+    var hasCameraPermission by remember {
+        mutableStateOf(
+            ContextCompat.checkSelfPermission(
+                localLifeCycleContext,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        )
+    }
+
+    // Verwende den ActivityResultLauncher direkt im Composable
+    val requestPermissionLauncher = androidx.activity.compose.rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            hasCameraPermission = isGranted
+        }
+
+    SideEffect {
+        if (!hasCameraPermission) {
+            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+        }
+    }
 
     val mapList by viewModel.filteredMaps.collectAsState(emptyList())
     val choosenMap by viewModel.choosenMap.collectAsState("")
@@ -202,6 +243,36 @@ fun MainActivityComposable(
                 .height(10.dp)
         ) { }
 
+        if (hasCameraPermission) {
+            AndroidView(
+                modifier = Modifier
+                    .padding(2.dp)
+                    .fillMaxWidth()
+                    .height(200.dp),
+                factory = { context ->
+                    PreviewView(context).apply {
+                        implementationMode = PreviewView.ImplementationMode.COMPATIBLE
+                        scaleType = PreviewView.ScaleType.FIT_CENTER
+                    }.also { previewView ->
+                        previewView.controller = cameraController
+                        cameraController.bindToLifecycle(localLifeCycleOwner)
+                    }
+                }
+            )
+        } else {
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .background(Color.Gray),
+                contentAlignment = Alignment.Center
+            ) {
+                Button(onClick = {
+                    requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+                }) {
+                    Text("Kamera-Berechtigung erteilen")
+                }
+            }
+        }
         if (!(theirPickedChamps.isEmpty() && ownPickedChamps.isEmpty())) {
 
             Row(
@@ -528,7 +599,11 @@ fun MainActivityComposable(
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Icon(Icons.Default.Block, tint = Color.White, contentDescription = "Ban")
+                            Icon(
+                                Icons.Default.Block,
+                                tint = Color.White,
+                                contentDescription = "Ban"
+                            )
                         }
                         Box(
                             modifier = Modifier
@@ -543,7 +618,11 @@ fun MainActivityComposable(
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Icon(Icons.Default.Block, tint = Color.White, contentDescription = "Ban")
+                            Icon(
+                                Icons.Default.Block,
+                                tint = Color.White,
+                                contentDescription = "Ban"
+                            )
                         }
                     }
                 }
