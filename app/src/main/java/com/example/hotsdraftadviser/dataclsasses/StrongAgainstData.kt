@@ -1,9 +1,9 @@
-package com.example.hotsdraftadviser
+package com.example.hotsdraftadviser.dataclsasses
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class StrongAgainst(
+data class StrongAgainstData(
     val ChampName: String,
     val ScoreValue: Int
 )

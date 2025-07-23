@@ -1,9 +1,9 @@
-package com.example.hotsdraftadviser
+package com.example.hotsdraftadviser.dataclsasses
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MapScore(
+data class MapScoreData(
     val MapName: String,
     val ScoreValue: Int
 )

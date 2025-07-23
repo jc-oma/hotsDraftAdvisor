@@ -60,6 +60,16 @@ dependencies {
 
     implementation("com.google.mlkit:object-detection:17.0.2")
 
+    // Text features
+    implementation (libs.text.recognition)
+
+    // TensorFlow Lite Interpreter
+    implementation(libs.tensorflow.lite) // Überprüfe die aktuellste Version
+    // Optional: Wenn dein Modell GPU-Delegation unterstützt und du sie nutzen willst
+    implementation(libs.tensorflow.lite.gpu)
+    // Optional: Wenn dein Modell Metadaten enthält (empfohlen)
+    implementation(libs.tensorflow.lite.support) //
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
