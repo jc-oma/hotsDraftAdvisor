@@ -1,15 +1,10 @@
 package com.example.hotsdraftadviser
 
-import android.Manifest
 import android.app.Application
 import android.os.Bundle
-import android.content.pm.PackageManager
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.camera.view.LifecycleCameraController
-import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,7 +21,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material.icons.Icons
@@ -39,7 +33,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
@@ -56,9 +49,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.hotsdraftadviser.cameraUI.CameraComposable
 import com.example.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
@@ -99,32 +89,6 @@ fun MainActivityComposable(
         factory = MainActivityViewModelFactory(LocalContext.current.applicationContext as Application)
     )
 ) {
-
-    val localLifeCycleContext = LocalContext.current
-    val localLifeCycleOwner = LocalLifecycleOwner.current
-    val cameraController = remember { LifecycleCameraController(localLifeCycleContext) }
-    var hasCameraPermission by remember {
-        mutableStateOf(
-            ContextCompat.checkSelfPermission(
-                localLifeCycleContext,
-                Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_GRANTED
-        )
-    }
-
-    // Verwende den ActivityResultLauncher direkt im Composable
-    val requestPermissionLauncher = androidx.activity.compose.rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            hasCameraPermission = isGranted
-        }
-
-    SideEffect {
-        if (!hasCameraPermission) {
-            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
-        }
-    }
-
     val mapList by viewModel.filteredMaps.collectAsState(emptyList())
     val choosenMap by viewModel.choosenMap.collectAsState("")
     val chosableChampList by viewModel.chosableChampList.collectAsState(emptyList())
@@ -150,6 +114,8 @@ fun MainActivityComposable(
     val composeOwnTeamColor = getColorByHexString(ownTeamColor)
     val composeTheirTeamColor = getColorByHexStringForET(theirTeamColor)
     val composeMapTextColor = getColorByHexStringForET(mapTextColor)
+
+    var detectedObjectLabels by remember { mutableStateOf<List<String>>(emptyList()) }
 
 
     Column(
@@ -239,11 +205,18 @@ fun MainActivityComposable(
         ) { }
 
         CameraComposable(
-            hasCameraPermission,
-            cameraController,
-            localLifeCycleOwner,
-            requestPermissionLauncher
+            onObjectsDetected = { labels -> detectedObjectLabels = labels }
         )
+
+        Text(
+            modifier = Modifier.padding(16.dp),
+            text = if (detectedObjectLabels.isNotEmpty()) {
+                "Zuletzt erkannte Objekte: ${detectedObjectLabels.joinToString(", ")}"
+            } else {
+                "Keine Objekte erkannt."
+            }
+        )
+
         if (!(theirPickedChamps.isEmpty() && ownPickedChamps.isEmpty())) {
 
             Row(
