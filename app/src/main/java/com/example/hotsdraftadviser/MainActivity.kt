@@ -50,7 +50,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.hotsdraftadviser.cameraUI.CameraComposable
+import com.example.hotsdraftadviser.cameraUI.CameraDetectionComposable
+import com.example.hotsdraftadviser.cameraUI.CameraViewComposable
 import com.example.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -204,18 +205,7 @@ fun MainActivityComposable(
                 .height(10.dp)
         ) { }
 
-        /*CameraComposable(
-            onObjectsDetected = { labels -> detectedObjectLabels = labels }
-        )
-
-        Text(
-            modifier = Modifier.padding(16.dp),
-            text = if (detectedObjectLabels.isNotEmpty()) {
-                "Zuletzt erkannte Objekte: ${detectedObjectLabels.joinToString(", ")}"
-            } else {
-                "Keine Objekte erkannt."
-            }
-        )*/
+        CameraViewComposable(detectedObjectLabels)
 
         if (!(theirPickedChamps.isEmpty() && ownPickedChamps.isEmpty())) {
 
