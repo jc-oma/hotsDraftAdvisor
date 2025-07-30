@@ -204,7 +204,7 @@ fun MainActivityComposable(
                 .height(10.dp)
         ) { }
 
-        CameraComposable(
+        /*CameraComposable(
             onObjectsDetected = { labels -> detectedObjectLabels = labels }
         )
 
@@ -215,7 +215,7 @@ fun MainActivityComposable(
             } else {
                 "Keine Objekte erkannt."
             }
-        )
+        )*/
 
         if (!(theirPickedChamps.isEmpty() && ownPickedChamps.isEmpty())) {
 
