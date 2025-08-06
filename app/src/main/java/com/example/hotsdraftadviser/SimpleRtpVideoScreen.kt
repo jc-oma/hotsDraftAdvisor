@@ -77,12 +77,12 @@ fun SimpleRtpVideoScreen(viewModel: SimpleRtpVideoViewModel = viewModel()) {
                             }
 
                             override fun surfaceDestroyed(holder: SurfaceHolder) {
+                                Log.d("RtpScreen", "Surface destroyed: $holder. Forcing stream stop if it was potentially active.")
+                                // Nicht auf isStreaming hier verlassen, da der Zustand asynchron sein kann.
+                                // viewModel.stopStreaming() sollte intern prüfen, ob es etwas zu stoppen gibt.
+                                viewModel.stopStreaming()
+                                isStreaming = false // UI-State aktualisieren
                                 surfaceHolderReady = null
-                                // Wenn Surface zerstört wird, Streaming stoppen, um Fehler zu vermeiden
-                                if (isStreaming) {
-                                    viewModel.stopStreaming()
-                                    isStreaming = false
-                                }
                             }
                         })
                     }
