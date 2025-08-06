@@ -100,7 +100,7 @@ fun SimpleRtpVideoScreen(viewModel: SimpleRtpVideoViewModel = viewModel()) {
             } else {
                 surfaceHolderReady?.surface?.let { validSurface ->
                     if (validSurface.isValid) {
-                        viewModel.startStreaming(validSurface)
+                        viewModel.startStreaming()
                         isStreaming = true
                     } else {
                         Log.e("RtpScreen", "Surface is not valid to start streaming.")

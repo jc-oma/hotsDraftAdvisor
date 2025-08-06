@@ -115,4 +115,8 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata")
     // Optional - Integration with RxJava
     implementation("androidx.compose.runtime:runtime-rxjava2")
+
+    implementation ("com.google.android.exoplayer:exoplayer-core:2.19.1")
+    implementation ("com.google.android.exoplayer:exoplayer-rtsp:2.19.1") // Für RTP/RTSP-Quellen
+    implementation ("com.google.android.exoplayer:exoplayer-ui:2.19.1") // Für PlayerView
 }
