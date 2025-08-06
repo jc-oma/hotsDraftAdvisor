@@ -204,6 +204,7 @@ fun MainActivityComposable(
                 .height(10.dp)
         ) { }
 
+        SimpleRtpVideoScreen()
         /*CameraComposable(
             onObjectsDetected = { labels -> detectedObjectLabels = labels }
         )
