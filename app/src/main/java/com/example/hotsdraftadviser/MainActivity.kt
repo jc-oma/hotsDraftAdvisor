@@ -50,7 +50,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.hotsdraftadviser.cameraUI.CameraComposable
 import com.example.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -204,7 +203,7 @@ fun MainActivityComposable(
                 .height(10.dp)
         ) { }
 
-        VideoStreamingScreen()
+        VideoStreamComposable()
         /*CameraComposable(
             onObjectsDetected = { labels -> detectedObjectLabels = labels }
         )
