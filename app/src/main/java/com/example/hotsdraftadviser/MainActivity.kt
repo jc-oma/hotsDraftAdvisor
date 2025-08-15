@@ -203,7 +203,10 @@ fun MainActivityComposable(
                 .height(10.dp)
         ) { }
 
+        //Composable um das tracken der Champs mit der Videostream zu testen
         VideoStreamComposable()
+
+        //Composable um das tracken der Champs mit der Kamera zu testen
         /*CameraComposable(
             onObjectsDetected = { labels -> detectedObjectLabels = labels }
         )

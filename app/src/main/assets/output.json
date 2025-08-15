@@ -34577,6 +34577,1511 @@
     ]
   },
   {
+    "ChampName": "Mei",
+    "ChampRole": "warrior",
+    "ChampRoleAlt": "tank",
+    "StrongAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 38
+      },
+      {
+        "ChampName": "Stitches",
+        "ScoreValue": 95
+      },
+      {
+        "ChampName": "Diablo",
+        "ScoreValue": 92
+      },
+      {
+        "ChampName": "Blaze",
+        "ScoreValue": 90
+      },
+      {
+        "ChampName": "Chogall",
+        "ScoreValue": 82
+      },
+      {
+        "ChampName": "Muradin",
+        "ScoreValue": 88
+      },
+      {
+        "ChampName": "Dehaka",
+        "ScoreValue": 84
+      },
+      {
+        "ChampName": "ETC",
+        "ScoreValue": 87
+      },
+      {
+        "ChampName": "Garrosh",
+        "ScoreValue": 85
+      },
+      {
+        "ChampName": "Chen",
+        "ScoreValue": 72
+      },
+      {
+        "ChampName": "Arthas",
+        "ScoreValue": 83
+      },
+      {
+        "ChampName": "Murky",
+        "ScoreValue": 68
+      },
+      {
+        "ChampName": "Leoric",
+        "ScoreValue": 81
+      },
+      {
+        "ChampName": "Zarya",
+        "ScoreValue": 70
+      },
+      {
+        "ChampName": "Ragnaros",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Tyrael",
+        "ScoreValue": 66
+      },
+      {
+        "ChampName": "Azmodan",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Artanis",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Malganis",
+        "ScoreValue": 77
+      },
+      {
+        "ChampName": "Imperius",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "Anubarak",
+        "ScoreValue": 74
+      },
+      {
+        "ChampName": "Johanna",
+        "ScoreValue": 80
+      },
+      {
+        "ChampName": "Malfurion",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Yrel",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "Zuljin",
+        "ScoreValue": 52
+      },
+      {
+        "ChampName": "Sonya",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Maiev",
+        "ScoreValue": 51
+      },
+      {
+        "ChampName": "Illidan",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Uther",
+        "ScoreValue": 57
+      },
+      {
+        "ChampName": "guldan",
+        "ScoreValue": 44
+      },
+      {
+        "ChampName": "Probius",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Sylvanas",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Nazeebo",
+        "ScoreValue": 54
+      },
+      {
+        "ChampName": "Thrall",
+        "ScoreValue": 48
+      },
+      {
+        "ChampName": "Xul",
+        "ScoreValue": 63
+      },
+      {
+        "ChampName": "Varian",
+        "ScoreValue": 53
+      },
+      {
+        "ChampName": "Kelthuzad",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Alexstrasza",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Jaina",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "LtMorales",
+        "ScoreValue": 42
+      },
+      {
+        "ChampName": "Medivh",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Tassadar",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Gazlowe",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "DVA",
+        "ScoreValue": 42
+      },
+      {
+        "ChampName": "Fenix",
+        "ScoreValue": 48
+      },
+      {
+        "ChampName": "Kharazim",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Chromie",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Valla",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Zeratul",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Falstad",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Lili",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Zagara",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Rexxar",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Greymane",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Stukov",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Kerrigan",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Kaelthas",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Orphea",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Malthael",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Lucio",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "LostVikings",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Butcher",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Samuro",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Raynor",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Abathur",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Alarak",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Li-Ming",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Valeera",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Nova",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Lunara",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Tracer",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Brightwing",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Chogall",
+        "ScoreValue": 82
+      },
+      {
+        "ChampName": "Maiev",
+        "ScoreValue": 51
+      },
+      {
+        "ChampName": "Diablo",
+        "ScoreValue": 92
+      },
+      {
+        "ChampName": "Stitches",
+        "ScoreValue": 95
+      },
+      {
+        "ChampName": "Leoric",
+        "ScoreValue": 81
+      },
+      {
+        "ChampName": "Blaze",
+        "ScoreValue": 90
+      },
+      {
+        "ChampName": "Chromie",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Malfurion",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "LostVikings",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Zarya",
+        "ScoreValue": 70
+      },
+      {
+        "ChampName": "Muradin",
+        "ScoreValue": 88
+      },
+      {
+        "ChampName": "LtMorales",
+        "ScoreValue": 42
+      },
+      {
+        "ChampName": "Medivh",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Imperius",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "Anubarak",
+        "ScoreValue": 74
+      },
+      {
+        "ChampName": "Thrall",
+        "ScoreValue": 48
+      },
+      {
+        "ChampName": "Uther",
+        "ScoreValue": 57
+      },
+      {
+        "ChampName": "Azmodan",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Xul",
+        "ScoreValue": 63
+      },
+      {
+        "ChampName": "Probius",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Zagara",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Zuljin",
+        "ScoreValue": 52
+      },
+      {
+        "ChampName": "Yrel",
+        "ScoreValue": 62
+      },
+      {
+        "ChampName": "ETC",
+        "ScoreValue": 87
+      },
+      {
+        "ChampName": "Malganis",
+        "ScoreValue": 77
+      },
+      {
+        "ChampName": "Garrosh",
+        "ScoreValue": 85
+      },
+      {
+        "ChampName": "Rexxar",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Dehaka",
+        "ScoreValue": 84
+      },
+      {
+        "ChampName": "Ragnaros",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Alexstrasza",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "DVA",
+        "ScoreValue": 42
+      },
+      {
+        "ChampName": "Kelthuzad",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Kerrigan",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Falstad",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Abathur",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Zeratul",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "guldan",
+        "ScoreValue": 44
+      },
+      {
+        "ChampName": "Arthas",
+        "ScoreValue": 83
+      },
+      {
+        "ChampName": "Alarak",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Tassadar",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Raynor",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Kaelthas",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Artanis",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Li-Ming",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Fenix",
+        "ScoreValue": 48
+      },
+      {
+        "ChampName": "Kharazim",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Greymane",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Butcher",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Gazlowe",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Sonya",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Tyrael",
+        "ScoreValue": 66
+      },
+      {
+        "ChampName": "Murky",
+        "ScoreValue": 68
+      },
+      {
+        "ChampName": "Nazeebo",
+        "ScoreValue": 54
+      },
+      {
+        "ChampName": "Stukov",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Sylvanas",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Jaina",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Lili",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Orphea",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Samuro",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Valla",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Valeera",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Malthael",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Chen",
+        "ScoreValue": 72
+      },
+      {
+        "ChampName": "Lucio",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Varian",
+        "ScoreValue": 53
+      },
+      {
+        "ChampName": "Johanna",
+        "ScoreValue": 80
+      },
+      {
+        "ChampName": "Nova",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Illidan",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Tracer",
+        "ScoreValue": 20
+      }
+    ],
+    "WeakAgainst": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 70
+      },
+      {
+        "ChampName": "Tracer",
+        "ScoreValue": 95
+      },
+      {
+        "ChampName": "Brightwing",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Lunara",
+        "ScoreValue": 90
+      },
+      {
+        "ChampName": "Kaelthas",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Genji",
+        "ScoreValue": 88
+      },
+      {
+        "ChampName": "SgtHammer",
+        "ScoreValue": 85
+      },
+      {
+        "ChampName": "Greymane",
+        "ScoreValue": 70
+      },
+      {
+        "ChampName": "Zeratul",
+        "ScoreValue": 72
+      },
+      {
+        "ChampName": "Nova",
+        "ScoreValue": 80
+      },
+      {
+        "ChampName": "Valeera",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Li-Ming",
+        "ScoreValue": 82
+      },
+      {
+        "ChampName": "Cassia",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Johanna",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Chromie",
+        "ScoreValue": 68
+      },
+      {
+        "ChampName": "Lili",
+        "ScoreValue": 48
+      },
+      {
+        "ChampName": "Butcher",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Uther",
+        "ScoreValue": 38
+      },
+      {
+        "ChampName": "Kerrigan",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Illidan",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "Alarak",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Rexxar",
+        "ScoreValue": 53
+      },
+      {
+        "ChampName": "Muradin",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Kelthuzad",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Artanis",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Zagara",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "ETC",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Fenix",
+        "ScoreValue": 51
+      },
+      {
+        "ChampName": "Tyrande",
+        "ScoreValue": 47
+      },
+      {
+        "ChampName": "Raynor",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Jaina",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Samuro",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Falstad",
+        "ScoreValue": 42
+      },
+      {
+        "ChampName": "Anubarak",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Sylvanas",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Chen",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "LtMorales",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Deckard",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Thrall",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Yrel",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Lucio",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Abathur",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Gazlowe",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "DVA",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "guldan",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "LostVikings",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Xul",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Valla",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Diablo",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Leoric",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Stitches",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Arthas",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Rehgar",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Tyrael",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Murky",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Malfurion",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Tassadar",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Kharazim",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Zarya",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Zuljin",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Nazeebo",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Garrosh",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Varian",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Azmodan",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Orphea",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Malthael",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Stukov",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Chogall",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Tracer",
+        "ScoreValue": 95
+      },
+      {
+        "ChampName": "Lunara",
+        "ScoreValue": 90
+      },
+      {
+        "ChampName": "Illidan",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "Johanna",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Brightwing",
+        "ScoreValue": 65
+      },
+      {
+        "ChampName": "Nova",
+        "ScoreValue": 80
+      },
+      {
+        "ChampName": "Valeera",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Li-Ming",
+        "ScoreValue": 82
+      },
+      {
+        "ChampName": "Genji",
+        "ScoreValue": 88
+      },
+      {
+        "ChampName": "Cassia",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Butcher",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "SgtHammer",
+        "ScoreValue": 85
+      },
+      {
+        "ChampName": "Greymane",
+        "ScoreValue": 70
+      },
+      {
+        "ChampName": "Artanis",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Lili",
+        "ScoreValue": 48
+      },
+      {
+        "ChampName": "Kaelthas",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Kelthuzad",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Zeratul",
+        "ScoreValue": 72
+      },
+      {
+        "ChampName": "Chromie",
+        "ScoreValue": 68
+      },
+      {
+        "ChampName": "Fenix",
+        "ScoreValue": 51
+      },
+      {
+        "ChampName": "Alarak",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Zagara",
+        "ScoreValue": 43
+      },
+      {
+        "ChampName": "Deckard",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Samuro",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Jaina",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Kerrigan",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Uther",
+        "ScoreValue": 38
+      },
+      {
+        "ChampName": "Orphea",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "guldan",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "LtMorales",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Zuljin",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Thrall",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Tyrande",
+        "ScoreValue": 47
+      },
+      {
+        "ChampName": "Rexxar",
+        "ScoreValue": 53
+      },
+      {
+        "ChampName": "Falstad",
+        "ScoreValue": 42
+      },
+      {
+        "ChampName": "Raynor",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Varian",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Malthael",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Arthas",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Murky",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "LostVikings",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "DVA",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Garrosh",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Anubarak",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Chen",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Sylvanas",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Yrel",
+        "ScoreValue": 20
+      },
+      {
+        "ChampName": "Muradin",
+        "ScoreValue": 25
+      }
+    ],
+    "GoodTeamWith": [
+      {
+        "ChampName": "Hogger",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Deathwing",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Qhira",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "LtMorales",
+        "ScoreValue": 85
+      },
+      {
+        "ChampName": "Auriel",
+        "ScoreValue": 95
+      },
+      {
+        "ChampName": "ETC",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Diablo",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Muradin",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Brightwing",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "Anubarak",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Lili",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Leoric",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Tyrande",
+        "ScoreValue": 22
+      },
+      {
+        "ChampName": "Uther",
+        "ScoreValue": 90
+      },
+      {
+        "ChampName": "Malfurion",
+        "ScoreValue": 82
+      },
+      {
+        "ChampName": "Nazeebo",
+        "ScoreValue": 72
+      },
+      {
+        "ChampName": "Rehgar",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Arthas",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Garrosh",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Blaze",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Raynor",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Zarya",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Abathur",
+        "ScoreValue": 52
+      },
+      {
+        "ChampName": "Kerrigan",
+        "ScoreValue": 63
+      },
+      {
+        "ChampName": "Malthael",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Johanna",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Medivh",
+        "ScoreValue": 28
+      },
+      {
+        "ChampName": "LostVikings",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Jaina",
+        "ScoreValue": 88
+      },
+      {
+        "ChampName": "Rexxar",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "SgtHammer",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Tyrael",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Zeratul",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Thrall",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Butcher",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Sylvanas",
+        "ScoreValue": 80
+      },
+      {
+        "ChampName": "Stukov",
+        "ScoreValue": 27
+      },
+      {
+        "ChampName": "Nova",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Azmodan",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Chen",
+        "ScoreValue": 30
+      },
+      {
+        "ChampName": "Chogall",
+        "ScoreValue": 25
+      },
+      {
+        "ChampName": "Tassadar",
+        "ScoreValue": 24
+      },
+      {
+        "ChampName": "Falstad",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Gazlowe",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Zagara",
+        "ScoreValue": 23
+      },
+      {
+        "ChampName": "Dehaka",
+        "ScoreValue": 55
+      },
+      {
+        "ChampName": "Genji",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "DVA",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Deckard",
+        "ScoreValue": 21
+      },
+      {
+        "ChampName": "Stitches",
+        "ScoreValue": 19
+      },
+      {
+        "ChampName": "Illidan",
+        "ScoreValue": 17
+      },
+      {
+        "ChampName": "Xul",
+        "ScoreValue": 15
+      },
+      {
+        "ChampName": "Tracer",
+        "ScoreValue": 14
+      },
+      {
+        "ChampName": "Cassia",
+        "ScoreValue": 10
+      },
+      {
+        "ChampName": "Alarak",
+        "ScoreValue": 9
+      },
+      {
+        "ChampName": "Kaelthas",
+        "ScoreValue": 70
+      },
+      {
+        "ChampName": "Samuro",
+        "ScoreValue": 6
+      },
+      {
+        "ChampName": "LtMorales",
+        "ScoreValue": 85
+      },
+      {
+        "ChampName": "ETC",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Auriel",
+        "ScoreValue": 95
+      },
+      {
+        "ChampName": "Abathur",
+        "ScoreValue": 52
+      },
+      {
+        "ChampName": "Malfurion",
+        "ScoreValue": 82
+      },
+      {
+        "ChampName": "Anubarak",
+        "ScoreValue": 50
+      },
+      {
+        "ChampName": "Blaze",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Brightwing",
+        "ScoreValue": 75
+      },
+      {
+        "ChampName": "Diablo",
+        "ScoreValue": 60
+      },
+      {
+        "ChampName": "Leoric",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Muradin",
+        "ScoreValue": 58
+      },
+      {
+        "ChampName": "Garrosh",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Arthas",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Raynor",
+        "ScoreValue": 40
+      },
+      {
+        "ChampName": "Tassadar",
+        "ScoreValue": 24
+      },
+      {
+        "ChampName": "Uther",
+        "ScoreValue": 90
+      },
+      {
+        "ChampName": "Nazeebo",
+        "ScoreValue": 72
+      },
+      {
+        "ChampName": "Lili",
+        "ScoreValue": 45
+      },
+      {
+        "ChampName": "Jaina",
+        "ScoreValue": 88
+      },
+      {
+        "ChampName": "Malthael",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Rehgar",
+        "ScoreValue": 78
+      },
+      {
+        "ChampName": "Johanna",
+        "ScoreValue": 35
+      },
+      {
+        "ChampName": "Medivh",
+        "ScoreValue": 28
+      }
+    ],
+    "MapScore": [
+      {
+        "MapName": "Garden of Terror",
+        "ScoreValue": 68
+      },
+      {
+        "MapName": "Battlefield of Eternity",
+        "ScoreValue": 85
+      },
+      {
+        "MapName": "Haunted Mines",
+        "ScoreValue": 65
+      },
+      {
+        "MapName": "Dragonshire",
+        "ScoreValue": 72
+      },
+      {
+        "MapName": "Braxis Holdout",
+        "ScoreValue": 78
+      },
+      {
+        "MapName": "Black Hearts Bay",
+        "ScoreValue": 70
+      },
+      {
+        "MapName": "Cursed Hollow",
+        "ScoreValue": 80
+      },
+      {
+        "MapName": "Infernal Shrines",
+        "ScoreValue": 75
+      },
+      {
+        "MapName": "Towers of Doom",
+        "ScoreValue": 62
+      },
+      {
+        "MapName": "Volskaya Foundry",
+        "ScoreValue": 55
+      },
+      {
+        "MapName": "Lost Caverns",
+        "ScoreValue": 45
+      },
+      {
+        "MapName": "Tomb of the Spider Queen",
+        "ScoreValue": 60
+      },
+      {
+        "MapName": "Warhead Junction",
+        "ScoreValue": 40
+      },
+      {
+        "MapName": "Hanamura",
+        "ScoreValue": 30
+      },
+      {
+        "MapName": "Sky Temple",
+        "ScoreValue": 35
+      },
+      {
+        "MapName": "Alterac Pass",
+        "ScoreValue": 50
+      },
+      {
+        "MapName": "Braxis Holdout",
+        "ScoreValue": 78
+      },
+      {
+        "MapName": "Cursed Hollow",
+        "ScoreValue": 80
+      },
+      {
+        "MapName": "Hanamura",
+        "ScoreValue": 30
+      },
+      {
+        "MapName": "Battlefield of Eternity",
+        "ScoreValue": 85
+      },
+      {
+        "MapName": "Dragonshire",
+        "ScoreValue": 72
+      },
+      {
+        "MapName": "Black Hearts Bay",
+        "ScoreValue": 70
+      },
+      {
+        "MapName": "Towers of Doom",
+        "ScoreValue": 62
+      },
+      {
+        "MapName": "Volskaya Foundry",
+        "ScoreValue": 55
+      },
+      {
+        "MapName": "Garden of Terror",
+        "ScoreValue": 68
+      },
+      {
+        "MapName": "Alterac Pass",
+        "ScoreValue": 50
+      },
+      {
+        "MapName": "Lost Caverns",
+        "ScoreValue": 45
+      },
+      {
+        "MapName": "Tomb of the Spider Queen",
+        "ScoreValue": 60
+      },
+      {
+        "MapName": "Infernal Shrines",
+        "ScoreValue": 75
+      },
+      {
+        "MapName": "Haunted Mines",
+        "ScoreValue": 65
+      },
+      {
+        "MapName": "Sky Temple",
+        "ScoreValue": 35
+      },
+      {
+        "MapName": "Warhead Junction",
+        "ScoreValue": 40
+      }
+    ]
+  },
+  {
     "ChampName": "Garrosh",
     "ChampRole": "warrior",
     "ChampRoleAlt": "tank",

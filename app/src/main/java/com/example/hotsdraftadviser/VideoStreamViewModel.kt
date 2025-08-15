@@ -62,16 +62,10 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     private val templateDescriptors = mutableMapOf<String, Mat>()
     private val templateKeypoints = mutableMapOf<String, MatOfKeyPoint>()
     //TODO alle Templates
-    private val templateNames = listOf("garrosh", "medivh", "stukov", "sylvanas", "yrel") // Namen müssen .bmp entsprechen
+    private var templateNames = listOf("qrcode") // Namen müssen .bmp entsprechen
     private val templateResourceIds = mapOf(
-        "garrosh" to R.drawable.garrosh, // Stelle sicher, dass diese existieren!
-        "medivh" to R.drawable.medivh,
-        "stukov" to R.drawable.stukov,
-        "sylvanas" to R.drawable.sylvanas,
-        "yrel" to R.drawable.yrel,
+        "qrcode" to R.drawable.test_qr
     )
-
-    val distanceFilter = 25
 
     private val udpPort = 1234 // UDP-Port für OBS
 
@@ -83,7 +77,8 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     private fun initializeOpenCVComponents(matcherType: Int = DescriptorMatcher.BRUTEFORCE_HAMMINGLUT) {
         viewModelScope.launch(Dispatchers.IO) { // OpenCV Init kann etwas dauern
             try {
-                featureDetector = ORB.create()
+                val nfeatures = 500
+                featureDetector = ORB.create(nfeatures)
                 descriptorMatcher = DescriptorMatcher.create(matcherType)
 
                 templateNames.forEach { name ->
@@ -249,7 +244,7 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
 
     // In VideoStreamViewModel.kt
 
-    fun startFrameProcessing(playerView: PlayerView, intervalMs: Long = 200) {
+    fun startFrameProcessing(playerView: PlayerView, intervalMs: Long = 1000) {
         if (frameProcessingJob?.isActive == true) {
             Log.w(TAG, "Frame processing already active.")
             return
@@ -348,7 +343,7 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                     descriptorMatcher!!.match(frameDescriptors, templateDesc, matches) // Einfaches Matching
 
                     // Filter matches (Beispiel: Gute Matches nach Distanz oder Lowe's Ratio Test)
-                    val goodMatchesList = matches.toList().filter { it.distance < distanceFilter }
+                    val goodMatchesList = matches.toList().filter { it.distance < 50 }
                     currentMatches[name] = goodMatchesList.size
 
                     matches.release()
