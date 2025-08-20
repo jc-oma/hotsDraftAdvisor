@@ -6,8 +6,10 @@ import android.graphics.BitmapFactory
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import kotlinx.coroutines.tasks.await
 import android.view.PixelCopy
 import android.view.SurfaceView
+import androidx.compose.ui.semantics.text
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.exoplayer2.DefaultLoadControl
@@ -20,6 +22,10 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSource
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.TextRecognizer
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -36,6 +42,12 @@ import org.opencv.core.MatOfKeyPoint
 import org.opencv.features2d.DescriptorMatcher
 import org.opencv.features2d.ORB
 import org.opencv.imgproc.Imgproc
+import java.util.concurrent.TimeUnit
+import kotlin.text.lines
+import androidx.core.graphics.createBitmap
+import kotlin.coroutines.cancellation.CancellationException
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class VideoStreamViewModel(application: Application) : AndroidViewModel(application) {
     private val TAG = "ExoPlayerVM"
@@ -62,16 +74,27 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     private val templateDescriptors = mutableMapOf<String, Mat>()
     private val templateKeypoints = mutableMapOf<String, MatOfKeyPoint>()
     //TODO alle Templates
-    private var templateNames = listOf("qrcode") // Namen müssen .bmp entsprechen
+    private var templateNames = listOf("thrall", "blaze_text") // Namen müssen .bmp entsprechen
     private val templateResourceIds = mapOf(
-        "qrcode" to R.drawable.test_qr
+        "thrall" to R.drawable.thrall,
+        "blaze_text" to R.drawable.blaze_text
     )
 
     private val udpPort = 1234 // UDP-Port für OBS
 
+//text recognition
+    private val textRecognizer: TextRecognizer by lazy {
+        TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+    }
+
+    // StateFlow für die erkannten Texte (z.B. eine Liste von Strings oder strukturiertere Daten)
+    private val _recognizedTexts = MutableStateFlow<List<String>>(emptyList())
+    val recognizedTexts: StateFlow<List<String>> = _recognizedTexts.asStateFlow()
+
+
     init {
         initializePlayer()
-        initializeOpenCVComponents()
+        //initializeOpenCVComponents()
     }
 
     private fun initializeOpenCVComponents(matcherType: Int = DescriptorMatcher.BRUTEFORCE_HAMMINGLUT) {
@@ -256,67 +279,115 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
             return
         }
 
+        val handler = Handler(Looper.getMainLooper())
+
         // Die Frame-Verarbeitungs-Coroutine läuft auf Dispatchers.Default für CPU-intensive Arbeit (OpenCV)
-        frameProcessingJob = viewModelScope.launch(Dispatchers.Default) {
-            Log.i(TAG, "Starting frame processing loop on ${Thread.currentThread().name}...")
+        frameProcessingJob = viewModelScope.launch(Dispatchers.Default) { // Use a background dispatcher
+            Log.i(TAG, "Starting frame processing loop for ML Kit on ${Thread.currentThread().name}...")
             try {
-                while (isActive) { // Äußere Schleife für die Coroutine-Aktivität
-
-                    // --- BEGINN: Zugriff auf Player-Status ---
-                    // Hole den Player-Status im Main-Thread-Kontext
-                    val isPlayerCurrentlyPlaying = withContext(Dispatchers.Main) {
-                        _player.value?.isPlaying == true
-                    }
-                    // --- ENDE: Zugriff auf Player-Status ---
-
-                    if (!isPlayerCurrentlyPlaying) {
-                        Log.i(TAG, "Player is no longer playing. Exiting frame processing loop.")
-                        break // Verlasse die Schleife, wenn der Player nicht mehr spielt
+                while (isActive) {
+                    var isPlayerPlayingAndSurfaceValid = false
+                    withContext(Dispatchers.Main) { // Wechsle zum Hauptthread für Player-Zugriff
+                        isPlayerPlayingAndSurfaceValid =
+                            player.value?.isPlaying == true && surfaceView.holder?.surface?.isValid == true
                     }
 
-                    // PixelCopy und OpenCV-Verarbeitung (kann im Default-Dispatcher bleiben)
-                    val bitmap = Bitmap.createBitmap(surfaceView.width, surfaceView.height, Bitmap.Config.ARGB_8888)
+                    if (!isPlayerPlayingAndSurfaceValid) {
+                        Log.d(TAG, "Player not playing or surface not valid on ${Thread.currentThread().name}. Skipping frame.")
+                        // Das delay kann weiterhin im DefaultDispatcher bleiben
+                        delay(intervalMs)
+                        continue
+                    }
+
+                    // Create bitmap for each frame
+                    val currentFrameBitmap = createBitmap(
+                        surfaceView.width.coerceAtLeast(1),
+                        surfaceView.height.coerceAtLeast(1)
+                    )
+
+                    var copySuccess: Boolean = false
+
                     try {
-                        val latch = java.util.concurrent.CountDownLatch(1)
-                        var copySuccess = false
-                        // PixelCopy's Callback wird auf dem Handler-Thread (Main) ausgeführt
-                        PixelCopy.request(surfaceView, bitmap, { result ->
-                            if (result == PixelCopy.SUCCESS) {
-                                copySuccess = true
-                            } else {
-                                Log.e(TAG, "PixelCopy failed with error: $result")
-                            }
-                            latch.countDown()
-                        }, Handler(Looper.getMainLooper()))
-
-                        latch.await(500, java.util.concurrent.TimeUnit.MILLISECONDS) // Timeout für PixelCopy hinzufügen
-
-                        if (copySuccess && isActive) { // Erneut isActive prüfen, da await blockiert
-                            processFrameWithOpenCV(bitmap)
-                        } else if (!copySuccess) {
-                            Log.w(TAG, "PixelCopy did not succeed in time or failed.")
+                        // Using suspendCoroutine for PixelCopy to make it suspending
+                        copySuccess = suspendCoroutine { continuation ->
+                            PixelCopy.request(
+                                surfaceView, currentFrameBitmap,
+                                { result ->
+                                    if (result == PixelCopy.SUCCESS) {
+                                        continuation.resume(true)
+                                    } else {
+                                        Log.e(TAG, "PixelCopy failed with result: $result")
+                                        continuation.resume(false)
+                                    }
+                                },
+                                handler // Ensure handler is on a thread with a Looper
+                            )
                         }
 
-                    } catch (e: InterruptedException) {
-                        Log.w(TAG, "PixelCopy or processing interrupted.", e)
-                        Thread.currentThread().interrupt() // Propagate interrupt
-                        break // Schleife verlassen
+                        if (copySuccess && isActive) {
+                            Log.d(TAG, "PixelCopy success. Processing frame with ML Kit.")
+                            // Directly await the suspend function.
+                            // The bitmap is not recycled until after this function returns.
+                            processFrameWithMLKitTextRecognition(currentFrameBitmap)
+                        } else if (!copySuccess) {
+                            Log.w(TAG, "PixelCopy did not succeed.")
+                            // No need to recycle here, finally block will handle it
+                        }
                     } catch (e: Exception) {
-                        Log.e(TAG, "Error during PixelCopy or frame processing", e)
+                        Log.e(TAG, "Error during PixelCopy or ML Kit processing: ${e.message}", e)
+                        // No need to recycle here, finally block will handle it
                     } finally {
-                        if (!bitmap.isRecycled) bitmap.recycle()
+                        // This is the ONLY place this specific bitmap should be recycled.
+                        // It happens after PixelCopy and processFrameWithMLKitTextRecognition (if successful)
+                        // have completed for this iteration.
+                        if (!currentFrameBitmap.isRecycled) {
+                            Log.d(TAG, "Recycling bitmap in loop iteration for ${System.identityHashCode(currentFrameBitmap)}")
+                            currentFrameBitmap.recycle()
+                        }
                     }
 
-                    if (!isActive) break // Erneut prüfen, falls Job während delay gecancelt wird
+                    if (!isActive) break
                     delay(intervalMs)
                 }
+            } catch (e: CancellationException) {
+                Log.i(TAG, "Frame processing job cancelled.")
+            } catch (e: Exception) {
+                Log.e(TAG, "Unexpected error in frame processing loop: ${e.message}", e)
             } finally {
-                Log.i(TAG, "Frame processing loop finished on ${Thread.currentThread().name}.")
-                // Hier könnten noch Aufräumarbeiten stattfinden, falls nötig
+                Log.i(TAG, "Frame processing loop (ML Kit) finished on ${Thread.currentThread().name}.")
             }
         }
     }
 
+
+    // processFrameWithMLKitTextRecognition remains a suspend function
+    private suspend fun processFrameWithMLKitTextRecognition(frameBitmap: Bitmap) {
+        if (frameBitmap.isRecycled) { // Good defensive check
+            Log.w(TAG, "processFrame: Bitmap is already recycled for ${System.identityHashCode(frameBitmap)}")
+            return
+        }
+        Log.d(TAG, "processFrame: Processing bitmap ${System.identityHashCode(frameBitmap)}")
+
+        // Make sure InputImage.fromBitmap doesn't hold onto the bitmap reference
+        // in a way that outlives this function if it were to launch its own async work
+        // without copying the data. For ML Kit, this is generally safe as it processes immediately.
+        val image = InputImage.fromBitmap(frameBitmap, 0)
+
+        try {
+            val result = textRecognizer.process(image).await()
+            val allRecognizedText = result.textBlocks.flatMap { block ->
+                block.lines.map { line -> line.text }
+            }
+            _recognizedTexts.value = allRecognizedText
+            // Log.d(TAG, "ML Kit Text Recognition successful. Texts: $allRecognizedText")
+        } catch (e: Exception) {
+            Log.e(TAG, "ML Kit Text Recognition failed for bitmap ${System.identityHashCode(frameBitmap)}", e)
+            _errorMessage.value = "Text Recognition Error: ${e.localizedMessage}"
+            _recognizedTexts.value = emptyList()
+        }
+        // DO NOT RECYCLE frameBitmap here. The caller (startFrameProcessing loop) owns it.
+        Log.d(TAG, "processFrame: Finished processing bitmap ${System.identityHashCode(frameBitmap)}")
+    }
 
     private fun processFrameWithOpenCV(frameBitmap: Bitmap) {
         if (featureDetector == null || descriptorMatcher == null || templateDescriptors.isEmpty()) {
@@ -341,7 +412,6 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                     val matches = MatOfDMatch()
                     // descriptorMatcher!!.knnMatch(frameDescriptors, templateDesc, matches, 2) // Für Lowe's Ratio Test
                     descriptorMatcher!!.match(frameDescriptors, templateDesc, matches) // Einfaches Matching
-
                     // Filter matches (Beispiel: Gute Matches nach Distanz oder Lowe's Ratio Test)
                     val goodMatchesList = matches.toList().filter { it.distance < 50 }
                     currentMatches[name] = goodMatchesList.size

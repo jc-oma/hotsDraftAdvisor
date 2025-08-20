@@ -25,6 +25,7 @@ import kotlinx.serialization.json.decodeFromStream
 import java.io.IOException
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
+    private val _isStreamingEnabled = MutableStateFlow(true)
 
     private val _allChampsData = MutableStateFlow<List<ChampData>>(emptyList())
 
@@ -36,6 +37,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     private val maxPicks = 5
 
+    val isStreamingEnabled = _isStreamingEnabled.asStateFlow()
     val allChampsData = _allChampsData.asStateFlow()
     val mapList: StateFlow<List<String>> = getSortedUniqueMaps()
     val filterMapsString: StateFlow<String> = _filterMapsString.asStateFlow()
@@ -401,6 +403,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             Log.d("ViewModel", "Aggregated Own Team Score: $totalScore")
             totalScore
         }.stateIn(viewModelScope, SharingStarted.Lazily, 0)
+    }
+
+    fun toggleStreaming() {
+        _isStreamingEnabled.value = !_isStreamingEnabled.value
     }
 }
 

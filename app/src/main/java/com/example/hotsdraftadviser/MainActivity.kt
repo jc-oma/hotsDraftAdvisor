@@ -29,6 +29,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.material3.Switch
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.material.icons.filled.Block
@@ -45,6 +46,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -116,6 +118,8 @@ fun MainActivityComposable(
 
     var detectedObjectLabels by remember { mutableStateOf<List<String>>(emptyList()) }
 
+    val isStreamingEnabled by viewModel.isStreamingEnabled.collectAsState()
+
 
     Column(
         modifier = Modifier
@@ -123,7 +127,7 @@ fun MainActivityComposable(
             .background(composeScreenBackgroundColor)
     ) {
         Box(modifier = Modifier.height(60.dp))
-        if (!choosenMap.isEmpty()) {
+        if (choosenMap.isNotEmpty()) {
             Row {
                 Box(
                     modifier = Modifier
@@ -149,14 +153,36 @@ fun MainActivityComposable(
         if (choosenMap.isEmpty()) {
             Column(modifier = Modifier.wrapContentSize())
             {
-                // Suchfeld
-                OutlinedTextField(
-                    value = searchQueryMaps,
-                    onValueChange = { newText ->
-                        viewModel.updateMapsSearchQuery(newText)
-                    },
-                    label = { Text("\uD83D\uDD0D Maps suchen...") }
-                )
+                Row (verticalAlignment = Alignment.CenterVertically){
+                    // Suchfeld
+                    OutlinedTextField(
+                        modifier = Modifier.weight(1f),
+                        value = searchQueryMaps,
+                        onValueChange = { newText ->
+                            viewModel.updateMapsSearchQuery(newText)
+                        },
+                        label = { Text("\uD83D\uDD0D Maps suchen...") }
+                    )
+                    Box(
+                        modifier = Modifier
+                                .weight(0.2f)
+                    ) { }
+                    Text(
+                        modifier = Modifier
+                            .weight(0.4f),
+                        text = "Video:"
+                    )
+                    Switch(
+                            checked = isStreamingEnabled,
+                            onCheckedChange = { viewModel.toggleStreaming() },
+                            modifier = Modifier
+                                .padding(start = 8.dp)
+                        )
+                    Box(
+                        modifier = Modifier
+                            .weight(0.2f)
+                    ) { }
+                    }
                 Box(
                     modifier = Modifier
                         .height(8.dp)
@@ -204,7 +230,9 @@ fun MainActivityComposable(
         ) { }
 
         //Composable um das tracken der Champs mit der Videostream zu testen
-        VideoStreamComposable()
+        if (isStreamingEnabled) {
+            VideoStreamComposable()
+        }
 
         //Composable um das tracken der Champs mit der Kamera zu testen
         /*CameraComposable(
@@ -512,7 +540,8 @@ fun MainActivityComposable(
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .border(1.dp, composeTextColor, shape = RoundedCornerShape(4.dp))
-                                .clickable { viewModel.pickChampForTeam(i, TeamSide.OWN) }
+                                .clickable { viewModel.pickChampForTeam(i, TeamSide.OWN)
+                                    viewModel.updateOwnChampSearchQuery("") }
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
@@ -527,7 +556,8 @@ fun MainActivityComposable(
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .border(1.dp, composeTextColor, shape = RoundedCornerShape(4.dp))
-                                .clickable { viewModel.pickChampForTeam(i, TeamSide.THEIR) }
+                                .clickable { viewModel.pickChampForTeam(i, TeamSide.THEIR)
+                                    viewModel.updateOwnChampSearchQuery("") }
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
@@ -542,7 +572,8 @@ fun MainActivityComposable(
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .border(1.dp, composeTextColor, shape = RoundedCornerShape(4.dp))
-                                .clickable { viewModel.setBansPerTeam(i, TeamSide.OWN) }
+                                .clickable { viewModel.setBansPerTeam(i, TeamSide.OWN)
+                                    viewModel.updateOwnChampSearchQuery("") }
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
@@ -561,7 +592,8 @@ fun MainActivityComposable(
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .border(1.dp, composeTextColor, shape = RoundedCornerShape(4.dp))
-                                .clickable { viewModel.setBansPerTeam(i, TeamSide.THEIR) }
+                                .clickable { viewModel.setBansPerTeam(i, TeamSide.THEIR)
+                                    viewModel.updateOwnChampSearchQuery("") }
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {

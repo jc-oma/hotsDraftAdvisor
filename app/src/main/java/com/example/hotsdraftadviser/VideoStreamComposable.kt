@@ -35,7 +35,7 @@ fun VideoStreamComposable(viewModel: VideoStreamViewModel = viewModel()) {
     // Referenz zur PlayerView, um sie an das ViewModel zu übergeben
     var playerViewRef: PlayerView? by remember { mutableStateOf(null) }
 
-    var playerView: PlayerView? by remember { mutableStateOf(null) }
+    val recognizedTexts by viewModel.recognizedTexts.collectAsState()
 
     // Lebenszyklus-Management für den PlayerView und den ExoPlayer
     // (besonders wichtig, wenn der Player nicht im ViewModel wäre, aber gute Praxis)
@@ -156,12 +156,9 @@ fun VideoStreamComposable(viewModel: VideoStreamViewModel = viewModel()) {
         }
 
         Spacer(modifier = Modifier.height(10.dp))
-        Text("Feature Matches:")
-        featureMatchResults.forEach { (name, count) ->
-            Text("$name: $count matches")
+        recognizedTexts.forEach { text ->
+            Text(text = "Erkannt: $text")
         }
-
-
         errorMessage?.let {
             Text(
                 text = it,

@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.example.hotsdraftadviser"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.hotsdraftadviser"
         minSdk = 31
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -42,23 +42,37 @@ android {
 }
 
 dependencies {
-    // CameraX core library using the camera2 implementation
-    val camerax_version = "1.5.0-beta02"
-    // The following line is optional, as the core library is included indirectly by camera-camera2
-    implementation("androidx.camera:camera-core:${camerax_version}")
-    implementation("androidx.camera:camera-camera2:${camerax_version}")
-    // If you want to additionally use the CameraX Lifecycle library
-    implementation("androidx.camera:camera-lifecycle:${camerax_version}")
-    // If you want to additionally use the CameraX VideoCapture library
-    implementation("androidx.camera:camera-video:${camerax_version}")
-    // If you want to additionally use the CameraX View class
-    implementation("androidx.camera:camera-view:${camerax_version}")
-    // If you want to additionally add CameraX ML Kit Vision Integration
-    implementation("androidx.camera:camera-mlkit-vision:${camerax_version}")
-    // If you want to additionally use the CameraX Extensions library
-    implementation("androidx.camera:camera-extensions:${camerax_version}")
+    val room_version = "2.7.2"
 
-    implementation("com.google.mlkit:object-detection:17.0.2")
+    implementation("androidx.room:room-runtime:$room_version")
+
+    // If this project only uses Java source, use the Java annotationProcessor
+    // No additional plugins are necessary
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$room_version")
+
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    implementation("androidx.room:room-guava:$room_version")
+
+    // optional - Test helpers
+    testImplementation("androidx.room:room-testing:$room_version")
+
+    // optional - Paging 3 Integration
+    implementation("androidx.room:room-paging:$room_version")
+
+    implementation(libs.kotlinx.coroutines.play.services)
+    // CameraX core library using the camera2 implementation
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.video)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.mlkit.vision)
+    implementation(libs.androidx.camera.extensions)
+
+    implementation(libs.object1.detection)
 
     // Text features
     implementation (libs.text.recognition)
@@ -91,34 +105,32 @@ dependencies {
     implementation(libs.androidx.material3)
 
     // Android Studio Preview support
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    debugImplementation("androidx.compose.ui:ui-tooling")
+    implementation(libs.ui.tooling.preview)
+    debugImplementation(libs.ui.tooling)
 
     // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    androidTestImplementation(libs.ui.test.junit4)
+    debugImplementation(libs.ui.test.manifest)
 
     // Optional - Included automatically by material, only add when you need
     // the icons but not the material library (e.g. when using Material3 or a
     // custom design system based on Foundation)
-    implementation("androidx.compose.material:material-icons-core")
+    implementation(libs.androidx.material.icons.core)
     // Optional - Add full set of material icons
-    implementation("androidx.compose.material:material-icons-extended")
+    implementation(libs.androidx.material.icons.extended)
     // Optional - Add window size utils
-    implementation("androidx.compose.material3.adaptive:adaptive")
+    implementation(libs.androidx.adaptive)
 
     // Optional - Integration with activities
-    implementation("androidx.activity:activity-compose:1.10.1")
+    implementation(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.5")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Optional - Integration with LiveData
-    implementation("androidx.compose.runtime:runtime-livedata")
-    // Optional - Integration with RxJava
-    implementation("androidx.compose.runtime:runtime-rxjava2")
+    implementation(libs.androidx.runtime.livedata)
 
-    implementation ("com.google.android.exoplayer:exoplayer-core:2.19.1")
-    implementation ("com.google.android.exoplayer:exoplayer-rtsp:2.19.1") // Für RTP/RTSP-Quellen
-    implementation ("com.google.android.exoplayer:exoplayer-ui:2.19.1") // Für PlayerView
+    implementation (libs.exoplayer.core)
+    implementation (libs.exoplayer.rtsp) // Für RTP/RTSP-Quellen
+    implementation (libs.exoplayer.ui) // Für PlayerView
 
     implementation (libs.opencv)
 }
