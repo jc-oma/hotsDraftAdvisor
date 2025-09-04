@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
+import com.example.hotsdraftadviser.database.AppDatabase
+import com.example.hotsdraftadviser.database.StreamingSettingsRepository
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +27,42 @@ import kotlinx.serialization.json.decodeFromStream
 import java.io.IOException
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository: StreamingSettingsRepository by lazy {
+        Log.d("ViewModelInit", "Initializing repository...") // Deine Logs sind hier hilfreich!
+        try {
+            Log.d("ViewModelInit", "Getting database instance...")
+            val db = AppDatabase.getDatabase(application)
+            Log.d("ViewModelInit", "Database instance obtained: $db")
+            Log.d("ViewModelInit", "Getting DAO...")
+            val dao = db.streamingSettingDao() // <<--- MÖGLICHER ABSTURZPUNKT HIER
+            Log.d("ViewModelInit", "DAO obtained: $dao")
+            val repoInstance = StreamingSettingsRepository(dao)
+            Log.d("ViewModelInit", "Repository instance created: $repoInstance")
+            repoInstance
+        } catch (e: Exception) {
+            Log.e("ViewModelInit", "Error initializing repository", e)
+            throw e // Diese Exception wird den lazy-Block abbrechen
+        }
+    }
+
+
+    // Dein isStreamingEnabled als StateFlow, das von der Datenbank gespeist wird
+    val isStreamingEnabled: StateFlow<Boolean> = repository.isStreamingEnabled
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = false
+        )
+
+    init {
+        // Logge den initialen Wert oder wenn er sich ändert
+        viewModelScope.launch {
+            isStreamingEnabled.collect { enabled ->
+                Log.d("VideoStreamViewModel", "isStreamingEnabled from DB (Flow): $enabled")
+            }
+        }
+    }
+
     private val _isStreamingEnabled = MutableStateFlow(true)
 
     private val _allChampsData = MutableStateFlow<List<ChampData>>(emptyList())
@@ -37,7 +75,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     private val maxPicks = 5
 
-    val isStreamingEnabled = _isStreamingEnabled.asStateFlow()
     val allChampsData = _allChampsData.asStateFlow()
     val mapList: StateFlow<List<String>> = getSortedUniqueMaps()
     val filterMapsString: StateFlow<String> = _filterMapsString.asStateFlow()
@@ -406,7 +443,13 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun toggleStreaming() {
-        _isStreamingEnabled.value = !_isStreamingEnabled.value
+        val currentValue = isStreamingEnabled.value // Hole den aktuellen Wert vom StateFlow
+        val newValue = !currentValue
+        viewModelScope.launch {
+            repository.updateStreamingEnabled(newValue)
+            // Der StateFlow `isStreamingEnabled` wird automatisch durch den Flow aus dem Repo aktualisiert.
+            Log.d("VideoStreamViewModel", "Toggled isStreamingEnabled to: $newValue (saved to DB)")
+        }
     }
 }
 

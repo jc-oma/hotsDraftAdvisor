@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     kotlin("plugin.serialization")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -45,21 +46,10 @@ dependencies {
     val room_version = "2.7.2"
 
     implementation("androidx.room:room-runtime:$room_version")
-
-    // If this project only uses Java source, use the Java annotationProcessor
-    // No additional plugins are necessary
-    annotationProcessor("androidx.room:room-compiler:$room_version")
-
-    // optional - Kotlin Extensions and Coroutines support for Room
+    ksp("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
-
-    // optional - Guava support for Room, including Optional and ListenableFuture
     implementation("androidx.room:room-guava:$room_version")
-
-    // optional - Test helpers
     testImplementation("androidx.room:room-testing:$room_version")
-
-    // optional - Paging 3 Integration
     implementation("androidx.room:room-paging:$room_version")
 
     implementation(libs.kotlinx.coroutines.play.services)
