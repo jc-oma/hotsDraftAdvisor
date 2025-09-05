@@ -1,4 +1,4 @@
-package com.example.hotsdraftadviser.database
+package com.example.hotsdraftadviser.database.isStreamingEnabled
 
 import androidx.room.Dao
 import androidx.room.Insert

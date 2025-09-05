@@ -1,4 +1,4 @@
-package com.example.hotsdraftadviser.database
+package com.example.hotsdraftadviser.database.isStreamingEnabled
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

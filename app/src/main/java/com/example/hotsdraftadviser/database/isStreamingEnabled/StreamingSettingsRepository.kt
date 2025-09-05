@@ -1,4 +1,4 @@
-package com.example.hotsdraftadviser.database
+package com.example.hotsdraftadviser.database.isStreamingEnabled
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

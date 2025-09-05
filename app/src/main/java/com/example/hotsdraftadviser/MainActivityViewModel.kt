@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
 import com.example.hotsdraftadviser.database.AppDatabase
-import com.example.hotsdraftadviser.database.StreamingSettingsRepository
+import com.example.hotsdraftadviser.database.isStreamingEnabled.StreamingSettingsRepository
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow

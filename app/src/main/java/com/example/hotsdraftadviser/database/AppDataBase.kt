@@ -4,11 +4,16 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.hotsdraftadviser.database.isFirstStart.FirstStartSetting
+import com.example.hotsdraftadviser.database.isFirstStart.FirstStartSettingDao
+import com.example.hotsdraftadviser.database.isStreamingEnabled.StreamingSetting
+import com.example.hotsdraftadviser.database.isStreamingEnabled.StreamingSettingDao
 
-@Database(entities = [StreamingSetting::class], version = 1, exportSchema = false) // Setze exportSchema = true für Produktions-Apps mit Schema-Export
+@Database(entities = [StreamingSetting::class, FirstStartSetting::class], version = 2, exportSchema = false) // Setze exportSchema = true für Produktions-Apps mit Schema-Export
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun streamingSettingDao(): StreamingSettingDao
+    abstract fun firstStartSettingDao(): FirstStartSettingDao
 
     companion object {
         // Singleton verhindert, dass mehrere Instanzen der Datenbank gleichzeitig geöffnet werden.
