@@ -32,8 +32,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material3.AssistChip
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.runtime.collectAsState
@@ -44,6 +46,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
+import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
@@ -306,6 +311,7 @@ fun MainActivityComposable(
             if (chosableChampList.isEmpty()) {
                 Text("Lade Champs oder keine Champs gefunden...")
             } else {
+                //TODO change as needed
                 availableChampListComposable(
                     composeHeadlineColor,
                     viewModel,
@@ -315,11 +321,21 @@ fun MainActivityComposable(
                     composeOwnTeamColor,
                     composeTheirTeamColor
                 )
+                /*availableChampCaruselComposable(
+                    composeHeadlineColor,
+                    viewModel,
+                    sortState,
+                    composeTextColor,
+                    chosableChampList,
+                    composeOwnTeamColor,
+                    composeTheirTeamColor
+                )*/
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun availableChampCaruselComposable(
     composeHeadlineColor: Color,
@@ -330,8 +346,29 @@ private fun availableChampCaruselComposable(
     composeOwnTeamColor: Color,
     composeTheirTeamColor: Color
 ) {
-
+    HorizontalMultiBrowseCarousel (
+        state = rememberCarouselState { chosableChampList.count() },
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(top = 16.dp, bottom = 16.dp),
+        preferredItemWidth = 186.dp,
+        itemSpacing = 8.dp,
+        contentPadding = PaddingValues(horizontal = 16.dp)
+    )
+    { i ->
+        val item = chosableChampList[i]
+        Image(
+            modifier = Modifier
+                .height(205.dp)
+                .maskClip(MaterialTheme.shapes.extraLarge),
+            painter = painterResource(id = viewModel.mapChampNameToDrawable(item.ChampName)!!),
+            contentDescription = "Text",
+            contentScale = ContentScale.Crop
+        )
+    }
 }
+
 @Composable
 private fun availableChampListComposable(
     composeHeadlineColor: Color,
