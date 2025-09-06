@@ -29,8 +29,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.material3.Switch
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.filled.Block
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,8 +55,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.hotsdraftadviser.advertisement.MainWindowAdInterstitial
+import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
 import kotlinx.serialization.ExperimentalSerializationApi
+import java.util.logging.Filter
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalSerializationApi::class)
@@ -269,393 +276,467 @@ fun MainActivityComposable(
 
         if (choosenMap.isNotEmpty()) {
             if (!(theirPickedChamps.isEmpty() && ownPickedChamps.isEmpty())) {
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(composeHeadlineColor)
-                ) {
-                    Text(modifier = Modifier.weight(1f), text = "Own Team")
-                    Text(modifier = Modifier.weight(1f), text = "Their Team")
-                }
-                LazyColumn {
-                    items(ownPickedChamps.size.coerceAtLeast(theirPickedChamps.size)) { i ->
-                        Row(modifier = Modifier.fillMaxWidth()) {
-                            if (ownPickedChamps.size > i) {
-                                Box(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .padding(2.dp)
-                                        .background(
-                                            composeOwnTeamColor.copy(alpha = 0.7f),
-                                            shape = RoundedCornerShape(4.dp)
-                                        )
-                                        .border(
-                                            1.dp,
-                                            composeTextColor,
-                                            shape = RoundedCornerShape(4.dp)
-                                        )
-                                        .clickable { viewModel.removePick(i, TeamSide.OWN) }
-                                        .padding(4.dp),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Text(
-                                        modifier = Modifier,
-                                        text = ownPickedChamps.get(i).ChampName
-                                    )
-                                }
-                            } else {
-                                Text(modifier = Modifier.weight(1f), text = "")
-                            }
-                            if (theirPickedChamps.size > i) {
-                                Box(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .padding(2.dp)
-                                        .background(
-                                            composeTheirTeamColor.copy(alpha = 0.7f),
-                                            shape = RoundedCornerShape(4.dp)
-                                        )
-                                        .border(
-                                            1.dp,
-                                            composeTextColor,
-                                            shape = RoundedCornerShape(4.dp)
-                                        )
-                                        .clickable { viewModel.removePick(i, TeamSide.THEIR) }
-                                        .padding(4.dp),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Text(
-                                        modifier = Modifier,
-                                        text = theirPickedChamps.get(i).ChampName
-                                    )
-                                }
-                            } else {
-                                Text(modifier = Modifier.weight(1f), text = "")
-                            }
-                        }
-                    }
-                }
-                Row {
-                    Text(
-                        modifier = Modifier.weight(1f),
-                        text = ownPickScore.toString(),
-                        textAlign = TextAlign.Right
-                    )
-                    Text(
-                        modifier = Modifier.weight(1f),
-                        text = theirPickScore.toString(),
-                        textAlign = TextAlign.Right
-                    )
-                }
+                ListOfPickedChampsComposable(
+                    composeHeadlineColor,
+                    ownPickedChamps,
+                    theirPickedChamps,
+                    composeOwnTeamColor,
+                    composeTextColor,
+                    viewModel,
+                    composeTheirTeamColor,
+                    ownPickScore,
+                    theirPickScore
+                )
             }
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(10.dp)
             )
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                OutlinedTextField(
-                    modifier = Modifier.weight(2.5f),
-                    value = searchQueryOwnTChamps,
-                    onValueChange = { newText ->
-                        viewModel.updateOwnChampSearchQuery(newText)
-                    },
-                    label = { Text("\uD83D\uDD0D Champ") },
-                    trailingIcon = {
-                        if (searchQueryOwnTChamps.isNotEmpty()) {
-                            Icon(
-                                Icons.Filled.Clear,
-                                contentDescription = "Clear text",
-                                modifier = Modifier.clickable {
-                                    viewModel.updateOwnChampSearchQuery(
-                                        ""
-                                    )
-                                }
-                            )
-                        }
-                    }
-                )
-                val imagePadding = 4.dp
-                Image(
-                    modifier = Modifier
-                        .weight(0.5f)
-                        .aspectRatio(1f)
-                        .padding(imagePadding)
-                        .clickable {
-                            viewModel.setRoleFilter(RoleEnum.Tank)
-                        },
-                    painter = painterResource(id = R.drawable.tank),
-                    colorFilter = if (roleFilter.contains(RoleEnum.Tank)) {
-                        ColorFilter.tint(Color.Yellow)
-                    } else {
-                        ColorFilter.tint(composeTextColor)
-                    },
-                    contentDescription = "Description of your image",
-                    contentScale = ContentScale.Fit
-                )
-                Image(
-                    modifier = Modifier
-                        .weight(0.5f)
-                        .aspectRatio(1f)
-                        .padding(imagePadding)
-                        .clickable {
-                            viewModel.setRoleFilter(RoleEnum.Ranged)
-                        },
-                    painter = painterResource(id = R.drawable.ranged),
-                    colorFilter = if (roleFilter.contains(RoleEnum.Ranged)) {
-                        ColorFilter.tint(Color.Yellow)
-                    } else {
-                        ColorFilter.tint(composeTextColor)
-                    },
-                    contentDescription = "Description of your image",
-                    contentScale = ContentScale.Fit
-                )
-                Image(
-                    modifier = Modifier
-                        .weight(0.5f)
-                        .aspectRatio(1f)
-                        .padding(imagePadding)
-                        .clickable {
-                            viewModel.setRoleFilter(RoleEnum.Melee)
-                        },
-                    painter = painterResource(id = R.drawable.melee),
-                    colorFilter = if (roleFilter.contains(RoleEnum.Melee)) {
-                        ColorFilter.tint(Color.Yellow)
-                    } else {
-                        ColorFilter.tint(composeTextColor)
-                    },
-                    contentDescription = "Description of your image",
-                    contentScale = ContentScale.Fit
-                )
-                Image(
-                    modifier = Modifier
-                        .weight(0.5f)
-                        .aspectRatio(1f)
-                        .padding(imagePadding)
-                        .clickable {
-                            viewModel.setRoleFilter(RoleEnum.Heal)
-                        },
-                    painter = painterResource(id = R.drawable.heiler),
-                    colorFilter = if (roleFilter.contains(RoleEnum.Heal)) {
-                        ColorFilter.tint(Color.Yellow)
-                    } else {
-                        ColorFilter.tint(composeTextColor)
-                    },
-                    contentDescription = "Description of your image",
-                    contentScale = ContentScale.Fit
-                )
-                Image(
-                    modifier = Modifier
-                        .weight(0.5f)
-                        .aspectRatio(1f)
-                        .padding(imagePadding)
-                        .clickable {
-                            viewModel.setRoleFilter(RoleEnum.Bruiser)
-                        },
-                    painter = painterResource(id = R.drawable.bruiser),
-                    colorFilter = if (roleFilter.contains(RoleEnum.Bruiser)) {
-                        ColorFilter.tint(Color.Yellow)
-                    } else {
-                        ColorFilter.tint(composeTextColor)
-                    },
-                    contentDescription = "Description of your image",
-                    contentScale = ContentScale.Fit
-                )
-                Image(
-                    modifier = Modifier
-                        .weight(0.5f)
-                        .aspectRatio(1f)
-                        .padding(imagePadding)
-                        .clickable {
-                            viewModel.setRoleFilter(RoleEnum.Support)
-                        },
-                    painter = painterResource(id = R.drawable.support),
-                    colorFilter = if (roleFilter.contains(RoleEnum.Support)) {
-                        ColorFilter.tint(Color.Yellow)
-                    } else {
-                        ColorFilter.tint(composeTextColor)
-                    },
-                    contentDescription = "Description of your image",
-                    contentScale = ContentScale.Fit
-                )
-            }
+
+            SearchAndFilterRowForChamps(
+                searchQueryOwnTChamps,
+                viewModel,
+                roleFilter,
+                composeTextColor
+            )
 
             Box(modifier = Modifier.height(8.dp))
 
             if (chosableChampList.isEmpty()) {
                 Text("Lade Champs oder keine Champs gefunden...")
             } else {
-                Row(
+                availableChampListComposable(
+                    composeHeadlineColor,
+                    viewModel,
+                    sortState,
+                    composeTextColor,
+                    chosableChampList,
+                    composeOwnTeamColor,
+                    composeTheirTeamColor
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun availableChampCaruselComposable(
+    composeHeadlineColor: Color,
+    viewModel: MainActivityViewModel,
+    sortState: Any,
+    composeTextColor: Color,
+    chosableChampList: List<ChampData>,
+    composeOwnTeamColor: Color,
+    composeTheirTeamColor: Color
+) {
+
+}
+@Composable
+private fun availableChampListComposable(
+    composeHeadlineColor: Color,
+    viewModel: MainActivityViewModel,
+    sortState: Any,
+    composeTextColor: Color,
+    chosableChampList: List<ChampData>,
+    composeOwnTeamColor: Color,
+    composeTheirTeamColor: Color
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(composeHeadlineColor)
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            modifier = Modifier
+                .weight(1f)
+                .clickable {
+                    viewModel.setSortState(SortState.CHAMPNAME)
+                },
+            text = "Champ",
+            color = if (sortState == SortState.CHAMPNAME) {
+                Color.Yellow
+            } else {
+                composeTextColor
+            }
+        )
+        Text(
+            modifier = Modifier
+                .weight(1f)
+                .clickable {
+                    viewModel.setSortState(SortState.OWNPOINTS)
+                },
+            text = "PickScore Own Team",
+            color = if (sortState == SortState.OWNPOINTS) {
+                Color.Yellow
+            } else {
+                composeTextColor
+            }
+        )
+        Text(
+            modifier = Modifier
+                .weight(1f)
+                .clickable {
+                    viewModel.setSortState(SortState.THEIRPOINTS)
+                },
+            text = "Pickscore Their Team",
+            color = if (sortState == SortState.THEIRPOINTS) {
+                Color.Yellow
+            } else {
+                composeTextColor
+            }
+        )
+        Text(
+            modifier = Modifier.weight(0.5f),
+            text = "Own Ban"
+        )
+        Text(
+            modifier = Modifier.weight(0.5f),
+            text = "Their Ban"
+        )
+    }
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(bottom = 80.dp) // Fügt Padding am unteren Rand hinzu
+    ) {
+        items(chosableChampList.size) { i ->
+            if (chosableChampList[i].isPicked) return@items
+            Row(modifier = Modifier.height(32.dp)) {
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = chosableChampList[i].ChampName
+                )
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .background(composeHeadlineColor)
-                        .padding(vertical = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                        .weight(1f)
+                        .padding(2.dp)
+                        .background(
+                            composeOwnTeamColor.copy(alpha = 0.7f),
+                            shape = RoundedCornerShape(4.dp)
+                        )
+                        .border(
+                            1.dp,
+                            composeTextColor,
+                            shape = RoundedCornerShape(4.dp)
+                        )
+                        .clickable {
+                            viewModel.pickChampForTeam(i, TeamSide.OWN)
+                            viewModel.updateOwnChampSearchQuery("")
+                        }
+                        .padding(4.dp),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        modifier = Modifier
-                            .weight(1f)
-                            .clickable {
-                                viewModel.setSortState(SortState.CHAMPNAME)
-                            },
-                        text = "Champ",
-                        color = if (sortState == SortState.CHAMPNAME) {
-                            Color.Yellow
-                        } else {
-                            composeTextColor
+                    Text(text = chosableChampList[i].ScoreOwn.toString())
+                }
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(2.dp)
+                        .background(
+                            composeTheirTeamColor.copy(alpha = 0.7f),
+                            shape = RoundedCornerShape(4.dp)
+                        )
+                        .border(
+                            1.dp,
+                            composeTextColor,
+                            shape = RoundedCornerShape(4.dp)
+                        )
+                        .clickable {
+                            viewModel.pickChampForTeam(i, TeamSide.THEIR)
+                            viewModel.updateOwnChampSearchQuery("")
                         }
-                    )
-                    Text(
-                        modifier = Modifier
-                            .weight(1f)
-                            .clickable {
-                                viewModel.setSortState(SortState.OWNPOINTS)
-                            },
-                        text = "PickScore Own Team",
-                        color = if (sortState == SortState.OWNPOINTS) {
-                            Color.Yellow
-                        } else {
-                            composeTextColor
+                        .padding(4.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = chosableChampList[i].ScoreTheir.toString())
+                }
+                Box(
+                    modifier = Modifier
+                        .weight(0.5f)
+                        .padding(2.dp)
+                        .background(
+                            composeOwnTeamColor.copy(alpha = 0.7f),
+                            shape = RoundedCornerShape(4.dp)
+                        )
+                        .border(
+                            1.dp,
+                            composeTextColor,
+                            shape = RoundedCornerShape(4.dp)
+                        )
+                        .clickable {
+                            viewModel.setBansPerTeam(i, TeamSide.OWN)
+                            viewModel.updateOwnChampSearchQuery("")
                         }
-                    )
-                    Text(
-                        modifier = Modifier
-                            .weight(1f)
-                            .clickable {
-                                viewModel.setSortState(SortState.THEIRPOINTS)
-                            },
-                        text = "Pickscore Their Team",
-                        color = if (sortState == SortState.THEIRPOINTS) {
-                            Color.Yellow
-                        } else {
-                            composeTextColor
-                        }
-                    )
-                    Text(
-                        modifier = Modifier.weight(0.5f),
-                        text = "Own Ban"
-                    )
-                    Text(
-                        modifier = Modifier.weight(0.5f),
-                        text = "Their Ban"
+                        .padding(4.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        Icons.Default.Block,
+                        tint = Color.White,
+                        contentDescription = "Ban"
                     )
                 }
-                LazyColumn(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(bottom = 80.dp) // Fügt Padding am unteren Rand hinzu
-                ) {
-                    items(chosableChampList.size) { i ->
-                        if (chosableChampList[i].isPicked) return@items
-                        Row(modifier = Modifier.height(32.dp)) {
-                            Text(
-                                modifier = Modifier.weight(1f),
-                                text = chosableChampList[i].ChampName
-                            )
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .padding(2.dp)
-                                    .background(
-                                        composeOwnTeamColor.copy(alpha = 0.7f),
-                                        shape = RoundedCornerShape(4.dp)
-                                    )
-                                    .border(
-                                        1.dp,
-                                        composeTextColor,
-                                        shape = RoundedCornerShape(4.dp)
-                                    )
-                                    .clickable {
-                                        viewModel.pickChampForTeam(i, TeamSide.OWN)
-                                        viewModel.updateOwnChampSearchQuery("")
-                                    }
-                                    .padding(4.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(text = chosableChampList[i].ScoreOwn.toString())
-                            }
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .padding(2.dp)
-                                    .background(
-                                        composeTheirTeamColor.copy(alpha = 0.7f),
-                                        shape = RoundedCornerShape(4.dp)
-                                    )
-                                    .border(
-                                        1.dp,
-                                        composeTextColor,
-                                        shape = RoundedCornerShape(4.dp)
-                                    )
-                                    .clickable {
-                                        viewModel.pickChampForTeam(i, TeamSide.THEIR)
-                                        viewModel.updateOwnChampSearchQuery("")
-                                    }
-                                    .padding(4.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(text = chosableChampList[i].ScoreTheir.toString())
-                            }
-                            Box(
-                                modifier = Modifier
-                                    .weight(0.5f)
-                                    .padding(2.dp)
-                                    .background(
-                                        composeOwnTeamColor.copy(alpha = 0.7f),
-                                        shape = RoundedCornerShape(4.dp)
-                                    )
-                                    .border(
-                                        1.dp,
-                                        composeTextColor,
-                                        shape = RoundedCornerShape(4.dp)
-                                    )
-                                    .clickable {
-                                        viewModel.setBansPerTeam(i, TeamSide.OWN)
-                                        viewModel.updateOwnChampSearchQuery("")
-                                    }
-                                    .padding(4.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(
-                                    Icons.Default.Block,
-                                    tint = Color.White,
-                                    contentDescription = "Ban"
-                                )
-                            }
-                            Box(
-                                modifier = Modifier
-                                    .weight(0.5f)
-                                    .padding(2.dp)
-                                    .background(
-                                        composeTheirTeamColor.copy(alpha = 0.7f),
-                                        shape = RoundedCornerShape(4.dp)
-                                    )
-                                    .border(
-                                        1.dp,
-                                        composeTextColor,
-                                        shape = RoundedCornerShape(4.dp)
-                                    )
-                                    .clickable {
-                                        viewModel.setBansPerTeam(i, TeamSide.THEIR)
-                                        viewModel.updateOwnChampSearchQuery("")
-                                    }
-                                    .padding(4.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(
-                                    Icons.Default.Block,
-                                    tint = Color.White,
-                                    contentDescription = "Ban"
-                                )
-                            }
+                Box(
+                    modifier = Modifier
+                        .weight(0.5f)
+                        .padding(2.dp)
+                        .background(
+                            composeTheirTeamColor.copy(alpha = 0.7f),
+                            shape = RoundedCornerShape(4.dp)
+                        )
+                        .border(
+                            1.dp,
+                            composeTextColor,
+                            shape = RoundedCornerShape(4.dp)
+                        )
+                        .clickable {
+                            viewModel.setBansPerTeam(i, TeamSide.THEIR)
+                            viewModel.updateOwnChampSearchQuery("")
                         }
-                    }
+                        .padding(4.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        Icons.Default.Block,
+                        tint = Color.White,
+                        contentDescription = "Ban"
+                    )
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun SearchAndFilterRowForChamps(
+    searchQueryOwnTChamps: String,
+    viewModel: MainActivityViewModel,
+    roleFilter: List<RoleEnum>,
+    composeTextColor: Color
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        OutlinedTextField(
+            modifier = Modifier
+                .padding(start = 8.dp, end = 8.dp),
+            value = searchQueryOwnTChamps,
+            onValueChange = { newText ->
+                viewModel.updateOwnChampSearchQuery(newText)
+            },
+            label = { Text("\uD83D\uDD0D Champ") },
+            trailingIcon = {
+                if (searchQueryOwnTChamps.isNotEmpty()) {
+                    Icon(
+                        Icons.Filled.Clear,
+                        contentDescription = "Clear text",
+                        modifier = Modifier.clickable {
+                            viewModel.updateOwnChampSearchQuery(
+                                ""
+                            )
+                        }
+                    )
+                }
+            }
+        )
+    }
+    Column(
+        verticalArrangement = Arrangement.Top
+    ) {
+        val imagePadding = 8.dp
+        val fontSize = 16.sp
+        Row(modifier = Modifier.padding(top = imagePadding)) {
+            FilterChip(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .padding(start = imagePadding, end = imagePadding),
+                leadingIcon = {
+                    Icon(
+                        painterResource(id = R.drawable.tank),
+                        contentDescription = "Description of your image",
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                selected = roleFilter.contains(RoleEnum.Tank),
+                onClick = { viewModel.setRoleFilter(RoleEnum.Tank) },
+                label = {
+                    Text("Tank", fontSize = fontSize)
+                }
+            )
+            FilterChip(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .padding(start = imagePadding, end = imagePadding),
+                leadingIcon = {
+                    Icon(
+                        painterResource(id = R.drawable.ranged),
+                        contentDescription = "Description of your image",
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                selected = roleFilter.contains(RoleEnum.Ranged),
+                onClick = { viewModel.setRoleFilter(RoleEnum.Ranged) },
+                label = { Text("Ranged", fontSize = fontSize) }
+            )
+            FilterChip(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .padding(start = imagePadding, end = imagePadding),
+                leadingIcon = {
+                    Icon(
+                        painterResource(id = R.drawable.melee),
+                        contentDescription = "Description of your image",
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                selected = roleFilter.contains(RoleEnum.Melee),
+                onClick = { viewModel.setRoleFilter(RoleEnum.Melee) },
+                label = { Text("Melee", fontSize = fontSize) }
+            )
+        }
+        Row {
+            FilterChip(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .padding(start = imagePadding, end = imagePadding),
+                leadingIcon = {
+                    Icon(
+                        painterResource(id = R.drawable.heiler),
+                        contentDescription = "Description of your image",
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                selected = roleFilter.contains(RoleEnum.Heal),
+                onClick = { viewModel.setRoleFilter(RoleEnum.Heal) },
+                label = { Text("Heal", fontSize = fontSize) }
+            )
+            FilterChip(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .padding(start = imagePadding, end = imagePadding),
+                leadingIcon = {
+                    Icon(
+                        painterResource(id = R.drawable.bruiser),
+                        contentDescription = "Description of your image",
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                selected = roleFilter.contains(RoleEnum.Bruiser),
+                onClick = { viewModel.setRoleFilter(RoleEnum.Bruiser) },
+                label = { Text("Bruiser", fontSize = fontSize) }
+            )
+            FilterChip(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .padding(start = imagePadding, end = imagePadding),
+                leadingIcon = {
+                    Icon(
+                        painterResource(id = R.drawable.support),
+                        contentDescription = "Description of your image",
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                selected = roleFilter.contains(RoleEnum.Support),
+                onClick = { viewModel.setRoleFilter(RoleEnum.Support) },
+                label = { Text("Support", fontSize = fontSize) }
+            )
+        }
+    }
+
+}
+
+@Composable
+private fun ListOfPickedChampsComposable(
+    composeHeadlineColor: Color,
+    ownPickedChamps: List<ChampData>,
+    theirPickedChamps: List<ChampData>,
+    composeOwnTeamColor: Color,
+    composeTextColor: Color,
+    viewModel: MainActivityViewModel,
+    composeTheirTeamColor: Color,
+    ownPickScore: Int,
+    theirPickScore: Int
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(composeHeadlineColor)
+    ) {
+        Text(modifier = Modifier.weight(1f), text = "Own Team")
+        Text(modifier = Modifier.weight(1f), text = "Their Team")
+    }
+    LazyColumn {
+        items(ownPickedChamps.size.coerceAtLeast(theirPickedChamps.size)) { i ->
+            Row(modifier = Modifier.fillMaxWidth()) {
+                if (ownPickedChamps.size > i) {
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(2.dp)
+                            .background(
+                                composeOwnTeamColor.copy(alpha = 0.7f),
+                                shape = RoundedCornerShape(4.dp)
+                            )
+                            .border(
+                                1.dp,
+                                composeTextColor,
+                                shape = RoundedCornerShape(4.dp)
+                            )
+                            .clickable { viewModel.removePick(i, TeamSide.OWN) }
+                            .padding(4.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            modifier = Modifier,
+                            text = ownPickedChamps.get(i).ChampName
+                        )
+                    }
+                } else {
+                    Text(modifier = Modifier.weight(1f), text = "")
+                }
+                if (theirPickedChamps.size > i) {
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(2.dp)
+                            .background(
+                                composeTheirTeamColor.copy(alpha = 0.7f),
+                                shape = RoundedCornerShape(4.dp)
+                            )
+                            .border(
+                                1.dp,
+                                composeTextColor,
+                                shape = RoundedCornerShape(4.dp)
+                            )
+                            .clickable { viewModel.removePick(i, TeamSide.THEIR) }
+                            .padding(4.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            modifier = Modifier,
+                            text = theirPickedChamps.get(i).ChampName
+                        )
+                    }
+                } else {
+                    Text(modifier = Modifier.weight(1f), text = "")
+                }
+            }
+        }
+    }
+    Row {
+        Text(
+            modifier = Modifier.weight(1f),
+            text = ownPickScore.toString(),
+            textAlign = TextAlign.Right
+        )
+        Text(
+            modifier = Modifier.weight(1f),
+            text = theirPickScore.toString(),
+            textAlign = TextAlign.Right
+        )
     }
 }
 
