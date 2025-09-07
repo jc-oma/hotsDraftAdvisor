@@ -47,6 +47,7 @@ import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -141,24 +142,48 @@ fun MainActivityComposable(
 
         if (choosenMap.isNotEmpty()) {
             Row {
+                val shape = RoundedCornerShape(4.dp)
                 Box(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(2.dp)
+                        .padding(start = 8.dp, end = 8.dp)
                         .background(
                             composeMapTextColor.copy(alpha = 0.7f),
-                            shape = RoundedCornerShape(4.dp)
+                            shape = shape
                         )
-                        .border(1.dp, composeTextColor, shape = RoundedCornerShape(4.dp))
+                        .height(48.dp)
+                        .border(1.dp, composeTextColor, shape = shape)
                         .clickable { viewModel.clearChoosenMap() }
-                        .padding(4.dp),
+                        .clip(shape),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = choosenMap,
-                        fontSize = 20.sp,
-                        color = Color.Black
+                    Image(
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop,
+                        painter = painterResource(id = viewModel.mapMapNameToDrawable(choosenMap)!!),
+                        contentDescription = choosenMap
                     )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                Color.Black.copy(0.7f)
+                            ) // Padding für den Text
+                    ) {
+                    }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        Text(
+                            text = choosenMap,
+                            fontSize = 20.sp,
+                            color = Color.White, // Besser lesbar auf dunklem Gradienten
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(top = 12.dp)
+                        )
+                    }
                 }
             }
         }
@@ -221,6 +246,7 @@ fun MainActivityComposable(
                 } else {
                     LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 140.dp)) {
                         items(mapList.size) { i ->
+                            val mapShape = RoundedCornerShape(4.dp)
                             Box(
                                 modifier = Modifier
                                     .fillMaxSize()
@@ -228,15 +254,15 @@ fun MainActivityComposable(
                                     .padding(2.dp)
                                     .background(
                                         composeMapTextColor.copy(alpha = 0.7f),
-                                        shape = RoundedCornerShape(4.dp)
+                                        shape = mapShape
                                     )
                                     .border(
                                         1.dp,
                                         composeTextColor,
-                                        shape = RoundedCornerShape(4.dp)
+                                        shape = mapShape
                                     )
-                                    .clickable { viewModel.setChosenMapByIndex(i) }
-                                    .padding(4.dp),
+                                    .clip(mapShape)
+                                    .clickable { viewModel.setChosenMapByIndex(i) },
                                 contentAlignment = Alignment.Center
                             ) {
                                 Image(
