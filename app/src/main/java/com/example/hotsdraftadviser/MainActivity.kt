@@ -27,21 +27,17 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.material3.Switch
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.filled.Block
-import androidx.compose.material3.AssistChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
@@ -50,7 +46,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -63,7 +60,6 @@ import com.example.hotsdraftadviser.advertisement.MainWindowAdInterstitial
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
 import kotlinx.serialization.ExperimentalSerializationApi
-import java.util.logging.Filter
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalSerializationApi::class)
@@ -139,6 +135,7 @@ fun MainActivityComposable(
     ) {
         Box(modifier = Modifier.height(48.dp))
 
+        //TODO
         //--- AdBanners here ---
         //MainWindowAdBanner()
 
@@ -226,6 +223,7 @@ fun MainActivityComposable(
                         items(mapList.size) { i ->
                             Box(
                                 modifier = Modifier
+                                    .fillMaxSize()
                                     .weight(1f)
                                     .padding(2.dp)
                                     .background(
@@ -241,13 +239,44 @@ fun MainActivityComposable(
                                     .padding(4.dp),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Text(
-                                    text = mapList[i],
-                                    color = Color.Black,
-                                    fontSize = 14.sp
+                                Image(
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop,
+                                    painter = painterResource(id = viewModel.mapMapNameToDrawable(mapList[i])!!),
+                                    contentDescription = mapList[i]
                                 )
+                                Box(
+                                    contentAlignment = Alignment.BottomCenter,
+                                    modifier = Modifier
+                                        .align(Alignment.BottomCenter)
+                                        .height(84.dp)
+                                        .fillMaxWidth()
+                                        .background(
+                                            brush = Brush.verticalGradient(
+                                                colors = listOf(
+                                                    Color.Black.copy(alpha = 0.0f), // Start: Transparentes Schwarz (oder ein helleres Schwarz)
+                                                    Color.Black.copy(alpha = 0.3f), // Optional: Ein Übergangspunkt
+                                                    Color.Black.copy(alpha = 0.7f), // Optional: Ein weiterer Übergangspunkt
+                                                    Color.Black                     // Ende: Vollständig deckendes Schwarz
+                                                )
+                                            )
+                                        )
+                                ) {
+                                    Text(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        text = mapList[i],
+                                        color = Color.White,
+                                        fontSize = 14.sp,
+                                        textAlign = TextAlign.Center,
+                                    )
+                                }
                             }
                         }
+                        item { Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(48.dp)
+                            ) { } }
                     }
                 }
             }
@@ -312,16 +341,7 @@ fun MainActivityComposable(
                 Text("Lade Champs oder keine Champs gefunden...")
             } else {
                 //TODO change as needed
-                availableChampListComposable(
-                    composeHeadlineColor,
-                    viewModel,
-                    sortState,
-                    composeTextColor,
-                    chosableChampList,
-                    composeOwnTeamColor,
-                    composeTheirTeamColor
-                )
-                /*availableChampCaruselComposable(
+                /*availableChampListComposable(
                     composeHeadlineColor,
                     viewModel,
                     sortState,
@@ -330,6 +350,15 @@ fun MainActivityComposable(
                     composeOwnTeamColor,
                     composeTheirTeamColor
                 )*/
+                availableChampCaruselComposable(
+                    composeHeadlineColor,
+                    viewModel,
+                    sortState,
+                    composeTextColor,
+                    chosableChampList,
+                    composeOwnTeamColor,
+                    composeTheirTeamColor
+                )
             }
         }
     }
