@@ -367,16 +367,7 @@ fun MainActivityComposable(
                 Text("Lade Champs oder keine Champs gefunden...")
             } else {
                 //TODO change as needed
-                /*availableChampListComposable(
-                    composeHeadlineColor,
-                    viewModel,
-                    sortState,
-                    composeTextColor,
-                    chosableChampList,
-                    composeOwnTeamColor,
-                    composeTheirTeamColor
-                )*/
-                availableChampCaruselComposable(
+                availableChampListComposable(
                     composeHeadlineColor,
                     viewModel,
                     sortState,
@@ -385,6 +376,15 @@ fun MainActivityComposable(
                     composeOwnTeamColor,
                     composeTheirTeamColor
                 )
+                /*availableChampCaruselComposable(
+                    composeHeadlineColor,
+                    viewModel,
+                    sortState,
+                    composeTextColor,
+                    chosableChampList,
+                    composeOwnTeamColor,
+                    composeTheirTeamColor
+                )*/
             }
         }
     }
@@ -619,7 +619,7 @@ private fun SearchAndFilterRowForChamps(
             onValueChange = { newText ->
                 viewModel.updateOwnChampSearchQuery(newText)
             },
-            label = { Text("\uD83D\uDD0D Champ") },
+            label = { Text("\uD83D\uDD0D Champs suchen...") },
             trailingIcon = {
                 if (searchQueryOwnTChamps.isNotEmpty()) {
                     Icon(
