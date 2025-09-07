@@ -60,7 +60,7 @@ fun ChampPortraitComposable() {
                 //TODO add fav via variable
                 imageVector = if (false) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                 contentDescription = if (true) "Remove from favorites" else "Add to favorites",
-                tint = Color.White
+                tint = Color.Black
             )
         }
         Row {
