@@ -15,7 +15,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Block
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,6 +26,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.hotsdraftadviser.R
@@ -39,6 +45,24 @@ fun ChampPortraitComposable() {
             .aspectRatio(2.5f)
             .background(Color.Cyan)
     ) {
+        IconToggleButton(
+            //TODO add fav via variable
+            checked = false,
+            onCheckedChange = {
+                //TODO add fav via variable
+                //viewModel.toggleMapFavorite(choosenMap)
+            },
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(end = 6.dp)
+        ) {
+            Icon(
+                //TODO add fav via variable
+                imageVector = if (false) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                contentDescription = if (true) "Remove from favorites" else "Add to favorites",
+                tint = Color.White
+            )
+        }
         Row {
             Box(
                 modifier = Modifier
@@ -62,11 +86,15 @@ fun ChampPortraitComposable() {
                     .weight(1f)
                     .padding(start = 8.dp)
             ) {
+                Row {
                 //TODO add ChampName via variable
                 Text(
                     modifier = Modifier.padding(start = 4.dp, top = 8.dp),
-                    text = "✓ Sgt. Hammer"
+                    fontStyle = FontStyle.Italic,
+                    style = TextStyle(textDecoration = TextDecoration.Underline),
+                    text = "Sgt. Hammer"
                 )
+                    }
                 Text(
                     modifier = Modifier.padding(start = 4.dp, top = 8.dp),
                     text = "✓ Best with Abathur"
