@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
 import com.example.hotsdraftadviser.database.AppDatabase
+import com.example.hotsdraftadviser.database.favoritChamps.FavoriteChampionsRepository
 import com.example.hotsdraftadviser.database.isStreamingEnabled.StreamingSettingsRepository
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,7 +28,7 @@ import kotlinx.serialization.json.decodeFromStream
 import java.io.IOException
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: StreamingSettingsRepository by lazy {
+    private val streamingSettingsRepository: StreamingSettingsRepository by lazy {
         Log.d("ViewModelInit", "Initializing repository...")
         try {
             Log.d("ViewModelInit", "Getting database instance...")
@@ -45,9 +46,27 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
+    private val favoriteChampionsRepository: FavoriteChampionsRepository by lazy {
+        Log.d("ViewModelInit", "Initializing repository...")
+        try {
+            Log.d("ViewModelInit", "Getting database instance...")
+            val db = AppDatabase.getDatabase(application)
+            Log.d("ViewModelInit", "Database instance obtained: $db")
+            Log.d("ViewModelInit", "Getting DAO...")
+            val dao = db.favoriteChampionDao()
+            Log.d("ViewModelInit", "DAO obtained: $dao")
+            val repoInstance = FavoriteChampionsRepository(dao)
+            Log.d("ViewModelInit", "Repository instance created: $repoInstance")
+            repoInstance
+        } catch (e: Exception) {
+            Log.e("ViewModelInit", "Error initializing repository", e)
+            throw e
+        }
+    }
+
 
     // Dein isStreamingEnabled als StateFlow, das von der Datenbank gespeist wird
-    val isStreamingEnabled: StateFlow<Boolean> = repository.isStreamingEnabled
+    val isStreamingEnabled: StateFlow<Boolean> = streamingSettingsRepository.isStreamingEnabled
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
@@ -92,8 +111,11 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             initialValue = emptyList()
         )
 
-    val unfilteredChosableChampList: StateFlow<List<ChampData>> = dataFlowForChampListWithScores(false)
-    val chosableChampList: StateFlow<List<ChampData>> = dataFlowForChampListWithScores(true)
+    val unfilteredChosableChampList: StateFlow<List<ChampData>> =
+        dataFlowForChampListWithScores(false)
+
+    val _choosableChampList = dataFlowForChampListWithScores(true)
+    val chosableChampList: StateFlow<List<ChampData>> = _choosableChampList
 
     val choosenMap: StateFlow<String> = _choosenMap
 
@@ -229,7 +251,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             "Murky" -> return R.drawable.murky_card_portrait
             "Nazeebo" -> return R.drawable.nazeebo_card_portrait
             "Nova" -> return R.drawable.nova_card_portrait
-            "Orphea"  -> return R.drawable.orphea_card_portrait
+            "Orphea" -> return R.drawable.orphea_card_portrait
             "Probius" -> return R.drawable.probius_card_portrait
             "Qhira" -> return R.drawable.qhira_card_portrait
             "Ragnaros" -> return R.drawable.ragnaros_card_portrait
@@ -280,7 +302,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             "Haunted Mines" -> return R.drawable.map_haunted_mines_card
             "Infernal Shrines" -> return R.drawable.map_infernal_shrines_card
             "Lost Caverns" -> return R.drawable.map_lost_caverns_card
-            "Sky Temple" -> return  R.drawable.map_sky_temple_card
+            "Sky Temple" -> return R.drawable.map_sky_temple_card
             "Tomb of the Spider Queen" -> return R.drawable.map_tomb_of_the_spider_queen_card
             "Towers of Doom" -> return R.drawable.map_towers_of_doom_card
             "Volskaya Foundry" -> return R.drawable.map_volskaya_foundry_card
@@ -307,10 +329,15 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         var copy = calculateChampsPerPicks()
         var list = combine(
             copy,
+            favoriteChampionsRepository.getAllFavoriteChampionNamesFlow(), // Add this line
             _choosenMap,
             _sortState,
             _filterChampString
-        ) { champs, mapSearchString, doSortByOwn, filter ->
+        ) { champs, allFavChamps, mapSearchString, doSortByOwn, filter ->
+
+            val champsWithFavoriteStatus = champs.map { champ ->
+                champ.copy(isAFavoriteChamp = allFavChamps.contains(champ.ChampName))
+            }
 
 
             val filteredByNameChamps = if (filter.isBlank()) {
@@ -324,7 +351,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     champs
                 }
             }
-
 
             val lowerCaseSearchString = mapSearchString.lowercase()
 
@@ -342,13 +368,16 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 updatedChamp
             }
 
-            if (doSortByOwn == SortState.OWNPOINTS) {
+
+            val sortedChamps = if (doSortByOwn == SortState.OWNPOINTS) {
                 calculatedChamps.sortedByDescending { it.ScoreOwn } // Höchster ScoreOwn zuerst
             } else if (doSortByOwn == SortState.THEIRPOINTS) {
                 calculatedChamps.sortedByDescending { it.ScoreTheir } // Höchster ScoreTheir zuerst
             } else {
                 calculatedChamps.sortedBy { it.ChampName }
             }
+
+            sortedChamps
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
@@ -437,6 +466,13 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         loadJson()
     }
 
+    private suspend fun checkIfChampIsFavorite() {
+        _allChampsData.value = _allChampsData.value.map { champ -> champ.copy(
+            isAFavoriteChamp = favoriteChampionsRepository.isChampionFavorite(champ.ChampName)
+        )
+        }
+    }
+
     fun updateMapsSearchQuery(query: String) {
         _filterMapsString.value = query
     }
@@ -506,6 +542,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     Log.d("TAG", "ChampData erfolgreich gemappt: ${champData}")
 
                     _allChampsData.value = champData
+
+                    checkIfChampIsFavorite()
                 } catch (e: Exception) {
                     Log.e("TAG", "Fehler beim Mappen der ChampData JSON-Daten: ${e.message}")
                     e.printStackTrace()
@@ -566,9 +604,16 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         val currentValue = isStreamingEnabled.value // Hole den aktuellen Wert vom StateFlow
         val newValue = !currentValue
         viewModelScope.launch {
-            repository.updateStreamingEnabled(newValue)
+            streamingSettingsRepository.updateStreamingEnabled(newValue)
             // Der StateFlow `isStreamingEnabled` wird automatisch durch den Flow aus dem Repo aktualisiert.
             Log.d("VideoStreamViewModel", "Toggled isStreamingEnabled to: $newValue (saved to DB)")
+        }
+    }
+
+    fun toggleFavoriteStatus(championName: String) {
+        viewModelScope.launch {
+            favoriteChampionsRepository.toggleFavoriteStatus(championName)
+            checkIfChampIsFavorite()
         }
     }
 }

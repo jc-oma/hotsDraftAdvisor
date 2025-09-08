@@ -1,6 +1,5 @@
 package com.example.hotsdraftadviser.champListPortraitItem
 
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -37,9 +36,7 @@ import com.example.hotsdraftadviser.getColorByHexString
 
 @Preview
 @Composable
-fun ChampPortraitComposable(
-    //TODO delete context
-    context: Context,
+fun ChampPortraitComposableDummy(
     isFavorite: Boolean = false,
     toggleChampFavorite: () -> Unit = {},
     pickChampForOwnTeam: () -> Unit = {},
@@ -54,19 +51,22 @@ fun ChampPortraitComposable(
     recomandation3: String = "You already have 3 DPS",
     ownPickScore: Int = 46,
     theirPickScore: Int = 234,
+    index: Int
 ) {
     val textColor = "f8f8f9ff"
     val composeTextColor = getColorByHexString(textColor)
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(2.5f)
             .background(Color.Cyan)
     ) {
+
         IconToggleButton(
             checked = isFavorite,
             onCheckedChange = {
-                toggleChampFavorite()
+                true
             },
             modifier = Modifier
                 .align(Alignment.TopEnd)

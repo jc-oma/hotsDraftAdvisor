@@ -3,6 +3,7 @@ package com.example.hotsdraftadviser
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -32,9 +33,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.filled.Block
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
@@ -45,10 +49,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
@@ -56,14 +64,17 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.hotsdraftadviser.advertisement.MainWindowAdInterstitial
-import com.example.hotsdraftadviser.champListPortraitItem.ChampPortraitComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
+import com.example.hotsdraftadviser.segmentedButton.SegmentedButtonToOrderChamplist
 import com.example.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -158,7 +169,9 @@ fun MainActivityComposable(
                         )
                         .height(48.dp)
                         .border(1.dp, composeTextColor, shape = shape)
-                        .clickable { viewModel.clearChoosenMap() }
+                        .clickable { viewModel.clearChoosenMap()
+                            val a = chosableChampList.first().isAFavoriteChamp
+                        Log.i("MainActivity", "isAFavoriteChamp: $a")}
                         .clip(shape),
                     contentAlignment = Alignment.Center
                 ) {
@@ -448,26 +461,203 @@ private fun AvailableChampPortraitComposable(
     chosableChampList: List<ChampData>,
     context: Context
 ) {
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(bottom = 80.dp) // Fügt Padding am unteren Rand hinzu
-    ) {
-        items(count = chosableChampList.size) { i ->
-            if (chosableChampList[i].isPicked) return@items
-            ChampPortraitComposable(
-                context = context,
-                champName = chosableChampList[i].ChampName,
-                champDrawable = viewModel.mapChampNameToDrawable(chosableChampList[i].ChampName)!!,
-                ownPickScore = chosableChampList[i].ScoreOwn,
-                theirPickScore = chosableChampList[i].ScoreTheir,
-                pickChampForOwnTeam = { viewModel.pickChampForTeam(i, TeamSide.OWN) },
-                pickChampForTheirTeam = { viewModel.pickChampForTeam(i, TeamSide.THEIR) },
-                updateChampSearchQuery = { viewModel.updateOwnChampSearchQuery("") },
-                ownBan = { viewModel.setBansPerTeam(i, TeamSide.OWN) },
-                theirBan = { viewModel.setBansPerTeam(i, TeamSide.THEIR) },
-                toggleChampFavorite = { showToast(context) }
-            )
+    Column(modifier = Modifier.fillMaxSize()) {
+        SegmentedButtonToOrderChamplist(viewModel)
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(bottom = 80.dp) // Fügt Padding am unteren Rand hinzu
+        ) {
+            items(count = chosableChampList.size) { i ->
+                if (chosableChampList[i].isPicked) return@items
 
+                val textColor = "f8f8f9ff"
+                val composeTextColor = getColorByHexString(textColor)
+
+                var fav by remember { mutableStateOf(chosableChampList[i].isAFavoriteChamp) }
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(2.5f)
+                        .background(Color.Cyan)
+                ) {
+
+                    IconToggleButton(
+                        checked = fav,
+                        onCheckedChange = {
+                            fav = !fav
+                            viewModel.toggleFavoriteStatus(chosableChampList[i].ChampName)
+                        },
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(end = 6.dp)
+                    ) {
+                        Icon(
+                            imageVector = if (fav) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                            contentDescription = if (fav) "Remove from favorites" else "Add to favorites",
+                            tint = Color.Black
+                        )
+                    }
+                    Row {
+                        Box(
+                            modifier = Modifier
+                                .weight(0.5f)
+                                .border(
+                                    1.dp,
+                                    composeTextColor,
+                                    shape = RoundedCornerShape(4.dp)
+                                )
+                        ) {
+                            Image(
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop,
+                                painter = painterResource(id = viewModel.mapChampNameToDrawable(chosableChampList[i].ChampName)!!),
+                                contentDescription = chosableChampList[i].ChampName
+                            )
+                        }
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(start = 8.dp)
+                        ) {
+                            Row {
+                                Text(
+                                    modifier = Modifier.padding(start = 4.dp, top = 8.dp),
+                                    fontStyle = FontStyle.Italic,
+                                    style = TextStyle(textDecoration = TextDecoration.Underline),
+                                    color = Color.Black,
+                                    text = chosableChampList[i].ChampName
+                                )
+                            }
+                            Text(
+                                modifier = Modifier.padding(start = 4.dp, top = 8.dp),
+                                color = Color.Black,
+                                text = "recomandation1"
+                            )
+                            Text(
+                                modifier = Modifier.padding(start = 4.dp, top = 8.dp),
+                                color = Color.Black,
+                                text = "recomandation2"
+                            )
+                            Text(
+                                modifier = Modifier.padding(start = 4.dp, top = 8.dp),
+                                color = Color.Black,
+                                text = "recomandation3"
+                            )
+                            Box(
+                                modifier = Modifier
+                                    .padding(end = 8.dp, bottom = 8.dp)
+                                    .fillMaxSize(),
+                                contentAlignment = Alignment.BottomStart
+                            ) {
+                                Row(modifier = Modifier.height(32.dp)) {
+                                    Box(
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .padding(2.dp)
+                                            .fillMaxSize()
+                                            .background(
+                                                Color.Blue.copy(alpha = 0.7f),
+                                                shape = RoundedCornerShape(4.dp)
+                                            )
+                                            .border(
+                                                1.dp,
+                                                composeTextColor,
+                                                shape = RoundedCornerShape(4.dp)
+                                            )
+                                            .clickable {
+                                                viewModel.pickChampForTeam(i, TeamSide.OWN)
+                                                viewModel.updateOwnChampSearchQuery("")
+                                            }
+                                            .padding(4.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(chosableChampList[i].ScoreOwn.toString())
+                                    }
+                                    Box(
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .padding(2.dp)
+                                            .fillMaxSize()
+                                            .background(
+                                                Color.Red.copy(alpha = 0.7f),
+                                                shape = RoundedCornerShape(4.dp)
+                                            )
+                                            .border(
+                                                1.dp,
+                                                composeTextColor,
+                                                shape = RoundedCornerShape(4.dp)
+                                            )
+                                            .clickable {
+                                                viewModel.pickChampForTeam(i, TeamSide.THEIR)
+                                                viewModel.updateOwnChampSearchQuery("")
+                                            }
+                                            .padding(4.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(chosableChampList[i].ScoreTheir.toString())
+                                    }
+                                    Box(
+                                        modifier = Modifier
+                                            .weight(0.5f)
+                                            .padding(2.dp)
+                                            .fillMaxSize()
+                                            .background(
+                                                Color.Blue.copy(alpha = 0.7f),
+                                                shape = RoundedCornerShape(4.dp)
+                                            )
+                                            .border(
+                                                1.dp,
+                                                composeTextColor,
+                                                shape = RoundedCornerShape(4.dp)
+                                            )
+                                            .clickable {
+                                                viewModel.setBansPerTeam(i, TeamSide.OWN)
+                                                viewModel.updateOwnChampSearchQuery("")
+                                            }
+                                            .padding(4.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Icon(
+                                            Icons.Default.Block,
+                                            tint = Color.White,
+                                            contentDescription = "Ban"
+                                        )
+                                    }
+                                    Box(
+                                        modifier = Modifier
+                                            .weight(0.5f)
+                                            .padding(2.dp)
+                                            .fillMaxSize()
+                                            .background(
+                                                Color.Red.copy(alpha = 0.7f),
+                                                shape = RoundedCornerShape(4.dp)
+                                            )
+                                            .border(
+                                                1.dp,
+                                                composeTextColor,
+                                                shape = RoundedCornerShape(4.dp)
+                                            )
+                                            .clickable {
+                                                viewModel.setBansPerTeam(i, TeamSide.THEIR)
+                                                viewModel.updateOwnChampSearchQuery("")
+                                            }
+                                            .padding(4.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Icon(
+                                            Icons.Default.Block,
+                                            tint = Color.White,
+                                            contentDescription = "Ban"
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
         }
     }
 }
@@ -809,8 +999,12 @@ private fun ListOfPickedChampsComposable(
             .fillMaxWidth()
             .background(composeHeadlineColor)
     ) {
-        Text(modifier = Modifier.weight(1f).padding(start = 12.dp, end = 8.dp), text = "Own Team")
-        Text(modifier = Modifier.weight(1f).padding(start = 12.dp, end = 8.dp), text = "Their Team")
+        Text(modifier = Modifier
+            .weight(1f)
+            .padding(start = 12.dp, end = 8.dp), text = "Own Team")
+        Text(modifier = Modifier
+            .weight(1f)
+            .padding(start = 12.dp, end = 8.dp), text = "Their Team")
     }
     LazyColumn {
         items(ownPickedChamps.size.coerceAtLeast(theirPickedChamps.size)) { i ->

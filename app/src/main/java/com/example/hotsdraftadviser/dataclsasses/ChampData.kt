@@ -16,5 +16,6 @@ data class ChampData(
     var ScoreOwn: Int = 0,
     var ScoreTheir: Int = 0,
     var isPicked: Boolean = false,
-    var pickedBy: TeamSide = TeamSide.NONE
+    var pickedBy: TeamSide = TeamSide.NONE,
+    var isAFavoriteChamp: Boolean = false
 )
