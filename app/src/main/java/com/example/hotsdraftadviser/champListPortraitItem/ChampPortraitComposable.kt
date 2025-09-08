@@ -1,7 +1,6 @@
-package com.example.hotsdraftadviser.champitem
+package com.example.hotsdraftadviser.champListPortraitItem
 
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
