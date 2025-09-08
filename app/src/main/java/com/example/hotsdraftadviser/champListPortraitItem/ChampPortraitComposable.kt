@@ -21,6 +21,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,15 +32,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.hotsdraftadviser.R
 import com.example.hotsdraftadviser.getColorByHexString
 
 @Preview
 @Composable
-fun ChampPortraitComposableDummy(
+fun ChampPortraitComposable(
     isFavorite: Boolean = false,
     toggleChampFavorite: () -> Unit = {},
     pickChampForOwnTeam: () -> Unit = {},
@@ -46,15 +52,16 @@ fun ChampPortraitComposableDummy(
     theirBan: () -> Unit = {},
     champName: String = "Sgt. Hammer",
     champDrawable: Int = R.drawable.sgthammer_card_portrait,
-    recomandation1: String = "Best with Aba",
-    recomandation2: String = "Not recommended with Cho",
-    recomandation3: String = "You already have 3 DPS",
+    mapRecommandation: String = "Ok on Hanamura",
+    ownChampRecommandation: String = "Super with Ana",
+    theirChampRecommandation: String = "Good against Cho",
+    compositionRecommandation: String = "You already have 3 DPS",
     ownPickScore: Int = 46,
-    theirPickScore: Int = 234,
-    index: Int
+    theirPickScore: Int = 234
 ) {
     val textColor = "f8f8f9ff"
     val composeTextColor = getColorByHexString(textColor)
+    var fav by remember { mutableStateOf(isFavorite) }
 
     Box(
         modifier = Modifier
@@ -64,17 +71,18 @@ fun ChampPortraitComposableDummy(
     ) {
 
         IconToggleButton(
-            checked = isFavorite,
+            checked = fav,
             onCheckedChange = {
-                true
+                toggleChampFavorite()
+                fav = !fav
             },
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(end = 6.dp)
         ) {
             Icon(
-                imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                contentDescription = if (isFavorite) "Remove from favorites" else "Add to favorites",
+                imageVector = if (fav) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                contentDescription = if (fav) "Remove from favorites" else "Add to favorites",
                 tint = Color.Black
             )
         }
@@ -101,28 +109,37 @@ fun ChampPortraitComposableDummy(
                     .padding(start = 8.dp)
             ) {
                 Row {
+                    Text(
+                        modifier = Modifier.padding(start = 4.dp, top = 8.dp),
+                        fontStyle = FontStyle.Italic,
+                        style = TextStyle(
+                            textDecoration = TextDecoration.Underline,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        ),
+                        color = Color.Black,
+                        text = champName
+                    )
+                }
                 Text(
                     modifier = Modifier.padding(start = 4.dp, top = 8.dp),
-                    fontStyle = FontStyle.Italic,
-                    style = TextStyle(textDecoration = TextDecoration.Underline),
                     color = Color.Black,
-                    text = champName
+                    text = mapRecommandation
                 )
-                    }
                 Text(
-                    modifier = Modifier.padding(start = 4.dp, top = 8.dp),
+                    modifier = Modifier.padding(start = 4.dp, top = 4.dp),
                     color = Color.Black,
-                    text = recomandation1
+                    text = ownChampRecommandation
                 )
                 Text(
-                    modifier = Modifier.padding(start = 4.dp, top = 8.dp),
+                    modifier = Modifier.padding(start = 4.dp, top = 4.dp),
                     color = Color.Black,
-                    text = recomandation2
+                    text = theirChampRecommandation
                 )
                 Text(
-                    modifier = Modifier.padding(start = 4.dp, top = 8.dp),
+                    modifier = Modifier.padding(start = 4.dp, top = 4.dp),
                     color = Color.Black,
-                    text = recomandation3
+                    text = compositionRecommandation
                 )
                 Box(
                     modifier = Modifier

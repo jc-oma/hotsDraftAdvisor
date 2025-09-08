@@ -66,6 +66,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -73,6 +74,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.hotsdraftadviser.advertisement.MainWindowAdInterstitial
+import com.example.hotsdraftadviser.champListPortraitItem.ChampPortraitComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.segmentedButton.SegmentedButtonToOrderChamplist
 import com.example.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
@@ -169,9 +171,11 @@ fun MainActivityComposable(
                         )
                         .height(48.dp)
                         .border(1.dp, composeTextColor, shape = shape)
-                        .clickable { viewModel.clearChoosenMap()
+                        .clickable {
+                            viewModel.clearChoosenMap()
                             val a = chosableChampList.first().isAFavoriteChamp
-                        Log.i("MainActivity", "isAFavoriteChamp: $a")}
+                            Log.i("MainActivity", "isAFavoriteChamp: $a")
+                        }
                         .clip(shape),
                     contentAlignment = Alignment.Center
                 ) {
@@ -411,9 +415,7 @@ fun MainActivityComposable(
                     composeTheirTeamColor
                 )*/
                 AvailableChampPortraitComposable(
-                    viewModel,
-                    chosableChampList,
-                    LocalContext.current
+                    viewModel
                 )
             }
         }
@@ -457,10 +459,12 @@ private fun availableChampCaruselComposable(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AvailableChampPortraitComposable(
-    viewModel: MainActivityViewModel,
-    chosableChampList: List<ChampData>,
-    context: Context
+    viewModel: MainActivityViewModel = viewModel(
+        factory = MainActivityViewModelFactory(LocalContext.current.applicationContext as Application)
+    )
 ) {
+    val chosableChampList by viewModel.chosableChampList.collectAsState(emptyList())
+
     Column(modifier = Modifier.fillMaxSize()) {
         SegmentedButtonToOrderChamplist(viewModel)
         LazyColumn(
@@ -470,10 +474,27 @@ private fun AvailableChampPortraitComposable(
             items(count = chosableChampList.size) { i ->
                 if (chosableChampList[i].isPicked) return@items
 
+                /*ChampPortraitComposable(
+                    isFavorite = chosableChampList[i].isAFavoriteChamp,
+                    toggleChampFavorite = { viewModel.toggleFavoriteStatus(chosableChampList[i].ChampName) },
+                    pickChampForOwnTeam = { viewModel.pickChampForTeam(i, TeamSide.OWN) },
+                    pickChampForTheirTeam = { viewModel.pickChampForTeam(i, TeamSide.THEIR) },
+                    updateChampSearchQuery = { viewModel.updateOwnChampSearchQuery("") },
+                    ownBan = { viewModel.setBansPerTeam(i, TeamSide.OWN) },
+                    theirBan = { viewModel.setBansPerTeam(i, TeamSide.THEIR) },
+                    champName = chosableChampList[i].ChampName,
+                    champDrawable = viewModel.mapChampNameToDrawable(chosableChampList[i].ChampName)!!,
+                    recomandation1 = "Sprich",
+                    recomandation2 = "deutsch",
+                    recomandation3 = "Huren",
+                    ownPickScore = chosableChampList[i].ScoreOwn,
+                    theirPickScore = chosableChampList[i].ScoreTheir
+                )*/
+
+                //------ChampPortraitComposable------
+
                 val textColor = "f8f8f9ff"
                 val composeTextColor = getColorByHexString(textColor)
-
-                var fav by remember { mutableStateOf(chosableChampList[i].isAFavoriteChamp) }
 
                 Box(
                     modifier = Modifier
@@ -483,9 +504,10 @@ private fun AvailableChampPortraitComposable(
                 ) {
 
                     IconToggleButton(
-                        checked = fav,
+                        checked = chosableChampList[i].isAFavoriteChamp,
                         onCheckedChange = {
-                            fav = !fav
+                            chosableChampList[i].isAFavoriteChamp =
+                                !chosableChampList[i].isAFavoriteChamp
                             viewModel.toggleFavoriteStatus(chosableChampList[i].ChampName)
                         },
                         modifier = Modifier
@@ -493,8 +515,8 @@ private fun AvailableChampPortraitComposable(
                             .padding(end = 6.dp)
                     ) {
                         Icon(
-                            imageVector = if (fav) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                            contentDescription = if (fav) "Remove from favorites" else "Add to favorites",
+                            imageVector = if (chosableChampList[i].isAFavoriteChamp) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                            contentDescription = if (chosableChampList[i].isAFavoriteChamp) "Remove from favorites" else "Add to favorites",
                             tint = Color.Black
                         )
                     }
@@ -511,7 +533,11 @@ private fun AvailableChampPortraitComposable(
                             Image(
                                 modifier = Modifier.fillMaxSize(),
                                 contentScale = ContentScale.Crop,
-                                painter = painterResource(id = viewModel.mapChampNameToDrawable(chosableChampList[i].ChampName)!!),
+                                painter = painterResource(
+                                    id = viewModel.mapChampNameToDrawable(
+                                        chosableChampList[i].ChampName
+                                    )!!
+                                ),
                                 contentDescription = chosableChampList[i].ChampName
                             )
                         }
@@ -524,25 +550,29 @@ private fun AvailableChampPortraitComposable(
                                 Text(
                                     modifier = Modifier.padding(start = 4.dp, top = 8.dp),
                                     fontStyle = FontStyle.Italic,
-                                    style = TextStyle(textDecoration = TextDecoration.Underline),
+                                    style = TextStyle(
+                                        textDecoration = TextDecoration.Underline,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 18.sp
+                                    ),
                                     color = Color.Black,
                                     text = chosableChampList[i].ChampName
                                 )
                             }
                             Text(
-                                modifier = Modifier.padding(start = 4.dp, top = 8.dp),
+                                modifier = Modifier.padding(start = 4.dp, top = 4.dp),
                                 color = Color.Black,
-                                text = "recomandation1"
+                                text = "Ok on Hanamura"
                             )
                             Text(
-                                modifier = Modifier.padding(start = 4.dp, top = 8.dp),
+                                modifier = Modifier.padding(start = 4.dp, top = 4.dp),
                                 color = Color.Black,
-                                text = "recomandation2"
+                                text = "Super with Ana"
                             )
                             Text(
-                                modifier = Modifier.padding(start = 4.dp, top = 8.dp),
+                                modifier = Modifier.padding(start = 4.dp, top = 4.dp),
                                 color = Color.Black,
-                                text = "recomandation3"
+                                text = "Good against Cho"
                             )
                             Box(
                                 modifier = Modifier
@@ -656,7 +686,7 @@ private fun AvailableChampPortraitComposable(
                         }
                     }
                 }
-
+                //------ChampPortraitComposable------ Ende
             }
         }
     }
@@ -999,12 +1029,16 @@ private fun ListOfPickedChampsComposable(
             .fillMaxWidth()
             .background(composeHeadlineColor)
     ) {
-        Text(modifier = Modifier
-            .weight(1f)
-            .padding(start = 12.dp, end = 8.dp), text = "Own Team")
-        Text(modifier = Modifier
-            .weight(1f)
-            .padding(start = 12.dp, end = 8.dp), text = "Their Team")
+        Text(
+            modifier = Modifier
+                .weight(1f)
+                .padding(start = 12.dp, end = 8.dp), text = "Own Team"
+        )
+        Text(
+            modifier = Modifier
+                .weight(1f)
+                .padding(start = 12.dp, end = 8.dp), text = "Their Team"
+        )
     }
     LazyColumn {
         items(ownPickedChamps.size.coerceAtLeast(theirPickedChamps.size)) { i ->
