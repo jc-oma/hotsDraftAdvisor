@@ -1,7 +1,9 @@
 package com.example.hotsdraftadviser
 
 import android.app.Application
+import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -58,6 +60,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.hotsdraftadviser.advertisement.MainWindowAdInterstitial
+import com.example.hotsdraftadviser.champitem.ChampPortraitComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -367,7 +370,7 @@ fun MainActivityComposable(
                 Text("Lade Champs oder keine Champs gefunden...")
             } else {
                 //TODO change as needed
-                availableChampListComposable(
+                /*availableChampListComposable(
                     composeHeadlineColor,
                     viewModel,
                     sortState,
@@ -375,7 +378,7 @@ fun MainActivityComposable(
                     chosableChampList,
                     composeOwnTeamColor,
                     composeTheirTeamColor
-                )
+                )*/
                 /*availableChampCaruselComposable(
                     composeHeadlineColor,
                     viewModel,
@@ -385,6 +388,16 @@ fun MainActivityComposable(
                     composeOwnTeamColor,
                     composeTheirTeamColor
                 )*/
+                availableChampPortraitComposable(
+                    composeHeadlineColor,
+                    viewModel,
+                    sortState,
+                    composeTextColor,
+                    chosableChampList,
+                    composeOwnTeamColor,
+                    composeTheirTeamColor,
+                    LocalContext.current
+                )
             }
         }
     }
@@ -421,6 +434,42 @@ private fun availableChampCaruselComposable(
             contentDescription = "Text",
             contentScale = ContentScale.Crop
         )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun availableChampPortraitComposable(
+    composeHeadlineColor: Color,
+    viewModel: MainActivityViewModel,
+    sortState: Any,
+    composeTextColor: Color,
+    chosableChampList: List<ChampData>,
+    composeOwnTeamColor: Color,
+    composeTheirTeamColor: Color,
+    context: Context
+) {
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(bottom = 80.dp) // Fügt Padding am unteren Rand hinzu
+    ) {
+        items(count= chosableChampList.size) { i ->
+
+                ChampPortraitComposable(
+                    context = context,
+                    champName = chosableChampList[i].ChampName,
+                    champDrawable = viewModel.mapChampNameToDrawable(chosableChampList[i].ChampName)!!,
+                    ownPickScore = chosableChampList[i].ScoreOwn,
+                    theirPickScore = chosableChampList[i].ScoreTheir,
+                    pickChampForOwnTeam = { viewModel.pickChampForTeam(i, TeamSide.OWN) },
+                    pickChampForTheirTeam = { viewModel.pickChampForTeam(i, TeamSide.THEIR) },
+                    updateChampSearchQuery = { viewModel.updateOwnChampSearchQuery("") },
+                    ownBan = { viewModel.setBansPerTeam(i, TeamSide.OWN) },
+                    theirBan = { viewModel.setBansPerTeam(i, TeamSide.THEIR) },
+                    toggleChampFavorite = { Toast.makeText(context, "Not implemented yet", Toast.LENGTH_SHORT).show() }
+                )
+
+        }
     }
 }
 

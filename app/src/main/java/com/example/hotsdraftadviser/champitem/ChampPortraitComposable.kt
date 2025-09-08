@@ -1,5 +1,7 @@
 package com.example.hotsdraftadviser.champitem
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,7 +38,24 @@ import com.example.hotsdraftadviser.getColorByHexString
 
 @Preview
 @Composable
-fun ChampPortraitComposable() {
+fun ChampPortraitComposable(
+    //TODO delete context
+    context: Context,
+    isFavorite: Boolean = false,
+    toggleChampFavorite: () -> Unit = {},
+    pickChampForOwnTeam: () -> Unit = {},
+    pickChampForTheirTeam: () -> Unit = {},
+    updateChampSearchQuery: () -> Unit = {},
+    ownBan: () -> Unit = {},
+    theirBan: () -> Unit = {},
+    champName: String = "Sgt. Hammer",
+    champDrawable: Int = R.drawable.sgthammer_card_portrait,
+    recomandation1: String = "Best with Aba",
+    recomandation2: String = "Not recommended with Cho",
+    recomandation3: String = "You already have 3 DPS",
+    ownPickScore: Int = 46,
+    theirPickScore: Int = 234,
+) {
     val textColor = "f8f8f9ff"
     val composeTextColor = getColorByHexString(textColor)
     Box(
@@ -46,20 +65,18 @@ fun ChampPortraitComposable() {
             .background(Color.Cyan)
     ) {
         IconToggleButton(
-            //TODO add fav via variable
-            checked = false,
+            checked = isFavorite,
             onCheckedChange = {
-                //TODO add fav via variable
-                //viewModel.toggleMapFavorite(choosenMap)
+                toggleChampFavorite
+                Toast.makeText(context, "Not implemented yet", Toast.LENGTH_SHORT).show()
             },
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(end = 6.dp)
         ) {
             Icon(
-                //TODO add fav via variable
-                imageVector = if (false) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                contentDescription = if (true) "Remove from favorites" else "Add to favorites",
+                imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                contentDescription = if (isFavorite) "Remove from favorites" else "Add to favorites",
                 tint = Color.Black
             )
         }
@@ -76,9 +93,8 @@ fun ChampPortraitComposable() {
                 Image(
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
-                    //TODO add id via variable
-                    painter = painterResource(id = R.drawable.sgthammer_card_portrait),
-                    contentDescription = "Hero"
+                    painter = painterResource(id = champDrawable),
+                    contentDescription = champName
                 )
             }
             Column(
@@ -87,25 +103,28 @@ fun ChampPortraitComposable() {
                     .padding(start = 8.dp)
             ) {
                 Row {
-                //TODO add ChampName via variable
                 Text(
                     modifier = Modifier.padding(start = 4.dp, top = 8.dp),
                     fontStyle = FontStyle.Italic,
                     style = TextStyle(textDecoration = TextDecoration.Underline),
-                    text = "Sgt. Hammer"
+                    color = Color.Black,
+                    text = champName
                 )
                     }
                 Text(
                     modifier = Modifier.padding(start = 4.dp, top = 8.dp),
-                    text = "✓ Best with Abathur"
+                    color = Color.Black,
+                    text = recomandation1
                 )
                 Text(
                     modifier = Modifier.padding(start = 4.dp, top = 8.dp),
-                    text = "× Not Recommanded against Stitches"
+                    color = Color.Black,
+                    text = recomandation2
                 )
                 Text(
                     modifier = Modifier.padding(start = 4.dp, top = 8.dp),
-                    text = "⚠ You already have 3 DPS!"
+                    color = Color.Black,
+                    text = recomandation3
                 )
                 Box(
                     modifier = Modifier
@@ -129,15 +148,13 @@ fun ChampPortraitComposable() {
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .clickable {
-                                    //TODO add viewmodel via variable
-                                    /*viewModel.pickChampForTeam(i, TeamSide.OWN)
-                                    viewModel.updateOwnChampSearchQuery("")*/
+                                    pickChampForOwnTeam
+                                    updateChampSearchQuery
                                 }
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            //TODO add points via variable
-                            Text("645")
+                            Text(ownPickScore.toString())
                         }
                         Box(
                             modifier = Modifier
@@ -154,15 +171,13 @@ fun ChampPortraitComposable() {
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .clickable {
-                                    //TODO add viewmodel via variable
-                                    /*viewModel.pickChampForTeam(i, TeamSide.THEIR)
-                                    viewModel.updateOwnChampSearchQuery("")*/
+                                    pickChampForTheirTeam
+                                    updateChampSearchQuery
                                 }
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            //TODO add points via variable
-                            Text("645")
+                            Text(theirPickScore.toString())
                         }
                         Box(
                             modifier = Modifier
@@ -179,9 +194,8 @@ fun ChampPortraitComposable() {
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .clickable {
-                                    //TODO add viewmodel via variable
-                                    /*viewModel.setBansPerTeam(i, TeamSide.OWN)
-                                    viewModel.updateOwnChampSearchQuery("")*/
+                                    ownBan
+                                    updateChampSearchQuery
                                 }
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
@@ -207,9 +221,8 @@ fun ChampPortraitComposable() {
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .clickable {
-                                    //TODO add id viewmodel variable
-                                    /*viewModel.setBansPerTeam(i, TeamSide.THEIR)
-                                    viewModel.updateOwnChampSearchQuery("")*/
+                                    theirBan
+                                    updateChampSearchQuery
                                 }
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
