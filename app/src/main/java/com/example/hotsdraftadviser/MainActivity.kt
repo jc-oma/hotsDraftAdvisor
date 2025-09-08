@@ -388,15 +388,11 @@ fun MainActivityComposable(
                     composeOwnTeamColor,
                     composeTheirTeamColor
                 )*/
-                availableChampPortraitComposable(
-                    composeHeadlineColor,
+                AvailableChampPortraitComposable(
                     viewModel,
-                    sortState,
-                    composeTextColor,
                     chosableChampList,
-                    composeOwnTeamColor,
-                    composeTheirTeamColor,
-                    LocalContext.current
+                    LocalContext.current,
+                    sortState
                 )
             }
         }
@@ -439,22 +435,18 @@ private fun availableChampCaruselComposable(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun availableChampPortraitComposable(
-    composeHeadlineColor: Color,
+private fun AvailableChampPortraitComposable(
     viewModel: MainActivityViewModel,
-    sortState: Any,
-    composeTextColor: Color,
     chosableChampList: List<ChampData>,
-    composeOwnTeamColor: Color,
-    composeTheirTeamColor: Color,
-    context: Context
+    context: Context,
+    sortState: SortState
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
         contentPadding = PaddingValues(bottom = 80.dp) // Fügt Padding am unteren Rand hinzu
     ) {
         items(count= chosableChampList.size) { i ->
-
+            if (chosableChampList[i].isPicked) return@items
                 ChampPortraitComposable(
                     context = context,
                     champName = chosableChampList[i].ChampName,
@@ -466,11 +458,15 @@ private fun availableChampPortraitComposable(
                     updateChampSearchQuery = { viewModel.updateOwnChampSearchQuery("") },
                     ownBan = { viewModel.setBansPerTeam(i, TeamSide.OWN) },
                     theirBan = { viewModel.setBansPerTeam(i, TeamSide.THEIR) },
-                    toggleChampFavorite = { Toast.makeText(context, "Not implemented yet", Toast.LENGTH_SHORT).show() }
+                    toggleChampFavorite = { showToast(context) }
                 )
 
         }
     }
+}
+
+private fun showToast(context: Context) {
+    Toast.makeText(context, "Not implemented yet", Toast.LENGTH_SHORT).show()
 }
 
 @Composable

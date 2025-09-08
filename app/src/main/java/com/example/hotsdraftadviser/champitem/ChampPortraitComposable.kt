@@ -67,8 +67,7 @@ fun ChampPortraitComposable(
         IconToggleButton(
             checked = isFavorite,
             onCheckedChange = {
-                toggleChampFavorite
-                Toast.makeText(context, "Not implemented yet", Toast.LENGTH_SHORT).show()
+                toggleChampFavorite()
             },
             modifier = Modifier
                 .align(Alignment.TopEnd)
@@ -148,8 +147,8 @@ fun ChampPortraitComposable(
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .clickable {
-                                    pickChampForOwnTeam
-                                    updateChampSearchQuery
+                                    pickChampForOwnTeam()
+                                    updateChampSearchQuery()
                                 }
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
@@ -171,8 +170,8 @@ fun ChampPortraitComposable(
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .clickable {
-                                    pickChampForTheirTeam
-                                    updateChampSearchQuery
+                                    pickChampForTheirTeam()
+                                    updateChampSearchQuery()
                                 }
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
@@ -194,8 +193,8 @@ fun ChampPortraitComposable(
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .clickable {
-                                    ownBan
-                                    updateChampSearchQuery
+                                    ownBan()
+                                    updateChampSearchQuery()
                                 }
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
@@ -221,8 +220,8 @@ fun ChampPortraitComposable(
                                     shape = RoundedCornerShape(4.dp)
                                 )
                                 .clickable {
-                                    theirBan
-                                    updateChampSearchQuery
+                                    theirBan()
+                                    updateChampSearchQuery()
                                 }
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
