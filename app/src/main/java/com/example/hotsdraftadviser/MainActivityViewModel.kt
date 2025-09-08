@@ -90,8 +90,11 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private val _choosenMap = MutableStateFlow<String>("")
     private val _sortState = MutableStateFlow<SortState>(SortState.OWNPOINTS)
     private val _roleFilter = MutableStateFlow<List<RoleEnum>>(emptyList())
+    private val _favFilter = MutableStateFlow<Boolean>(false)
 
     private val maxPicks = 5
+
+    val favFilter: StateFlow<Boolean> = _favFilter.asStateFlow()
 
     val allChampsData = _allChampsData.asStateFlow()
     val mapList: StateFlow<List<String>> = getSortedUniqueMaps()
@@ -390,7 +393,24 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         } else {
             list
         }
+
+        list = filterChampsByFav(list)
+
         return list
+    }
+
+    private fun filterChampsByFav(list: StateFlow<List<ChampData>>): StateFlow<List<ChampData>> {
+        return combine(list, _favFilter) { champs, favFilter ->
+            if (favFilter) {
+                champs.filter { it.isAFavoriteChamp }
+            } else {
+                champs
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = emptyList()
+        )
     }
 
     private fun filterChampsByRole(flow: StateFlow<List<ChampData>>): StateFlow<List<ChampData>> {
@@ -467,9 +487,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private suspend fun checkIfChampIsFavorite() {
-        _allChampsData.value = _allChampsData.value.map { champ -> champ.copy(
-            isAFavoriteChamp = favoriteChampionsRepository.isChampionFavorite(champ.ChampName)
-        )
+        _allChampsData.value = _allChampsData.value.map { champ ->
+            champ.copy(
+                isAFavoriteChamp = favoriteChampionsRepository.isChampionFavorite(champ.ChampName)
+            )
         }
     }
 
@@ -564,6 +585,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         } else {
             _roleFilter.value = _roleFilter.value + role
         }
+    }
+
+    fun toggleFavFilter() {
+        _favFilter.value = !_favFilter.value
     }
 
     fun resetAll() {

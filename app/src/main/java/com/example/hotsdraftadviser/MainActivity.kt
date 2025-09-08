@@ -53,10 +53,7 @@ import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
@@ -74,7 +71,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.hotsdraftadviser.advertisement.MainWindowAdInterstitial
-import com.example.hotsdraftadviser.champListPortraitItem.ChampPortraitComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.segmentedButton.SegmentedButtonToOrderChamplist
 import com.example.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
@@ -469,6 +465,7 @@ private fun AvailableChampPortraitComposable(
         SegmentedButtonToOrderChamplist(viewModel)
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
             contentPadding = PaddingValues(bottom = 80.dp) // Fügt Padding am unteren Rand hinzu
         ) {
             items(count = chosableChampList.size) { i ->
@@ -880,13 +877,15 @@ private fun SearchAndFilterRowForChamps(
     roleFilter: List<RoleEnum>,
     composeTextColor: Color
 ) {
+    val favFilter by viewModel.favFilter.collectAsState(false)
     Row(
         modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.Bottom
     ) {
         OutlinedTextField(
             modifier = Modifier
-                .padding(start = 8.dp, end = 8.dp),
+                .padding(start = 8.dp, end = 8.dp)
+                .weight(2f),
             value = searchQueryOwnTChamps,
             onValueChange = { newText ->
                 viewModel.updateOwnChampSearchQuery(newText)
@@ -906,6 +905,27 @@ private fun SearchAndFilterRowForChamps(
                 }
             }
         )
+        Box ( modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.BottomStart) {
+            FilterChip(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 8.dp, end = 8.dp),
+                leadingIcon = {
+                    Icon(
+                        imageVector = (Icons.Filled.Favorite),
+                        contentDescription = "Heart",
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                //TODO
+                selected = favFilter,
+                onClick = { viewModel.toggleFavFilter() },
+                label = {
+                    Text("Favorite", fontSize = 16.sp)
+                }
+            )
+        }
     }
     Column(
         verticalArrangement = Arrangement.Top
