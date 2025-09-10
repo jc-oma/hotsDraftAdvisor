@@ -474,17 +474,14 @@ private fun AvailableChampPortraitComposable(
                 if (chosableChampList[i].isPicked) return@items
 
                 ChampPortraitComposable(
-                    isFavorite = chosableChampList[i].isAFavoriteChamp,
+                    champ = chosableChampList[i],
                     toggleChampFavorite = { viewModel.toggleFavoriteStatus(chosableChampList[i].ChampName) },
                     pickChampForOwnTeam = { viewModel.pickChampForTeam(i, TeamSide.OWN) },
                     pickChampForTheirTeam = { viewModel.pickChampForTeam(i, TeamSide.THEIR) },
                     updateChampSearchQuery = { viewModel.updateOwnChampSearchQuery("") },
                     ownBan = { viewModel.setBansPerTeam(i, TeamSide.OWN) },
                     theirBan = { viewModel.setBansPerTeam(i, TeamSide.THEIR) },
-                    champName = chosableChampList[i].ChampName,
                     champDrawable = viewModel.mapChampNameToDrawable(chosableChampList[i].ChampName)!!,
-                    ownPickScore = chosableChampList[i].ScoreOwn,
-                    theirPickScore = chosableChampList[i].ScoreTheir,
                     index = i,
                 )
             }

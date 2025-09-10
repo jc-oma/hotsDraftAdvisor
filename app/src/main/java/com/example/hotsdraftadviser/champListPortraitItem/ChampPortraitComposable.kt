@@ -1,6 +1,5 @@
 package com.example.hotsdraftadviser.champListPortraitItem
 
-import android.app.Application
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,18 +12,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,7 +29,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -42,31 +37,27 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.hotsdraftadviser.MainActivityViewModel
-import com.example.hotsdraftadviser.MainActivityViewModelFactory
 import com.example.hotsdraftadviser.R
+import com.example.hotsdraftadviser.dataclsasses.ChampData
+import com.example.hotsdraftadviser.dataclsasses.exampleChampData
 import com.example.hotsdraftadviser.getColorByHexString
 
 @Preview
 @Composable
 fun ChampPortraitComposable(
-    isFavorite: Boolean = false,
+    champ:  ChampData = exampleChampData,
     toggleChampFavorite: () -> Unit = {},
     pickChampForOwnTeam: () -> Unit = {},
     pickChampForTheirTeam: () -> Unit = {},
     updateChampSearchQuery: () -> Unit = {},
     ownBan: () -> Unit = {},
     theirBan: () -> Unit = {},
-    champName: String = "Sgt. Hammer",
     champDrawable: Int = R.drawable.sgthammer_card_portrait,
-    ownPickScore: Int = 46,
-    theirPickScore: Int = 234,
     index: Int = 0
 ) {
     val textColor = "f8f8f9ff"
     val composeTextColor = getColorByHexString(textColor)
-    var fav by remember { mutableStateOf(isFavorite) }
+    var fav by remember { mutableStateOf(champ.isAFavoriteChamp) }
 
     Box(
         modifier = Modifier
@@ -105,7 +96,7 @@ fun ChampPortraitComposable(
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
                     painter = painterResource(id = champDrawable),
-                    contentDescription = champName
+                    contentDescription = champ.ChampName
                 )
             }
             Column(
@@ -123,7 +114,7 @@ fun ChampPortraitComposable(
                             fontSize = 18.sp
                         ),
                         color = Color.Black,
-                        text = champName
+                        text = champ.ChampName
                     )
                 }
                 Box(
@@ -154,7 +145,7 @@ fun ChampPortraitComposable(
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(ownPickScore.toString())
+                            Text(champ.ScoreOwn.toString())
                         }
                         Box(
                             modifier = Modifier
@@ -177,7 +168,7 @@ fun ChampPortraitComposable(
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(theirPickScore.toString())
+                            Text(champ.ScoreTheir.toString())
                         }
                         Box(
                             modifier = Modifier
