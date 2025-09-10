@@ -1,6 +1,6 @@
 package com.example.hotsdraftadviser.dataclsasses
 
-import com.example.hotsdraftadviser.GoodTeamWith
+import com.example.hotsdraftadviser.dataclsasses.GoodTeamWith
 import com.example.hotsdraftadviser.TeamSide
 import kotlinx.serialization.Serializable
 

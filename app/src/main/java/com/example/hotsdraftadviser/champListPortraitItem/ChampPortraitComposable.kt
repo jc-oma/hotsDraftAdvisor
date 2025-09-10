@@ -1,5 +1,6 @@
 package com.example.hotsdraftadviser.champListPortraitItem
 
+import android.app.Application
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -12,15 +13,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -37,6 +42,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.hotsdraftadviser.MainActivityViewModel
+import com.example.hotsdraftadviser.MainActivityViewModelFactory
 import com.example.hotsdraftadviser.R
 import com.example.hotsdraftadviser.getColorByHexString
 
@@ -52,12 +60,9 @@ fun ChampPortraitComposable(
     theirBan: () -> Unit = {},
     champName: String = "Sgt. Hammer",
     champDrawable: Int = R.drawable.sgthammer_card_portrait,
-    mapRecommandation: String = "Ok on Hanamura",
-    ownChampRecommandation: String = "Super with Ana",
-    theirChampRecommandation: String = "Good against Cho",
-    compositionRecommandation: String = "You already have 3 DPS",
     ownPickScore: Int = 46,
-    theirPickScore: Int = 234
+    theirPickScore: Int = 234,
+    index: Int = 0
 ) {
     val textColor = "f8f8f9ff"
     val composeTextColor = getColorByHexString(textColor)
@@ -73,8 +78,8 @@ fun ChampPortraitComposable(
         IconToggleButton(
             checked = fav,
             onCheckedChange = {
-                toggleChampFavorite()
                 fav = !fav
+                toggleChampFavorite()
             },
             modifier = Modifier
                 .align(Alignment.TopEnd)
@@ -121,26 +126,6 @@ fun ChampPortraitComposable(
                         text = champName
                     )
                 }
-                Text(
-                    modifier = Modifier.padding(start = 4.dp, top = 8.dp),
-                    color = Color.Black,
-                    text = mapRecommandation
-                )
-                Text(
-                    modifier = Modifier.padding(start = 4.dp, top = 4.dp),
-                    color = Color.Black,
-                    text = ownChampRecommandation
-                )
-                Text(
-                    modifier = Modifier.padding(start = 4.dp, top = 4.dp),
-                    color = Color.Black,
-                    text = theirChampRecommandation
-                )
-                Text(
-                    modifier = Modifier.padding(start = 4.dp, top = 4.dp),
-                    color = Color.Black,
-                    text = compositionRecommandation
-                )
                 Box(
                     modifier = Modifier
                         .padding(end = 8.dp, bottom = 8.dp)

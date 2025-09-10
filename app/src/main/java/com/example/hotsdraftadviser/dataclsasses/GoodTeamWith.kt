@@ -1,4 +1,4 @@
-package com.example.hotsdraftadviser
+package com.example.hotsdraftadviser.dataclsasses
 
 import kotlinx.serialization.Serializable
 
