@@ -63,12 +63,12 @@ fun ChampEvaluationComposable(
     weightOwn = pOwn / fullLength
     weightTheir = pTheir / fullLength
 
-    Column(modifier = Modifier.padding(vertical = 8.dp)) {
+    Column(modifier = Modifier.padding(vertical = 0.dp)) {
         if (label.isNotBlank()) {
             Text(
                 text = label,
                 style = MaterialTheme.typography.labelSmall,
-                modifier = Modifier.padding(bottom = 6.dp)
+                modifier = Modifier.padding(bottom = 0.dp)
             )
         }
 
