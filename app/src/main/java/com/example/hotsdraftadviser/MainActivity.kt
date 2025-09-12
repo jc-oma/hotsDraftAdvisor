@@ -454,6 +454,7 @@ private fun AvailableChampPortraitComposable(
     )
 ) {
     val chosableChampList by viewModel.chosableChampList.collectAsState(emptyList())
+    val distinctChosableChampList by viewModel.distinctChosableChampList.collectAsState(emptyList())
 
     Column(modifier = Modifier.fillMaxSize()) {
         SegmentedButtonToOrderChamplist(viewModel)
@@ -462,19 +463,19 @@ private fun AvailableChampPortraitComposable(
             verticalArrangement = Arrangement.spacedBy(6.dp),
             contentPadding = PaddingValues(bottom = 80.dp) // Fügt Padding am unteren Rand hinzu
         ) {
-            items(count = chosableChampList.size,
-                key = { it -> chosableChampList[it].key }) { i ->
-                if (chosableChampList[i].isPicked) return@items
+            items(count = distinctChosableChampList.size,
+                key = { it -> distinctChosableChampList[it].key }) { i ->
+                if (distinctChosableChampList[i].isPicked) return@items
 
                 ChampPortraitComposable(
-                    champ = chosableChampList[i],
-                    toggleChampFavorite = { viewModel.toggleFavoriteStatus(chosableChampList[i].ChampName) },
+                    champ = distinctChosableChampList[i],
+                    toggleChampFavorite = { viewModel.toggleFavoriteStatus(distinctChosableChampList[i].ChampName) },
                     pickChampForOwnTeam = { viewModel.pickChampForTeam(i, TeamSide.OWN) },
                     pickChampForTheirTeam = { viewModel.pickChampForTeam(i, TeamSide.THEIR) },
                     updateChampSearchQuery = { viewModel.updateOwnChampSearchQuery("") },
                     ownBan = { viewModel.setBansPerTeam(i, TeamSide.OWN) },
                     theirBan = { viewModel.setBansPerTeam(i, TeamSide.THEIR) },
-                    champDrawable = viewModel.mapChampNameToDrawable(chosableChampList[i].ChampName)!!,
+                    champDrawable = viewModel.mapChampNameToDrawable(distinctChosableChampList[i].ChampName)!!,
                     index = i,
                 )
             }

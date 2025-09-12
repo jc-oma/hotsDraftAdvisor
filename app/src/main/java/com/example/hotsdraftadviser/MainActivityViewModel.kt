@@ -115,10 +115,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         )
 
     val unfilteredChosableChampList: StateFlow<List<ChampData>> =
-        dataFlowForChampListWithScores(false)
+        dataFlowForChampListWithScores(false, false)
 
-    val _choosableChampList = dataFlowForChampListWithScores(true)
+    val _choosableChampList = dataFlowForChampListWithScores(true, false)
+    val _distinctchoosableChampList = dataFlowForChampListWithScores(true, true)
     val chosableChampList: StateFlow<List<ChampData>> = _choosableChampList
+    val distinctChosableChampList: StateFlow<List<ChampData>> = _distinctchoosableChampList
 
     val choosenMap: StateFlow<String> = _choosenMap
 
@@ -328,7 +330,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    private fun dataFlowForChampListWithScores(isFiltered: Boolean): StateFlow<List<ChampData>> {
+    private fun dataFlowForChampListWithScores(isFiltered: Boolean, isDistincted: Boolean): StateFlow<List<ChampData>> {
         var copy = calculateChampsPerPicks()
         var list = combine(
             copy,
@@ -390,6 +392,14 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         // Filter 2x
         list = if (isFiltered) {
             filterChampsByRole(list)
+        } else {
+            list
+        }
+
+        list = if (isDistincted) {
+            list.map { champs ->
+                champs.distinctBy { it.ChampName }
+            }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
         } else {
             list
         }
