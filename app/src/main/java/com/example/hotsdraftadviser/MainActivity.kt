@@ -453,7 +453,6 @@ private fun AvailableChampPortraitComposable(
         factory = MainActivityViewModelFactory(LocalContext.current.applicationContext as Application)
     )
 ) {
-    val chosableChampList by viewModel.chosableChampList.collectAsState(emptyList())
     val distinctChosableChampList by viewModel.distinctChosableChampList.collectAsState(emptyList())
 
     Column(modifier = Modifier.fillMaxSize()) {
