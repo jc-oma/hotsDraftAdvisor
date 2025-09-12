@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hotsdraftadviser.R
+import com.example.hotsdraftadviser.composables.ChampEvaluationComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampData
 import com.example.hotsdraftadviser.getColorByHexString
@@ -45,7 +46,7 @@ import com.example.hotsdraftadviser.getColorByHexString
 @Preview
 @Composable
 fun ChampPortraitComposable(
-    champ:  ChampData = exampleChampData,
+    champ: ChampData = exampleChampData,
     toggleChampFavorite: () -> Unit = {},
     pickChampForOwnTeam: () -> Unit = {},
     pickChampForTheirTeam: () -> Unit = {},
@@ -53,7 +54,10 @@ fun ChampPortraitComposable(
     ownBan: () -> Unit = {},
     theirBan: () -> Unit = {},
     champDrawable: Int = R.drawable.sgthammer_card_portrait,
-    index: Int = 0
+    index: Int = 0,
+    mapFloat: Float = 0.7f,
+    ownTeamFloat: Float = 0.4f,
+    theirTeamFloat: Float = 0.2f
 ) {
     val textColor = "f8f8f9ff"
     val composeTextColor = getColorByHexString(textColor)
@@ -123,106 +127,133 @@ fun ChampPortraitComposable(
                         .fillMaxSize(),
                     contentAlignment = Alignment.BottomStart
                 ) {
-                    Row(modifier = Modifier.height(32.dp)) {
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(2.dp)
-                                .fillMaxSize()
-                                .background(
-                                    Color.Blue.copy(alpha = 0.7f),
-                                    shape = RoundedCornerShape(4.dp)
+                    Column() {
+                        val barHeight = 8.dp
+                        ChampEvaluationComposable(
+                            label = "Map Wertung",
+                            progressFloat = mapFloat,
+                            colorOwn = Color.Blue,
+                            colorTheir = Color.Red,
+                            barHeight = barHeight
+                        )
+                        Box(modifier = Modifier.height(2.dp))
+                        ChampEvaluationComposable(
+                            label = "Fit in Team",
+                            progressFloat = ownTeamFloat,
+                            colorOwn = Color.Blue,
+                            colorTheir = Color.Red,
+                            barHeight = barHeight
+                        )
+                        Box(modifier = Modifier.height(2.dp))
+                        ChampEvaluationComposable(
+                            label = "Good against enemy Team",
+                            progressFloat = theirTeamFloat,
+                            colorOwn = Color.Blue,
+                            colorTheir = Color.Red,
+                            barHeight = barHeight
+                        )
+                        Box(modifier = Modifier.height(8.dp))
+                        Row(modifier = Modifier.height(32.dp)) {
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(2.dp)
+                                    .fillMaxSize()
+                                    .background(
+                                        Color.Blue.copy(alpha = 0.7f),
+                                        shape = RoundedCornerShape(4.dp)
+                                    )
+                                    .border(
+                                        1.dp,
+                                        composeTextColor,
+                                        shape = RoundedCornerShape(4.dp)
+                                    )
+                                    .clickable {
+                                        pickChampForOwnTeam()
+                                        updateChampSearchQuery()
+                                    }
+                                    .padding(4.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(champ.ScoreOwn.toString())
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(2.dp)
+                                    .fillMaxSize()
+                                    .background(
+                                        Color.Red.copy(alpha = 0.7f),
+                                        shape = RoundedCornerShape(4.dp)
+                                    )
+                                    .border(
+                                        1.dp,
+                                        composeTextColor,
+                                        shape = RoundedCornerShape(4.dp)
+                                    )
+                                    .clickable {
+                                        pickChampForTheirTeam()
+                                        updateChampSearchQuery()
+                                    }
+                                    .padding(4.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(champ.ScoreTheir.toString())
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .weight(0.5f)
+                                    .padding(2.dp)
+                                    .fillMaxSize()
+                                    .background(
+                                        Color.Blue.copy(alpha = 0.7f),
+                                        shape = RoundedCornerShape(4.dp)
+                                    )
+                                    .border(
+                                        1.dp,
+                                        composeTextColor,
+                                        shape = RoundedCornerShape(4.dp)
+                                    )
+                                    .clickable {
+                                        ownBan()
+                                        updateChampSearchQuery()
+                                    }
+                                    .padding(4.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    Icons.Default.Block,
+                                    tint = Color.White,
+                                    contentDescription = "Ban"
                                 )
-                                .border(
-                                    1.dp,
-                                    composeTextColor,
-                                    shape = RoundedCornerShape(4.dp)
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .weight(0.5f)
+                                    .padding(2.dp)
+                                    .fillMaxSize()
+                                    .background(
+                                        Color.Red.copy(alpha = 0.7f),
+                                        shape = RoundedCornerShape(4.dp)
+                                    )
+                                    .border(
+                                        1.dp,
+                                        composeTextColor,
+                                        shape = RoundedCornerShape(4.dp)
+                                    )
+                                    .clickable {
+                                        theirBan()
+                                        updateChampSearchQuery()
+                                    }
+                                    .padding(4.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    Icons.Default.Block,
+                                    tint = Color.White,
+                                    contentDescription = "Ban"
                                 )
-                                .clickable {
-                                    pickChampForOwnTeam()
-                                    updateChampSearchQuery()
-                                }
-                                .padding(4.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(champ.ScoreOwn.toString())
-                        }
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(2.dp)
-                                .fillMaxSize()
-                                .background(
-                                    Color.Red.copy(alpha = 0.7f),
-                                    shape = RoundedCornerShape(4.dp)
-                                )
-                                .border(
-                                    1.dp,
-                                    composeTextColor,
-                                    shape = RoundedCornerShape(4.dp)
-                                )
-                                .clickable {
-                                    pickChampForTheirTeam()
-                                    updateChampSearchQuery()
-                                }
-                                .padding(4.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(champ.ScoreTheir.toString())
-                        }
-                        Box(
-                            modifier = Modifier
-                                .weight(0.5f)
-                                .padding(2.dp)
-                                .fillMaxSize()
-                                .background(
-                                    Color.Blue.copy(alpha = 0.7f),
-                                    shape = RoundedCornerShape(4.dp)
-                                )
-                                .border(
-                                    1.dp,
-                                    composeTextColor,
-                                    shape = RoundedCornerShape(4.dp)
-                                )
-                                .clickable {
-                                    ownBan()
-                                    updateChampSearchQuery()
-                                }
-                                .padding(4.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                Icons.Default.Block,
-                                tint = Color.White,
-                                contentDescription = "Ban"
-                            )
-                        }
-                        Box(
-                            modifier = Modifier
-                                .weight(0.5f)
-                                .padding(2.dp)
-                                .fillMaxSize()
-                                .background(
-                                    Color.Red.copy(alpha = 0.7f),
-                                    shape = RoundedCornerShape(4.dp)
-                                )
-                                .border(
-                                    1.dp,
-                                    composeTextColor,
-                                    shape = RoundedCornerShape(4.dp)
-                                )
-                                .clickable {
-                                    theirBan()
-                                    updateChampSearchQuery()
-                                }
-                                .padding(4.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                Icons.Default.Block,
-                                tint = Color.White,
-                                contentDescription = "Ban"
-                            )
+                            }
                         }
                     }
                 }
