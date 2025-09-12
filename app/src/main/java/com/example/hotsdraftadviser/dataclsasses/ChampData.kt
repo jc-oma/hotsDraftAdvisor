@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ChampData(
+    val key: Int = 0,
     val ChampName: String,
     val ChampRole: String,
     val ChampRoleAlt: String,

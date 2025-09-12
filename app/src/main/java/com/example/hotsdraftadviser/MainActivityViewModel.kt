@@ -494,6 +494,15 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
+    private suspend fun setIDsForChampData() {
+        var id = 0
+        _allChampsData.value = _allChampsData.value.map { champ ->
+            champ.copy(
+                key = id++
+            )
+        }
+    }
+
     fun updateMapsSearchQuery(query: String) {
         _filterMapsString.value = query
     }
@@ -565,6 +574,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     _allChampsData.value = champData
 
                     checkIfChampIsFavorite()
+                    setIDsForChampData()
+
                 } catch (e: Exception) {
                     Log.e("TAG", "Fehler beim Mappen der ChampData JSON-Daten: ${e.message}")
                     e.printStackTrace()
