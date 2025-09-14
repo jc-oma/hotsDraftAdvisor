@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -68,6 +69,7 @@ fun ChampEvaluationComposable(
             Text(
                 text = label,
                 style = MaterialTheme.typography.labelSmall,
+                color = Color.Black,
                 modifier = Modifier.padding(bottom = 0.dp)
             )
         }
@@ -82,7 +84,9 @@ fun ChampEvaluationComposable(
             contentAlignment = Alignment.CenterStart // Für den Text, falls nur ein Segment
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (weightOwn > 0f) {
@@ -102,6 +106,34 @@ fun ChampEvaluationComposable(
                     )
                 }
             }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(0.33f))
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(2.dp)
+                        .background(Color.White)
+                )
+                Box(modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(0.33f))
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(2.dp)
+                        .background(Color.White)
+                )
+                Box(modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(0.33f))
+            }
         }
     }
 }
@@ -114,7 +146,7 @@ fun SingleTwoToneRatingBarPreview_SingleExample() { // Umbenannt für Klarheit
     Column(modifier = Modifier.padding(16.dp)) {
         ChampEvaluationComposable(
             label = "Map Wertung",
-            progressFloat = 0.2f,
+            progressFloat = 0.5f,
             barHeight = 8.dp
         )
     }

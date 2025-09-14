@@ -334,16 +334,11 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         var copy = calculateChampsPerPicks()
         var list = combine(
             copy,
-            favoriteChampionsRepository.getAllFavoriteChampionNamesFlow(), // Add this line
+            favoriteChampionsRepository.getAllFavoriteChampionNamesFlow(),
             _choosenMap,
             _sortState,
             _filterChampString
         ) { champs, allFavChamps, mapSearchString, doSortByOwn, filter ->
-
-            val champsWithFavoriteStatus = champs.map { champ ->
-                champ.copy(isAFavoriteChamp = allFavChamps.contains(champ.ChampName))
-            }
-
 
             val filteredByNameChamps = if (filter.isBlank()) {
                 champs
@@ -404,7 +399,27 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             list
         }
 
+        // Normalize scores based on the maximum mapScore in the list
+        list = list.map { champs ->
+
+            val maxMapScoreOverall = champs.maxOfOrNull { champ ->
+                val scoreOfCurrentMap = champ.MapScore.find { it.MapName == _choosenMap.value }
+                scoreOfCurrentMap?.ScoreValue ?: 0
+            } ?: 1
+
+            val champsWithMapFloat = champs.map { champ ->
+                val mapScoreForChosenMap = champ.MapScore.find { it.MapName == _choosenMap.value }?.ScoreValue ?: 0
+                val mapFloatValue = if (maxMapScoreOverall != 0) (mapScoreForChosenMap.toFloat() / maxMapScoreOverall.toFloat()) else 0f
+                champ.copy(
+                    mapFloat = mapFloatValue
+                )
+            }
+            champsWithMapFloat
+        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
         list = filterChampsByFav(list)
+
+        list = addMapScoreToDistinctMaps(list)
 
         return list
     }
@@ -415,6 +430,23 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 champs.filter { it.isAFavoriteChamp }
             } else {
                 champs
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = emptyList()
+        )
+    }
+
+    private fun addMapScoreToDistinctMaps(list: StateFlow<List<ChampData>>): StateFlow<List<ChampData>> {
+        return list.map { champs ->
+            champs.map { champ ->
+                val distinctMapScores = champ.MapScore
+                    .groupBy { it.MapName }
+                    .map { (mapName, scores) ->
+                        scores.first().copy(ScoreValue = scores.sumOf { it.ScoreValue })
+                    }
+                champ.copy(MapScore = distinctMapScores)
             }
         }.stateIn(
             scope = viewModelScope,
@@ -504,12 +536,52 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    private suspend fun setIDsForChampData() {
+    private fun setIDsForChampData() {
         var id = 0
         _allChampsData.value = _allChampsData.value.map { champ ->
             champ.copy(
                 key = id++
             )
+        }
+    }
+
+    private fun setUniqueMapsInMapScore() {
+        _allChampsData.value = _allChampsData.value.map { champ ->
+            val uniqueMapScores = champ.MapScore
+                .groupBy { it.MapName }
+                .map { (mapName, scores) ->
+                    scores.first().copy(ScoreValue = scores.sumOf { it.ScoreValue })
+                }
+            champ.copy(MapScore = uniqueMapScores)
+        }
+    }
+
+    private fun setUniqueCahmpsInChampScores() {
+        _allChampsData.value = _allChampsData.value.map { champ ->
+            val uniqueChampScore = champ.StrongAgainst
+                .groupBy { it.ChampName }
+                .map { (mapName, scores) ->
+                    scores.first().copy(ScoreValue = scores.sumOf { it.ScoreValue })
+                }
+            champ.copy(StrongAgainst = uniqueChampScore)
+        }
+
+        _allChampsData.value = _allChampsData.value.map { champ ->
+            val uniqueChampScore = champ.WeakAgainst
+                .groupBy { it.ChampName }
+                .map { (mapName, scores) ->
+                    scores.first().copy(ScoreValue = scores.sumOf { it.ScoreValue })
+                }
+            champ.copy(WeakAgainst = uniqueChampScore)
+        }
+
+        _allChampsData.value = _allChampsData.value.map { champ ->
+            val uniqueChampScore = champ.GoodTeamWith
+                .groupBy { it.ChampName }
+                .map { (mapName, scores) ->
+                    scores.first().copy(ScoreValue = scores.sumOf { it.ScoreValue })
+                }
+            champ.copy(GoodTeamWith = uniqueChampScore)
         }
     }
 
@@ -585,6 +657,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
                     checkIfChampIsFavorite()
                     setIDsForChampData()
+                    setUniqueMapsInMapScore()
+                    setUniqueCahmpsInChampScores()
 
                 } catch (e: Exception) {
                     Log.e("TAG", "Fehler beim Mappen der ChampData JSON-Daten: ${e.message}")

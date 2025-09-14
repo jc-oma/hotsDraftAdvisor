@@ -118,7 +118,7 @@ fun ChampPortraitComposable(
                             fontSize = 18.sp
                         ),
                         color = Color.Black,
-                        text = champ.ChampName
+                        text = (index + 1).toString() + ". "+ champ.ChampName
                     )
                 }
                 Box(

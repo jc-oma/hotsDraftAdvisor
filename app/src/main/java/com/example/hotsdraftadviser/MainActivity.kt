@@ -476,6 +476,9 @@ private fun AvailableChampPortraitComposable(
                     theirBan = { viewModel.setBansPerTeam(i, TeamSide.THEIR) },
                     champDrawable = viewModel.mapChampNameToDrawable(distinctChosableChampList[i].ChampName)!!,
                     index = i,
+                    mapFloat = distinctChosableChampList[i].mapFloat,
+                    ownTeamFloat = distinctChosableChampList[i].fitTeamFloat,
+                    theirTeamFloat = distinctChosableChampList[i].goodAgainstTeamFloat
                 )
             }
         }

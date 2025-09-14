@@ -13,6 +13,9 @@ data class ChampData(
     val WeakAgainst: List<WeakAgainstData>,
     val GoodTeamWith: List<GoodTeamWith>,
     val MapScore: List<MapScoreData>,
+    val mapFloat: Float = 0f,
+    val fitTeamFloat: Float = 0f,
+    val goodAgainstTeamFloat: Float = 0f,
     var ScoreOwn: Int = 0,
     var ScoreTheir: Int = 0,
     var isPicked: Boolean = false,
@@ -22,7 +25,7 @@ data class ChampData(
 
 // Beispielhafte Instanz Ihrer ChampData-Klasse
 val exampleChampData = ChampData(
-    ChampName = "Raynor",
+    ChampName = "Sgt. Hammer",
     ChampRole = "Fernkampf-Assassine",
     ChampRoleAlt = "Anfängerfreundlich",
     StrongAgainst = listOf(
