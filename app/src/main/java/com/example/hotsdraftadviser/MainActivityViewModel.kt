@@ -91,7 +91,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private val _sortState = MutableStateFlow<SortState>(SortState.OWNPOINTS)
     private val _roleFilter = MutableStateFlow<List<RoleEnum>>(emptyList())
     private val _favFilter = MutableStateFlow<Boolean>(false)
-
     private val maxPicks = 5
 
     val favFilter: StateFlow<Boolean> = _favFilter.asStateFlow()
@@ -121,6 +120,31 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val _distinctchoosableChampList = dataFlowForChampListWithScores(true, true)
     val chosableChampList: StateFlow<List<ChampData>> = _choosableChampList
     val distinctChosableChampList: StateFlow<List<ChampData>> = _distinctchoosableChampList
+
+    val fitTeamMax: StateFlow<Int> = _choosableChampList.map { list ->
+        list.maxOfOrNull { it.fitTeam } ?: 1
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Lazily,
+        initialValue = 1
+    )
+
+    val goodAgainstTeamMax: StateFlow<Int> = combine(
+        _choosableChampList, // Assuming this contains champs with their StrongAgainst properties
+        pickedTheirTeamChamps
+    ) { champs, pickedTheirChamps ->
+        champs.maxOfOrNull { champ ->
+            champ.StrongAgainst.sumOf { strongAgainstEntry ->
+                if (pickedTheirChamps.any { pickedChamp -> pickedChamp.ChampName == strongAgainstEntry.ChampName }) {
+                    strongAgainstEntry.ScoreValue
+                } else 0
+            }
+        } ?: 1
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Lazily,
+        initialValue = 1
+    )
 
     val choosenMap: StateFlow<String> = _choosenMap
 
@@ -330,7 +354,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    private fun dataFlowForChampListWithScores(isFiltered: Boolean, isDistincted: Boolean): StateFlow<List<ChampData>> {
+    private fun dataFlowForChampListWithScores(
+        isFiltered: Boolean,
+        isDistincted: Boolean
+    ): StateFlow<List<ChampData>> {
         var copy = calculateChampsPerPicks()
         var list = combine(
             copy,
@@ -360,7 +387,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 if (!mapSearchString.isEmpty()) {
                     champ.MapScore.forEach { mapScore ->
                         if (mapScore.MapName.lowercase().contains(lowerCaseSearchString)) {
-                            updatedChamp.ScoreOwn += mapScore.ScoreValue
+                            updatedChamp.scoreOwn += mapScore.ScoreValue
                             updatedChamp.ScoreTheir += mapScore.ScoreValue
                         }
                     }
@@ -370,7 +397,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
 
             val sortedChamps = if (doSortByOwn == SortState.OWNPOINTS) {
-                calculatedChamps.sortedByDescending { it.ScoreOwn } // Höchster ScoreOwn zuerst
+                calculatedChamps.sortedByDescending { it.scoreOwn } // Höchster ScoreOwn zuerst
             } else if (doSortByOwn == SortState.THEIRPOINTS) {
                 calculatedChamps.sortedByDescending { it.ScoreTheir } // Höchster ScoreTheir zuerst
             } else {
@@ -408,12 +435,15 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             } ?: 1
 
             val champsWithMapFloat = champs.map { champ ->
-                val mapScoreForChosenMap = champ.MapScore.find { it.MapName == _choosenMap.value }?.ScoreValue ?: 0
-                val mapFloatValue = if (maxMapScoreOverall != 0) (mapScoreForChosenMap.toFloat() / maxMapScoreOverall.toFloat()) else 0f
+                val mapScoreForChosenMap =
+                    champ.MapScore.find { it.MapName == _choosenMap.value }?.ScoreValue ?: 0
+                val mapFloatValue =
+                    if (maxMapScoreOverall != 0) (mapScoreForChosenMap.toFloat() / maxMapScoreOverall.toFloat()) else 0f
                 champ.copy(
                     mapFloat = mapFloatValue
                 )
             }
+
             champsWithMapFloat
         }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
@@ -484,14 +514,25 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
                 var currentScoreOwn = 0
                 var currentScoreTheir = 0
+                //--------------------------//
+                var strongAgainstScoreOwn = 0
+                var strongAgainstScoreTheir = 0
+
+                var weakAgainstScoreOwn = 0
+                var weakAgainstScoreTheir = 0
+
+                var goodTeamWithScoreOwn = 0
+                var goodTeamWithScoreTheir = 0
 
                 champ.StrongAgainst.forEach { strongAgainstEntry ->
                     if (theirPickNames.contains(strongAgainstEntry.ChampName)) {
                         currentScoreOwn += strongAgainstEntry.ScoreValue
+                        strongAgainstScoreOwn += strongAgainstEntry.ScoreValue
                     }
 
                     if (ownPickNames.contains(strongAgainstEntry.ChampName)) {
                         currentScoreTheir += strongAgainstEntry.ScoreValue
+                        strongAgainstScoreTheir += strongAgainstEntry.ScoreValue
                     }
                 }
 
@@ -499,22 +540,31 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 champ.WeakAgainst.forEach { weakAgainstEntry ->
                     if (theirPickNames.contains(weakAgainstEntry.ChampName)) {
                         currentScoreOwn -= weakAgainstEntry.ScoreValue
+                        weakAgainstScoreOwn += weakAgainstEntry.ScoreValue
                     }
                     if (ownPickNames.contains(weakAgainstEntry.ChampName)) {
                         currentScoreTheir -= weakAgainstEntry.ScoreValue
+                        weakAgainstScoreTheir += weakAgainstEntry.ScoreValue
                     }
                 }
 
                 champ.GoodTeamWith.forEach { goodTeamEntry ->
                     if (ownPickNames.contains(goodTeamEntry.ChampName)) {
                         currentScoreOwn += goodTeamEntry.ScoreValue
+                        goodTeamWithScoreOwn += goodTeamEntry.ScoreValue
                     }
                     if (theirPickNames.contains(goodTeamEntry.ChampName)) {
                         currentScoreTheir += goodTeamEntry.ScoreValue
+                        goodTeamWithScoreTheir += goodTeamEntry.ScoreValue
                     }
                 }
 
-                champ.copy(ScoreOwn = currentScoreOwn, ScoreTheir = currentScoreTheir)
+                champ.copy(
+                    scoreOwn = currentScoreOwn,
+                    ScoreTheir = currentScoreTheir,
+                    fitTeam = goodTeamWithScoreOwn,
+                    goodAgainstTeam = strongAgainstScoreOwn - weakAgainstScoreOwn
+                )
             }
         }.stateIn(
             scope = viewModelScope,
@@ -697,7 +747,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 it.copy(
                     isPicked = false,
                     pickedBy = TeamSide.NONE,
-                    ScoreOwn = 0,
+                    scoreOwn = 0,
                     ScoreTheir = 0
                 )
             } // Setze isPicked für alle Champs zurück
@@ -712,7 +762,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             pickedChamp.forEach { pickedChamp ->
                 champsWithScores.first().find { it.ChampName == pickedChamp.ChampName }
                     ?.let { matchedChamp ->
-                        totalScore += matchedChamp.ScoreOwn
+                        totalScore += matchedChamp.scoreOwn
                     }
             }
             Log.d("ViewModel", "Aggregated Own Team Score: $totalScore")

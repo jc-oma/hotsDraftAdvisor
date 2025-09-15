@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.toColorInt
 
 /**
  * Ein Composable, das einen einzelnen Fortschrittsbalken anzeigt,
@@ -29,16 +30,10 @@ import androidx.compose.ui.unit.dp
  *
  * @param label Der Titel oder die Beschreibung für diesen Bewertungsbalken.
  * @param progressFloat Der Fortschritt für das "eigene" Segment (Wert zwischen 0.0f und 1.0f).
- * @param totalProgressClaimed Die Summe von progressFloat und maximalen Betrag sollte idealerweise <= 1.0f sein.
- *                      Wenn die Summe > 1.0f ist, werden die Anteile proportional skaliert.
  * @param colorOwn Die Farbe für das "eigene" Segment.
  * @param colorTheir Die Farbe für das "andere" Segment.
  * @param backgroundColor Die Hintergrundfarbe des Balkens (der Teil, der nicht gefüllt ist).
  * @param barHeight Die Höhe des Fortschrittsbalkens.
- * @param showPercentageText Ob der Prozentwert als Text auf dem Balken angezeigt werden soll.
- * @param showAbsoluteValues Ob absolute Werte anstelle von Prozenten angezeigt werden sollen.
- * @param ownValue Optionaler absoluter Wert für "own".
- * @param theirValue Optionaler absoluter Wert für "their".
  */
 @Composable
 fun ChampEvaluationComposable(
@@ -48,7 +43,7 @@ fun ChampEvaluationComposable(
     colorTheir: Color = Color(0xFFF44336), // Standard Rot
     backgroundColor: Color = Color.LightGray.copy(alpha = 0.3f),
     borderColor: Color = Color.Gray.copy(alpha = 0.5f),
-    barHeight: Dp = 22.dp
+    barHeight: Dp = 32.dp
 ) {
     // Fortschritte auf den Bereich [0, 1] begrenzen
     val pOwn = progressFloat.coerceIn(0f, 1f)
@@ -93,6 +88,8 @@ fun ChampEvaluationComposable(
                     Box(
                         modifier = Modifier
                             .fillMaxHeight()
+                            .clip(RoundedCornerShape(barHeight / 2))
+                            .border(1.dp, borderColor, RoundedCornerShape(barHeight / 2))
                             .weight(weightOwn) // Nimmt den proportionalen Anteil der Breite
                             .background(colorOwn)
                     )
@@ -102,7 +99,6 @@ fun ChampEvaluationComposable(
                         modifier = Modifier
                             .fillMaxHeight()
                             .weight(weightTheir) // Nimmt den proportionalen Anteil der Breite
-                            .background(colorTheir)
                     )
                 }
             }
@@ -119,7 +115,7 @@ fun ChampEvaluationComposable(
                     modifier = Modifier
                         .fillMaxHeight()
                         .width(2.dp)
-                        .background(Color.White)
+                        .background(Color(("#7a68a5" ).toColorInt()))
                 )
                 Box(modifier = Modifier
                     .fillMaxHeight()
@@ -128,7 +124,7 @@ fun ChampEvaluationComposable(
                     modifier = Modifier
                         .fillMaxHeight()
                         .width(2.dp)
-                        .background(Color.White)
+                        .background(Color(("#7a68a5" ).toColorInt()))
                 )
                 Box(modifier = Modifier
                     .fillMaxHeight()

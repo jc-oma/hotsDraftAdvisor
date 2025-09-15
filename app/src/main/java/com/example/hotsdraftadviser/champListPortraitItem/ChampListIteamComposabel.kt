@@ -60,7 +60,7 @@ fun ChampListItem(
                 .padding(4.dp),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = chosableChamp.ScoreOwn.toString())
+            Text(text = chosableChamp.scoreOwn.toString())
         }
         Box(
             modifier = Modifier

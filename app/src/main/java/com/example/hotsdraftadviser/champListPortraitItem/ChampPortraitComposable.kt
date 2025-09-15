@@ -42,6 +42,8 @@ import com.example.hotsdraftadviser.composables.ChampEvaluationComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampData
 import com.example.hotsdraftadviser.getColorByHexString
+import com.example.hotsdraftadviser.getColorByHexStringForET
+import androidx.core.graphics.toColorInt
 
 @Composable
 fun ChampPortraitComposable(
@@ -56,7 +58,8 @@ fun ChampPortraitComposable(
     index: Int,
     mapFloat: Float,
     ownTeamFloat: Float,
-    theirTeamFloat: Float
+    theirTeamFloat: Float,
+    mapName: String
 ) {
     val textColor = "f8f8f9ff"
     val composeTextColor = getColorByHexString(textColor)
@@ -66,7 +69,7 @@ fun ChampPortraitComposable(
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(2.5f)
-            .background(Color.Cyan)
+            .background(Color(("#7a68a5" ).toColorInt()))
     ) {
 
         IconToggleButton(
@@ -127,9 +130,9 @@ fun ChampPortraitComposable(
                     contentAlignment = Alignment.BottomStart
                 ) {
                     Column() {
-                        val barHeight = 8.dp
+                        val barHeight = 10.dp
                         ChampEvaluationComposable(
-                            label = "Map Wertung",
+                            label = "Value on $mapName",
                             progressFloat = mapFloat,
                             colorOwn = Color.Blue,
                             colorTheir = Color.Red,
@@ -137,7 +140,7 @@ fun ChampPortraitComposable(
                         )
                         Box(modifier = Modifier.height(2.dp))
                         ChampEvaluationComposable(
-                            label = "Fit in Team",
+                            label = "Fit in own Team",
                             progressFloat = ownTeamFloat,
                             colorOwn = Color.Blue,
                             colorTheir = Color.Red,
@@ -174,7 +177,7 @@ fun ChampPortraitComposable(
                                     .padding(4.dp),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Text(champ.ScoreOwn.toString())
+                                Text(champ.scoreOwn.toString())
                             }
                             Box(
                                 modifier = Modifier
@@ -276,6 +279,7 @@ private fun ChampPortraitComposablePreview() {
         index = 0,
         mapFloat = 0.7f,
         ownTeamFloat = 0.4f,
-        theirTeamFloat = 0.2f
+        theirTeamFloat = 0.2f,
+        mapName = "Hanamura"
     )
 }
