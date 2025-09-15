@@ -64,6 +64,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.hotsdraftadviser.advertisement.MainWindowAdInterstitial
+import com.example.hotsdraftadviser.champListPortraitItem.ChampListItem
 import com.example.hotsdraftadviser.champListPortraitItem.ChampPortraitComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.segmentedButton.SegmentedButtonToOrderChamplist
@@ -560,108 +561,16 @@ private fun availableChampListComposable(
     ) {
         items(chosableChampList.size) { i ->
             if (chosableChampList[i].isPicked) return@items
-            Row(modifier = Modifier.height(32.dp)) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = chosableChampList[i].ChampName
-                )
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(2.dp)
-                        .background(
-                            composeOwnTeamColor.copy(alpha = 0.7f),
-                            shape = RoundedCornerShape(4.dp)
-                        )
-                        .border(
-                            1.dp,
-                            composeTextColor,
-                            shape = RoundedCornerShape(4.dp)
-                        )
-                        .clickable {
-                            viewModel.pickChampForTeam(i, TeamSide.OWN)
-                            viewModel.updateOwnChampSearchQuery("")
-                        }
-                        .padding(4.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(text = chosableChampList[i].ScoreOwn.toString())
-                }
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(2.dp)
-                        .background(
-                            composeTheirTeamColor.copy(alpha = 0.7f),
-                            shape = RoundedCornerShape(4.dp)
-                        )
-                        .border(
-                            1.dp,
-                            composeTextColor,
-                            shape = RoundedCornerShape(4.dp)
-                        )
-                        .clickable {
-                            viewModel.pickChampForTeam(i, TeamSide.THEIR)
-                            viewModel.updateOwnChampSearchQuery("")
-                        }
-                        .padding(4.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(text = chosableChampList[i].ScoreTheir.toString())
-                }
-                Box(
-                    modifier = Modifier
-                        .weight(0.5f)
-                        .padding(2.dp)
-                        .background(
-                            composeOwnTeamColor.copy(alpha = 0.7f),
-                            shape = RoundedCornerShape(4.dp)
-                        )
-                        .border(
-                            1.dp,
-                            composeTextColor,
-                            shape = RoundedCornerShape(4.dp)
-                        )
-                        .clickable {
-                            viewModel.setBansPerTeam(i, TeamSide.OWN)
-                            viewModel.updateOwnChampSearchQuery("")
-                        }
-                        .padding(4.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        Icons.Default.Block,
-                        tint = Color.White,
-                        contentDescription = "Ban"
-                    )
-                }
-                Box(
-                    modifier = Modifier
-                        .weight(0.5f)
-                        .padding(2.dp)
-                        .background(
-                            composeTheirTeamColor.copy(alpha = 0.7f),
-                            shape = RoundedCornerShape(4.dp)
-                        )
-                        .border(
-                            1.dp,
-                            composeTextColor,
-                            shape = RoundedCornerShape(4.dp)
-                        )
-                        .clickable {
-                            viewModel.setBansPerTeam(i, TeamSide.THEIR)
-                            viewModel.updateOwnChampSearchQuery("")
-                        }
-                        .padding(4.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        Icons.Default.Block,
-                        tint = Color.White,
-                        contentDescription = "Ban"
-                    )
-                }
-            }
+            ChampListItem(
+                chosableChampList[i],
+                index = i,
+                composeOwnTeamColor = composeOwnTeamColor,
+                composeTextColor = composeTextColor,
+                composeTheirTeamColor = composeTheirTeamColor,
+                pickChampForTeam = {i, teamSide -> viewModel.pickChampForTeam(i, teamSide)},
+                banChampForTeam = {i, teamSide -> viewModel.setBansPerTeam(i, teamSide)},
+                updateOwnChampSearchQuery = { string -> viewModel.updateOwnChampSearchQuery(string) }
+            )
         }
     }
 }

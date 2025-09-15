@@ -142,7 +142,7 @@ fun ChampEvaluationComposable(
 // In Ihrer App verwenden Sie das Composable oben nur einmal pro gewünschtem Balken.
 @Preview(showBackground = true, widthDp = 300)
 @Composable
-fun SingleTwoToneRatingBarPreview_SingleExample() { // Umbenannt für Klarheit
+private fun ChampEvaluationComposablePreview() { // Umbenannt für Klarheit
     Column(modifier = Modifier.padding(16.dp)) {
         ChampEvaluationComposable(
             label = "Map Wertung",

@@ -43,21 +43,20 @@ import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampData
 import com.example.hotsdraftadviser.getColorByHexString
 
-@Preview
 @Composable
 fun ChampPortraitComposable(
-    champ: ChampData = exampleChampData,
-    toggleChampFavorite: () -> Unit = {},
-    pickChampForOwnTeam: () -> Unit = {},
-    pickChampForTheirTeam: () -> Unit = {},
-    updateChampSearchQuery: () -> Unit = {},
-    ownBan: () -> Unit = {},
-    theirBan: () -> Unit = {},
-    champDrawable: Int = R.drawable.sgthammer_card_portrait,
-    index: Int = 0,
-    mapFloat: Float = 0.7f,
-    ownTeamFloat: Float = 0.4f,
-    theirTeamFloat: Float = 0.2f
+    champ: ChampData,
+    toggleChampFavorite: () -> Unit,
+    pickChampForOwnTeam: () -> Unit,
+    pickChampForTheirTeam: () -> Unit,
+    updateChampSearchQuery: () -> Unit,
+    ownBan: () -> Unit,
+    theirBan: () -> Unit,
+    champDrawable: Int,
+    index: Int,
+    mapFloat: Float,
+    ownTeamFloat: Float,
+    theirTeamFloat: Float
 ) {
     val textColor = "f8f8f9ff"
     val composeTextColor = getColorByHexString(textColor)
@@ -118,7 +117,7 @@ fun ChampPortraitComposable(
                             fontSize = 18.sp
                         ),
                         color = Color.Black,
-                        text = (index + 1).toString() + ". "+ champ.ChampName
+                        text = (index + 1).toString() + ". " + champ.ChampName
                     )
                 }
                 Box(
@@ -260,4 +259,23 @@ fun ChampPortraitComposable(
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun ChampPortraitComposablePreview() {
+    ChampPortraitComposable(
+        champ = exampleChampData,
+        toggleChampFavorite = {},
+        pickChampForOwnTeam = {},
+        pickChampForTheirTeam = {},
+        updateChampSearchQuery = {},
+        ownBan = {},
+        theirBan = {},
+        champDrawable = R.drawable.sgthammer_card_portrait,
+        index = 0,
+        mapFloat = 0.7f,
+        ownTeamFloat = 0.4f,
+        theirTeamFloat = 0.2f
+    )
 }
