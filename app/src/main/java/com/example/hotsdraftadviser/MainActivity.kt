@@ -125,7 +125,7 @@ fun MainActivityComposable(
     val theirTeamColor = "5C1A1BFF"
     val ownTeamColor = "533088ff"
     val mapTextColor = "AFEEEEff"
-    val composeScreenBackgroundColor = R.color.purple_200
+    val composeScreenBackgroundColor = getColorByHexString(screenBackgroundColor)
     val composeTextColor = getColorByHexString(textColor)
     val composeHeadlineColor = getColorByHexString(headlineColor)
     val composeOwnTeamColor = getColorByHexString(ownTeamColor)
