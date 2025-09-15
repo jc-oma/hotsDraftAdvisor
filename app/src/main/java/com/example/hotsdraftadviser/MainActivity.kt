@@ -55,10 +55,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -465,7 +468,8 @@ private fun AvailableChampPortraitComposable(
             verticalArrangement = Arrangement.spacedBy(6.dp),
             contentPadding = PaddingValues(bottom = 80.dp) // Fügt Padding am unteren Rand hinzu
         ) {
-            items(count = distinctChosableChampList.size,
+            items(
+                count = distinctChosableChampList.size,
                 key = { it -> distinctChosableChampList[it].key }) { i ->
                 if (distinctChosableChampList[i].isPicked) return@items
 
@@ -570,8 +574,8 @@ private fun availableChampListComposable(
                 composeOwnTeamColor = composeOwnTeamColor,
                 composeTextColor = composeTextColor,
                 composeTheirTeamColor = composeTheirTeamColor,
-                pickChampForTeam = {i, teamSide -> viewModel.pickChampForTeam(i, teamSide)},
-                banChampForTeam = {i, teamSide -> viewModel.setBansPerTeam(i, teamSide)},
+                pickChampForTeam = { i, teamSide -> viewModel.pickChampForTeam(i, teamSide) },
+                banChampForTeam = { i, teamSide -> viewModel.setBansPerTeam(i, teamSide) },
                 updateOwnChampSearchQuery = { string -> viewModel.updateOwnChampSearchQuery(string) }
             )
         }
@@ -595,10 +599,17 @@ private fun SearchAndFilterRowForChamps(
                 .padding(start = 8.dp, end = 8.dp)
                 .weight(2f),
             value = searchQueryOwnTChamps,
-            onValueChange = { newText ->
+            onValueChange = { newText: String ->
                 viewModel.updateOwnChampSearchQuery(newText)
             },
-            label = { Text("\uD83D\uDD0D Champs suchen...") },
+            label = {
+                Text(
+                    "\uD83D\uDD0D Champs suchen...", fontSize = getResponsiveFontSize(),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            },
+            textStyle = androidx.compose.ui.text.TextStyle(fontSize = getResponsiveFontSize()),
             trailingIcon = {
                 if (searchQueryOwnTChamps.isNotEmpty()) {
                     Icon(
@@ -613,8 +624,10 @@ private fun SearchAndFilterRowForChamps(
                 }
             }
         )
-        Box ( modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.BottomStart) {
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.BottomStart
+        ) {
             FilterChip(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -630,7 +643,11 @@ private fun SearchAndFilterRowForChamps(
                 selected = favFilter,
                 onClick = { viewModel.toggleFavFilter() },
                 label = {
-                    Text("Favorite", fontSize = 16.sp)
+                    Text(
+                        "Favorite", fontSize = getResponsiveFontSize(),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             )
         }
@@ -639,7 +656,8 @@ private fun SearchAndFilterRowForChamps(
         verticalArrangement = Arrangement.Top
     ) {
         val imagePadding = 8.dp
-        val fontSize = 16.sp
+        val responsiveFontSize = getResponsiveFontSize()
+
         Row(modifier = Modifier.padding(top = imagePadding)) {
             FilterChip(
                 modifier = Modifier
@@ -655,7 +673,12 @@ private fun SearchAndFilterRowForChamps(
                 selected = roleFilter.contains(RoleEnum.Tank),
                 onClick = { viewModel.setRoleFilter(RoleEnum.Tank) },
                 label = {
-                    Text("Tank", fontSize = fontSize)
+                    Text(
+                        "Tank",
+                        fontSize = responsiveFontSize,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             )
             FilterChip(
@@ -671,7 +694,13 @@ private fun SearchAndFilterRowForChamps(
                 },
                 selected = roleFilter.contains(RoleEnum.Ranged),
                 onClick = { viewModel.setRoleFilter(RoleEnum.Ranged) },
-                label = { Text("Ranged", fontSize = fontSize) }
+                label = {
+                    Text(
+                        "Ranged", fontSize = responsiveFontSize,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             )
             FilterChip(
                 modifier = Modifier
@@ -686,7 +715,13 @@ private fun SearchAndFilterRowForChamps(
                 },
                 selected = roleFilter.contains(RoleEnum.Melee),
                 onClick = { viewModel.setRoleFilter(RoleEnum.Melee) },
-                label = { Text("Melee", fontSize = fontSize) }
+                label = {
+                    Text(
+                        "Melee", fontSize = responsiveFontSize,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             )
         }
         Row {
@@ -703,7 +738,13 @@ private fun SearchAndFilterRowForChamps(
                 },
                 selected = roleFilter.contains(RoleEnum.Heal),
                 onClick = { viewModel.setRoleFilter(RoleEnum.Heal) },
-                label = { Text("Heal", fontSize = fontSize) }
+                label = {
+                    Text(
+                        "Heal", fontSize = responsiveFontSize,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             )
             FilterChip(
                 modifier = Modifier
@@ -718,7 +759,13 @@ private fun SearchAndFilterRowForChamps(
                 },
                 selected = roleFilter.contains(RoleEnum.Bruiser),
                 onClick = { viewModel.setRoleFilter(RoleEnum.Bruiser) },
-                label = { Text("Bruiser", fontSize = fontSize) }
+                label = {
+                    Text(
+                        "Bruiser", fontSize = responsiveFontSize,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             )
             FilterChip(
                 modifier = Modifier
@@ -733,7 +780,13 @@ private fun SearchAndFilterRowForChamps(
                 },
                 selected = roleFilter.contains(RoleEnum.Support),
                 onClick = { viewModel.setRoleFilter(RoleEnum.Support) },
-                label = { Text("Support", fontSize = fontSize) }
+                label = {
+                    Text(
+                        "Support", fontSize = responsiveFontSize,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             )
         }
     }
@@ -899,5 +952,21 @@ fun getColorByHexStringForET(hexColorString: String): Color {
 fun GreetingPreview() {
     HotsDraftAdviserTheme {
         MainActivityComposable()
+    }
+}
+
+@Composable
+fun getResponsiveFontSize(): TextUnit {
+    val configuration = LocalConfiguration.current
+    val screenWidthDp = configuration.screenWidthDp.dp
+
+    // Beispielhafte Logik:
+    // Kleinere Schriftgröße für schmalere Bildschirme
+    return if (screenWidthDp < 360.dp) {
+        12.sp
+    } else if (screenWidthDp < 480.dp) {
+        14.sp
+    } else {
+        16.sp // Ihre aktuelle fontSize
     }
 }
