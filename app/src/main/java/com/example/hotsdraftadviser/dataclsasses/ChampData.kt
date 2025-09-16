@@ -1,5 +1,6 @@
 package com.example.hotsdraftadviser.dataclsasses
 
+import com.example.hotsdraftadviser.Difficulty
 import com.example.hotsdraftadviser.TeamSide
 import kotlinx.serialization.Serializable
 
@@ -20,7 +21,8 @@ data class ChampData(
     var ScoreTheir: Int = 0,
     var isPicked: Boolean = false,
     var pickedBy: TeamSide = TeamSide.NONE,
-    var isAFavoriteChamp: Boolean = false
+    var isAFavoriteChamp: Boolean = false,
+    var difficulty: Difficulty = Difficulty.EASY
 )
 
 // Beispielhafte Instanz Ihrer ChampData-Klasse

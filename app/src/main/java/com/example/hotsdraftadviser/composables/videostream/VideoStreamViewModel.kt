@@ -1,4 +1,4 @@
-package com.example.hotsdraftadviser
+package com.example.hotsdraftadviser.composables.videostream
 
 import android.app.Application
 import android.graphics.Bitmap
@@ -42,6 +42,8 @@ import org.opencv.features2d.DescriptorMatcher
 import org.opencv.features2d.ORB
 import org.opencv.imgproc.Imgproc
 import androidx.core.graphics.createBitmap
+import com.example.hotsdraftadviser.R
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -234,7 +236,7 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
 
             val mediaSourceFactory = ProgressiveMediaSource.Factory(
                 dataSourceFactory, // Hier die DefaultDataSource.Factory übergeben
-                com.google.android.exoplayer2.extractor.DefaultExtractorsFactory()
+                DefaultExtractorsFactory()
             )
             val mediaSource: MediaSource = mediaSourceFactory.createMediaSource(MediaItem.fromUri(udpListenerUrl))
 

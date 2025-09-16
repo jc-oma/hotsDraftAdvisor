@@ -174,7 +174,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun pickChampForTeam(index: Int, teamSide: TeamSide) {
         viewModelScope.launch {
-            val currentChampList = chosableChampList.first()
+            val currentChampList = _distinctchoosableChampList.first()
             val alreadyPicked = currentChampList.filter { it.isPicked && it.pickedBy == teamSide }
 
             if (alreadyPicked.size < maxPicks) {
@@ -193,7 +193,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     //TODO: Implement bans Teamside
     fun setBansPerTeam(i: Int, teamSide: TeamSide) {
         viewModelScope.launch {
-            val currentChampList = chosableChampList.first()
+            val currentChampList = _distinctchoosableChampList.first()
             val bannedChamp = currentChampList[i].copy(isPicked = true)
             updateChampDataWithPickStatus(bannedChamp, true, teamSide)
         }
@@ -709,7 +709,11 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     setIDsForChampData()
                     setUniqueMapsInMapScore()
                     setUniqueCahmpsInChampScores()
-
+                    _allChampsData.value = _allChampsData.value.map { champ ->
+                        champ.copy(
+                            difficulty = DifficultyMapper().mapDifficultyForChamp(champ.ChampName)!!
+                        )
+                    }
                 } catch (e: Exception) {
                     Log.e("TAG", "Fehler beim Mappen der ChampData JSON-Daten: ${e.message}")
                     e.printStackTrace()
@@ -805,4 +809,8 @@ enum class TeamSide {
 
 enum class SortState {
     OWNPOINTS, THEIRPOINTS, CHAMPNAME
+}
+
+enum class Difficulty {
+    EASY, MEDIUM, HARD, EXTREME
 }

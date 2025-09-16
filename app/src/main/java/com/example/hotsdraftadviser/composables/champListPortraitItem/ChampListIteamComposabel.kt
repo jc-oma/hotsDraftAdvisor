@@ -1,4 +1,4 @@
-package com.example.hotsdraftadviser.champListPortraitItem
+package com.example.hotsdraftadviser.composables.champListPortraitItem
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

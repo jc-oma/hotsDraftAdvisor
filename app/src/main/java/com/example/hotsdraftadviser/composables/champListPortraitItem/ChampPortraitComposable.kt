@@ -1,4 +1,4 @@
-package com.example.hotsdraftadviser.champListPortraitItem
+package com.example.hotsdraftadviser.composables.champListPortraitItem
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -42,7 +42,6 @@ import com.example.hotsdraftadviser.composables.ChampEvaluationComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampData
 import com.example.hotsdraftadviser.getColorByHexString
-import com.example.hotsdraftadviser.getColorByHexStringForET
 import androidx.core.graphics.toColorInt
 
 @Composable

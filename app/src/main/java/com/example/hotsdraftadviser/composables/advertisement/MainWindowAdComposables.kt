@@ -1,4 +1,4 @@
-package com.example.hotsdraftadviser.advertisement
+package com.example.hotsdraftadviser.composables.advertisement
 
 import android.app.Activity
 import android.content.Context

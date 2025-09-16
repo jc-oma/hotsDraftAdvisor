@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">HotsDraftAdviser</string>
     <string name="title_activity_main">HotsDraftAdviser</string>
+    <string name="disclaimer">Heroes of the Storm™ is a trademark or registered trademark of Blizzard Entertainment, Inc., in the U.S. and/or other countries.
+HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</string>
 </resources>

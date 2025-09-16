@@ -1,7 +1,8 @@
-package com.example.hotsdraftadviser.cameraUI
+package com.example.hotsdraftadviser.composables.cameraUI
 
 import android.Manifest
 import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.OptIn
 import androidx.camera.core.ExperimentalGetImage
@@ -56,7 +57,7 @@ fun CameraDetectionComposable(
     }
 
     // Verwende den ActivityResultLauncher direkt im Composable
-    val requestPermissionLauncher = androidx.activity.compose.rememberLauncherForActivityResult(
+    val requestPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         hasCameraPermission = isGranted

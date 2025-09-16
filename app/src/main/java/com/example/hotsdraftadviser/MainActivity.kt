@@ -65,11 +65,13 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.hotsdraftadviser.advertisement.MainWindowAdInterstitial
-import com.example.hotsdraftadviser.champListPortraitItem.ChampListItem
-import com.example.hotsdraftadviser.champListPortraitItem.ChampPortraitComposable
+import com.example.hotsdraftadviser.composables.advertisement.MainWindowAdInterstitial
+import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampListItem
+import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampPortraitComposable
+import com.example.hotsdraftadviser.composables.menus.MenuMainActivit
 import com.example.hotsdraftadviser.dataclsasses.ChampData
-import com.example.hotsdraftadviser.segmentedButton.SegmentedButtonToOrderChamplist
+import com.example.hotsdraftadviser.composables.segmentedButton.SegmentedButtonToOrderChamplist
+import com.example.hotsdraftadviser.composables.videostream.VideoStreamComposable
 import com.example.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -166,8 +168,6 @@ fun MainActivityComposable(
                         .border(1.dp, composeTextColor, shape = shape)
                         .clickable {
                             viewModel.clearChoosenMap()
-                            val a = chosableChampList.first().isAFavoriteChamp
-                            Log.i("MainActivity", "isAFavoriteChamp: $a")
                         }
                         .clip(shape),
                     contentAlignment = Alignment.Center
@@ -201,6 +201,7 @@ fun MainActivityComposable(
                         )
                     }
                 }
+                MenuMainActivit(modifier = Modifier.weight(0.24f))
             }
         }
         if (choosenMap.isEmpty()) {
@@ -217,8 +218,10 @@ fun MainActivityComposable(
                         fontSize = 18.sp,
                         color = composeTextColor,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.weight(1f)
                     )
+
+                    MenuMainActivit(modifier = Modifier.weight(0.2f))
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     // Suchfeld
@@ -250,7 +253,7 @@ fun MainActivityComposable(
                     Box(
                         modifier = Modifier
                             .weight(0.2f)
-                    ) { }
+                    )
                 }
                 Box(
                     modifier = Modifier

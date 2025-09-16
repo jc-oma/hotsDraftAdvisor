@@ -1,4 +1,4 @@
-package com.example.hotsdraftadviser.segmentedButton
+package com.example.hotsdraftadviser.composables.segmentedButton
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.SegmentedButton
