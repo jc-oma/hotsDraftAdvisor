@@ -70,7 +70,7 @@ import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampPortr
 import com.example.hotsdraftadviser.composables.menus.DisclaimerComposable
 import com.example.hotsdraftadviser.composables.menus.MenuMainActivityComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
-import com.example.hotsdraftadviser.composables.segmentedButton.SegmentedButtonToOrderChamplist
+import com.example.hotsdraftadviser.composables.segmentedButton.SegmentedButtonToOrderChamplistComposable
 import com.example.hotsdraftadviser.composables.videostream.VideoStreamComposable
 import com.example.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -484,7 +484,7 @@ private fun AvailableChampPortraitComposable(
     val choosenMap by viewModel.choosenMap.collectAsState("")
 
     Column(modifier = Modifier.fillMaxSize()) {
-        SegmentedButtonToOrderChamplist(viewModel, sortState)
+        SegmentedButtonToOrderChamplistComposable({ sortState -> viewModel.setSortState(sortState)}, sortState)
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(6.dp),

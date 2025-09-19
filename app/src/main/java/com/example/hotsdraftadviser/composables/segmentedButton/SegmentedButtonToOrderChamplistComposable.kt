@@ -1,6 +1,5 @@
 package com.example.hotsdraftadviser.composables.segmentedButton
 
-import android.app.Application
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
@@ -11,15 +10,11 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.hotsdraftadviser.MainActivityViewModel
-import com.example.hotsdraftadviser.MainActivityViewModelFactory
 import com.example.hotsdraftadviser.SortState
 
 @Composable
-fun SegmentedButtonToOrderChamplist(viewModel: MainActivityViewModel, sortState: SortState) {
+fun SegmentedButtonToOrderChamplistComposable(setSortState: (SortState) -> Unit, sortState: SortState) {
     var selectedIndex by remember { mutableIntStateOf(sortState.ordinal) }
     var list = listOf<String>("Best Pick", "Best Ban", "Name")
     SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
@@ -35,7 +30,7 @@ fun SegmentedButtonToOrderChamplist(viewModel: MainActivityViewModel, sortState:
                 ),
                 onClick = {
                     selectedIndex = i
-                    viewModel.setSortState(state)
+                    setSortState(state)
                 },
                 selected = i == selectedIndex,
                 label = { Text(list[i], color = Color.White) }
@@ -47,7 +42,5 @@ fun SegmentedButtonToOrderChamplist(viewModel: MainActivityViewModel, sortState:
 @Preview
 @Composable
 private fun SegmentedPreview() {
-    SegmentedButtonToOrderChamplist(viewModel = viewModel(
-        factory = MainActivityViewModelFactory(LocalContext.current.applicationContext as Application)
-    ), SortState.OWNPOINTS)
+    SegmentedButtonToOrderChamplistComposable({}, SortState.OWNPOINTS)
 }
