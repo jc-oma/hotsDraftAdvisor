@@ -9,6 +9,7 @@ import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
 import com.example.hotsdraftadviser.database.AppDatabase
 import com.example.hotsdraftadviser.database.favoritChamps.FavoriteChampionsRepository
+import com.example.hotsdraftadviser.database.isListShown.IsListModeRepository
 import com.example.hotsdraftadviser.database.isStreamingEnabled.StreamingSettingsRepository
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -46,6 +47,24 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
+    private val isListModeRepository: IsListModeRepository by lazy {
+        Log.d("ViewModelInit", "Initializing repository...")
+        try {
+            Log.d("ViewModelInit", "Getting database instance...")
+            val db = AppDatabase.getDatabase(application)
+            Log.d("ViewModelInit", "Database instance obtained: $db")
+            Log.d("ViewModelInit", "Getting DAO...")
+            val dao = db.isListShownSettingDao()
+            Log.d("ViewModelInit", "DAO obtained: $dao")
+            val repoInstance = IsListModeRepository(dao)
+            Log.d("ViewModelInit", "Repository instance created: $repoInstance")
+            repoInstance
+        } catch (e: Exception) {
+            Log.e("ViewModelInit", "Error initializing repository", e)
+            throw e
+        }
+    }
+
     private val favoriteChampionsRepository: FavoriteChampionsRepository by lazy {
         Log.d("ViewModelInit", "Initializing repository...")
         try {
@@ -64,7 +83,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-
     // Dein isStreamingEnabled als StateFlow, das von der Datenbank gespeist wird
     val isStreamingEnabled: StateFlow<Boolean> = streamingSettingsRepository.isStreamingEnabled
         .stateIn(
@@ -81,6 +99,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
+    private val _isDisclaymerShown = MutableStateFlow(false)
+    private val _isListMode = MutableStateFlow(false)
     private val _isStreamingEnabled = MutableStateFlow(true)
 
     private val _allChampsData = MutableStateFlow<List<ChampData>>(emptyList())
@@ -93,6 +113,13 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private val _favFilter = MutableStateFlow<Boolean>(false)
     private val maxPicks = 5
 
+    val isDisclaymerShown: StateFlow<Boolean> = _isDisclaymerShown.asStateFlow()
+    val isListMode: StateFlow<Boolean> = isListModeRepository.isListModeEnabled
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = false
+        )
     val favFilter: StateFlow<Boolean> = _favFilter.asStateFlow()
 
     val allChampsData = _allChampsData.asStateFlow()
@@ -156,6 +183,19 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     fun setSortState(sortState: SortState) {
         viewModelScope.launch {
             _sortState.value = sortState
+        }
+    }
+
+    fun toggleDisclaymer() {
+        viewModelScope.launch {
+            _isDisclaymerShown.value = !_isDisclaymerShown.value
+        }
+    }
+
+    fun toggleListMode() {
+        viewModelScope.launch {
+            isListModeRepository.updateListModeStatus(!isListMode.value)
+            checkIfChampIsFavorite()
         }
     }
 

@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MenuMainActivit(modifier: Modifier = Modifier) {
+fun MenuMainActivityComposable(modifier: Modifier = Modifier, onDisclaymer: () -> Unit, onToggleListMode: () -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     Box(
         modifier = modifier
@@ -36,7 +36,11 @@ fun MenuMainActivit(modifier: Modifier = Modifier) {
             )
             DropdownMenuItem(
                 text = { Text("Disclaim") },
-                onClick = { /* Do something... */ }
+                onClick = { onDisclaymer() }
+            )
+            DropdownMenuItem(
+                text = { Text("Toggle List Mode") },
+                onClick = { onToggleListMode() }
             )
         }
     }
@@ -45,5 +49,5 @@ fun MenuMainActivit(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun MenuMainActivitPreview() {
-    MenuMainActivit()
+    MenuMainActivityComposable(onDisclaymer = {}, onToggleListMode = {})
 }

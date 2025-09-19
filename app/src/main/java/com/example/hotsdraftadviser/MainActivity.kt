@@ -3,7 +3,6 @@ package com.example.hotsdraftadviser
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -68,7 +67,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.hotsdraftadviser.composables.advertisement.MainWindowAdInterstitial
 import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampListItem
 import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampPortraitComposable
-import com.example.hotsdraftadviser.composables.menus.MenuMainActivit
+import com.example.hotsdraftadviser.composables.menus.DisclaimerComposable
+import com.example.hotsdraftadviser.composables.menus.MenuMainActivityComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.composables.segmentedButton.SegmentedButtonToOrderChamplist
 import com.example.hotsdraftadviser.composables.videostream.VideoStreamComposable
@@ -141,6 +141,9 @@ fun MainActivityComposable(
 
     val isStreamingEnabled by viewModel.isStreamingEnabled.collectAsState()
 
+    val isDisclaymerShown by viewModel.isDisclaymerShown.collectAsState()
+    val isListMode by viewModel.isListMode.collectAsState()
+
 
     Column(
         modifier = Modifier
@@ -201,7 +204,10 @@ fun MainActivityComposable(
                         )
                     }
                 }
-                MenuMainActivit(modifier = Modifier.weight(0.24f))
+                MenuMainActivityComposable(
+                    modifier = Modifier.weight(0.24f),
+                    onDisclaymer = { viewModel.toggleDisclaymer() },
+                    onToggleListMode = { viewModel.toggleListMode() })
             }
         }
         if (choosenMap.isEmpty()) {
@@ -221,7 +227,10 @@ fun MainActivityComposable(
                         modifier = Modifier.weight(1f)
                     )
 
-                    MenuMainActivit(modifier = Modifier.weight(0.2f))
+                    MenuMainActivityComposable(
+                        modifier = Modifier.weight(0.2f),
+                        { viewModel.toggleDisclaymer() },
+                        onToggleListMode = { viewModel.toggleListMode() })
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     // Suchfeld
@@ -391,8 +400,8 @@ fun MainActivityComposable(
             if (chosableChampList.isEmpty()) {
                 Text("Lade Champs oder keine Champs gefunden...")
             } else {
-                //TODO change as needed
-                /*availableChampListComposable(
+                if (isListMode) {
+                    availableChampListComposable(
                     composeHeadlineColor,
                     viewModel,
                     sortState,
@@ -400,20 +409,28 @@ fun MainActivityComposable(
                     chosableChampList,
                     composeOwnTeamColor,
                     composeTheirTeamColor
-                )*/
-                /*availableChampCaruselComposable(
-                    composeHeadlineColor,
-                    viewModel,
-                    sortState,
-                    composeTextColor,
-                    chosableChampList,
-                    composeOwnTeamColor,
-                    composeTheirTeamColor
-                )*/
-                AvailableChampPortraitComposable(
-                    viewModel
                 )
+                } else {
+                    /*availableChampCaruselComposable(
+                    composeHeadlineColor,
+                    viewModel,
+                    sortState,
+                    composeTextColor,
+                    chosableChampList,
+                    composeOwnTeamColor,
+                    composeTheirTeamColor
+                )*/
+                    AvailableChampPortraitComposable(
+                        viewModel
+                    )
+                }
             }
+        }
+    }
+    if (isDisclaymerShown) {
+        Column {
+            Box(modifier = Modifier.height(48.dp))
+            DisclaimerComposable(onClose = { viewModel.toggleDisclaymer() })
         }
     }
 }
