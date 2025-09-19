@@ -114,7 +114,7 @@ fun MainActivityComposable(
     val mapList by viewModel.filteredMaps.collectAsState(emptyList())
     val choosenMap by viewModel.choosenMap.collectAsState("")
     val chosableChampList by viewModel.chosableChampList.collectAsState(emptyList())
-    val sortState by viewModel.sortState.collectAsState(true)
+    val sortState by viewModel.sortState.collectAsState(SortState.CHAMPNAME)
     val searchQueryMaps by viewModel.filterMapsString.collectAsState()
     val searchQueryOwnTChamps by viewModel.filterOwnChampString.collectAsState()
     val roleFilter by viewModel.roleFilter.collectAsState()
@@ -421,7 +421,8 @@ fun MainActivityComposable(
                     composeTheirTeamColor
                 )*/
                     AvailableChampPortraitComposable(
-                        viewModel
+                        viewModel,
+                        sortState
                     )
                 }
             }
@@ -474,7 +475,8 @@ private fun availableChampCaruselComposable(
 private fun AvailableChampPortraitComposable(
     viewModel: MainActivityViewModel = viewModel(
         factory = MainActivityViewModelFactory(LocalContext.current.applicationContext as Application)
-    )
+    ),
+    sortState: SortState
 ) {
     val distinctChosableChampList by viewModel.distinctChosableChampList.collectAsState(emptyList())
     val fitTeamMax by viewModel.fitTeamMax.collectAsState(1)
@@ -482,7 +484,7 @@ private fun AvailableChampPortraitComposable(
     val choosenMap by viewModel.choosenMap.collectAsState("")
 
     Column(modifier = Modifier.fillMaxSize()) {
-        SegmentedButtonToOrderChamplist(viewModel)
+        SegmentedButtonToOrderChamplist(viewModel, sortState)
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(6.dp),
