@@ -51,7 +51,7 @@ class IsListModeRepository @Inject constructor(
      * Diese Methode sollte idealerweise beim ersten App-Start aufgerufen werden.
      * @param defaultIsListMode Der Standardwert für isListMode, falls die Einstellung neu erstellt wird.
      */
-    suspend fun insertOrInitializeSetting(defaultIsListMode: Boolean = true) {
+    suspend fun insertOrInitializeSetting(defaultIsListMode: Boolean = false) {
         val currentSetting = isListModeDao.getListModeSettingOnce()
         if (currentSetting == null) {
             isListModeDao.insertOrUpdate(IsListModeEntity(isListModeEnabled = defaultIsListMode))
