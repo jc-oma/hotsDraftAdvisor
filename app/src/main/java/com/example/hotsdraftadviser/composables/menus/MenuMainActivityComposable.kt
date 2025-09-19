@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun MenuMainActivityComposable(modifier: Modifier = Modifier, onDisclaymer: () -> Unit, onToggleListMode: () -> Unit) {
-    var expanded by remember { mutableStateOf(true) }
+    var expanded by remember { mutableStateOf(false) }
     Box(
         modifier = modifier
             .padding(16.dp)
