@@ -1,5 +1,6 @@
 package com.example.hotsdraftadviser.composables.menus
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,22 +17,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.hotsdraftadviser.R
 
-@Preview
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun DisclaimerComposable(onClose: () -> Unit = {}) {
-    Column (
+    Column(
         modifier = Modifier
             .padding(16.dp)
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .padding(10.dp),
         verticalArrangement = Arrangement.Top
     ) {
-        Text(modifier = Modifier.padding(18.dp),
-            text = stringResource(id = R.string.disclaimer))
+        Text(
+            modifier = Modifier.padding(18.dp),
+            text = stringResource(id = R.string.disclaimer)
+        )
         Button(
             onClick = { onClose() },
         ) {
-            Text(text = "CLOSE", style = MaterialTheme.typography.labelLarge)
+            Text(text = "CLOSE",
+                style = MaterialTheme.typography.labelLarge)
         }
     }
 }
