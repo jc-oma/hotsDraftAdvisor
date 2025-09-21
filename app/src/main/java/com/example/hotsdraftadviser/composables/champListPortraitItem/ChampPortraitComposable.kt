@@ -199,7 +199,7 @@ fun ChampPortraitComposable(
                                     .padding(4.dp),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Text(champ.ScoreTheir.toString())
+                                Text(champ.scoreTheir.toString())
                             }
                             Box(
                                 modifier = Modifier

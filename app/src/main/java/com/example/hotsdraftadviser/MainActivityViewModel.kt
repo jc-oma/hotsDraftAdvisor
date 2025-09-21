@@ -428,7 +428,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     champ.MapScore.forEach { mapScore ->
                         if (mapScore.MapName.lowercase().contains(lowerCaseSearchString)) {
                             updatedChamp.scoreOwn += mapScore.ScoreValue
-                            updatedChamp.ScoreTheir += mapScore.ScoreValue
+                            updatedChamp.scoreTheir += mapScore.ScoreValue
                         }
                     }
                 }
@@ -439,7 +439,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             val sortedChamps = if (doSortByOwn == SortState.OWNPOINTS) {
                 calculatedChamps.sortedByDescending { it.scoreOwn } // Höchster ScoreOwn zuerst
             } else if (doSortByOwn == SortState.THEIRPOINTS) {
-                calculatedChamps.sortedByDescending { it.ScoreTheir } // Höchster ScoreTheir zuerst
+                calculatedChamps.sortedByDescending { it.scoreTheir } // Höchster ScoreTheir zuerst
             } else {
                 calculatedChamps.sortedBy { it.ChampName }
             }
@@ -601,7 +601,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
                 champ.copy(
                     scoreOwn = currentScoreOwn,
-                    ScoreTheir = currentScoreTheir,
+                    scoreTheir = currentScoreTheir,
                     fitTeam = goodTeamWithScoreOwn,
                     goodAgainstTeam = strongAgainstScoreOwn - weakAgainstScoreOwn
                 )
@@ -792,7 +792,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     isPicked = false,
                     pickedBy = TeamSide.NONE,
                     scoreOwn = 0,
-                    ScoreTheir = 0
+                    scoreTheir = 0
                 )
             } // Setze isPicked für alle Champs zurück
         }

@@ -18,7 +18,7 @@ data class ChampData(
     val fitTeam: Int = 0,
     val goodAgainstTeam: Int = 0,
     var scoreOwn: Int = 0,
-    var ScoreTheir: Int = 0,
+    var scoreTheir: Int = 0,
     var isPicked: Boolean = false,
     var pickedBy: TeamSide = TeamSide.NONE,
     var isAFavoriteChamp: Boolean = false,
@@ -48,7 +48,7 @@ val exampleChampData = ChampData(
         MapScoreData("Verfluchtes Tal", 70)
     ),
     scoreOwn = 80,
-    ScoreTheir = 75,
+    scoreTheir = 75,
     isPicked = false,
     pickedBy = TeamSide.NONE,
     isAFavoriteChamp = true
