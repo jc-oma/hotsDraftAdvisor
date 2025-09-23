@@ -1,6 +1,6 @@
 package com.example.hotsdraftadviser
 
-class DifficultyMapper {
+class Utilitys {
     fun mapDifficultyForChamp(champName: String): Difficulty? {
         when (champName) {
             "Abathur" -> return Difficulty.EXTREME
@@ -96,6 +96,28 @@ class DifficultyMapper {
             "Zuljin" -> return Difficulty.MEDIUM
 
 
+            else -> return null
+        }
+    }
+
+    fun mapMapNameToDrawable(champName: String): Int? {
+        when (champName) {
+            "Alterac Pass" -> return R.drawable.map_alteracpass_card
+            "Battlefield of Eternity" -> return R.drawable.map_battlefield_of_eternity_card
+            "Black Hearts Bay" -> return R.drawable.map_black_hearts_bay_card
+            "Braxis Holdout" -> return R.drawable.map_braxis_holdout_card
+            "Cursed Hollow" -> return R.drawable.map_cursed_hollow_card
+            "Dragonshire" -> return R.drawable.map_dragon_shire_card
+            "Garden of Terror" -> return R.drawable.map_garden_of_terror_card
+            "Hanamura" -> return R.drawable.map_hanamura_card
+            "Haunted Mines" -> return R.drawable.map_haunted_mines_card
+            "Infernal Shrines" -> return R.drawable.map_infernal_shrines_card
+            "Lost Caverns" -> return R.drawable.map_lost_caverns_card
+            "Sky Temple" -> return R.drawable.map_sky_temple_card
+            "Tomb of the Spider Queen" -> return R.drawable.map_tomb_of_the_spider_queen_card
+            "Towers of Doom" -> return R.drawable.map_towers_of_doom_card
+            "Volskaya Foundry" -> return R.drawable.map_volskaya_foundry_card
+            "Warhead Junction" -> return R.drawable.map_warhead_junction_card
             else -> return null
         }
     }

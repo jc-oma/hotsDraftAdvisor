@@ -178,7 +178,7 @@ fun MainActivityComposable(
                     Image(
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop,
-                        painter = painterResource(id = viewModel.mapMapNameToDrawable(choosenMap)!!),
+                        painter = painterResource(id = Utilitys().mapMapNameToDrawable(choosenMap)!!),
                         contentDescription = choosenMap
                     )
                     Box(
@@ -297,7 +297,7 @@ fun MainActivityComposable(
                                     modifier = Modifier.fillMaxSize(),
                                     contentScale = ContentScale.Crop,
                                     painter = painterResource(
-                                        id = viewModel.mapMapNameToDrawable(
+                                        id = Utilitys().mapMapNameToDrawable(
                                             mapList[i]
                                         )!!
                                     ),
