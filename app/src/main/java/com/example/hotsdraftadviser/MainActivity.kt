@@ -463,7 +463,7 @@ private fun availableChampCaruselComposable(
             modifier = Modifier
                 .height(205.dp)
                 .maskClip(MaterialTheme.shapes.extraLarge),
-            painter = painterResource(id = viewModel.mapChampNameToDrawable(item.ChampName)!!),
+            painter = painterResource(id = Utilitys().mapChampNameToDrawable(item.ChampName)!!),
             contentDescription = "Text",
             contentScale = ContentScale.Crop
         )
@@ -503,7 +503,7 @@ private fun AvailableChampPortraitComposable(
                     updateChampSearchQuery = { viewModel.updateOwnChampSearchQuery("") },
                     ownBan = { viewModel.setBansPerTeam(i, TeamSide.OWN) },
                     theirBan = { viewModel.setBansPerTeam(i, TeamSide.THEIR) },
-                    champDrawable = viewModel.mapChampNameToDrawable(distinctChosableChampList[i].ChampName)!!,
+                    champDrawable = Utilitys().mapChampNameToDrawable(distinctChosableChampList[i].ChampName)!!,
                     index = i,
                     mapFloat = distinctChosableChampList[i].mapFloat,
                     ownTeamFloat = distinctChosableChampList[i].fitTeam / fitTeamMax.toFloat(),
@@ -853,7 +853,7 @@ private fun ListOfPickedChampsComposable(
                         removePickForTeam = { viewModel.removePick(i, TeamSide.OWN) },
                         teamPickedChamp = ownPickedChamps[i],
                         painter = painterResource(
-                            id = viewModel.mapChampNameToDrawable(
+                            id = Utilitys().mapChampNameToDrawable(
                                 ownPickedChamps[i].ChampName
                             )!!
                         )
@@ -868,7 +868,7 @@ private fun ListOfPickedChampsComposable(
                         removePickForTeam = { viewModel.removePick(i, TeamSide.THEIR) },
                         teamPickedChamp = theirPickedChamps[i],
                         painter = painterResource(
-                            id = viewModel.mapChampNameToDrawable(
+                            id = Utilitys().mapChampNameToDrawable(
                                 theirPickedChamps[i].ChampName
                             )!!
                         )
