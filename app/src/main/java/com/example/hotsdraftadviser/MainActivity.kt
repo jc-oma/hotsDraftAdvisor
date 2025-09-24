@@ -479,7 +479,7 @@ private fun AvailableChampPortraitComposable(
     sortState: SortState
 ) {
     val distinctChosableChampList by viewModel.distinctChosableChampList.collectAsState(emptyList())
-    val distinctAndUnfilteredChosableChampList by viewModel.distinctUnfilteredChosableChampList.collectAsState(emptyList())
+    val distinctAndUnfilteredChosableChampList by viewModel.distinctfilteredChosableChampList.collectAsState(emptyList())
     val fitTeamMax by viewModel.fitTeamMax.collectAsState(1)
     val goodAgainstTeamMax by viewModel.goodAgainstTeamMax.collectAsState(1)
     val choosenMap by viewModel.choosenMap.collectAsState("")
