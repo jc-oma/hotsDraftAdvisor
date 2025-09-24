@@ -57,6 +57,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -207,7 +208,9 @@ fun MainActivityComposable(
                 MenuMainActivityComposable(
                     modifier = Modifier.weight(0.24f),
                     onDisclaymer = { viewModel.toggleDisclaymer() },
-                    onToggleListMode = { viewModel.toggleListMode() })
+                    onToggleListMode = { viewModel.toggleListMode() },
+                    onToggleStarRating = { viewModel.toggleStarRateMode() }
+                )
             }
         }
         if (choosenMap.isEmpty()) {
@@ -230,7 +233,8 @@ fun MainActivityComposable(
                     MenuMainActivityComposable(
                         modifier = Modifier.weight(0.2f),
                         { viewModel.toggleDisclaymer() },
-                        onToggleListMode = { viewModel.toggleListMode() })
+                        onToggleListMode = { viewModel.toggleListMode() },
+                        onToggleStarRating = { viewModel.toggleStarRateMode() })
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     // Suchfeld
@@ -482,7 +486,10 @@ private fun AvailableChampPortraitComposable(
     val distinctAndUnfilteredChosableChampList by viewModel.distinctfilteredChosableChampList.collectAsState(emptyList())
     val fitTeamMax by viewModel.fitTeamMax.collectAsState(1)
     val goodAgainstTeamMax by viewModel.goodAgainstTeamMax.collectAsState(1)
+    val ownScoreMax by viewModel.ownScoreMax.collectAsState(1)
+    val theirScoreMax by viewModel.theirScoreMax.collectAsState(1)
     val choosenMap by viewModel.choosenMap.collectAsState("")
+    val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
 
     Column(modifier = Modifier.fillMaxSize()) {
         SegmentedButtonToOrderChamplistComposable({ sortState -> viewModel.setSortState(sortState)}, sortState)
@@ -511,7 +518,10 @@ private fun AvailableChampPortraitComposable(
                     mapFloat = currentChampUnfilt.mapFloat,
                     ownTeamFloat = currentChampUnfilt.fitTeam / fitTeamMax.toFloat(),
                     theirTeamFloat = currentChampUnfilt.goodAgainstTeam / goodAgainstTeamMax.toFloat(),
-                    mapName = choosenMap
+                    mapName = choosenMap,
+                    maxOwnScore = ownScoreMax,
+                    maxTheirScore = theirScoreMax,
+                    isStarRating = isStarRatingMode
                 )
             }
         }
@@ -532,6 +542,10 @@ private fun availableChampListComposable(
     composeOwnTeamColor: Color,
     composeTheirTeamColor: Color
 ) {
+    val ownScoreMax by viewModel.ownScoreMax.collectAsState(1)
+    val theirScoreMax by viewModel.theirScoreMax.collectAsState(1)
+    val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -601,7 +615,11 @@ private fun availableChampListComposable(
                 composeTheirTeamColor = composeTheirTeamColor,
                 pickChampForTeam = { i, teamSide -> viewModel.pickChampForTeam(i, teamSide) },
                 banChampForTeam = { i, teamSide -> viewModel.setBansPerTeam(i, teamSide) },
-                updateOwnChampSearchQuery = { string -> viewModel.updateOwnChampSearchQuery(string) }
+                updateOwnChampSearchQuery = { string -> viewModel.updateOwnChampSearchQuery(string) },
+                //TODO set by repository
+                isStarRating = isStarRatingMode,
+                maxOwnScore = ownScoreMax,
+                maxTheirScore = theirScoreMax
             )
         }
     }
@@ -634,7 +652,7 @@ private fun SearchAndFilterRowForChamps(
                     overflow = TextOverflow.Ellipsis
                 )
             },
-            textStyle = androidx.compose.ui.text.TextStyle(fontSize = getResponsiveFontSize()),
+            textStyle = TextStyle(fontSize = getResponsiveFontSize()),
             trailingIcon = {
                 if (searchQueryOwnTChamps.isNotEmpty()) {
                     Icon(

@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.hotsdraftadviser.database.AppDatabase
 import com.example.hotsdraftadviser.database.favoritChamps.FavoriteChampionsRepository
 import com.example.hotsdraftadviser.database.isListShown.IsListModeRepository
+import com.example.hotsdraftadviser.database.isStarRating.IsStarRatingRepository
 import com.example.hotsdraftadviser.database.isStreamingEnabled.StreamingSettingsRepository
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampData
@@ -85,6 +86,24 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
+    private val starRateRepository: IsStarRatingRepository by lazy {
+        Log.d("ViewModelInit", "Initializing repository...")
+        try {
+            Log.d("ViewModelInit", "Getting database instance...")
+            val db = AppDatabase.getDatabase(application)
+            Log.d("ViewModelInit", "Database instance obtained: $db")
+            Log.d("ViewModelInit", "Getting DAO...")
+            val dao = db.isStarRatingSettingDao()
+            Log.d("ViewModelInit", "DAO obtained: $dao")
+            val repoInstance = IsStarRatingRepository(dao)
+            Log.d("ViewModelInit", "Repository instance created: $repoInstance")
+            repoInstance
+        } catch (e: Exception) {
+            Log.e("ViewModelInit", "Error initializing repository", e)
+            throw e
+        }
+    }
+
     // Dein isStreamingEnabled als StateFlow, das von der Datenbank gespeist wird
     val isStreamingEnabled: StateFlow<Boolean> = streamingSettingsRepository.isStreamingEnabled
         .stateIn(
@@ -122,6 +141,13 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             started = SharingStarted.WhileSubscribed(5000L),
             initialValue = false
         )
+
+    val isStarRatingMode: StateFlow<Boolean> = starRateRepository.isStarRatingEnabled
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = false
+        )
     val favFilter: StateFlow<Boolean> = _favFilter.asStateFlow()
 
     val allChampsData = _allChampsData.asStateFlow()
@@ -150,9 +176,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val _distinctchoosableChampList = dataFlowForChampListWithScores(true, true)
     val chosableChampList: StateFlow<List<ChampData>> = _choosableChampList
     val distinctChosableChampList: StateFlow<List<ChampData>> = _distinctchoosableChampList
+    val allChampsDistinct = dataFlowForChampListWithScores(false, true)
 
     val distinctfilteredChosableChampList: StateFlow<List<ChampData>> = combine(
-        dataFlowForChampListWithScores(false, true),
+        allChampsDistinct,
         distinctChosableChampList
     ) { unfilteredList, distinctList ->
         val distinctChampNames = distinctList.map { it.ChampName }.toSet()
@@ -163,9 +190,21 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         initialValue = emptyList()
     )
 
+    val ownScoreMax = allChampsDistinct.map { list -> list.maxOfOrNull { it.scoreOwn } ?: 1 }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = 1
+        )
 
-    //hier problem?=
-    val fitTeamMax: StateFlow<Int> = dataFlowForChampListWithScores(false, true).map { list ->
+    val theirScoreMax = allChampsDistinct.map { list -> list.maxOfOrNull { it.scoreTheir } ?: 1 }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = 1
+        )
+
+    val fitTeamMax: StateFlow<Int> = allChampsDistinct.map { list ->
         list.maxOfOrNull { it.fitTeam } ?: 1
     }.stateIn(
         scope = viewModelScope,
@@ -174,7 +213,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     )
 
     val goodAgainstTeamMax: StateFlow<Int> = combine(
-        dataFlowForChampListWithScores(false, true), // Assuming this contains champs with their StrongAgainst properties
+        allChampsDistinct, // Assuming this contains champs with their StrongAgainst properties
         pickedTheirTeamChamps
     ) { champs, pickedTheirChamps ->
         champs.maxOfOrNull { champ ->
@@ -213,6 +252,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         viewModelScope.launch {
             isListModeRepository.updateListModeStatus(!isListMode.value)
             checkIfChampIsFavorite()
+        }
+    }
+
+    fun toggleStarRateMode() {
+        viewModelScope.launch {
+            starRateRepository.updateStarRatingStatus(!isStarRatingMode.value)
         }
     }
 

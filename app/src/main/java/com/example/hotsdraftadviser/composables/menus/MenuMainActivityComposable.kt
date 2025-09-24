@@ -21,7 +21,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MenuMainActivityComposable(modifier: Modifier = Modifier, onDisclaymer: () -> Unit, onToggleListMode: () -> Unit) {
+fun MenuMainActivityComposable(
+    modifier: Modifier = Modifier,
+    onDisclaymer: () -> Unit,
+    onToggleListMode: () -> Unit,
+    onToggleStarRating: () -> Unit
+) {
     var expanded by remember { mutableStateOf(false) }
     Box(
         modifier = modifier
@@ -42,14 +47,18 @@ fun MenuMainActivityComposable(modifier: Modifier = Modifier, onDisclaymer: () -
                 text = { Text("Disclaim") },
                 onClick = { onDisclaymer() }
             )
-            // TODO
-            //  drawable/skull_list_24"
             DropdownMenuItem(
-                text = { Row{
-                    Icon(Icons.AutoMirrored.Filled.List, contentDescription = "List")
-                    Icon(Icons.Outlined.CompareArrows, contentDescription = "List")
-                    Icon(Icons.Outlined.AccountBox, contentDescription = "List")
-                } },
+                text = { Text("Starrating") },
+                onClick = { onToggleStarRating() }
+            )
+            DropdownMenuItem(
+                text = {
+                    Row {
+                        Icon(Icons.AutoMirrored.Filled.List, contentDescription = "List")
+                        Icon(Icons.Outlined.CompareArrows, contentDescription = "List")
+                        Icon(Icons.Outlined.AccountBox, contentDescription = "List")
+                    }
+                },
                 onClick = { onToggleListMode() }
             )
         }
@@ -59,5 +68,8 @@ fun MenuMainActivityComposable(modifier: Modifier = Modifier, onDisclaymer: () -
 @Preview
 @Composable
 fun MenuMainActivitPreview() {
-    MenuMainActivityComposable(onDisclaymer = {}, onToggleListMode = {})
+    MenuMainActivityComposable(
+        onDisclaymer = {}, onToggleListMode = {},
+        onToggleStarRating = {}
+    )
 }

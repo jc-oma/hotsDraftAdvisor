@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -43,6 +44,7 @@ import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampData
 import com.example.hotsdraftadviser.getColorByHexString
 import androidx.core.graphics.toColorInt
+import com.example.hotsdraftadviser.composables.starRating.StarRatingComposable
 
 @Composable
 fun ChampPortraitComposable(
@@ -58,7 +60,10 @@ fun ChampPortraitComposable(
     mapFloat: Float,
     ownTeamFloat: Float,
     theirTeamFloat: Float,
-    mapName: String
+    mapName: String,
+    maxOwnScore: Int,
+    maxTheirScore: Int,
+    isStarRating: Boolean
 ) {
     val textColor = "f8f8f9ff"
     val composeTextColor = getColorByHexString(textColor)
@@ -68,7 +73,7 @@ fun ChampPortraitComposable(
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(2.5f)
-            .background(Color(("#7a68a5" ).toColorInt()))
+            .background(Color(("#7a68a5").toColorInt()))
     ) {
 
         IconToggleButton(
@@ -176,7 +181,14 @@ fun ChampPortraitComposable(
                                     .padding(4.dp),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Text(champ.scoreOwn.toString())
+                                if (isStarRating) {
+                                    StarRatingComposable(
+                                        champ.scoreOwn.toFloat() / maxOwnScore.toFloat(),
+                                        modifier = Modifier.fillMaxHeight()
+                                    )
+                                } else {
+                                    Text(champ.scoreOwn.toString())
+                                }
                             }
                             Box(
                                 modifier = Modifier
@@ -199,7 +211,14 @@ fun ChampPortraitComposable(
                                     .padding(4.dp),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Text(champ.scoreTheir.toString())
+                                if (isStarRating) {
+                                    StarRatingComposable(
+                                        champ.scoreTheir.toFloat() / maxTheirScore.toFloat(),
+                                        modifier = Modifier.fillMaxWidth()
+                                    )
+                                } else {
+                                    Text(champ.scoreTheir.toString())
+                                }
                             }
                             Box(
                                 modifier = Modifier
@@ -279,6 +298,9 @@ private fun ChampPortraitComposablePreview() {
         mapFloat = 0.7f,
         ownTeamFloat = 0.4f,
         theirTeamFloat = 0.2f,
-        mapName = "Hanamura"
+        mapName = "Hanamura",
+        maxOwnScore = 145,
+        maxTheirScore = 74,
+        isStarRating = true
     )
 }
