@@ -479,6 +479,7 @@ private fun AvailableChampPortraitComposable(
     sortState: SortState
 ) {
     val distinctChosableChampList by viewModel.distinctChosableChampList.collectAsState(emptyList())
+    val distinctAndUnfilteredChosableChampList by viewModel.distinctUnfilteredChosableChampList.collectAsState(emptyList())
     val fitTeamMax by viewModel.fitTeamMax.collectAsState(1)
     val goodAgainstTeamMax by viewModel.goodAgainstTeamMax.collectAsState(1)
     val choosenMap by viewModel.choosenMap.collectAsState("")
@@ -494,20 +495,22 @@ private fun AvailableChampPortraitComposable(
                 count = distinctChosableChampList.size,
                 key = { it -> distinctChosableChampList[it].key }) { i ->
                 if (distinctChosableChampList[i].isPicked) return@items
+                val currentChamp = distinctChosableChampList[i]
+                val currentChampUnfilt = distinctAndUnfilteredChosableChampList[i]
 
                 ChampPortraitComposable(
-                    champ = distinctChosableChampList[i],
-                    toggleChampFavorite = { viewModel.toggleFavoriteStatus(distinctChosableChampList[i].ChampName) },
+                    champ = currentChamp,
+                    toggleChampFavorite = { viewModel.toggleFavoriteStatus(currentChamp.ChampName) },
                     pickChampForOwnTeam = { viewModel.pickChampForTeam(i, TeamSide.OWN) },
                     pickChampForTheirTeam = { viewModel.pickChampForTeam(i, TeamSide.THEIR) },
                     updateChampSearchQuery = { viewModel.updateOwnChampSearchQuery("") },
                     ownBan = { viewModel.setBansPerTeam(i, TeamSide.OWN) },
                     theirBan = { viewModel.setBansPerTeam(i, TeamSide.THEIR) },
-                    champDrawable = Utilitys().mapChampNameToDrawable(distinctChosableChampList[i].ChampName)!!,
+                    champDrawable = Utilitys().mapChampNameToDrawable(currentChamp.ChampName)!!,
                     index = i,
-                    mapFloat = distinctChosableChampList[i].mapFloat,
-                    ownTeamFloat = distinctChosableChampList[i].fitTeam / fitTeamMax.toFloat(),
-                    theirTeamFloat = distinctChosableChampList[i].goodAgainstTeam / goodAgainstTeamMax.toFloat(),
+                    mapFloat = currentChampUnfilt.mapFloat,
+                    ownTeamFloat = currentChampUnfilt.fitTeam / fitTeamMax.toFloat(),
+                    theirTeamFloat = currentChampUnfilt.goodAgainstTeam / goodAgainstTeamMax.toFloat(),
                     mapName = choosenMap
                 )
             }

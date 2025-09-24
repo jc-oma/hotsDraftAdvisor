@@ -12,6 +12,7 @@ import com.example.hotsdraftadviser.database.favoritChamps.FavoriteChampionsRepo
 import com.example.hotsdraftadviser.database.isListShown.IsListModeRepository
 import com.example.hotsdraftadviser.database.isStreamingEnabled.StreamingSettingsRepository
 import com.example.hotsdraftadviser.dataclsasses.ChampData
+import com.example.hotsdraftadviser.dataclsasses.exampleChampData
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,6 +20,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -144,11 +146,26 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         dataFlowForChampListWithScores(false, false)
 
     val _choosableChampList = dataFlowForChampListWithScores(true, false)
+
     val _distinctchoosableChampList = dataFlowForChampListWithScores(true, true)
     val chosableChampList: StateFlow<List<ChampData>> = _choosableChampList
     val distinctChosableChampList: StateFlow<List<ChampData>> = _distinctchoosableChampList
 
-    val fitTeamMax: StateFlow<Int> = _choosableChampList.map { list ->
+    val distinctfilteredChosableChampList: StateFlow<List<ChampData>> = combine(
+        dataFlowForChampListWithScores(false, true),
+        distinctChosableChampList
+    ) { unfilteredList, distinctList ->
+        val distinctChampNames = distinctList.map { it.ChampName }.toSet()
+        unfilteredList.filter { it.ChampName in distinctChampNames }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Lazily,
+        initialValue = emptyList()
+    )
+
+
+    //hier problem?=
+    val fitTeamMax: StateFlow<Int> = dataFlowForChampListWithScores(false, true).map { list ->
         list.maxOfOrNull { it.fitTeam } ?: 1
     }.stateIn(
         scope = viewModelScope,
@@ -157,7 +174,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     )
 
     val goodAgainstTeamMax: StateFlow<Int> = combine(
-        _choosableChampList, // Assuming this contains champs with their StrongAgainst properties
+        dataFlowForChampListWithScores(false, true), // Assuming this contains champs with their StrongAgainst properties
         pickedTheirTeamChamps
     ) { champs, pickedTheirChamps ->
         champs.maxOfOrNull { champ ->
@@ -366,7 +383,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             champsWithMapFloat
         }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-        list = filterChampsByFav(list)
+        if (isFiltered) {
+            list = filterChampsByFav(list)
+        }
 
         list = addMapScoreToDistinctMaps(list)
 
