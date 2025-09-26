@@ -145,6 +145,7 @@ fun MainActivityComposable(
 
     val isDisclaymerShown by viewModel.isDisclaymerShown.collectAsState()
     val isListMode by viewModel.isListMode.collectAsState()
+    val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
 
 
     Column(
@@ -383,7 +384,8 @@ fun MainActivityComposable(
                     { i, teamSide -> viewModel.removePick(i, teamSide) },
                     composeTheirTeamColor,
                     ownPickScore,
-                    theirPickScore
+                    theirPickScore,
+                    isStarRatingMode
                 )
             }
 

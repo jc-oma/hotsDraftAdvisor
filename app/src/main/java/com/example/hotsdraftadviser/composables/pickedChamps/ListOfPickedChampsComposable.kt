@@ -4,7 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
@@ -17,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.hotsdraftadviser.TeamSide
 import com.example.hotsdraftadviser.Utilitys
+import com.example.hotsdraftadviser.composables.starRating.StarRatingComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampData
 import com.example.hotsdraftadviser.getColorByHexString
@@ -31,7 +34,8 @@ fun ListOfPickedChampsComposable(
     removePick: (Int, TeamSide) -> Unit,
     composeTheirTeamColor: Color,
     ownPickScore: Int,
-    theirPickScore: Int
+    theirPickScore: Int,
+    isStarrating: Boolean
 ) {
     Column() {
         Row(
@@ -86,17 +90,27 @@ fun ListOfPickedChampsComposable(
                 }
             }
         }
-        Row {
-            Text(
-                modifier = Modifier.weight(1f),
-                text = ownPickScore.toString(),
-                textAlign = TextAlign.Right
-            )
-            Text(
-                modifier = Modifier.weight(1f),
-                text = theirPickScore.toString(),
-                textAlign = TextAlign.Right
-            )
+        Row(modifier = Modifier.height(32.dp)) {
+            if (isStarrating) {
+
+                val ownScoreFlaot = ownPickScore.toFloat()
+                val theirScoreFlaot = ownPickScore.toFloat()
+                val maxFloat = ownScoreFlaot.coerceAtLeast(theirScoreFlaot)
+
+                StarRatingComposable(ownPickScore / maxFloat,  modifier = Modifier.fillMaxHeight().weight(1f))
+                StarRatingComposable(theirScoreFlaot / maxFloat,  modifier = Modifier.fillMaxHeight().weight(1f))
+            } else {
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = ownPickScore.toString(),
+                    textAlign = TextAlign.Right
+                )
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = theirPickScore.toString(),
+                    textAlign = TextAlign.Right
+                )
+            }
         }
     }
 }
@@ -119,6 +133,7 @@ fun ListOfPickedChampsComposablePreview() {
         removePick = { _, _ -> {} },
         composeTheirTeamColor = getColorByHexString(theirTeamColor),
         ownPickScore = 321,
-        theirPickScore = 83
+        theirPickScore = 83,
+        isStarrating = true
     )
 }
