@@ -714,11 +714,15 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         _choosenMap.value = ""
     }
 
-    fun setRoleFilter(role: RoleEnum) {
-        if (_roleFilter.value.contains(role)) {
-            _roleFilter.value = _roleFilter.value.filter { it -> it != role }
+    fun setRoleFilter(role: RoleEnum?) {
+        if (role == null) {
+            _roleFilter.value = emptyList()
         } else {
-            _roleFilter.value = _roleFilter.value + role
+            if (_roleFilter.value.contains(role)) {
+                _roleFilter.value = _roleFilter.value.filter { it -> it != role }
+            } else {
+                _roleFilter.value = _roleFilter.value + role
+            }
         }
     }
 

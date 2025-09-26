@@ -643,6 +643,7 @@ private fun SearchAndFilterRowForChamps(
                 .weight(2f),
             value = searchQueryOwnTChamps,
             onValueChange = { newText: String ->
+                viewModel.setRoleFilter(null)
                 viewModel.updateOwnChampSearchQuery(newText)
             },
             label = {
