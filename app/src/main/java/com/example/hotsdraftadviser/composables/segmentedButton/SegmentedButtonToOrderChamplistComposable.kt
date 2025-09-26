@@ -1,6 +1,8 @@
 package com.example.hotsdraftadviser.composables.segmentedButton
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
@@ -12,18 +14,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.hotsdraftadviser.SortState
+import com.example.hotsdraftadviser.getColorByHexString
 
 @Composable
-fun SegmentedButtonToOrderChamplistComposable(setSortState: (SortState) -> Unit, sortState: SortState) {
+fun SegmentedButtonToOrderChamplistComposable(
+    setSortState: (SortState) -> Unit,
+    sortState: SortState
+) {
     var selectedIndex by remember { mutableIntStateOf(sortState.ordinal) }
-    var list = listOf<String>("Best Pick", "Best Ban", "Name")
-    SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+    val list = listOf<String>("Best Pick", "Best Ban", "Name")
+    val screenBackgroundColor = "150e35ff"
+    val composeScreenBackgroundColor = getColorByHexString(screenBackgroundColor)
+
+    SingleChoiceSegmentedButtonRow(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
         for ((i, state) in SortState.entries.withIndex()) {
             SegmentedButton(
-                colors = SegmentedButtonDefaults.colors(
-                    activeBorderColor = Color.White,
-                    inactiveBorderColor = Color.White,
-                    activeContentColor = Color.White),
                 shape = SegmentedButtonDefaults.itemShape(
                     index = i,
                     count = SortState.entries.size
@@ -33,7 +41,7 @@ fun SegmentedButtonToOrderChamplistComposable(setSortState: (SortState) -> Unit,
                     setSortState(state)
                 },
                 selected = i == selectedIndex,
-                label = { Text(list[i], color = Color.White) }
+                label = { Text(list[i]) }
             )
         }
     }

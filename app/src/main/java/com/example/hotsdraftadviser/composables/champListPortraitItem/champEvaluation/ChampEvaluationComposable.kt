@@ -64,7 +64,6 @@ fun ChampEvaluationComposable(
             Text(
                 text = label,
                 style = MaterialTheme.typography.labelSmall,
-                color = Color.Black,
                 modifier = Modifier.padding(bottom = 0.dp)
             )
         }

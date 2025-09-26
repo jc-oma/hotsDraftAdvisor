@@ -27,9 +27,9 @@ data class ChampData(
 
 // Beispielhafte Instanz Ihrer ChampData-Klasse
 val exampleChampData = ChampData(
-    ChampName = "Sgt. Hammer",
-    ChampRole = listOf("Fernkampf-Assassine"),
-    ChampRoleAlt = listOf("Anfängerfreundlich"),
+    ChampName = "SgtHammer",
+    ChampRole = listOf("assassine"),
+    ChampRoleAlt = listOf("range"),
     StrongAgainst = listOf(
         StrongAgainstData("Illidan", 123),
         StrongAgainstData("Arthas", 423)

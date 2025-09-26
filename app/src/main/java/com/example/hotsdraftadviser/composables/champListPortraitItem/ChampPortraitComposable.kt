@@ -43,7 +43,6 @@ import com.example.hotsdraftadviser.composables.ChampEvaluationComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampData
 import com.example.hotsdraftadviser.getColorByHexString
-import androidx.core.graphics.toColorInt
 import com.example.hotsdraftadviser.composables.starRating.StarRatingComposable
 
 @Composable
@@ -65,15 +64,17 @@ fun ChampPortraitComposable(
     maxTheirScore: Int,
     isStarRating: Boolean
 ) {
-    val textColor = "f8f8f9ff"
-    val composeTextColor = getColorByHexString(textColor)
+    val screenBackgroundColor = "150e35ff"
+    val composeScreenBackgroundColor = getColorByHexString(screenBackgroundColor)
+    val boardercolor = "f8f8f9ff"
+    val composeBoarderColor = getColorByHexString(boardercolor)
     var fav by remember { mutableStateOf(champ.isAFavoriteChamp) }
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(2.5f)
-            .background(Color(("#7a68a5").toColorInt()))
+            .background(composeScreenBackgroundColor)
     ) {
 
         IconToggleButton(
@@ -88,8 +89,7 @@ fun ChampPortraitComposable(
         ) {
             Icon(
                 imageVector = if (fav) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                contentDescription = if (fav) "Remove from favorites" else "Add to favorites",
-                tint = Color.Black
+                contentDescription = if (fav) "Remove from favorites" else "Add to favorites"
             )
         }
         Row {
@@ -98,7 +98,7 @@ fun ChampPortraitComposable(
                     .weight(0.5f)
                     .border(
                         1.dp,
-                        composeTextColor,
+                        composeBoarderColor,
                         shape = RoundedCornerShape(4.dp)
                     )
             ) {
@@ -123,7 +123,6 @@ fun ChampPortraitComposable(
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp
                         ),
-                        color = Color.Black,
                         text = (index + 1).toString() + ". " + champ.ChampName
                     )
                 }
@@ -171,7 +170,7 @@ fun ChampPortraitComposable(
                                     )
                                     .border(
                                         1.dp,
-                                        composeTextColor,
+                                        composeBoarderColor,
                                         shape = RoundedCornerShape(4.dp)
                                     )
                                     .clickable {
@@ -201,7 +200,7 @@ fun ChampPortraitComposable(
                                     )
                                     .border(
                                         1.dp,
-                                        composeTextColor,
+                                        composeBoarderColor,
                                         shape = RoundedCornerShape(4.dp)
                                     )
                                     .clickable {
@@ -231,7 +230,7 @@ fun ChampPortraitComposable(
                                     )
                                     .border(
                                         1.dp,
-                                        composeTextColor,
+                                        composeBoarderColor,
                                         shape = RoundedCornerShape(4.dp)
                                     )
                                     .clickable {
@@ -258,7 +257,7 @@ fun ChampPortraitComposable(
                                     )
                                     .border(
                                         1.dp,
-                                        composeTextColor,
+                                        composeBoarderColor,
                                         shape = RoundedCornerShape(4.dp)
                                     )
                                     .clickable {

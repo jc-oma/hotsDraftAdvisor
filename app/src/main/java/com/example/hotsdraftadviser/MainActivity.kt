@@ -70,6 +70,7 @@ import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampListI
 import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampPortraitComposable
 import com.example.hotsdraftadviser.composables.menus.DisclaimerComposable
 import com.example.hotsdraftadviser.composables.menus.MenuMainActivityComposable
+import com.example.hotsdraftadviser.composables.pickedChamps.ListOfPickedChampsComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.composables.segmentedButton.SegmentedButtonToOrderChamplistComposable
 import com.example.hotsdraftadviser.composables.videostream.VideoStreamComposable
@@ -380,7 +381,7 @@ fun MainActivityComposable(
                     theirPickedChamps,
                     composeOwnTeamColor,
                     composeTextColor,
-                    viewModel,
+                    { i, teamSide -> viewModel.removePick(i, teamSide) },
                     composeTheirTeamColor,
                     ownPickScore,
                     theirPickScore
@@ -830,129 +831,6 @@ private fun SearchAndFilterRowForChamps(
         }
     }
 
-}
-
-@Composable
-private fun ListOfPickedChampsComposable(
-    composeHeadlineColor: Color,
-    ownPickedChamps: List<ChampData>,
-    theirPickedChamps: List<ChampData>,
-    composeOwnTeamColor: Color,
-    composeTextColor: Color,
-    viewModel: MainActivityViewModel,
-    composeTheirTeamColor: Color,
-    ownPickScore: Int,
-    theirPickScore: Int
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(composeHeadlineColor)
-    ) {
-        Text(
-            modifier = Modifier
-                .weight(1f)
-                .padding(start = 12.dp, end = 8.dp), text = "Own Team"
-        )
-        Text(
-            modifier = Modifier
-                .weight(1f)
-                .padding(start = 12.dp, end = 8.dp), text = "Their Team"
-        )
-    }
-    LazyColumn {
-        items(ownPickedChamps.size.coerceAtLeast(theirPickedChamps.size)) { i ->
-            Row(modifier = Modifier.fillMaxWidth()) {
-                if (ownPickedChamps.size > i) {
-                    pickedChampItem(
-                        composeOwnTeamColor,
-                        composeTextColor,
-                        removePickForTeam = { viewModel.removePick(i, TeamSide.OWN) },
-                        teamPickedChamp = ownPickedChamps[i],
-                        painter = painterResource(
-                            id = Utilitys().mapChampNameToDrawable(
-                                ownPickedChamps[i].ChampName
-                            )!!
-                        )
-                    )
-                } else {
-                    Text(modifier = Modifier.weight(1f), text = "")
-                }
-                if (theirPickedChamps.size > i) {
-                    pickedChampItem(
-                        composeTheirTeamColor,
-                        composeTextColor,
-                        removePickForTeam = { viewModel.removePick(i, TeamSide.THEIR) },
-                        teamPickedChamp = theirPickedChamps[i],
-                        painter = painterResource(
-                            id = Utilitys().mapChampNameToDrawable(
-                                theirPickedChamps[i].ChampName
-                            )!!
-                        )
-                    )
-                } else {
-                    Text(modifier = Modifier.weight(1f), text = "")
-                }
-            }
-        }
-    }
-    Row {
-        Text(
-            modifier = Modifier.weight(1f),
-            text = ownPickScore.toString(),
-            textAlign = TextAlign.Right
-        )
-        Text(
-            modifier = Modifier.weight(1f),
-            text = theirPickScore.toString(),
-            textAlign = TextAlign.Right
-        )
-    }
-}
-
-@Composable
-private fun RowScope.pickedChampItem(
-    teamColor: Color,
-    textColor: Color,
-    removePickForTeam: () -> Unit,
-    teamPickedChamp: ChampData,
-    painter: Painter
-) {
-    Box(
-        modifier = Modifier
-            .weight(1f)
-            .padding(2.dp)
-            .height(32.dp)
-            .background(
-                Color.Black.copy(alpha = 0.0f),
-                shape = RoundedCornerShape(4.dp)
-            )
-            .border(
-                3.dp,
-                teamColor.copy(alpha = 1.0f),
-                shape = RoundedCornerShape(4.dp)
-            )
-            .clickable { removePickForTeam() }
-            .padding(4.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            painter = painter,
-            contentScale = ContentScale.Crop,
-            contentDescription = teamPickedChamp.ChampName
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.7f))
-        )
-        Text(
-            modifier = Modifier,
-            text = teamPickedChamp.ChampName,
-            color = Color.White
-        )
-    }
 }
 
 @Composable
