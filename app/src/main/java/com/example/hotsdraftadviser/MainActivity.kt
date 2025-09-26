@@ -151,7 +151,7 @@ fun MainActivityComposable(
             .fillMaxSize()
             .background(composeScreenBackgroundColor)
     ) {
-        Box(modifier = Modifier.height(48.dp))
+        Box(modifier = Modifier.height(52.dp))
 
         //TODO
         //--- AdBanners here ---
@@ -386,11 +386,6 @@ fun MainActivityComposable(
                     theirPickScore
                 )
             }
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(10.dp)
-            )
 
             SearchAndFilterRowForChamps(
                 searchQueryOwnTChamps,

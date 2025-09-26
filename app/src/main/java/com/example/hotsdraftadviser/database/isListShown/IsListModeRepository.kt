@@ -16,7 +16,7 @@ class IsListModeRepository @Inject constructor(
      * Dies stellt sicher, dass immer ein nicht-nullbarer Boolean zurückgegeben wird.
      */
     val isListModeEnabled: Flow<Boolean> = isListModeDao.isListModeEnabled().map {
-        it ?: true // Standardwert, wenn null aus der DB kommt (z.B. vor dem ersten Setzen)
+        it ?: false // Standardwert, wenn null aus der DB kommt (z.B. vor dem ersten Setzen)
     }
 
     /**
