@@ -594,11 +594,11 @@ private fun availableChampListComposable(
         )
         Text(
             modifier = Modifier.weight(0.5f),
-            text = "Own Ban"
+            text = "Ban Own"
         )
         Text(
             modifier = Modifier.weight(0.5f),
-            text = "Their Ban"
+            text = "Ban Their"
         )
     }
     LazyColumn(
