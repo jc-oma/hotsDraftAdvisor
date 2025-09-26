@@ -299,8 +299,8 @@ private fun ChampPortraitComposablePreview() {
         ownTeamFloat = 0.4f,
         theirTeamFloat = 0.2f,
         mapName = "Hanamura",
-        maxOwnScore = 145,
-        maxTheirScore = 74,
+        maxOwnScore = 144,
+        maxTheirScore = 75,
         isStarRating = true
     )
 }

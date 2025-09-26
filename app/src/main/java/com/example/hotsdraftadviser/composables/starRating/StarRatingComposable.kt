@@ -19,12 +19,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kotlin.math.roundToInt
 
 @Composable
 fun StarRatingComposable(
     ratingFloat: Float,
     modifier: Modifier = Modifier, // Akzeptiere einen Modifier von außen
-    maxRating: Int = 3,
+    maxRating: Int = 5,
     filledStar: ImageVector = Icons.Filled.Star,
     emptyStar: ImageVector = Icons.Outlined.StarBorder,
     starColorFilled: Color = Color.White,
@@ -32,7 +33,7 @@ fun StarRatingComposable(
     starColorEmpty: Color = Color.Black.copy(alpha = 0f),
     starSize: Dp = Dp.Unspecified
 ) {
-    val rating = (ratingFloat * (maxRating - 1)).toInt() + 1
+    val rating = (ratingFloat * (maxRating)).roundToInt()
     val starPadding = 8.dp
     Row(modifier = modifier.padding(starPadding)) {
         for (i in 1..maxRating) {

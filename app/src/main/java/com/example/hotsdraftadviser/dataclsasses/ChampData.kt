@@ -47,7 +47,7 @@ val exampleChampData = ChampData(
         MapScoreData("Endstation Braxis", 75),
         MapScoreData("Verfluchtes Tal", 70)
     ),
-    scoreOwn = 80,
+    scoreOwn = 120,
     scoreTheir = 75,
     isPicked = false,
     pickedBy = TeamSide.NONE,
