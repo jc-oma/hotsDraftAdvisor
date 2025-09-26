@@ -2,6 +2,7 @@ package com.example.hotsdraftadviser
 
 import android.app.Application
 import android.util.Log
+import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -474,8 +475,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 champs
             } else {
                 champs.filter { champ ->
-                    selectedRoles.any { selectedRole ->
-                        champ.ChampRoleAlt.equals(selectedRole.name, ignoreCase = true)
+                    selectedRoles.any { it ->
+                        val name = it.name.lowercase()
+                        val ccrole = champ.ChampRoleAlt
+                        ccrole.contains(name)
                     }
                 }
             }

@@ -1,8 +1,8 @@
 [
   {
     "ChampName": "Abathur",
-    "ChampRole": "specialist",
-    "ChampRoleAlt": "support",
+    "ChampRole": ["specialist"],
+    "ChampRoleAlt": ["support"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -1566,8 +1566,8 @@
   },
   {
     "ChampName": "Alarak",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "melee",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["melee"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -3287,8 +3287,8 @@
   },
   {
     "ChampName": "Alexstrasza",
-    "ChampRole": "support",
-    "ChampRoleAlt": "heal",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["heal"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -4208,8 +4208,8 @@
   },
   {
     "ChampName": "Ana",
-    "ChampRole": "support",
-    "ChampRoleAlt": "heal",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["heal"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -5489,8 +5489,8 @@
   },
   {
     "ChampName": "Anduin",
-    "ChampRole": "support",
-    "ChampRoleAlt": "heal",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["heal"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -6410,8 +6410,8 @@
   },
   {
     "ChampName": "Anubarak",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "tank",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["tank"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -7999,8 +7999,8 @@
   },
   {
     "ChampName": "Artanis",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "bruiser",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["bruiser"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -9620,8 +9620,8 @@
   },
   {
     "ChampName": "Arthas",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "tank",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["tank"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -11285,8 +11285,8 @@
   },
   {
     "ChampName": "Auriel",
-    "ChampRole": "support",
-    "ChampRoleAlt": "heal",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["heal"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -12430,8 +12430,8 @@
   },
   {
     "ChampName": "Azmodan",
-    "ChampRole": "specialist",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["specialist"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -13827,8 +13827,8 @@
   },
   {
     "ChampName": "Blaze",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "tank",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["tank"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -14864,8 +14864,8 @@
   },
   {
     "ChampName": "Brightwing",
-    "ChampRole": "support",
-    "ChampRoleAlt": "heal",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["heal"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -16461,8 +16461,8 @@
   },
   {
     "ChampName": "Cassia",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -17770,8 +17770,8 @@
   },
   {
     "ChampName": "Chen",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "bruiser",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["bruiser"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -19175,8 +19175,8 @@
   },
   {
     "ChampName": "Chogall",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "tank",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["tank", "ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -20584,8 +20584,8 @@
   },
   {
     "ChampName": "Deathwing",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "bruiser",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["bruiser"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -22157,8 +22157,8 @@
   },
   {
     "ChampName": "Chromie",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -23610,8 +23610,8 @@
   },
   {
     "ChampName": "DVA",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "bruiser",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["bruiser"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -24839,8 +24839,8 @@
   },
   {
     "ChampName": "Deckard",
-    "ChampRole": "support",
-    "ChampRoleAlt": "heal",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["heal"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -25872,8 +25872,8 @@
   },
   {
     "ChampName": "Dehaka",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "bruiser",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["bruiser"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -27265,8 +27265,8 @@
   },
   {
     "ChampName": "Diablo",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "tank",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["tank"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -28994,8 +28994,8 @@
   },
   {
     "ChampName": "ETC",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "tank",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["tank"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -30603,8 +30603,8 @@
   },
   {
     "ChampName": "Falstad",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -31980,8 +31980,8 @@
   },
   {
     "ChampName": "Fenix",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -33169,8 +33169,8 @@
   },
   {
     "ChampName": "Chogall",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "tank",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["tank", "ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -34578,8 +34578,8 @@
   },
   {
     "ChampName": "Mei",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "tank",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["tank"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -36083,8 +36083,8 @@
   },
   {
     "ChampName": "Garrosh",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "tank",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["tank"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -37516,8 +37516,8 @@
   },
   {
     "ChampName": "Gazlowe",
-    "ChampRole": "specialist",
-    "ChampRoleAlt": "melee",
+    "ChampRole": ["specialist"],
+    "ChampRoleAlt": ["melee"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -38861,8 +38861,8 @@
   },
   {
     "ChampName": "Genji",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -40294,8 +40294,8 @@
   },
   {
     "ChampName": "Greymane",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -41863,8 +41863,8 @@
   },
   {
     "ChampName": "Guldan",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -43108,8 +43108,8 @@
   },
   {
     "ChampName": "Hanzo",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -44128,8 +44128,8 @@
     ]
   },{
   "ChampName": "Hogger",
-  "ChampRole": "warrior",
-  "ChampRoleAlt": "bruiser",
+  "ChampRole": ["warrior"],
+  "ChampRoleAlt": ["bruiser"],
   "StrongAgainst": [
     {
       "ChampName": "Deathwing",
@@ -45701,8 +45701,8 @@
 },
   {
     "ChampName": "Illidan",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "melee",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["melee"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -47362,8 +47362,8 @@
   },
   {
     "ChampName": "Imperius",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "bruiser",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["bruiser"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -48383,8 +48383,8 @@
   },
   {
     "ChampName": "Jaina",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -50040,8 +50040,8 @@
   },
   {
     "ChampName": "Johanna",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "tank",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["tank"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -51617,8 +51617,8 @@
   },
   {
     "ChampName": "Junkrat",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -52530,8 +52530,8 @@
   },
   {
     "ChampName": "Kaelthas",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -54207,8 +54207,8 @@
   },
   {
     "ChampName": "Kelthuzad",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -55632,8 +55632,8 @@
   },
   {
     "ChampName": "Kerrigan",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "melee",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["melee"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -57233,8 +57233,8 @@
   },
   {
     "ChampName": "Kharazim",
-    "ChampRole": "support",
-    "ChampRoleAlt": "heal",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["heal"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -58582,8 +58582,8 @@
   },
   {
     "ChampName": "Leoric",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "bruiser",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["bruiser"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -60243,8 +60243,8 @@
   },
   {
     "ChampName": "Lili",
-    "ChampRole": "support",
-    "ChampRoleAlt": "heal",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["heal"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -61603,8 +61603,8 @@
   },
   {
     "ChampName": "Li-Ming",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -63228,8 +63228,8 @@
   },
   {
     "ChampName": "LtMorales",
-    "ChampRole": "support",
-    "ChampRoleAlt": "heal",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["heal"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -64713,8 +64713,8 @@
   },
   {
     "ChampName": "Lucio",
-    "ChampRole": "support",
-    "ChampRoleAlt": "heal",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["heal"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -66030,8 +66030,8 @@
   },
   {
     "ChampName": "Lunara",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -67695,8 +67695,8 @@
   },
   {
     "ChampName": "Maiev",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "melee",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["melee"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -69132,8 +69132,8 @@
   },
   {
     "ChampName": "Malganis",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "tank",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["tank"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -70049,8 +70049,8 @@
   },
   {
     "ChampName": "Malfurion",
-    "ChampRole": "support",
-    "ChampRoleAlt": "heal",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["heal"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -71522,8 +71522,8 @@
   },
   {
     "ChampName": "Malthael",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "bruiser",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["bruiser"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -72931,8 +72931,8 @@
   },
   {
     "ChampName": "Medivh",
-    "ChampRole": "specialist",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["specialist"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -74300,8 +74300,8 @@
   },
   {
     "ChampName": "Mephisto",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -75325,8 +75325,8 @@
   },
   {
     "ChampName": "Muradin",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "tank",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["tank"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -76746,8 +76746,8 @@
   },
   {
     "ChampName": "Murky",
-    "ChampRole": "specialist",
-    "ChampRoleAlt": "melee",
+    "ChampRole": ["specialist"],
+    "ChampRoleAlt": ["melee"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -78375,8 +78375,8 @@
   },
   {
     "ChampName": "Nazeebo",
-    "ChampRole": "specialist",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["specialist"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -79932,8 +79932,8 @@
   },
   {
     "ChampName": "Nova",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -81497,8 +81497,8 @@
   },
   {
     "ChampName": "Orphea",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -82781,8 +82781,8 @@
     ]
   },{
   "ChampName": "Qhira",
-  "ChampRole": "assassin",
-  "ChampRoleAlt": "Bruiser",
+  "ChampRole": ["assassin"],
+  "ChampRoleAlt": ["bruiser"],
   "StrongAgainst": [
     {
       "ChampName": "Hogger",
@@ -83062,8 +83062,8 @@
 },
   {
     "ChampName": "Probius",
-    "ChampRole": "specialist",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["specialist"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -84063,8 +84063,8 @@
   },
   {
     "ChampName": "Ragnaros",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "melee",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["melee"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -85248,8 +85248,8 @@
   },
   {
     "ChampName": "Raynor",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -86733,8 +86733,8 @@
   },
   {
     "ChampName": "Rehgar",
-    "ChampRole": "support",
-    "ChampRoleAlt": "heal",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["heal"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -87998,8 +87998,8 @@
   },
   {
     "ChampName": "Rexxar",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "bruiser",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["bruiser"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -89547,8 +89547,8 @@
   },
   {
     "ChampName": "Samuro",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "melee",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["melee"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -90888,8 +90888,8 @@
   },
   {
     "ChampName": "SgtHammer",
-    "ChampRole": "specialist",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["specialist"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -92349,8 +92349,8 @@
   },
   {
     "ChampName": "Sonya",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "bruiser",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["bruiser"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -93906,8 +93906,8 @@
   },
   {
     "ChampName": "Stitches",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "tank",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["tank"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -95379,8 +95379,8 @@
   },
   {
     "ChampName": "Stukov",
-    "ChampRole": "support",
-    "ChampRoleAlt": "heal",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["heal"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -96536,8 +96536,8 @@
   },
   {
     "ChampName": "Sylvanas",
-    "ChampRole": "specialist",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["specialist"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -98045,8 +98045,8 @@
   },
   {
     "ChampName": "Tassadar",
-    "ChampRole": "support",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -99446,8 +99446,8 @@
   },
   {
     "ChampName": "Butcher",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "melee",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["melee"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -101299,8 +101299,8 @@
   },
   {
     "ChampName": "LostVikings",
-    "ChampRole": "specialist",
-    "ChampRoleAlt": "support",
+    "ChampRole": ["specialist"],
+    "ChampRoleAlt": ["support"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -102904,8 +102904,8 @@
   },
   {
     "ChampName": "Thrall",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "bruiser",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["bruiser"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -104465,8 +104465,8 @@
   },
   {
     "ChampName": "Tracer",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -106218,8 +106218,8 @@
   },
   {
     "ChampName": "Tychus",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -107723,8 +107723,8 @@
   },
   {
     "ChampName": "Tyrael",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "tank",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["tank"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -109080,8 +109080,8 @@
   },
   {
     "ChampName": "Tyrande",
-    "ChampRole": "support",
-    "ChampRoleAlt": "heal",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["heal"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -110473,8 +110473,8 @@
   },
   {
     "ChampName": "Uther",
-    "ChampRole": "support",
-    "ChampRoleAlt": "heal",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["heal"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -111890,8 +111890,8 @@
   },
   {
     "ChampName": "Valeera",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "melee",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["melee"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -113699,8 +113699,8 @@
   },
   {
     "ChampName": "Valla",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -115184,8 +115184,8 @@
   },
   {
     "ChampName": "Varian",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "bruiser",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["bruiser", "tank", "melee"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -116781,8 +116781,8 @@
   },
   {
     "ChampName": "Whitemane",
-    "ChampRole": "support",
-    "ChampRoleAlt": "heal",
+    "ChampRole": ["support"],
+    "ChampRoleAlt": ["heal"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -117694,8 +117694,8 @@
   },
   {
     "ChampName": "Xul",
-    "ChampRole": "specialist",
-    "ChampRoleAlt": "bruiser",
+    "ChampRole": ["specialist"],
+    "ChampRoleAlt": ["bruiser"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -119179,8 +119179,8 @@
   },
   {
     "ChampName": "Yrel",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "bruiser",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["bruiser"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -120308,8 +120308,8 @@
   },
   {
     "ChampName": "Zagara",
-    "ChampRole": "specialist",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["specialist"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -121681,8 +121681,8 @@
   },
   {
     "ChampName": "Zarya",
-    "ChampRole": "warrior",
-    "ChampRoleAlt": "support",
+    "ChampRole": ["warrior"],
+    "ChampRoleAlt": ["support"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -123010,8 +123010,8 @@
   },
   {
     "ChampName": "Zeratul",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "melee",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["melee"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",
@@ -124639,8 +124639,8 @@
   },
   {
     "ChampName": "Zuljin",
-    "ChampRole": "assassin",
-    "ChampRoleAlt": "ranged",
+    "ChampRole": ["assassin"],
+    "ChampRoleAlt": ["ranged"],
     "StrongAgainst": [
       {
         "ChampName": "Hogger",

@@ -8,8 +8,8 @@ import kotlinx.serialization.Serializable
 data class ChampData(
     val key: Int = 0,
     val ChampName: String,
-    val ChampRole: String,
-    val ChampRoleAlt: String,
+    val ChampRole: List<String>,
+    val ChampRoleAlt: List<String>,
     val StrongAgainst: List<StrongAgainstData>,
     val WeakAgainst: List<WeakAgainstData>,
     val GoodTeamWith: List<GoodTeamWith>,
@@ -28,8 +28,8 @@ data class ChampData(
 // Beispielhafte Instanz Ihrer ChampData-Klasse
 val exampleChampData = ChampData(
     ChampName = "Sgt. Hammer",
-    ChampRole = "Fernkampf-Assassine",
-    ChampRoleAlt = "Anfängerfreundlich",
+    ChampRole = listOf("Fernkampf-Assassine"),
+    ChampRoleAlt = listOf("Anfängerfreundlich"),
     StrongAgainst = listOf(
         StrongAgainstData("Illidan", 123),
         StrongAgainstData("Arthas", 423)
