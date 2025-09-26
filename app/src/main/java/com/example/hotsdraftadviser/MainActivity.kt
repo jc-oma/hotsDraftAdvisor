@@ -226,7 +226,6 @@ fun MainActivityComposable(
                     Text(
                         text = "Bitte wähle zuerst eine Map aus:",
                         fontSize = 18.sp,
-                        color = composeTextColor,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.weight(1f)
                     )
