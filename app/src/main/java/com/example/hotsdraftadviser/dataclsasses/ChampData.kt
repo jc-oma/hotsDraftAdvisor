@@ -26,7 +26,7 @@ data class ChampData(
 )
 
 // Beispielhafte Instanz Ihrer ChampData-Klasse
-val exampleChampData = ChampData(
+val exampleChampDataSgtHammer = ChampData(
     ChampName = "SgtHammer",
     ChampRole = listOf("assassine"),
     ChampRoleAlt = listOf("range"),
@@ -49,6 +49,34 @@ val exampleChampData = ChampData(
     ),
     scoreOwn = 120,
     scoreTheir = 75,
+    isPicked = false,
+    pickedBy = TeamSide.NONE,
+    isAFavoriteChamp = true
+)
+
+val exampleChampDataAbathur = ChampData(
+    ChampName = "Abathur",
+    ChampRole = listOf("support"),
+    ChampRoleAlt = listOf("support"),
+    StrongAgainst = listOf(
+        StrongAgainstData("Hanzo", 123),
+        StrongAgainstData("SgtHammer", 423)
+    ),
+    WeakAgainst = listOf(
+        WeakAgainstData("Genji", 42),
+        WeakAgainstData("Tyrande", 43)
+    ),
+    GoodTeamWith = listOf(
+        GoodTeamWith("Illidan", 23),
+        GoodTeamWith("Tyrael", 43)
+    ),
+    MapScore = listOf(
+        MapScoreData("Verfluchtes Tal", 80),
+        MapScoreData("Türme des Unheils", 75),
+        MapScoreData("Schlachtfeld der Ewigkeit", 70)
+    ),
+    scoreOwn = 55,
+    scoreTheir = 135,
     isPicked = false,
     pickedBy = TeamSide.NONE,
     isAFavoriteChamp = true

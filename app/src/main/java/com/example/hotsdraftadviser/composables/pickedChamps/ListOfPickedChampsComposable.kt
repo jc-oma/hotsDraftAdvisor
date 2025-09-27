@@ -2,7 +2,6 @@ package com.example.hotsdraftadviser.composables.pickedChamps
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,7 +20,8 @@ import com.example.hotsdraftadviser.TeamSide
 import com.example.hotsdraftadviser.Utilitys
 import com.example.hotsdraftadviser.composables.starRating.StarRatingComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
-import com.example.hotsdraftadviser.dataclsasses.exampleChampData
+import com.example.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
+import com.example.hotsdraftadviser.dataclsasses.exampleChampDataAbathur
 import com.example.hotsdraftadviser.getColorByHexString
 
 @Composable
@@ -94,10 +94,10 @@ fun ListOfPickedChampsComposable(
             if (isStarrating) {
 
                 val ownScoreFlaot = ownPickScore.toFloat()
-                val theirScoreFlaot = ownPickScore.toFloat()
+                val theirScoreFlaot = theirPickScore.toFloat()
                 val maxFloat = ownScoreFlaot.coerceAtLeast(theirScoreFlaot)
 
-                StarRatingComposable(ownPickScore / maxFloat,  modifier = Modifier.fillMaxHeight().weight(1f))
+                StarRatingComposable(ownScoreFlaot / maxFloat,  modifier = Modifier.fillMaxHeight().weight(1f))
                 StarRatingComposable(theirScoreFlaot / maxFloat,  modifier = Modifier.fillMaxHeight().weight(1f))
             } else {
                 Text(
@@ -126,8 +126,8 @@ fun ListOfPickedChampsComposablePreview() {
 
     ListOfPickedChampsComposable(
         composeHeadlineColor = getColorByHexString(headlineColor),
-        ownPickedChamps = listOf(exampleChampData, exampleChampData),
-        theirPickedChamps = listOf(exampleChampData, exampleChampData),
+        ownPickedChamps = listOf(exampleChampDataSgtHammer, exampleChampDataAbathur),
+        theirPickedChamps = listOf(exampleChampDataSgtHammer, exampleChampDataSgtHammer),
         composeOwnTeamColor = getColorByHexString(ownTeamColor),
         composeTextColor = getColorByHexString(textColor),
         removePick = { _, _ -> {} },

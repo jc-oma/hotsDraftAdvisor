@@ -18,22 +18,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.hotsdraftadviser.Utilitys
 import com.example.hotsdraftadviser.dataclsasses.ChampData
-import com.example.hotsdraftadviser.dataclsasses.exampleChampData
+import com.example.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
 
 @Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TutorialCarousel() {
-    val listOfTutorialItems = listOf<ChampData>(exampleChampData, exampleChampData, exampleChampData)
+    val listOfTutorialItems =
+        listOf<ChampData>(exampleChampDataSgtHammer, exampleChampDataSgtHammer, exampleChampDataSgtHammer)
     HorizontalMultiBrowseCarousel(
-    state = rememberCarouselState { listOfTutorialItems.count() },
-    modifier = Modifier
-    .fillMaxWidth()
-    .wrapContentHeight()
-    .padding(top = 16.dp, bottom = 16.dp),
-    preferredItemWidth = 186.dp,
-    itemSpacing = 8.dp,
-    contentPadding = PaddingValues(horizontal = 16.dp)
+        state = rememberCarouselState { listOfTutorialItems.count() },
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(top = 16.dp, bottom = 16.dp),
+        preferredItemWidth = 186.dp,
+        itemSpacing = 8.dp,
+        contentPadding = PaddingValues(horizontal = 16.dp)
     )
     { i ->
         val item = listOfTutorialItems[i]

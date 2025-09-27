@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.example.hotsdraftadviser.TeamSide
 import com.example.hotsdraftadviser.composables.starRating.StarRatingComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
-import com.example.hotsdraftadviser.dataclsasses.exampleChampData
+import com.example.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
 import com.example.hotsdraftadviser.getColorByHexString
 import com.example.hotsdraftadviser.getColorByHexStringForET
 
@@ -173,7 +173,7 @@ private fun ChampListItemPreview(){
     val composeTheirTeamColor = getColorByHexStringForET(theirTeamColor)
 
     ChampListItem(
-        chosableChamp = exampleChampData,
+        chosableChamp = exampleChampDataSgtHammer,
         index = 1,
         composeOwnTeamColor = composeOwnTeamColor,
         composeTextColor = composeTextColor,

@@ -22,11 +22,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.hotsdraftadviser.R
-import com.example.hotsdraftadviser.Utilitys
 import com.example.hotsdraftadviser.dataclsasses.ChampData
-import com.example.hotsdraftadviser.dataclsasses.exampleChampData
+import com.example.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
 import com.example.hotsdraftadviser.getColorByHexString
-import com.example.hotsdraftadviser.getColorByHexStringForET
 
 
 @Composable
@@ -86,7 +84,7 @@ private fun PickedsChampItemPreview() {
             teamColor = getColorByHexString(theirTeamColor),
             textColor = getColorByHexString(textColor),
             removePickForTeam = {},
-            teamPickedChamp = exampleChampData,
+            teamPickedChamp = exampleChampDataSgtHammer,
             painter = painterResource(
                 id = R.drawable.sgthammer_card_portrait
             )
