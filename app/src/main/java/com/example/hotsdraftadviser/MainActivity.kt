@@ -34,6 +34,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
@@ -49,6 +50,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
@@ -403,14 +405,14 @@ fun MainActivityComposable(
             } else {
                 if (isListMode) {
                     availableChampListComposable(
-                    composeHeadlineColor,
-                    viewModel,
-                    sortState,
-                    composeTextColor,
-                    chosableChampList,
-                    composeOwnTeamColor,
-                    composeTheirTeamColor
-                )
+                        composeHeadlineColor,
+                        viewModel,
+                        sortState,
+                        composeTextColor,
+                        chosableChampList,
+                        composeOwnTeamColor,
+                        composeTheirTeamColor
+                    )
                 } else {
                     /*availableChampCaruselComposable(
                     composeHeadlineColor,
@@ -480,20 +482,29 @@ private fun AvailableChampPortraitComposable(
     sortState: SortState
 ) {
     val distinctChosableChampList by viewModel.distinctChosableChampList.collectAsState(emptyList())
-    val distinctAndUnfilteredChosableChampList by viewModel.distinctfilteredChosableChampList.collectAsState(emptyList())
+    val distinctAndUnfilteredChosableChampList by viewModel.distinctfilteredChosableChampList.collectAsState(
+        emptyList()
+    )
     val fitTeamMax by viewModel.fitTeamMax.collectAsState(1)
     val goodAgainstTeamMax by viewModel.goodAgainstTeamMax.collectAsState(1)
     val ownScoreMax by viewModel.ownScoreMax.collectAsState(1)
     val theirScoreMax by viewModel.theirScoreMax.collectAsState(1)
     val choosenMap by viewModel.choosenMap.collectAsState("")
     val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
 
     Column(modifier = Modifier.fillMaxSize()) {
-        SegmentedButtonToOrderChamplistComposable({ sortState -> viewModel.setSortState(sortState)}, sortState)
+        SegmentedButtonToOrderChamplistComposable(
+            setSortState = { sortState -> viewModel.setSortState(sortState) },
+            sortState = sortState,
+            onButtonClick = { viewModel.scrollList(listState, coroutineScope) }
+        )
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(6.dp),
-            contentPadding = PaddingValues(bottom = 80.dp) // Fügt Padding am unteren Rand hinzu
+            contentPadding = PaddingValues(bottom = 80.dp),
+            state = listState
         ) {
             items(
                 count = distinctChosableChampList.size,

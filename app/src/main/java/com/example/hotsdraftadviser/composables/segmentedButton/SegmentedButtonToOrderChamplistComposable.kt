@@ -19,7 +19,8 @@ import com.example.hotsdraftadviser.getColorByHexString
 @Composable
 fun SegmentedButtonToOrderChamplistComposable(
     setSortState: (SortState) -> Unit,
-    sortState: SortState
+    sortState: SortState,
+    onButtonClick: () -> Unit
 ) {
     var selectedIndex by remember { mutableIntStateOf(sortState.ordinal) }
     val list = listOf<String>("Best Pick", "Best Ban", "Name")
@@ -39,6 +40,7 @@ fun SegmentedButtonToOrderChamplistComposable(
                 onClick = {
                     selectedIndex = i
                     setSortState(state)
+                    onButtonClick()
                 },
                 selected = i == selectedIndex,
                 label = { Text(list[i]) }
@@ -50,5 +52,8 @@ fun SegmentedButtonToOrderChamplistComposable(
 @Preview
 @Composable
 private fun SegmentedPreview() {
-    SegmentedButtonToOrderChamplistComposable({}, SortState.OWNPOINTS)
+    SegmentedButtonToOrderChamplistComposable(
+        {}, SortState.OWNPOINTS,
+        onButtonClick = {}
+    )
 }

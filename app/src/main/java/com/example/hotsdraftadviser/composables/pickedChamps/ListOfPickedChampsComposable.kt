@@ -1,6 +1,7 @@
 package com.example.hotsdraftadviser.composables.pickedChamps
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -96,9 +97,10 @@ fun ListOfPickedChampsComposable(
                 val ownScoreFlaot = ownPickScore.toFloat()
                 val theirScoreFlaot = theirPickScore.toFloat()
                 val maxFloat = ownScoreFlaot.coerceAtLeast(theirScoreFlaot)
+                val starColor = if (!isSystemInDarkTheme()) Color.Black else Color.White
 
-                StarRatingComposable(ownScoreFlaot / maxFloat,  modifier = Modifier.fillMaxHeight().weight(1f))
-                StarRatingComposable(theirScoreFlaot / maxFloat,  modifier = Modifier.fillMaxHeight().weight(1f))
+                StarRatingComposable(ratingFloat = ownScoreFlaot / maxFloat,  modifier = Modifier.fillMaxHeight().weight(1f), starColorFilled = starColor)
+                StarRatingComposable(ratingFloat = theirScoreFlaot / maxFloat,  modifier = Modifier.fillMaxHeight().weight(1f), starColorFilled = starColor)
             } else {
                 Text(
                     modifier = Modifier.weight(1f),

@@ -2,6 +2,7 @@ package com.example.hotsdraftadviser
 
 import android.app.Application
 import android.util.Log
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,7 @@ import com.example.hotsdraftadviser.database.isListShown.IsListModeRepository
 import com.example.hotsdraftadviser.database.isStarRating.IsStarRatingRepository
 import com.example.hotsdraftadviser.database.isStreamingEnabled.StreamingSettingsRepository
 import com.example.hotsdraftadviser.dataclsasses.ChampData
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -775,6 +777,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         viewModelScope.launch {
             favoriteChampionsRepository.toggleFavoriteStatus(championName)
             checkIfChampIsFavorite()
+        }
+    }
+
+    fun scrollList(listState: LazyListState, coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            listState.animateScrollToItem(0)
         }
     }
 }
