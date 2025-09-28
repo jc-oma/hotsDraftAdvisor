@@ -4,6 +4,39 @@
     <string name="disclaimer">Heroes of the Storm™ is a trademark or registered trademark of Blizzard Entertainment, Inc., in the U.S. and/or other countries.
 HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</string>
     <string name="main_activity_chose_map">Bitte wähle zuerst eine Map aus:</string>
-    <string name="main_activity_maps_suchen">🔍 Maps suchen...</string>
-    <string name="main_activity_champs_suchen">🔍 Champs suchen...</string>
+    <string name="main_activity_maps_suchen">🔍 Maps suchen…</string>
+    <string name="main_activity_champs_suchen">🔍 Champs suchen…</string>
+    <string name="main_acitivity_menu_tutorial" translatable="false">Tutorial</string>
+    <string name="main_acitivity_menu_disclaimer">Rechtliches</string>
+    <string name="main_acitivity_menu_starrating">Sternenwertung</string>
+    <string name="main_acitivity_pickscore_own_team">Wertung blaues Team</string>
+    <string name="main_acitivity_pickscore_their_team">Wertung rotes Team</string>
+    <string name="main_acitivity_tank" translatable="false">Tank</string>
+    <string name="main_acitivity_melee">Nahkampf</string>
+    <string name="main_acitivity_heal">Heiler</string>
+    <string name="main_acitivity_bruiser">Frontbrecher</string>
+    <string name="main_acitivity_support">Unterstützer</string>
+    <string name="main_acitivity_ban_own">Ban blau</string>
+    <string name="main_acitivity_ban_their">Ban rot</string>
+    <string name="tutorial_you_got_it_desc">Vielen Dank, dass Du meine App geladen hast. \nHi, Ich bin Janek und ich will dir zur besseren Heldenauswahl verhelfen.</string>
+    <string name="tutorial_start_it">Los geht\'s!</string>
+    <string name="tutorial_start_it_desc">Starte einfach die Suche eines gewerteten oder ungewerteten Spiels.</string>
+    <string name="tutorial_map_it">Karte finden!</string>
+    <string name="tutorial_map_it_desc">Wenn Du ein Spiel gefunden hast, tippe einfach auf die gewählte Karte. Die App unterstützt dich sofort, indem sie die besten Helden für die Karte anzeigt.</string>
+    <string name="tutorial_watch_it">Bleib dran!</string>
+    <string name="tutorial_watch_it_desc">Sobald die Heldenauswahl beginnt, wähle die Helden aus, die deine Mitspieler in der Vorauswahl anzeigen. Tippe einfach auf die Fläche mit den Teamfarben neben dem Helden.</string>
+    <string name="tutorial_calc_it_desc">Während die Vorauswahlen angezeigt werden, Du die Teams befüllst und der Gegner wählt, berechnet die App welche übrigen Helden am besten zu deinem Team oder dem gegnerischen Team passen.\nDas Gesamtergebnis wird als Sterne oder Zahl angezeigt. Das ist abhängig von deinen Einstellungen</string>
+    <string name="tutorial_calc_it">Jede Entscheidung wird gezählt</string>
+    <string name="tutorial_filter_it">Filter deine Auswahl</string>
+    <string name="tutorial_filter_it_desc">Du kannst jeder Zeit nach Rollen der Helden filtern und deine Favoriten setzen.</string>
+    <string name="tutorial_change_it">Auswahl ändern</string>
+    <string name="tutorial_change_it_desc">Wenn sich die Vorauswahlen ändern oder Du dich einfach mal vertippt hast, kannst du die Helden mit einem Tippen wieder zurück in die Auswahl schicken.</string>
+    <string name="tutorial_restart_it">Neustart!</string>
+    <string name="tutorial_restart_it_desc">Wenn das Spiel vorbei ist und die eine neue Auswahl machen möchtest, kannst Du die Auswahl unten links neu starten.</string>
+    <string name="tutorial_customize_it">Personalisieren der Anzeige</string>
+    <string name="tutorial_customize_it_desc">Du kannst im Menue entscheiden, ob Du eine einfache Bewertung in Sternen oder Anhand von Zahlen möchtest. Zusätzlich kann die Anzeige der Liste verändert werden.</string>
+    <string name="tutorial_that_s_it">Das war\'s!</string>
+    <string name="tutorial_that_s_it_desc">Viel Glück und GG!</string>
+    <string name="main_acitivity_ranged">Fernkampf</string>
+    <string name="tutorial_you_got_it">Du hast es!</string>
 </resources>

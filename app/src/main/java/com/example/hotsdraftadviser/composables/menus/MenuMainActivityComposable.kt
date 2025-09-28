@@ -17,8 +17,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.hotsdraftadviser.R
 
 @Composable
 fun MenuMainActivityComposable(
@@ -41,15 +43,15 @@ fun MenuMainActivityComposable(
             onDismissRequest = { expanded = false }
         ) {
             DropdownMenuItem(
-                text = { Text("Tutorial") },
+                text = { Text(stringResource(R.string.main_acitivity_menu_tutorial)) },
                 onClick = { onTutorial() }
             )
             DropdownMenuItem(
-                text = { Text("Disclaim") },
+                text = { Text(stringResource(R.string.main_acitivity_menu_disclaimer)) },
                 onClick = { onDisclaymer() }
             )
             DropdownMenuItem(
-                text = { Text("Starrating") },
+                text = { Text(stringResource(R.string.main_acitivity_menu_starrating)) },
                 onClick = { onToggleStarRating() }
             )
             DropdownMenuItem(

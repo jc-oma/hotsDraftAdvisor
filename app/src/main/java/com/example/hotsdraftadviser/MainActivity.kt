@@ -591,7 +591,7 @@ private fun availableChampListComposable(
                 .clickable {
                     viewModel.setSortState(SortState.OWNPOINTS)
                 },
-            text = "PickScore Own Team",
+            text = stringResource(R.string.main_acitivity_pickscore_own_team),
             color = if (sortState == SortState.OWNPOINTS) {
                 Color.Yellow
             } else {
@@ -604,7 +604,7 @@ private fun availableChampListComposable(
                 .clickable {
                     viewModel.setSortState(SortState.THEIRPOINTS)
                 },
-            text = "Pickscore Their Team",
+            text = stringResource(R.string.main_acitivity_pickscore_their_team),
             color = if (sortState == SortState.THEIRPOINTS) {
                 Color.Yellow
             } else {
@@ -613,11 +613,11 @@ private fun availableChampListComposable(
         )
         Text(
             modifier = Modifier.weight(0.5f),
-            text = "Ban Own"
+            text = stringResource(R.string.main_acitivity_ban_own)
         )
         Text(
             modifier = Modifier.weight(0.5f),
-            text = "Ban Their"
+            text = stringResource(R.string.main_acitivity_ban_their)
         )
     }
     LazyColumn(
@@ -737,7 +737,7 @@ private fun SearchAndFilterRowForChamps(
                 onClick = { viewModel.setRoleFilter(RoleEnum.Tank) },
                 label = {
                     Text(
-                        "Tank",
+                        stringResource(R.string.main_acitivity_tank),
                         fontSize = responsiveFontSize,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -759,7 +759,7 @@ private fun SearchAndFilterRowForChamps(
                 onClick = { viewModel.setRoleFilter(RoleEnum.Ranged) },
                 label = {
                     Text(
-                        "Ranged", fontSize = responsiveFontSize,
+                        stringResource(R.string.main_acitivity_ranged), fontSize = responsiveFontSize,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -780,7 +780,7 @@ private fun SearchAndFilterRowForChamps(
                 onClick = { viewModel.setRoleFilter(RoleEnum.Melee) },
                 label = {
                     Text(
-                        "Melee", fontSize = responsiveFontSize,
+                        stringResource(R.string.main_acitivity_melee), fontSize = responsiveFontSize,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -803,7 +803,7 @@ private fun SearchAndFilterRowForChamps(
                 onClick = { viewModel.setRoleFilter(RoleEnum.Heal) },
                 label = {
                     Text(
-                        "Heal", fontSize = responsiveFontSize,
+                        stringResource(R.string.main_acitivity_heal), fontSize = responsiveFontSize,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -824,7 +824,7 @@ private fun SearchAndFilterRowForChamps(
                 onClick = { viewModel.setRoleFilter(RoleEnum.Bruiser) },
                 label = {
                     Text(
-                        "Bruiser", fontSize = responsiveFontSize,
+                        stringResource(R.string.main_acitivity_bruiser), fontSize = responsiveFontSize,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -845,7 +845,7 @@ private fun SearchAndFilterRowForChamps(
                 onClick = { viewModel.setRoleFilter(RoleEnum.Support) },
                 label = {
                     Text(
-                        "Support", fontSize = responsiveFontSize,
+                        stringResource(R.string.main_acitivity_support), fontSize = responsiveFontSize,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
