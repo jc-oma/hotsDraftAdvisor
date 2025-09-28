@@ -31,7 +31,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -54,11 +53,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.style.TextAlign
@@ -70,9 +69,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.hotsdraftadviser.composables.advertisement.MainWindowAdInterstitial
 import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampListItem
 import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampPortraitComposable
-import com.example.hotsdraftadviser.composables.composabaleUtilitis.glow
 import com.example.hotsdraftadviser.composables.menus.DisclaimerComposable
 import com.example.hotsdraftadviser.composables.menus.MenuMainActivityComposable
+import com.example.hotsdraftadviser.composables.menus.tutorial.TutorialCarousel
 import com.example.hotsdraftadviser.composables.pickedChamps.ListOfPickedChampsComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.composables.segmentedButton.SegmentedButtonToOrderChamplistComposable
@@ -147,6 +146,7 @@ fun MainActivityComposable(
     val isStreamingEnabled by viewModel.isStreamingEnabled.collectAsState()
 
     val isDisclaymerShown by viewModel.isDisclaymerShown.collectAsState()
+    val isTutorialShown by viewModel.isTutorialShown.collectAsState()
     val isListMode by viewModel.isListMode.collectAsState()
     val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
 
@@ -214,7 +214,8 @@ fun MainActivityComposable(
                     modifier = Modifier.weight(0.24f),
                     onDisclaymer = { viewModel.toggleDisclaymer() },
                     onToggleListMode = { viewModel.toggleListMode() },
-                    onToggleStarRating = { viewModel.toggleStarRateMode() }
+                    onToggleStarRating = { viewModel.toggleStarRateMode() },
+                    onTutorial = { viewModel.toggleTutorial() },
                 )
             }
         }
@@ -228,7 +229,7 @@ fun MainActivityComposable(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Bitte wähle zuerst eine Map aus:",
+                        text = stringResource(R.string.main_activity_chose_map),
                         fontSize = 18.sp,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.weight(1f)
@@ -236,9 +237,10 @@ fun MainActivityComposable(
 
                     MenuMainActivityComposable(
                         modifier = Modifier.weight(0.2f),
-                        { viewModel.toggleDisclaymer() },
+                        onDisclaymer = { viewModel.toggleDisclaymer() },
                         onToggleListMode = { viewModel.toggleListMode() },
-                        onToggleStarRating = { viewModel.toggleStarRateMode() })
+                    onToggleStarRating = { viewModel.toggleStarRateMode() },
+                        onTutorial = { viewModel.toggleTutorial() })
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     // Suchfeld
@@ -248,7 +250,7 @@ fun MainActivityComposable(
                         onValueChange = { newText ->
                             viewModel.updateMapsSearchQuery(newText)
                         },
-                        label = { Text("\uD83D\uDD0D Maps suchen...") }
+                        label = { Text(stringResource(R.string.main_activity_maps_suchen)) }
                     )
                     Box(
                         modifier = Modifier
@@ -436,6 +438,13 @@ fun MainActivityComposable(
         Column {
             Box(modifier = Modifier.height(48.dp))
             DisclaimerComposable(onClose = { viewModel.toggleDisclaymer() })
+        }
+    }
+
+    if (isTutorialShown) {
+        Column {
+            Box(modifier = Modifier.height(48.dp))
+            TutorialCarousel(modifier = Modifier.fillMaxSize(), onClose = { viewModel.toggleTutorial() })
         }
     }
 }
@@ -657,7 +666,7 @@ private fun SearchAndFilterRowForChamps(
             },
             label = {
                 Text(
-                    "\uD83D\uDD0D Champs suchen...", fontSize = getResponsiveFontSize(),
+                    stringResource(R.string.main_activity_champs_suchen), fontSize = getResponsiveFontSize(),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )

@@ -25,7 +25,8 @@ fun MenuMainActivityComposable(
     modifier: Modifier = Modifier,
     onDisclaymer: () -> Unit,
     onToggleListMode: () -> Unit,
-    onToggleStarRating: () -> Unit
+    onToggleStarRating: () -> Unit,
+    onTutorial: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
     Box(
@@ -41,7 +42,7 @@ fun MenuMainActivityComposable(
         ) {
             DropdownMenuItem(
                 text = { Text("Tutorial") },
-                onClick = { /* Do something... */ }
+                onClick = { onTutorial() }
             )
             DropdownMenuItem(
                 text = { Text("Disclaim") },
@@ -69,7 +70,7 @@ fun MenuMainActivityComposable(
 @Composable
 fun MenuMainActivitPreview() {
     MenuMainActivityComposable(
-        onDisclaymer = {}, onToggleListMode = {},
+        onDisclaymer = {}, onToggleListMode = {}, onTutorial = {},
         onToggleStarRating = {}
     )
 }

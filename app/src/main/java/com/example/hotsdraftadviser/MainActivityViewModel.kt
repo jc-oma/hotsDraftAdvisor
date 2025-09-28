@@ -2,6 +2,7 @@ package com.example.hotsdraftadviser
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
@@ -121,6 +122,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private val _isDisclaymerShown = MutableStateFlow(false)
+    private val _isTutorialShown = MutableStateFlow(false)
     private val _isListMode = MutableStateFlow(false)
     private val _isStreamingEnabled = MutableStateFlow(true)
 
@@ -135,6 +137,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private val maxPicks = 5
 
     val isDisclaymerShown: StateFlow<Boolean> = _isDisclaymerShown.asStateFlow()
+    val isTutorialShown: StateFlow<Boolean> = _isTutorialShown.asStateFlow()
     val isListMode: StateFlow<Boolean> = isListModeRepository.isListModeEnabled
         .stateIn(
             scope = viewModelScope,
@@ -245,6 +248,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     fun toggleDisclaymer() {
         viewModelScope.launch {
             _isDisclaymerShown.value = !_isDisclaymerShown.value
+        }
+    }
+
+    fun toggleTutorial() {
+        viewModelScope.launch {
+            _isTutorialShown.value = !_isTutorialShown.value
         }
     }
 

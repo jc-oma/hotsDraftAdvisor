@@ -22,8 +22,6 @@ fun Modifier.glow(
     radius: Dp = 16.dp,
     alpha: Float = 1f
 ): Modifier = composed {
-
-    // 1. Erstelle die native Paint-Instanz mit dem Blur-Effekt
     val frameworkPaint = android.graphics.Paint().apply {
         this.style = android.graphics.Paint.Style.STROKE
         this.strokeWidth = radius.value / 4f // Eine Strichbreite für die "Quelle" des Glühens
