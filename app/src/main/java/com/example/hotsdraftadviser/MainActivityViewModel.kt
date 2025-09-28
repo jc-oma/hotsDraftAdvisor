@@ -11,6 +11,7 @@ import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
 import com.example.hotsdraftadviser.database.AppDatabase
 import com.example.hotsdraftadviser.database.favoritChamps.FavoriteChampionsRepository
+import com.example.hotsdraftadviser.database.isFirstStart.FirstStartRepository
 import com.example.hotsdraftadviser.database.isListShown.IsListModeRepository
 import com.example.hotsdraftadviser.database.isStarRating.IsStarRatingRepository
 import com.example.hotsdraftadviser.database.isStreamingEnabled.StreamingSettingsRepository
@@ -105,6 +106,24 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
+    private val isFirstStartRepository: FirstStartRepository by lazy {
+        Log.d("ViewModelInit", "Initializing repository...")
+        try {
+            Log.d("ViewModelInit", "Getting database instance...")
+            val db = AppDatabase.getDatabase(application)
+            Log.d("ViewModelInit", "Database instance obtained: $db")
+            Log.d("ViewModelInit", "Getting DAO...")
+            val dao = db.firstStartSettingDao()
+            Log.d("ViewModelInit", "DAO obtained: $dao")
+            val repoInstance = FirstStartRepository(dao)
+            Log.d("ViewModelInit", "Repository instance created: $repoInstance")
+            repoInstance
+        } catch (e: Exception) {
+            Log.e("ViewModelInit", "Error initializing repository", e)
+            throw e
+        }
+    }
+
     // Dein isStreamingEnabled als StateFlow, das von der Datenbank gespeist wird
     val isStreamingEnabled: StateFlow<Boolean> = streamingSettingsRepository.isStreamingEnabled
         .stateIn(
@@ -139,6 +158,13 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val isDisclaymerShown: StateFlow<Boolean> = _isDisclaymerShown.asStateFlow()
     val isTutorialShown: StateFlow<Boolean> = _isTutorialShown.asStateFlow()
     val isListMode: StateFlow<Boolean> = isListModeRepository.isListModeEnabled
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = false
+        )
+
+    val isFirstStart: StateFlow<Boolean> = isFirstStartRepository.isFirstStartFlow
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
@@ -254,6 +280,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     fun toggleTutorial() {
         viewModelScope.launch {
             _isTutorialShown.value = !_isTutorialShown.value
+            isFirstStartRepository.setIsFirstStart(false)
         }
     }
 

@@ -148,6 +148,7 @@ fun MainActivityComposable(
     val isDisclaymerShown by viewModel.isDisclaymerShown.collectAsState()
     val isTutorialShown by viewModel.isTutorialShown.collectAsState()
     val isListMode by viewModel.isListMode.collectAsState()
+    val isFirstStart by viewModel.isFirstStart.collectAsState()
     val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
 
 
@@ -441,7 +442,7 @@ fun MainActivityComposable(
         }
     }
 
-    if (isTutorialShown) {
+    if (isTutorialShown || isFirstStart) {
         Column {
             Box(modifier = Modifier.height(48.dp))
             TutorialCarousel(modifier = Modifier.fillMaxSize(), onClose = { viewModel.toggleTutorial() })
