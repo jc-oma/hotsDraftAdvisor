@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hotsdraftadviser.R
+import com.example.hotsdraftadviser.Utilitys
 import com.example.hotsdraftadviser.composables.ChampEvaluationComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
@@ -123,7 +125,8 @@ fun ChampPortraitComposable(
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp
                         ),
-                        text = (index + 1).toString() + ". " + champ.ChampName
+                        //TODO Index wieder hinzufügen wenn Bug List gefixt? -> (index + 1).toString() + ". " +
+                        text = stringResource(Utilitys().mapChampNameToStringRessource(champ.ChampName)!!)
                     )
                 }
                 Box(

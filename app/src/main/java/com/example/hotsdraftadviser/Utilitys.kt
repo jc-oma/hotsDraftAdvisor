@@ -122,6 +122,29 @@ class Utilitys {
         }
     }
 
+    fun mapMapNameToStringRessource(mapName: String): Int? {
+        when (mapName) {
+            "Alterac Pass" -> return R.string.map_name_Alterac_Pass
+            "Battlefield of Eternity" -> return R.string.map_name_Battlefield_of_Eternity
+            "Black Hearts Bay" -> return R.string.map_name_Black_Hearts_Bay
+            "Braxis Holdout" -> return R.string.map_name_Braxis_Holdout
+            "Cursed Hollow" -> return R.string.map_name_Cursed_Hollow
+            "Dragonshire" -> return R.string.map_name_Dragonshire
+            "Garden of Terror" -> return R.string.map_name_Garden_of_Terror
+            "Hanamura" -> return R.string.map_name_Hanamura
+            "Haunted Mines" -> return R.string.map_name_Haunted_Mines
+            "Infernal Shrines" -> return R.string.map_name_Infernal_Shrines
+            "Lost Caverns" -> return R.string.map_name_Lost_Caverns
+            "Sky Temple" -> return R.string.map_name_Sky_Temple
+            "Tomb of the Spider Queen" -> return R.string.map_name_Tomb_of_the_Spider_Queen
+            "Towers of Doom" -> return R.string.map_name_Towers_of_Doom
+            "Volskaya Foundry" -> return R.string.map_name_Volskaya_Foundry
+            "Warhead Junction" -> return R.string.map_name_Warhead_Junction
+
+            else -> return null
+        }
+    }
+
     fun mapChampNameToDrawable(champName: String): Int? {
         when (champName) {
             "Abathur" -> return R.drawable.abathur_card_portrait
@@ -215,6 +238,105 @@ class Utilitys {
             "Zeratul" -> return R.drawable.zeratul_card_portrait
             "Zarya" -> return R.drawable.zarya_card_portrait
             "Zuljin" -> return R.drawable.zuljin_card_portrait
+
+
+            else -> return null
+        }
+    }
+
+    fun mapChampNameToStringRessource(champName: String): Int? {
+        when (champName) {
+            "Abathur" -> return R.string.champ_name_abathur
+            "Alarak" -> return R.string.champ_name_Alarak
+            "Alexstrasza" -> return R.string.champ_name_Alexstrasza
+            "Ana" -> return R.string.champ_name_Ana
+            "Anduin" -> return R.string.champ_name_Anduin
+            "Anubarak" -> return R.string.champ_name_Anubarak
+            "Artanis" -> return R.string.champ_name_Artanis
+            "Arthas" -> return R.string.champ_name_Arthas
+            "Auriel" -> return R.string.champ_name_Auriel
+            "Azmodan" -> return R.string.champ_name_Azmodan
+            "Blaze" -> return R.string.champ_name_Blaze
+            "Brightwing" -> return R.string.champ_name_Brightwing
+            "Cassia" -> return R.string.champ_name_Cassia
+            "Chen" -> return R.string.champ_name_Chen
+            "Cho" -> return R.string.champ_name_Cho
+            "Chogall" -> return R.string.champ_name_Chogall
+            "Chromie" -> return R.string.champ_name_Chromie
+            "Deathwing" -> return R.string.champ_name_Deathwing
+            "Deckard" -> return R.string.champ_name_Deckard
+            "Dehaka" -> return R.string.champ_name_Dehaka
+            "Diablo" -> return R.string.champ_name_Diablo
+            "DVA" -> return R.string.champ_name_DVA
+            "ETC" -> return R.string.champ_name_ETC
+            "Falstad" -> return R.string.champ_name_Falstad
+            "Fenix" -> return R.string.champ_name_Fenix
+            "Gall" -> return R.string.champ_name_Gall
+            "Garrosh" -> return R.string.champ_name_Garrosh
+            "Gazlowe" -> return R.string.champ_name_Gazlowe
+            "Genji" -> return R.string.champ_name_Genji
+            "Greymane" -> return R.string.champ_name_Greymane
+            "Guldan" -> return R.string.champ_name_Guldan
+            "Hanzo" -> return R.string.champ_name_Hanzo
+            "Hogger" -> return R.string.champ_name_Hogger
+            "Illidan" -> return R.string.champ_name_Illidan
+            "Imperius" -> return R.string.champ_name_Imperius
+            "Jaina" -> return R.string.champ_name_Jaina
+            "Johanna" -> return R.string.champ_name_Johanna
+            "Junkrat" -> return R.string.champ_name_Junkrat
+            "Kaelthas" -> return R.string.champ_name_Kaelthas
+            "Kelthuzad" -> return R.string.champ_name_Kelthuzad
+            "Kerrigan" -> return R.string.champ_name_Kerrigan
+            "Kharazim" -> return R.string.champ_name_Kharazim
+            "Leoric" -> return R.string.champ_name_Leoric
+            "Lili" -> return R.string.champ_name_Lili
+            "Li-Ming" -> return R.string.champ_name_Li_Ming
+            "LtMorales" -> return R.string.champ_name_LtMorales
+            "Lucio" -> return R.string.champ_name_Lucio
+            "Lunara" -> return R.string.champ_name_Lunara
+            "Maiev" -> return R.string.champ_name_Maiev
+            "Malfurion" -> return R.string.champ_name_Malfurion
+            "Malganis" -> return R.string.champ_name_Malganis
+            "Malthael" -> return R.string.champ_name_Malthael
+            "Medivh" -> return R.string.champ_name_Medivh
+            "Mei" -> return R.string.champ_name_Mei
+            "Mephisto" -> return R.string.champ_name_Mephisto
+            "Muradin" -> return R.string.champ_name_Muradin
+            "Murky" -> return R.string.champ_name_Murky
+            "Nazeebo" -> return R.string.champ_name_Nazeebo
+            "Nova" -> return R.string.champ_name_Nova
+            "Orphea" -> return R.string.champ_name_Orphea
+            "Probius" -> return R.string.champ_name_Probius
+            "Qhira" -> return R.string.champ_name_Qhira
+            "Ragnaros" -> return R.string.champ_name_Ragnaros
+            "Raynor" -> return R.string.champ_name_Raynor
+            "Rehgar" -> return R.string.champ_name_Rehgar
+            "Rexxar" -> return R.string.champ_name_Rexxar
+            "Samuro" -> return R.string.champ_name_Samuro
+            "SgtHammer" -> return R.string.champ_name_SgtHammer
+            "Sonya" -> return R.string.champ_name_Sonya
+            "Stitches" -> return R.string.champ_name_Stitches
+            "Stukov" -> return R.string.champ_name_Stukov
+            "Sylvanas" -> return R.string.champ_name_Sylvanas
+            "Tassadar" -> return R.string.champ_name_Tassadar
+            "Butcher" -> return R.string.champ_name_Butcher
+            "LostVikings" -> return R.string.champ_name_LostVikings
+            "Thrall" -> return R.string.champ_name_Thrall
+            "Tracer" -> return R.string.champ_name_Tracer
+            "Tychus" -> return R.string.champ_name_Tychus
+            "Tyrael" -> return R.string.champ_name_Tyrael
+            "Tyrande" -> return R.string.champ_name_Tyrande
+            "Uther" -> return R.string.champ_name_Uther
+            "Valeera" -> return R.string.champ_name_Valeera
+            "Valla" -> return R.string.champ_name_Valla
+            "Varian" -> return R.string.champ_name_Varian
+            "Whitemane" -> return R.string.champ_name_Whitemane
+            "Xul" -> return R.string.champ_name_Xul
+            "Yrel" -> return R.string.champ_name_Yrel
+            "Zagara" -> return R.string.champ_name_Zagara
+            "Zeratul" -> return R.string.champ_name_Zeratul
+            "Zarya" -> return R.string.champ_name_Zarya
+            "Zuljin" -> return R.string.champ_name_Zuljin
 
 
             else -> return null

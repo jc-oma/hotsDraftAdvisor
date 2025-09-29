@@ -333,7 +333,7 @@ fun MainActivityComposable(
                                 ) {
                                     Text(
                                         modifier = Modifier.fillMaxWidth(),
-                                        text = mapList[i],
+                                        text = stringResource(Utilitys().mapMapNameToStringRessource(mapList[i])!!),
                                         color = Color.White,
                                         fontSize = 14.sp,
                                         textAlign = TextAlign.Center,
