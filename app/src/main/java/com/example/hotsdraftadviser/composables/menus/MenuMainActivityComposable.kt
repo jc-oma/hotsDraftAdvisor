@@ -55,8 +55,8 @@ fun MenuMainActivityComposable(
             DropdownMenuItem(
                 text = {
                     Text(
-                        if (isStarRating) stringResource(R.string.main_acitivity_menu_starrating) else stringResource(
-                            R.string.main_acitivity_menu_number_rating
+                        if (isStarRating) stringResource(R.string.main_acitivity_menu_number_rating) else stringResource(
+                            R.string.main_acitivity_menu_starrating
                         )
                     )
                 },
