@@ -513,9 +513,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             } else {
                 champs.filter { champ ->
                     selectedRoles.any { it ->
-                        val name = it.name.lowercase()
                         val ccrole = champ.ChampRoleAlt
-                        ccrole.contains(name)
+                        ccrole.contains(it)
                     }
                 }
             }

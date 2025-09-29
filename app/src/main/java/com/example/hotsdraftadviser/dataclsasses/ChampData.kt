@@ -2,6 +2,7 @@ package com.example.hotsdraftadviser.dataclsasses
 
 import com.example.hotsdraftadviser.Difficulty
 import com.example.hotsdraftadviser.GameOrigin
+import com.example.hotsdraftadviser.RoleEnum
 import com.example.hotsdraftadviser.TeamSide
 import kotlinx.serialization.Serializable
 
@@ -10,7 +11,7 @@ data class ChampData(
     val key: Int = 0,
     val ChampName: String,
     val ChampRole: List<String>,
-    val ChampRoleAlt: List<String>,
+    val ChampRoleAlt: List<RoleEnum>,
     val StrongAgainst: List<StrongAgainstData>,
     val WeakAgainst: List<WeakAgainstData>,
     val GoodTeamWith: List<GoodTeamWith>,
@@ -32,7 +33,7 @@ data class ChampData(
 val exampleChampDataSgtHammer = ChampData(
     ChampName = "SgtHammer",
     ChampRole = listOf("assassine"),
-    ChampRoleAlt = listOf("range"),
+    ChampRoleAlt = listOf(RoleEnum.ranged),
     StrongAgainst = listOf(
         StrongAgainstData("Illidan", 123),
         StrongAgainstData("Arthas", 423)
@@ -62,7 +63,7 @@ val exampleChampDataSgtHammer = ChampData(
 val exampleChampDataAbathur = ChampData(
     ChampName = "Abathur",
     ChampRole = listOf("support"),
-    ChampRoleAlt = listOf("support"),
+    ChampRoleAlt = listOf(RoleEnum.support),
     StrongAgainst = listOf(
         StrongAgainstData("Hanzo", 123),
         StrongAgainstData("SgtHammer", 423)

@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -66,11 +68,32 @@ fun RowScope.PickedChampItem(
                 .fillMaxSize()
                 .background(Color.Black.copy(alpha = 0.7f))
         )
-        Text(
-            modifier = Modifier,
-            text = teamPickedChamp.ChampName,
-            color = Color.White
-        )
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Box(modifier = Modifier.padding(start = 6.dp, top = 2.dp, bottom = 2.dp),
+                contentAlignment = Alignment.Center) {
+                Row {
+                    teamPickedChamp.ChampRoleAlt.forEach { it ->
+                        Icon(
+                            painter = painterResource(Utilitys().mapRoleToImageRessource(it)!!),
+                            contentDescription = it.name,
+                            tint = Color.White
+                        )
+                    }
+                }
+            }
+            Text(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 4.dp),
+                text = teamPickedChamp.localName!!,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                color = Color.White
+            )
+        }
     }
 }
 

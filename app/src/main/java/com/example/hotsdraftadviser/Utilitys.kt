@@ -441,4 +441,15 @@ class Utilitys {
             else -> return null
         }
     }
+
+    fun mapRoleToImageRessource(role: RoleEnum): Int? {
+        when (role) {
+            RoleEnum.ranged -> return R.drawable.ranged
+            RoleEnum.support -> return R.drawable.support
+            RoleEnum.melee -> return R.drawable.melee
+            RoleEnum.heal -> return R.drawable.heiler
+            RoleEnum.tank -> return R.drawable.tank
+            RoleEnum.bruiser -> return R.drawable.bruiser
+        }
+    }
 }

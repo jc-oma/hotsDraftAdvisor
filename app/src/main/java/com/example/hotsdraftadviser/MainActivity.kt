@@ -745,8 +745,8 @@ private fun SearchAndFilterRowForChamps(
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                selected = roleFilter.contains(RoleEnum.Tank),
-                onClick = { viewModel.setRoleFilter(RoleEnum.Tank) },
+                selected = roleFilter.contains(RoleEnum.tank),
+                onClick = { viewModel.setRoleFilter(RoleEnum.tank) },
                 label = {
                     Text(
                         stringResource(R.string.main_acitivity_tank),
@@ -767,8 +767,8 @@ private fun SearchAndFilterRowForChamps(
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                selected = roleFilter.contains(RoleEnum.Ranged),
-                onClick = { viewModel.setRoleFilter(RoleEnum.Ranged) },
+                selected = roleFilter.contains(RoleEnum.ranged),
+                onClick = { viewModel.setRoleFilter(RoleEnum.ranged) },
                 label = {
                     Text(
                         stringResource(R.string.main_acitivity_ranged),
@@ -789,8 +789,8 @@ private fun SearchAndFilterRowForChamps(
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                selected = roleFilter.contains(RoleEnum.Melee),
-                onClick = { viewModel.setRoleFilter(RoleEnum.Melee) },
+                selected = roleFilter.contains(RoleEnum.melee),
+                onClick = { viewModel.setRoleFilter(RoleEnum.melee) },
                 label = {
                     Text(
                         stringResource(R.string.main_acitivity_melee),
@@ -813,8 +813,8 @@ private fun SearchAndFilterRowForChamps(
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                selected = roleFilter.contains(RoleEnum.Heal),
-                onClick = { viewModel.setRoleFilter(RoleEnum.Heal) },
+                selected = roleFilter.contains(RoleEnum.heal),
+                onClick = { viewModel.setRoleFilter(RoleEnum.heal) },
                 label = {
                     Text(
                         stringResource(R.string.main_acitivity_heal), fontSize = responsiveFontSize,
@@ -834,8 +834,8 @@ private fun SearchAndFilterRowForChamps(
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                selected = roleFilter.contains(RoleEnum.Bruiser),
-                onClick = { viewModel.setRoleFilter(RoleEnum.Bruiser) },
+                selected = roleFilter.contains(RoleEnum.bruiser),
+                onClick = { viewModel.setRoleFilter(RoleEnum.bruiser) },
                 label = {
                     Text(
                         stringResource(R.string.main_acitivity_bruiser),
@@ -856,8 +856,8 @@ private fun SearchAndFilterRowForChamps(
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                selected = roleFilter.contains(RoleEnum.Support),
-                onClick = { viewModel.setRoleFilter(RoleEnum.Support) },
+                selected = roleFilter.contains(RoleEnum.support),
+                onClick = { viewModel.setRoleFilter(RoleEnum.support) },
                 label = {
                     Text(
                         stringResource(R.string.main_acitivity_support),

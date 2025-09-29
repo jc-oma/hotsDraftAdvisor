@@ -1,10 +1,13 @@
 package com.example.hotsdraftadviser
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 enum class RoleEnum {
-    Ranged,
-    Support,
-    Melee,
-    Heal,
-    Tank,
-    Bruiser
+    ranged,
+    support,
+    melee,
+    heal,
+    tank,
+    bruiser
 }
