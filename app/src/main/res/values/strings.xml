@@ -14,11 +14,12 @@ HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</
     <string name="main_acitivity_tank" translatable="false">Tank</string>
     <string name="main_acitivity_melee">Nahkampf</string>
     <string name="main_acitivity_heal">Heiler</string>
+    <string name="main_acitivity_ranged">Fernkampf</string>
     <string name="main_acitivity_bruiser">Frontbrecher</string>
     <string name="main_acitivity_support">Unterstützer</string>
     <string name="main_acitivity_ban_own">Ban blau</string>
     <string name="main_acitivity_ban_their">Ban rot</string>
-    <string name="tutorial_you_got_it_desc">Vielen Dank, dass Du meine App geladen hast. \nHi, Ich bin Janek und ich will dir zur besseren Heldenauswahl verhelfen.</string>
+    <string name="tutorial_you_got_it_desc">Vielen Dank, dass Du meine App geladen hast. \nHi, Ich will dir mit diser App zur besseren Heldenauswahl in gewertet - und ungewerteten Spielen in Heroes of the Storm verhelfen.</string>
     <string name="tutorial_start_it">Los geht\'s!</string>
     <string name="tutorial_start_it_desc">Starte einfach die Suche eines gewerteten oder ungewerteten Spiels.</string>
     <string name="tutorial_map_it">Karte finden!</string>
@@ -37,6 +38,5 @@ HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</
     <string name="tutorial_customize_it_desc">Du kannst im Menue entscheiden, ob Du eine einfache Bewertung in Sternen oder Anhand von Zahlen möchtest. Zusätzlich kann die Anzeige der Liste verändert werden.</string>
     <string name="tutorial_that_s_it">Das war\'s!</string>
     <string name="tutorial_that_s_it_desc">Viel Glück und GG!</string>
-    <string name="main_acitivity_ranged">Fernkampf</string>
     <string name="tutorial_you_got_it">Du hast es!</string>
 </resources>

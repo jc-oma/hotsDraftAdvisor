@@ -18,7 +18,7 @@
     <string name="main_acitivity_ban_own">Ban Own</string>
     <string name="main_acitivity_ban_their">Ban Their</string>
     <string name="tutorial_you_got_it">You got it!</string>
-    <string name="tutorial_you_got_it_desc">First of all thank you for giving me a chance. \nHi, I\'m Janek and I want you to improve your drafting by assisting with my tool.</string>
+    <string name="tutorial_you_got_it_desc">First of all thank you for giving me a chance. \nHi, I want you to improve your drafting by assisting with this tool.</string>
     <string name="tutorial_start_it">Start it!</string>
     <string name="tutorial_start_it_desc">You start searching for a ranked or unranked game. Or maybe you just started a custom match with drafting champs for each team.</string>
     <string name="tutorial_map_it">Map it!</string>
@@ -34,7 +34,7 @@
     <string name="tutorial_restart_it">Restart it!</string>
     <string name="tutorial_restart_it_desc">When your finished and want to start a new game tap the restart button at the bottom left.</string>
     <string name="tutorial_customize_it">Customize it!</string>
-    <string name="tutorial_customize_it_desc">Instead of evaluating the champs with stars you can chose a rating based on numbers in the three dot menu. You can also change the champ view to a smaller list view.</string>
+    <string name="tutorial_customize_it_desc">Instead of evaluating the champs with stars you can chose a number based rating in the three dot menu. You can also change the champ view to a smaller list view.</string>
     <string name="tutorial_that_s_it">That\'s it!</string>
     <string name="tutorial_that_s_it_desc"><![CDATA[GL & GG]]></string>
 </resources>

@@ -71,7 +71,7 @@ import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampListI
 import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampPortraitComposable
 import com.example.hotsdraftadviser.composables.menus.DisclaimerComposable
 import com.example.hotsdraftadviser.composables.menus.MenuMainActivityComposable
-import com.example.hotsdraftadviser.composables.menus.tutorial.TutorialCarousel
+import com.example.hotsdraftadviser.composables.menus.tutorial.TutorialCarouselComposable
 import com.example.hotsdraftadviser.composables.pickedChamps.ListOfPickedChampsComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.composables.segmentedButton.SegmentedButtonToOrderChamplistComposable
@@ -445,7 +445,7 @@ fun MainActivityComposable(
     if (isTutorialShown || isFirstStart) {
         Column {
             Box(modifier = Modifier.height(48.dp))
-            TutorialCarousel(modifier = Modifier.fillMaxSize(), onClose = { viewModel.toggleTutorial() })
+            TutorialCarouselComposable(modifier = Modifier.fillMaxSize(), onClose = { viewModel.toggleTutorial() })
         }
     }
 }

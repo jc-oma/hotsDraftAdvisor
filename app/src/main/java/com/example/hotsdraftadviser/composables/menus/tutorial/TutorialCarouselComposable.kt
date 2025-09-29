@@ -33,7 +33,7 @@ import com.example.hotsdraftadviser.getColorByHexString
 @Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TutorialCarousel(modifier: Modifier = Modifier, onClose: () -> Unit = {}) {
+fun TutorialCarouselComposable(modifier: Modifier = Modifier, onClose: () -> Unit = {}) {
     val screenBackgroundColor = "150e35ff"
     val composeScreenBackgroundColor = getColorByHexString(screenBackgroundColor)
     val site0 = TutorialItem(
