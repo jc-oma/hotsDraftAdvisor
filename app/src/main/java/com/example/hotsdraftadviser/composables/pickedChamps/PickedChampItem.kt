@@ -59,7 +59,7 @@ fun RowScope.PickedChampItem(
             modifier = Modifier.fillMaxSize(),
             painter = painter,
             contentScale = ContentScale.Crop,
-            contentDescription = stringResource(Utilitys().mapChampNameToStringRessource(teamPickedChamp.ChampName)!!)
+            contentDescription = teamPickedChamp.localName!!
         )
         Box(
             modifier = Modifier

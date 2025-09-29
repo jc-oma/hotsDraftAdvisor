@@ -126,7 +126,7 @@ fun ChampPortraitComposable(
                             fontSize = 18.sp
                         ),
                         //TODO Index wieder hinzufügen wenn Bug List gefixt? -> (index + 1).toString() + ". " +
-                        text = stringResource(Utilitys().mapChampNameToStringRessource(champ.ChampName)!!)
+                        text = champ.localName!!
                     )
                 }
                 Box(

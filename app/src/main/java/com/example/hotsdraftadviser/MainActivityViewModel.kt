@@ -4,6 +4,8 @@ import android.app.Application
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -389,7 +391,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             } else {
                 if (isFiltered) {
                     champs.filter { champ ->
-                        champ.ChampName.contains(filter, ignoreCase = true) && !champ.isPicked
+                        (champ.ChampName.contains(filter, ignoreCase = true) || champ.localName!!.contains(filter, ignoreCase = true)) && !champ.isPicked
                     }
                 } else {
                     champs
@@ -694,9 +696,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     ): StateFlow<List<String>> {
         return combine(maps, searchString) { currentMaps, currentSearchString ->
             val lowerCaseSearchString = currentSearchString.lowercase()
+            val application = getApplication<Application>()
 
             currentMaps.filter { item ->
-                item.lowercase().contains(lowerCaseSearchString)
+                item.lowercase().contains(lowerCaseSearchString) ||
+                        application.getString(Utilitys().mapMapNameToStringRessource(item)!!)
+                            .lowercase().contains(lowerCaseSearchString)
             }
         }.stateIn(
             scope = viewModelScope,
@@ -731,8 +736,15 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     setUniqueMapsInMapScore()
                     setUniqueCahmpsInChampScores()
                     _allChampsData.value = _allChampsData.value.map { champ ->
+                        val application = getApplication<Application>()
                         champ.copy(
-                            difficulty = Utilitys().mapDifficultyForChamp(champ.ChampName)!!
+                            difficulty = Utilitys().mapDifficultyForChamp(champ.ChampName)!!,
+                            origin = Utilitys().mapChampToOrigin(champ.ChampName)!!,
+                            localName = application.getString(
+                                Utilitys().mapChampNameToStringRessource(
+                                    champ.ChampName
+                                )!!
+                            )
                         )
                     }
                 } catch (e: Exception) {

@@ -47,7 +47,7 @@ fun ChampListItem(
     Row(modifier = Modifier.height(32.dp)) {
         Text(
             modifier = Modifier.weight(1f),
-            text = stringResource(Utilitys().mapChampNameToStringRessource(chosableChamp.ChampName)!!)
+            text = chosableChamp.localName!!
         )
         Box(
             modifier = Modifier

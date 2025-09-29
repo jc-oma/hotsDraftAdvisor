@@ -1,6 +1,7 @@
 package com.example.hotsdraftadviser.dataclsasses
 
 import com.example.hotsdraftadviser.Difficulty
+import com.example.hotsdraftadviser.GameOrigin
 import com.example.hotsdraftadviser.TeamSide
 import kotlinx.serialization.Serializable
 
@@ -22,7 +23,9 @@ data class ChampData(
     var isPicked: Boolean = false,
     var pickedBy: TeamSide = TeamSide.NONE,
     var isAFavoriteChamp: Boolean = false,
-    var difficulty: Difficulty = Difficulty.EASY
+    var difficulty: Difficulty = Difficulty.EASY,
+    var origin: GameOrigin? = null,
+    var localName: String? = null
 )
 
 // Beispielhafte Instanz Ihrer ChampData-Klasse
@@ -51,7 +54,9 @@ val exampleChampDataSgtHammer = ChampData(
     scoreTheir = 75,
     isPicked = false,
     pickedBy = TeamSide.NONE,
-    isAFavoriteChamp = true
+    isAFavoriteChamp = true,
+    origin = GameOrigin.STARCRAFT,
+    localName = "Hammer"
 )
 
 val exampleChampDataAbathur = ChampData(
@@ -79,5 +84,7 @@ val exampleChampDataAbathur = ChampData(
     scoreTheir = 135,
     isPicked = false,
     pickedBy = TeamSide.NONE,
-    isAFavoriteChamp = true
+    isAFavoriteChamp = true,
+    origin = GameOrigin.STARCRAFT,
+    localName = "Abathur"
 )

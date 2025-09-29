@@ -342,4 +342,103 @@ class Utilitys {
             else -> return null
         }
     }
+
+    fun mapChampToOrigin(champName: String): GameOrigin? {
+        when (champName) {
+            "Abathur" -> return GameOrigin.STARCRAFT
+            "Alarak" -> return GameOrigin.STARCRAFT
+            "Alexstrasza" -> return GameOrigin.WARCRAFT
+            "Ana" -> return GameOrigin.OVERWATCH
+            "Anduin" -> return GameOrigin.WARCRAFT
+            "Anubarak" -> return GameOrigin.WARCRAFT
+            "Artanis" -> return GameOrigin.STARCRAFT
+            "Arthas" -> return GameOrigin.WARCRAFT
+            "Auriel" -> return GameOrigin.DIABLO
+            "Azmodan" -> return GameOrigin.DIABLO
+            "Blaze" -> return GameOrigin.STARCRAFT
+            "Brightwing" -> return GameOrigin.WARCRAFT
+            "Cassia" -> return GameOrigin.DIABLO
+            "Chen" -> return GameOrigin.WARCRAFT
+            "Cho" -> return GameOrigin.WARCRAFT
+            "Chogall" -> return GameOrigin.WARCRAFT
+            "Chromie" -> return GameOrigin.WARCRAFT
+            "Deathwing" -> return GameOrigin.WARCRAFT
+            "Deckard" -> return GameOrigin.DIABLO
+            "Dehaka" -> return GameOrigin.STARCRAFT
+            "Diablo" -> return GameOrigin.DIABLO
+            "DVA" -> return GameOrigin.OVERWATCH
+            "ETC" -> return GameOrigin.WARCRAFT
+            "Falstad" -> return GameOrigin.WARCRAFT
+            "Fenix" -> return GameOrigin.STARCRAFT
+            "Gall" -> return GameOrigin.WARCRAFT
+            "Garrosh" -> return GameOrigin.WARCRAFT
+            "Gazlowe" -> return GameOrigin.WARCRAFT
+            "Genji" -> return GameOrigin.OVERWATCH
+            "Greymane" -> return GameOrigin.WARCRAFT
+            "Guldan" -> return GameOrigin.WARCRAFT
+            "Hanzo" -> return GameOrigin.OVERWATCH
+            "Hogger" -> return GameOrigin.WARCRAFT
+            "Illidan" -> return GameOrigin.WARCRAFT
+            "Imperius" -> return GameOrigin.DIABLO
+            "Jaina" -> return GameOrigin.WARCRAFT
+            "Johanna" -> return GameOrigin.DIABLO
+            "Junkrat" -> return GameOrigin.OVERWATCH
+            "Kaelthas" -> return GameOrigin.WARCRAFT
+            "Kelthuzad" -> return GameOrigin.WARCRAFT
+            "Kerrigan" -> return GameOrigin.STARCRAFT
+            "Kharazim" -> return GameOrigin.DIABLO
+            "Leoric" -> return GameOrigin.DIABLO
+            "Lili" -> return GameOrigin.WARCRAFT
+            "Li-Ming" -> return GameOrigin.DIABLO
+            "LtMorales" -> return GameOrigin.STARCRAFT
+            "Lucio" -> return GameOrigin.OVERWATCH
+            "Lunara" -> return GameOrigin.WARCRAFT
+            "Maiev" -> return GameOrigin.WARCRAFT
+            "Malfurion" -> return GameOrigin.WARCRAFT
+            "Malganis" -> return GameOrigin.WARCRAFT
+            "Malthael" -> return GameOrigin.DIABLO
+            "Medivh" -> return GameOrigin.WARCRAFT
+            "Mei" -> return GameOrigin.OVERWATCH
+            "Mephisto" -> return GameOrigin.DIABLO
+            "Muradin" -> return GameOrigin.WARCRAFT
+            "Murky" -> return GameOrigin.WARCRAFT
+            "Nazeebo" -> return GameOrigin.DIABLO
+            "Nova" -> return GameOrigin.STARCRAFT
+            "Orphea" -> return GameOrigin.NEXUS
+            "Probius" -> return GameOrigin.STARCRAFT
+            "Qhira" -> return GameOrigin.NEXUS
+            "Ragnaros" -> return GameOrigin.WARCRAFT
+            "Raynor" -> return GameOrigin.STARCRAFT
+            "Rehgar" -> return GameOrigin.WARCRAFT
+            "Rexxar" -> return GameOrigin.WARCRAFT
+            "Samuro" -> return GameOrigin.WARCRAFT
+            "SgtHammer" -> return GameOrigin.STARCRAFT
+            "Sonya" -> return GameOrigin.DIABLO
+            "Stitches" -> return GameOrigin.WARCRAFT
+            "Stukov" -> return GameOrigin.STARCRAFT
+            "Sylvanas" -> return GameOrigin.WARCRAFT
+            "Tassadar" -> return GameOrigin.STARCRAFT
+            "Butcher" -> return GameOrigin.DIABLO
+            "LostVikings" -> return GameOrigin.NEXUS
+            "Thrall" -> return GameOrigin.WARCRAFT
+            "Tracer" -> return GameOrigin.OVERWATCH
+            "Tychus" -> return GameOrigin.STARCRAFT
+            "Tyrael" -> return GameOrigin.DIABLO
+            "Tyrande" -> return GameOrigin.WARCRAFT
+            "Uther" -> return GameOrigin.WARCRAFT
+            "Valeera" -> return GameOrigin.WARCRAFT
+            "Valla" -> return GameOrigin.DIABLO
+            "Varian" -> return GameOrigin.WARCRAFT
+            "Whitemane" -> return GameOrigin.WARCRAFT
+            "Xul" -> return GameOrigin.DIABLO
+            "Yrel" -> return GameOrigin.WARCRAFT
+            "Zagara" -> return GameOrigin.STARCRAFT
+            "Zeratul" -> return GameOrigin.STARCRAFT
+            "Zarya" -> return GameOrigin.OVERWATCH
+            "Zuljin" -> return GameOrigin.WARCRAFT
+
+
+            else -> return null
+        }
+    }
 }
