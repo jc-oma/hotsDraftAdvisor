@@ -548,7 +548,7 @@ private fun AvailableChampPortraitComposable(
                     mapFloat = currentChampUnfilt.mapFloat,
                     ownTeamFloat = currentChampUnfilt.fitTeam / fitTeamMax.toFloat(),
                     theirTeamFloat = currentChampUnfilt.goodAgainstTeam / goodAgainstTeamMax.toFloat(),
-                    mapName = choosenMap,
+                    mapName = stringResource(Utilitys().mapMapNameToStringRessource(choosenMap)!!),
                     maxOwnScore = ownScoreMax,
                     maxTheirScore = theirScoreMax,
                     isStarRating = isStarRatingMode
@@ -719,7 +719,7 @@ private fun SearchAndFilterRowForChamps(
                 onClick = { viewModel.toggleFavFilter() },
                 label = {
                     Text(
-                        "Favorite", fontSize = getResponsiveFontSize(),
+                        stringResource(R.string.filter_favorite) , fontSize = getResponsiveFontSize(),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )

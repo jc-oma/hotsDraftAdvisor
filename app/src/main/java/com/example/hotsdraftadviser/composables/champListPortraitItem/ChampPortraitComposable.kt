@@ -116,9 +116,12 @@ fun ChampPortraitComposable(
                     .weight(1f)
                     .padding(start = 8.dp)
             ) {
-                Row {
+                Row(
+                    verticalAlignment = Alignment.Bottom,
+                    modifier = Modifier.padding(top = 8.dp)
+                ) {
                     Text(
-                        modifier = Modifier.padding(start = 4.dp, top = 8.dp),
+                        modifier = Modifier.padding(start = 4.dp),
                         fontStyle = FontStyle.Italic,
                         style = TextStyle(
                             textDecoration = TextDecoration.Underline,
@@ -128,6 +131,13 @@ fun ChampPortraitComposable(
                         //TODO Index wieder hinzufügen wenn Bug List gefixt? -> (index + 1).toString() + ". " +
                         text = champ.localName!!
                     )
+                    //TODO später richtig einbauen
+                    /*
+                    Icon(
+                        modifier = Modifier.height(24.dp).padding(start = 24.dp),
+                        painter = painterResource(id = Utilitys().mapDifficultyToDrawable(champ.difficulty)),
+                        contentDescription = champ.difficulty.name
+                    )*/
                 }
                 Box(
                     modifier = Modifier
@@ -138,7 +148,7 @@ fun ChampPortraitComposable(
                     Column() {
                         val barHeight = 10.dp
                         ChampEvaluationComposable(
-                            label = "Value on $mapName",
+                            label = stringResource(R.string.portrait_value_on, mapName),
                             progressFloat = mapFloat,
                             colorOwn = Color.Blue,
                             colorTheir = Color.Red,
@@ -146,7 +156,7 @@ fun ChampPortraitComposable(
                         )
                         Box(modifier = Modifier.height(2.dp))
                         ChampEvaluationComposable(
-                            label = "Fit in own Team",
+                            label = stringResource(R.string.portrait_it_in_own_team),
                             progressFloat = ownTeamFloat,
                             colorOwn = Color.Blue,
                             colorTheir = Color.Red,
@@ -154,7 +164,7 @@ fun ChampPortraitComposable(
                         )
                         Box(modifier = Modifier.height(2.dp))
                         ChampEvaluationComposable(
-                            label = "Good against enemy Team",
+                            label = stringResource(R.string.portrait_good_against_enemy_team),
                             progressFloat = theirTeamFloat,
                             colorOwn = Color.Blue,
                             colorTheir = Color.Red,

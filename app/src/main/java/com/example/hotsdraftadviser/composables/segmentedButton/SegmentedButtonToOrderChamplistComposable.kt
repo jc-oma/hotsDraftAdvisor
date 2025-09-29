@@ -12,7 +12,9 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.hotsdraftadviser.R
 import com.example.hotsdraftadviser.SortState
 import com.example.hotsdraftadviser.getColorByHexString
 
@@ -23,7 +25,10 @@ fun SegmentedButtonToOrderChamplistComposable(
     onButtonClick: () -> Unit
 ) {
     var selectedIndex by remember { mutableIntStateOf(sortState.ordinal) }
-    val list = listOf<String>("Best Pick", "Best Ban", "Name")
+    val list = listOf<String>(stringResource(R.string.segment_button_best_pick),
+        stringResource(R.string.segment_button_best_ban),
+        stringResource(R.string.segment_button_name)
+    )
     val screenBackgroundColor = "150e35ff"
     val composeScreenBackgroundColor = getColorByHexString(screenBackgroundColor)
 

@@ -452,4 +452,13 @@ class Utilitys {
             RoleEnum.bruiser -> return R.drawable.bruiser
         }
     }
+
+    fun mapDifficultyToDrawable(difficulty: Difficulty): Int {
+        return when (difficulty) {
+            Difficulty.EASY -> R.drawable.difficulty_easy
+            Difficulty.MEDIUM -> R.drawable.difficulty_medium
+            Difficulty.HARD -> R.drawable.difficulty_hard
+            Difficulty.EXTREME -> R.drawable.difficulty_extreme
+        }
+    }
 }

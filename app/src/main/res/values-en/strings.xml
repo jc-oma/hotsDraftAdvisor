@@ -14,6 +14,7 @@
     <string name="main_acitivity_ranged">Ranged</string>
     <string name="main_acitivity_melee">Melee</string>
     <string name="main_acitivity_heal">Heal</string>
+    <string name="filter_favorite">Favorite</string>
     <string name="main_acitivity_bruiser">Bruiser</string>
     <string name="main_acitivity_support">Support</string>
     <string name="main_acitivity_ban_own">Ban Own</string>
@@ -148,4 +149,12 @@
     <string name="map_name_Volskaya_Foundry">Volskaya Foundry</string>
     <string name="map_name_Warhead_Junction">Warhead Junction</string>
     <string name="button_close">Got it</string>
+
+    <string name="portrait_value_on">Value on %1$s</string>
+    <string name="portrait_it_in_own_team">Fit in own Team</string>
+    <string name="portrait_good_against_enemy_team">Good against enemy Team</string>
+
+    <string name="segment_button_best_pick">Best Pick</string>
+    <string name="segment_button_best_ban">Best Ban</string>
+    <string name="segment_button_name">Name</string>
 </resources>
