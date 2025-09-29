@@ -153,7 +153,7 @@ HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</
     <string name="button_close">OK</string>
 
     <string name="portrait_value_on">Stärke auf %1$s</string>
-    <string name="portrait_it_in_own_team">Pasend für\'s eigene Team</string>
+    <string name="portrait_it_in_own_team">Passend für\'s eigene Team</string>
     <string name="portrait_good_against_enemy_team">Stärke gegen rotes Team</string>
     <string name="segment_button_best_pick">Beste Wahl</string>
     <string name="segment_button_best_ban">Bester Bann</string>
