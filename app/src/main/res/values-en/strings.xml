@@ -7,7 +7,8 @@
     <string name="main_activity_maps_suchen">🔍 Search for specific map...</string>
     <string name="main_activity_champs_suchen">🔍 Search for specific champ...</string>
     <string name="main_acitivity_menu_disclaimer">Disclaim</string>
-    <string name="main_acitivity_menu_starrating">Starrating</string>
+    <string name="main_acitivity_menu_starrating">Star Rating</string>
+    <string name="main_acitivity_menu_number_rating">Number Rating</string>
     <string name="main_acitivity_pickscore_own_team">PickScore Own Team</string>
     <string name="main_acitivity_pickscore_their_team">Pickscore Their Team</string>
     <string name="main_acitivity_ranged">Ranged</string>
@@ -146,4 +147,5 @@
     <string name="map_name_Towers_of_Doom">Towers of Doom</string>
     <string name="map_name_Volskaya_Foundry">Volskaya Foundry</string>
     <string name="map_name_Warhead_Junction">Warhead Junction</string>
+    <string name="button_close">Got it</string>
 </resources>

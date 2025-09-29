@@ -217,6 +217,8 @@ fun MainActivityComposable(
                     onToggleListMode = { viewModel.toggleListMode() },
                     onToggleStarRating = { viewModel.toggleStarRateMode() },
                     onTutorial = { viewModel.toggleTutorial() },
+                    isListMode = isListMode,
+                    isStarRating = isStarRatingMode
                 )
             }
         }
@@ -240,8 +242,11 @@ fun MainActivityComposable(
                         modifier = Modifier.weight(0.2f),
                         onDisclaymer = { viewModel.toggleDisclaymer() },
                         onToggleListMode = { viewModel.toggleListMode() },
-                    onToggleStarRating = { viewModel.toggleStarRateMode() },
-                        onTutorial = { viewModel.toggleTutorial() })
+                        onToggleStarRating = { viewModel.toggleStarRateMode() },
+                        onTutorial = { viewModel.toggleTutorial() },
+                        isListMode = isListMode,
+                        isStarRating = isStarRatingMode
+                    )
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     // Suchfeld
@@ -333,7 +338,11 @@ fun MainActivityComposable(
                                 ) {
                                     Text(
                                         modifier = Modifier.fillMaxWidth(),
-                                        text = stringResource(Utilitys().mapMapNameToStringRessource(mapList[i])!!),
+                                        text = stringResource(
+                                            Utilitys().mapMapNameToStringRessource(
+                                                mapList[i]
+                                            )!!
+                                        ),
                                         color = Color.White,
                                         fontSize = 14.sp,
                                         textAlign = TextAlign.Center,
@@ -445,7 +454,9 @@ fun MainActivityComposable(
     if (isTutorialShown || isFirstStart) {
         Column {
             Box(modifier = Modifier.height(48.dp))
-            TutorialCarouselComposable(modifier = Modifier.fillMaxSize(), onClose = { viewModel.toggleTutorial() })
+            TutorialCarouselComposable(
+                modifier = Modifier.fillMaxSize(),
+                onClose = { viewModel.toggleTutorial() })
         }
     }
 }
@@ -667,7 +678,8 @@ private fun SearchAndFilterRowForChamps(
             },
             label = {
                 Text(
-                    stringResource(R.string.main_activity_champs_suchen), fontSize = getResponsiveFontSize(),
+                    stringResource(R.string.main_activity_champs_suchen),
+                    fontSize = getResponsiveFontSize(),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -759,7 +771,8 @@ private fun SearchAndFilterRowForChamps(
                 onClick = { viewModel.setRoleFilter(RoleEnum.Ranged) },
                 label = {
                     Text(
-                        stringResource(R.string.main_acitivity_ranged), fontSize = responsiveFontSize,
+                        stringResource(R.string.main_acitivity_ranged),
+                        fontSize = responsiveFontSize,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -780,7 +793,8 @@ private fun SearchAndFilterRowForChamps(
                 onClick = { viewModel.setRoleFilter(RoleEnum.Melee) },
                 label = {
                     Text(
-                        stringResource(R.string.main_acitivity_melee), fontSize = responsiveFontSize,
+                        stringResource(R.string.main_acitivity_melee),
+                        fontSize = responsiveFontSize,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -824,7 +838,8 @@ private fun SearchAndFilterRowForChamps(
                 onClick = { viewModel.setRoleFilter(RoleEnum.Bruiser) },
                 label = {
                     Text(
-                        stringResource(R.string.main_acitivity_bruiser), fontSize = responsiveFontSize,
+                        stringResource(R.string.main_acitivity_bruiser),
+                        fontSize = responsiveFontSize,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -845,7 +860,8 @@ private fun SearchAndFilterRowForChamps(
                 onClick = { viewModel.setRoleFilter(RoleEnum.Support) },
                 label = {
                     Text(
-                        stringResource(R.string.main_acitivity_support), fontSize = responsiveFontSize,
+                        stringResource(R.string.main_acitivity_support),
+                        fontSize = responsiveFontSize,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )

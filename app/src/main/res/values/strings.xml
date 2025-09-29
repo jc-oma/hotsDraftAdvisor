@@ -9,6 +9,7 @@ HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</
     <string name="main_acitivity_menu_tutorial" translatable="false">Tutorial</string>
     <string name="main_acitivity_menu_disclaimer">Rechtliches</string>
     <string name="main_acitivity_menu_starrating">Sternenwertung</string>
+    <string name="main_acitivity_menu_number_rating">Zahlenwertung</string>
     <string name="main_acitivity_pickscore_own_team">Wertung blaues Team</string>
     <string name="main_acitivity_pickscore_their_team">Wertung rotes Team</string>
     <string name="main_acitivity_tank" translatable="false">Tank</string>
@@ -148,4 +149,5 @@ HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</
     <string name="map_name_Towers_of_Doom">Türme des Unheils</string>
     <string name="map_name_Volskaya_Foundry">Volskaya-Fertigung</string>
     <string name="map_name_Warhead_Junction">Sprengkopfmanufaktur</string>
+    <string name="button_close">OK</string>
 </resources>

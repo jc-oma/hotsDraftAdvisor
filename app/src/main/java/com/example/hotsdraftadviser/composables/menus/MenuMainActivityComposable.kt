@@ -25,6 +25,8 @@ import com.example.hotsdraftadviser.R
 @Composable
 fun MenuMainActivityComposable(
     modifier: Modifier = Modifier,
+    isStarRating: Boolean,
+    isListMode: Boolean,
     onDisclaymer: () -> Unit,
     onToggleListMode: () -> Unit,
     onToggleStarRating: () -> Unit,
@@ -51,15 +53,23 @@ fun MenuMainActivityComposable(
                 onClick = { onDisclaymer() }
             )
             DropdownMenuItem(
-                text = { Text(stringResource(R.string.main_acitivity_menu_starrating)) },
+                text = {
+                    Text(
+                        if (isStarRating) stringResource(R.string.main_acitivity_menu_starrating) else stringResource(
+                            R.string.main_acitivity_menu_number_rating
+                        )
+                    )
+                },
                 onClick = { onToggleStarRating() }
             )
             DropdownMenuItem(
                 text = {
                     Row {
-                        Icon(Icons.AutoMirrored.Filled.List, contentDescription = "List")
-                        Icon(Icons.Outlined.CompareArrows, contentDescription = "List")
-                        Icon(Icons.Outlined.AccountBox, contentDescription = "List")
+                        if (isListMode) {
+                            Icon(Icons.Outlined.AccountBox, contentDescription = "List")
+                        } else {
+                            Icon(Icons.AutoMirrored.Filled.List, contentDescription = "List")
+                        }
                     }
                 },
                 onClick = { onToggleListMode() }
@@ -73,6 +83,6 @@ fun MenuMainActivityComposable(
 fun MenuMainActivitPreview() {
     MenuMainActivityComposable(
         onDisclaymer = {}, onToggleListMode = {}, onTutorial = {},
-        onToggleStarRating = {}
+        onToggleStarRating = {}, isListMode = true, isStarRating = true
     )
 }

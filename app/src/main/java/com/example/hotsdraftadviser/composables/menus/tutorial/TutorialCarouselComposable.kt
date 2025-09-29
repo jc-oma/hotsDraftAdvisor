@@ -159,7 +159,7 @@ fun TutorialCarouselComposable(modifier: Modifier = Modifier, onClose: () -> Uni
                     )
                 }
             }
-            Button(onClick = { onClose() }) { Text("Close") }
+            Button(onClick = { onClose() }) { Text(stringResource(R.string.button_close)) }
         }
     }
 }
