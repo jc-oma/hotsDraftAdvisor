@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -30,6 +31,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -75,7 +78,7 @@ fun ChampPortraitComposable(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(2.5f)
+            .heightIn(min = (LocalWindowInfo.current.containerSize.width / 7f).dp)
             .background(composeScreenBackgroundColor)
     ) {
 
@@ -105,7 +108,7 @@ fun ChampPortraitComposable(
                     )
             ) {
                 Image(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.height(LocalWindowInfo.current.containerSize.height.dp / 15f),
                     contentScale = ContentScale.Crop,
                     painter = painterResource(id = champDrawable),
                     contentDescription = champ.ChampName
@@ -171,7 +174,7 @@ fun ChampPortraitComposable(
                             barHeight = barHeight
                         )
                         Box(modifier = Modifier.height(8.dp))
-                        Row(modifier = Modifier.height(32.dp)) {
+                        Row(modifier = Modifier.heightIn(min = (32.dp))) {
                             Box(
                                 modifier = Modifier
                                     .weight(1f)
@@ -199,7 +202,11 @@ fun ChampPortraitComposable(
                                         modifier = Modifier.fillMaxHeight()
                                     )
                                 } else {
-                                    Text(champ.scoreOwn.toString())
+                                    Text(
+                                        text = champ.scoreOwn.toString(),
+                                        maxLines = 1,
+                                        color = Color.White
+                                    )
                                 }
                             }
                             Box(
@@ -229,7 +236,11 @@ fun ChampPortraitComposable(
                                         modifier = Modifier.fillMaxWidth()
                                     )
                                 } else {
-                                    Text(champ.scoreTheir.toString())
+                                    Text(
+                                        text = champ.scoreTheir.toString(),
+                                        color = Color.White,
+                                        maxLines = 1
+                                    )
                                 }
                             }
                             Box(
@@ -313,6 +324,6 @@ private fun ChampPortraitComposablePreview() {
         mapName = "Hanamura",
         maxOwnScore = 144,
         maxTheirScore = 75,
-        isStarRating = true
+        isStarRating = false
     )
 }
