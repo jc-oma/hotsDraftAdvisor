@@ -699,7 +699,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
             currentMaps.filter { item ->
                 item.lowercase().contains(lowerCaseSearchString) ||
-                        application.getString(Utilitys().mapMapNameToStringRessource(item)!!)
+                        application.getString(Utilitys.mapMapNameToStringRessource(item)!!)
                             .lowercase().contains(lowerCaseSearchString)
             }
         }.stateIn(
@@ -737,10 +737,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     _allChampsData.value = _allChampsData.value.map { champ ->
                         val application = getApplication<Application>()
                         champ.copy(
-                            difficulty = Utilitys().mapDifficultyForChamp(champ.ChampName)!!,
-                            origin = Utilitys().mapChampToOrigin(champ.ChampName)!!,
+                            difficulty = Utilitys.mapDifficultyForChamp(champ.ChampName)!!,
+                            origin = Utilitys.mapChampToOrigin(champ.ChampName)!!,
                             localName = application.getString(
-                                Utilitys().mapChampNameToStringRessource(
+                                Utilitys.mapChampNameToStringRessource(
                                     champ.ChampName
                                 )!!
                             )

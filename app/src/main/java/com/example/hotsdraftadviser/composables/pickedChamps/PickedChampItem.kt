@@ -84,7 +84,7 @@ fun RowScope.PickedChampItem(
                 Row {
                     teamPickedChamp.ChampRoleAlt.forEach { it ->
                         Icon(
-                            painter = painterResource(Utilitys().mapRoleToImageRessource(it)!!),
+                            painter = painterResource(Utilitys.mapRoleToImageRessource(it)!!),
                             contentDescription = it.name,
                             tint = Color.White,
                         )

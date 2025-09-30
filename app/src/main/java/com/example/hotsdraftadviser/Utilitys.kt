@@ -1,6 +1,6 @@
 package com.example.hotsdraftadviser
 
-class Utilitys {
+object Utilitys {
     fun mapDifficultyForChamp(champName: String): Difficulty? {
         when (champName) {
             "Abathur" -> return Difficulty.EXTREME

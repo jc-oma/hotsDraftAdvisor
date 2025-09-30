@@ -52,7 +52,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -185,17 +187,10 @@ fun MainActivityComposable(
                     Image(
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop,
-                        painter = painterResource(id = Utilitys().mapMapNameToDrawable(choosenMap)!!),
-                        contentDescription = choosenMap
+                        painter = painterResource(id = Utilitys.mapMapNameToDrawable(choosenMap)!!),
+                        contentDescription = choosenMap,
+                        colorFilter = ColorFilter.tint(Color.Black.copy(alpha = 0.5f), blendMode = BlendMode.Darken)
                     )
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(
-                                Color.Black.copy(0.7f)
-                            ) // Padding für den Text
-                    ) {
-                    }
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -313,7 +308,7 @@ fun MainActivityComposable(
                                     modifier = Modifier.fillMaxSize(),
                                     contentScale = ContentScale.Crop,
                                     painter = painterResource(
-                                        id = Utilitys().mapMapNameToDrawable(
+                                        id = Utilitys.mapMapNameToDrawable(
                                             mapList[i]
                                         )!!
                                     ),
@@ -339,7 +334,7 @@ fun MainActivityComposable(
                                     Text(
                                         modifier = Modifier.fillMaxWidth(),
                                         text = stringResource(
-                                            Utilitys().mapMapNameToStringRessource(
+                                            Utilitys.mapMapNameToStringRessource(
                                                 mapList[i]
                                             )!!
                                         ),
@@ -479,7 +474,7 @@ private fun availableChampCaruselComposable(
             modifier = Modifier
                 .height(205.dp)
                 .maskClip(MaterialTheme.shapes.extraLarge),
-            painter = painterResource(id = Utilitys().mapChampNameToDrawable(item.ChampName)!!),
+            painter = painterResource(id = Utilitys.mapChampNameToDrawable(item.ChampName)!!),
             contentDescription = "Text",
             contentScale = ContentScale.Crop
         )
@@ -534,12 +529,12 @@ private fun AvailableChampPortraitComposable(
                     updateChampSearchQuery = { viewModel.updateOwnChampSearchQuery("") },
                     ownBan = { viewModel.setBansPerTeam(i, TeamSide.OWN) },
                     theirBan = { viewModel.setBansPerTeam(i, TeamSide.THEIR) },
-                    champDrawable = Utilitys().mapChampNameToDrawable(currentChamp.ChampName)!!,
+                    champDrawable = Utilitys.mapChampNameToDrawable(currentChamp.ChampName)!!,
                     index = i,
                     mapFloat = currentChampUnfilt.mapFloat,
                     ownTeamFloat = currentChampUnfilt.fitTeam / fitTeamMax.toFloat(),
                     theirTeamFloat = currentChampUnfilt.goodAgainstTeam / goodAgainstTeamMax.toFloat(),
-                    mapName = stringResource(Utilitys().mapMapNameToStringRessource(choosenMap)!!),
+                    mapName = stringResource(Utilitys.mapMapNameToStringRessource(choosenMap)!!),
                     maxOwnScore = ownScoreMax,
                     maxTheirScore = theirScoreMax,
                     isStarRating = isStarRatingMode

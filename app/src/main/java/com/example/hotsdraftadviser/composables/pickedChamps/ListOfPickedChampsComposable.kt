@@ -65,7 +65,7 @@ fun ListOfPickedChampsComposable(
                             removePickForTeam = { removePick(i, TeamSide.OWN) },
                             teamPickedChamp = ownPickedChamps[i],
                             painter = painterResource(
-                                id = Utilitys().mapChampNameToDrawable(
+                                id = Utilitys.mapChampNameToDrawable(
                                     ownPickedChamps[i].ChampName
                                 )!!
                             )
@@ -80,7 +80,7 @@ fun ListOfPickedChampsComposable(
                             removePickForTeam = { removePick(i, TeamSide.THEIR) },
                             teamPickedChamp = theirPickedChamps[i],
                             painter = painterResource(
-                                id = Utilitys().mapChampNameToDrawable(
+                                id = Utilitys.mapChampNameToDrawable(
                                     theirPickedChamps[i].ChampName
                                 )!!
                             )
