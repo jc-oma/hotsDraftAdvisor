@@ -427,15 +427,6 @@ fun MainActivityComposable(
                         composeTheirTeamColor
                     )
                 } else {
-                    /*availableChampCaruselComposable(
-                    composeHeadlineColor,
-                    viewModel,
-                    sortState,
-                    composeTextColor,
-                    chosableChampList,
-                    composeOwnTeamColor,
-                    composeTheirTeamColor
-                )*/
                     AvailableChampPortraitComposable(
                         viewModel,
                         sortState
@@ -566,7 +557,7 @@ private fun showToast(context: Context) {
 private fun availableChampListComposable(
     composeHeadlineColor: Color,
     viewModel: MainActivityViewModel,
-    sortState: Any,
+    sortState: SortState,
     composeTextColor: Color,
     chosableChampList: List<ChampData>,
     composeOwnTeamColor: Color,
@@ -575,62 +566,14 @@ private fun availableChampListComposable(
     val ownScoreMax by viewModel.ownScoreMax.collectAsState(1)
     val theirScoreMax by viewModel.theirScoreMax.collectAsState(1)
     val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(composeHeadlineColor)
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            modifier = Modifier
-                .weight(1f)
-                .clickable {
-                    viewModel.setSortState(SortState.CHAMPNAME)
-                },
-            text = "Champ",
-            color = if (sortState == SortState.CHAMPNAME) {
-                Color.Yellow
-            } else {
-                composeTextColor
-            }
-        )
-        Text(
-            modifier = Modifier
-                .weight(1f)
-                .clickable {
-                    viewModel.setSortState(SortState.OWNPOINTS)
-                },
-            text = stringResource(R.string.main_acitivity_pickscore_own_team),
-            color = if (sortState == SortState.OWNPOINTS) {
-                Color.Yellow
-            } else {
-                composeTextColor
-            }
-        )
-        Text(
-            modifier = Modifier
-                .weight(1f)
-                .clickable {
-                    viewModel.setSortState(SortState.THEIRPOINTS)
-                },
-            text = stringResource(R.string.main_acitivity_pickscore_their_team),
-            color = if (sortState == SortState.THEIRPOINTS) {
-                Color.Yellow
-            } else {
-                composeTextColor
-            }
-        )
-        Text(
-            modifier = Modifier.weight(0.5f),
-            text = stringResource(R.string.main_acitivity_ban_own)
-        )
-        Text(
-            modifier = Modifier.weight(0.5f),
-            text = stringResource(R.string.main_acitivity_ban_their)
-        )
-    }
+    SegmentedButtonToOrderChamplistComposable(
+        setSortState = { sortState -> viewModel.setSortState(sortState) },
+        sortState = sortState,
+        onButtonClick = { viewModel.scrollList(listState, coroutineScope) }
+    )
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
         contentPadding = PaddingValues(bottom = 80.dp) // Fügt Padding am unteren Rand hinzu

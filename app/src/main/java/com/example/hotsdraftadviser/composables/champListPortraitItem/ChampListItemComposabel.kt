@@ -121,7 +121,7 @@ fun ChampListItem(
                 .weight(0.5f)
                 .padding(2.dp)
                 .background(
-                    composeOwnTeamColor.copy(alpha = 0.7f),
+                    Color.Blue.copy(alpha = 0.7f),
                     shape = RoundedCornerShape(4.dp)
                 )
                 .border(
@@ -147,7 +147,7 @@ fun ChampListItem(
                 .weight(0.5f)
                 .padding(2.dp)
                 .background(
-                    composeTheirTeamColor.copy(alpha = 0.7f),
+                    Color.Red.copy(alpha = 0.7f),
                     shape = RoundedCornerShape(4.dp)
                 )
                 .border(
