@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -42,10 +43,11 @@ fun ChampListItem(
     maxOwnScore: Int,
     maxTheirScore: Int
 ) {
-    Row(modifier = Modifier.height(32.dp)) {
+    Row(modifier = Modifier.heightIn(min = 32.dp)) {
         Text(
             modifier = Modifier.weight(1f),
-            text = chosableChamp.localName!!
+            text = chosableChamp.localName!!,
+            maxLines = 1
         )
         Box(
             modifier = Modifier
@@ -74,7 +76,11 @@ fun ChampListItem(
                     modifier = Modifier.fillMaxHeight()
                 )
             } else {
-                Text(chosableChamp.scoreOwn.toString())
+                Text(
+                    color = Color.White,
+                    text = chosableChamp.scoreOwn.toString(),
+                    maxLines = 1
+                )
             }
         }
         Box(
@@ -104,7 +110,10 @@ fun ChampListItem(
                     modifier = Modifier.fillMaxWidth()
                 )
             } else {
-                Text(chosableChamp.scoreTheir.toString())
+                Text(
+                    color = Color.White,
+                    text = chosableChamp.scoreTheir.toString()
+                )
             }
         }
         Box(
@@ -164,7 +173,7 @@ fun ChampListItem(
 
 @Preview
 @Composable
-private fun ChampListItemPreview(){
+private fun ChampListItemPreview() {
     val textColor = "f8f8f9ff"
     val theirTeamColor = "5C1A1BFF"
     val ownTeamColor = "533088ff"
