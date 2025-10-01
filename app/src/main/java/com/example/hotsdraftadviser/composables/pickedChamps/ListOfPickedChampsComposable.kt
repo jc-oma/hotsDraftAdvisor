@@ -10,13 +10,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.hotsdraftadviser.R
 import com.example.hotsdraftadviser.TeamSide
 import com.example.hotsdraftadviser.Utilitys
 import com.example.hotsdraftadviser.composables.starRating.StarRatingComposable
@@ -39,25 +44,10 @@ fun ListOfPickedChampsComposable(
     isStarrating: Boolean
 ) {
     Column() {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(composeHeadlineColor)
-        ) {
-            Text(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 12.dp, end = 8.dp), text = "Own Team"
-            )
-            Text(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 12.dp, end = 8.dp), text = "Their Team"
-            )
-        }
+        
         LazyColumn {
             items(ownPickedChamps.size.coerceAtLeast(theirPickedChamps.size)) { i ->
-                Row(modifier = Modifier.fillMaxWidth()) {
+                Row(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surface)) {
                     if (ownPickedChamps.size > i) {
                         PickedChampItem(
                             composeOwnTeamColor,
@@ -99,8 +89,16 @@ fun ListOfPickedChampsComposable(
                 val maxFloat = ownScoreFlaot.coerceAtLeast(theirScoreFlaot)
                 val starColor = if (!isSystemInDarkTheme()) Color.Black else Color.White
 
-                StarRatingComposable(ratingFloat = ownScoreFlaot / maxFloat,  modifier = Modifier.fillMaxHeight().weight(1f), starColorFilled = starColor)
-                StarRatingComposable(ratingFloat = theirScoreFlaot / maxFloat,  modifier = Modifier.fillMaxHeight().weight(1f), starColorFilled = starColor)
+                StarRatingComposable(
+                    ratingFloat = ownScoreFlaot / maxFloat, modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1f), starColorFilled = starColor
+                )
+                StarRatingComposable(
+                    ratingFloat = theirScoreFlaot / maxFloat, modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1f), starColorFilled = starColor
+                )
             } else {
                 Text(
                     modifier = Modifier.weight(1f),

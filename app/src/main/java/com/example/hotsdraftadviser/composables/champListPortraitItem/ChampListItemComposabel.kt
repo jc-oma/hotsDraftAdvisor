@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.hotsdraftadviser.TeamSide
@@ -43,11 +44,13 @@ fun ChampListItem(
     maxOwnScore: Int,
     maxTheirScore: Int
 ) {
-    Row(modifier = Modifier.heightIn(min = 32.dp)) {
+    Row(modifier = Modifier.heightIn(min = 32.dp),
+        verticalAlignment = Alignment.CenterVertically) {
         Text(
             modifier = Modifier.weight(1f),
             text = chosableChamp.localName!!,
-            maxLines = 1
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
         Box(
             modifier = Modifier

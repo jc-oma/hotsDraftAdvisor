@@ -158,4 +158,6 @@ HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</
     <string name="segment_button_best_pick">Beste Wahl</string>
     <string name="segment_button_best_ban">Bester Bann</string>
     <string name="segment_button_name">Name</string>
+    <string name="picked_list_own_team">Blaues Team</string>
+    <string name="picked_list_their_team">Rotes Team</string>
 </resources>

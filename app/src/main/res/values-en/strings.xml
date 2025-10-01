@@ -157,4 +157,6 @@
     <string name="segment_button_best_pick">Best Pick</string>
     <string name="segment_button_best_ban">Best Ban</string>
     <string name="segment_button_name">Name</string>
+    <string name="picked_list_own_team">Own Team</string>
+    <string name="picked_list_their_team">Their Team</string>
 </resources>

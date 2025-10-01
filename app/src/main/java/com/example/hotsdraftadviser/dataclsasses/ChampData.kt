@@ -57,7 +57,7 @@ val exampleChampDataSgtHammer = ChampData(
     pickedBy = TeamSide.NONE,
     isAFavoriteChamp = true,
     origin = GameOrigin.STARCRAFT,
-    localName = "Hammer",
+    localName = "Seargent Hammer",
     difficulty = Difficulty.MEDIUM
 )
 

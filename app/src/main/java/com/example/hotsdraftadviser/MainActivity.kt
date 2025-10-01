@@ -70,7 +70,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.hotsdraftadviser.composables.advertisement.MainWindowAdInterstitial
 import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampListItem
-import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampPortraitComposable
+import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampPortraitItemComposable
 import com.example.hotsdraftadviser.composables.menus.DisclaimerComposable
 import com.example.hotsdraftadviser.composables.menus.MenuMainActivityComposable
 import com.example.hotsdraftadviser.composables.menus.tutorial.TutorialCarouselComposable
@@ -521,7 +521,7 @@ private fun AvailableChampPortraitComposable(
                 val currentChamp = distinctChosableChampList[i]
                 val currentChampUnfilt = distinctAndUnfilteredChosableChampList[i]
 
-                ChampPortraitComposable(
+                ChampPortraitItemComposable(
                     champ = currentChamp,
                     toggleChampFavorite = { viewModel.toggleFavoriteStatus(currentChamp.ChampName) },
                     pickChampForOwnTeam = { viewModel.pickChampForTeam(i, TeamSide.OWN) },
