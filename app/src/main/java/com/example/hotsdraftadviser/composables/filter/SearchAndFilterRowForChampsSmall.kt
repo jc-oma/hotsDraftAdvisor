@@ -32,7 +32,7 @@ import com.example.hotsdraftadviser.R
 import com.example.hotsdraftadviser.RoleEnum
 
 @Composable
-fun SearchAndFilterRowForChamps(
+fun SearchAndFilterRowForChampsSmall(
     searchQueryOwnTChamps: String,
     roleFilter: List<RoleEnum>,
     favFilter: Boolean,
@@ -75,34 +75,6 @@ fun SearchAndFilterRowForChamps(
                     }
                 }
             )
-            Box(
-                modifier = Modifier.weight(1f),
-                contentAlignment = Alignment.BottomStart
-            ) {
-                FilterChip(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 8.dp, end = 8.dp),
-                    leadingIcon = {
-                        Icon(
-                            imageVector = (Icons.Filled.Favorite),
-                            contentDescription = "Heart",
-                            modifier = Modifier.size(FilterChipDefaults.IconSize)
-                        )
-                    },
-                    //TODO
-                    selected = favFilter,
-                    onClick = { toggleFavFilter() },
-                    label = {
-                        Text(
-                            stringResource(R.string.filter_favorite),
-                            fontSize = getResponsiveFontSize(),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-                )
-            }
         }
         Column(
             verticalArrangement = Arrangement.Top
@@ -116,134 +88,139 @@ fun SearchAndFilterRowForChamps(
                         .weight(0.5f)
                         .padding(start = imagePadding, end = imagePadding),
                     leadingIcon = {
-                        Icon(
-                            painterResource(id = R.drawable.tank),
-                            contentDescription = "Description of your image",
-                            modifier = Modifier.size(FilterChipDefaults.IconSize)
-                        )
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painterResource(id = R.drawable.tank),
+                                contentDescription = "Description of your image",
+                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                            )
+                        }
                     },
                     selected = roleFilter.contains(RoleEnum.tank),
                     onClick = { setRoleFilter(RoleEnum.tank) },
-                    label = {
-                        Text(
-                            stringResource(R.string.main_acitivity_tank),
-                            fontSize = responsiveFontSize,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
+                    label = {}
                 )
                 FilterChip(
                     modifier = Modifier
                         .weight(0.5f)
                         .padding(start = imagePadding, end = imagePadding),
                     leadingIcon = {
-                        Icon(
-                            painterResource(id = R.drawable.ranged),
-                            contentDescription = "Description of your image",
-                            modifier = Modifier.size(FilterChipDefaults.IconSize)
-                        )
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painterResource(id = R.drawable.ranged),
+                                contentDescription = "Description of your image",
+                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                            )
+                        }
                     },
                     selected = roleFilter.contains(RoleEnum.ranged),
                     onClick = { setRoleFilter(RoleEnum.ranged) },
-                    label = {
-                        Text(
-                            stringResource(R.string.main_acitivity_ranged),
-                            fontSize = responsiveFontSize,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
+                    label = {}
                 )
                 FilterChip(
                     modifier = Modifier
                         .weight(0.5f)
                         .padding(start = imagePadding, end = imagePadding),
                     leadingIcon = {
-                        Icon(
-                            painterResource(id = R.drawable.melee),
-                            contentDescription = "Description of your image",
-                            modifier = Modifier.size(FilterChipDefaults.IconSize)
-                        )
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painterResource(id = R.drawable.melee),
+                                contentDescription = "Description of your image",
+                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                            )
+                        }
                     },
                     selected = roleFilter.contains(RoleEnum.melee),
                     onClick = { setRoleFilter(RoleEnum.melee) },
-                    label = {
-                        Text(
-                            stringResource(R.string.main_acitivity_melee),
-                            fontSize = responsiveFontSize,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
+                    label = {}
                 )
-            }
-            Row {
                 FilterChip(
                     modifier = Modifier
                         .weight(0.5f)
                         .padding(start = imagePadding, end = imagePadding),
                     leadingIcon = {
-                        Icon(
-                            painterResource(id = R.drawable.heiler),
-                            contentDescription = "Description of your image",
-                            modifier = Modifier.size(FilterChipDefaults.IconSize)
-                        )
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painterResource(id = R.drawable.heiler),
+                                contentDescription = "Description of your image",
+                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                            )
+                        }
                     },
                     selected = roleFilter.contains(RoleEnum.heal),
                     onClick = { setRoleFilter(RoleEnum.heal) },
-                    label = {
-                        Text(
-                            stringResource(R.string.main_acitivity_heal),
-                            fontSize = responsiveFontSize,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
+                    label = {}
                 )
                 FilterChip(
                     modifier = Modifier
                         .weight(0.5f)
                         .padding(start = imagePadding, end = imagePadding),
                     leadingIcon = {
-                        Icon(
-                            painterResource(id = R.drawable.bruiser),
-                            contentDescription = "Description of your image",
-                            modifier = Modifier.size(FilterChipDefaults.IconSize)
-                        )
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painterResource(id = R.drawable.bruiser),
+                                contentDescription = "Description of your image",
+                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                            )
+                        }
                     },
                     selected = roleFilter.contains(RoleEnum.bruiser),
                     onClick = { setRoleFilter(RoleEnum.bruiser) },
-                    label = {
-                        Text(
-                            stringResource(R.string.main_acitivity_bruiser),
-                            fontSize = responsiveFontSize,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
+                    label = {}
                 )
                 FilterChip(
                     modifier = Modifier
                         .weight(0.5f)
                         .padding(start = imagePadding, end = imagePadding),
                     leadingIcon = {
-                        Icon(
-                            painterResource(id = R.drawable.support),
-                            contentDescription = "Description of your image",
-                            modifier = Modifier.size(FilterChipDefaults.IconSize)
-                        )
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painterResource(id = R.drawable.support),
+                                contentDescription = "Description of your image",
+                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                            )
+                        }
                     },
                     selected = roleFilter.contains(RoleEnum.support),
                     onClick = { setRoleFilter(RoleEnum.support) },
-                    label = {
-                        Text(
-                            stringResource(R.string.main_acitivity_support),
-                            fontSize = responsiveFontSize,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
+                    label = {}
+                )
+                FilterChip(
+                    modifier = Modifier
+                        .weight(0.5f)
+                        .padding(start = 8.dp, end = 8.dp),
+                    leadingIcon = {
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = (Icons.Filled.Favorite),
+                                contentDescription = "Heart",
+                                modifier = Modifier.size(FilterChipDefaults.IconSize))
+                        }
+                    },
+                    selected = favFilter,
+                    onClick = { toggleFavFilter() },
+                    label = {}
                 )
             }
         }
@@ -266,8 +243,8 @@ private fun getResponsiveFontSize(): TextUnit {
 
 @Preview
 @Composable
-private fun SearchAndFilterRowForChampsPreview() {
-    SearchAndFilterRowForChamps(
+private fun SearchAndFilterRowForChampsSmallPreview() {
+    SearchAndFilterRowForChampsSmall(
         searchQueryOwnTChamps = "Hammer",
         roleFilter = listOf(RoleEnum.tank, RoleEnum.melee),
         favFilter = false,

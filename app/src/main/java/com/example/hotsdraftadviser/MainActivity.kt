@@ -72,6 +72,7 @@ import com.example.hotsdraftadviser.composables.advertisement.MainWindowAdInters
 import com.example.hotsdraftadviser.composables.champListPortraitItem.AvailableChampPortraitComposable
 import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampListItem
 import com.example.hotsdraftadviser.composables.filter.SearchAndFilterRowForChamps
+import com.example.hotsdraftadviser.composables.filter.SearchAndFilterRowForChampsSmall
 import com.example.hotsdraftadviser.composables.menus.DisclaimerComposable
 import com.example.hotsdraftadviser.composables.menus.MenuMainActivityComposable
 import com.example.hotsdraftadviser.composables.menus.tutorial.TutorialCarouselComposable
@@ -400,7 +401,7 @@ fun MainActivityComposable(
                 )
             }
             val favFilter by viewModel.favFilter.collectAsState(false)
-            SearchAndFilterRowForChamps(
+            SearchAndFilterRowForChampsSmall(
                 searchQueryOwnTChamps = searchQueryOwnTChamps,
                 roleFilter = roleFilter,
                 favFilter = favFilter,
