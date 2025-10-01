@@ -29,6 +29,7 @@ import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
 import com.example.hotsdraftadviser.getColorByHexString
 import com.example.hotsdraftadviser.getColorByHexStringForET
+import kotlin.math.max
 
 @Composable
 fun ChampListItem(
@@ -44,6 +45,8 @@ fun ChampListItem(
     maxOwnScore: Int,
     maxTheirScore: Int
 ) {
+    val scoreOwnPercent = max((chosableChamp.scoreOwn.toFloat() / maxOwnScore.toFloat() * 100).toInt(), 0)
+    val scoreTheirPercent = max((chosableChamp.scoreTheir.toFloat() / maxTheirScore.toFloat() * 100).toInt(), 0)
     Row(modifier = Modifier.heightIn(min = 32.dp),
         verticalAlignment = Alignment.CenterVertically) {
         Text(
@@ -81,7 +84,7 @@ fun ChampListItem(
             } else {
                 Text(
                     color = Color.White,
-                    text = chosableChamp.scoreOwn.toString(),
+                    text = scoreOwnPercent.toString(),
                     maxLines = 1
                 )
             }
@@ -115,7 +118,7 @@ fun ChampListItem(
             } else {
                 Text(
                     color = Color.White,
-                    text = chosableChamp.scoreTheir.toString()
+                    text = scoreTheirPercent.toString()
                 )
             }
         }
@@ -193,7 +196,7 @@ private fun ChampListItemPreview() {
         pickChampForTeam = { _, _ -> {} },
         banChampForTeam = { _, _ -> {} },
         updateOwnChampSearchQuery = {},
-        isStarRating = true,
+        isStarRating = false,
         maxOwnScore = 123,
         maxTheirScore = 75
     )

@@ -29,6 +29,7 @@ import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
 import com.example.hotsdraftadviser.dataclsasses.exampleChampDataAbathur
 import com.example.hotsdraftadviser.getColorByHexString
+import kotlin.math.max
 
 @Composable
 fun ListOfPickedChampsComposable(
@@ -43,8 +44,11 @@ fun ListOfPickedChampsComposable(
     theirPickScore: Int,
     isStarrating: Boolean
 ) {
+    val aggrScore = ownPickScore + theirPickScore
+    val ownScorePercent = max((ownPickScore.toFloat() / aggrScore.toFloat() * 100).toInt(), 0)
+    val theirScorePercent = max((theirPickScore.toFloat() / aggrScore.toFloat() * 100).toInt(), 0)
+
     Column() {
-        
         LazyColumn {
             items(ownPickedChamps.size.coerceAtLeast(theirPickedChamps.size)) { i ->
                 Row(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surface)) {
@@ -102,12 +106,12 @@ fun ListOfPickedChampsComposable(
             } else {
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = ownPickScore.toString(),
+                    text = ownScorePercent.toString(),
                     textAlign = TextAlign.Right
                 )
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = theirPickScore.toString(),
+                    text = theirScorePercent.toString(),
                     textAlign = TextAlign.Right
                 )
             }
@@ -134,6 +138,6 @@ fun ListOfPickedChampsComposablePreview() {
         composeTheirTeamColor = getColorByHexString(theirTeamColor),
         ownPickScore = 321,
         theirPickScore = 83,
-        isStarrating = true
+        isStarrating = false
     )
 }

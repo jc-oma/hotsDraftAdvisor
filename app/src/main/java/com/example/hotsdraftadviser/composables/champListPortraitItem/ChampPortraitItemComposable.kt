@@ -46,6 +46,7 @@ import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
 import com.example.hotsdraftadviser.getColorByHexString
 import com.example.hotsdraftadviser.composables.starRating.StarRatingComposable
+import kotlin.math.max
 
 @Composable
 fun ChampPortraitItemComposable(
@@ -71,6 +72,8 @@ fun ChampPortraitItemComposable(
     val boardercolor = "f8f8f9ff"
     val composeBoarderColor = getColorByHexString(boardercolor)
     var fav by remember { mutableStateOf(champ.isAFavoriteChamp) }
+    val scoreOwnPercent = max((champ.scoreOwn.toFloat() / maxOwnScore.toFloat() * 100).toInt(), 0)
+    val scoreTheirPercent = max((champ.scoreTheir.toFloat() / maxTheirScore.toFloat() * 100).toInt(), 0)
 
     Box(
         modifier = Modifier
@@ -200,7 +203,7 @@ fun ChampPortraitItemComposable(
                                     )
                                 } else {
                                     Text(
-                                        text = champ.scoreOwn.toString(),
+                                        text = scoreOwnPercent.toString(),
                                         maxLines = 1,
                                         color = Color.White
                                     )
@@ -234,7 +237,7 @@ fun ChampPortraitItemComposable(
                                     )
                                 } else {
                                     Text(
-                                        text = champ.scoreTheir.toString(),
+                                        text = scoreTheirPercent.toString(),
                                         color = Color.White,
                                         maxLines = 1
                                     )
