@@ -69,8 +69,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.hotsdraftadviser.composables.advertisement.MainWindowAdInterstitial
+import com.example.hotsdraftadviser.composables.champListPortraitItem.AvailableChampPortraitComposable
 import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampListItem
-import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampPortraitItemComposable
+import com.example.hotsdraftadviser.composables.filter.SearchAndFilterRowForChamps
 import com.example.hotsdraftadviser.composables.menus.DisclaimerComposable
 import com.example.hotsdraftadviser.composables.menus.MenuMainActivityComposable
 import com.example.hotsdraftadviser.composables.menus.tutorial.TutorialCarouselComposable
@@ -398,12 +399,14 @@ fun MainActivityComposable(
                     isStarRatingMode
                 )
             }
-
+            val favFilter by viewModel.favFilter.collectAsState(false)
             SearchAndFilterRowForChamps(
-                searchQueryOwnTChamps,
-                viewModel,
-                roleFilter,
-                composeTextColor
+                searchQueryOwnTChamps = searchQueryOwnTChamps,
+                roleFilter = roleFilter,
+                favFilter = favFilter,
+                setRoleFilter = { roleEnum -> viewModel.setRoleFilter(roleEnum) },
+                updateChampSearchQuery = { queryString -> viewModel.updateChampSearchQuery(queryString) },
+                toggleFavFilter = { viewModel.toggleFavFilter() }
             )
 
             Box(modifier = Modifier.height(8.dp))
@@ -411,8 +414,19 @@ fun MainActivityComposable(
             if (chosableChampList.isEmpty()) {
                 Text("Lade Champs oder keine Champs gefunden...")
             } else {
+                val distinctChosableChampList by viewModel.distinctChosableChampList.collectAsState(emptyList())
+                val distinctAndUnfilteredChosableChampList by viewModel.distinctfilteredChosableChampList.collectAsState(
+                    emptyList()
+                )
+                val fitTeamMax by viewModel.fitTeamMax.collectAsState(1)
+                val goodAgainstTeamMax by viewModel.goodAgainstTeamMax.collectAsState(1)
+                val ownScoreMax by viewModel.ownScoreMax.collectAsState(1)
+                val theirScoreMax by viewModel.theirScoreMax.collectAsState(1)
+                val choosenMap by viewModel.choosenMap.collectAsState("")
+                val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
+
                 if (isListMode) {
-                    availableChampListComposable(
+                    AvailableChampListComposable(
                         composeHeadlineColor,
                         viewModel,
                         sortState,
@@ -423,8 +437,21 @@ fun MainActivityComposable(
                     )
                 } else {
                     AvailableChampPortraitComposable(
-                        viewModel,
-                        sortState
+                        sortState = sortState,
+                        distinctChosableChampList = distinctChosableChampList,
+                        distinctAndUnfilteredChosableChampList = distinctAndUnfilteredChosableChampList,
+                        fitTeamMax = fitTeamMax,
+                        goodAgainstTeamMax = goodAgainstTeamMax,
+                        ownScoreMax = ownScoreMax,
+                        theirScoreMax = theirScoreMax,
+                        choosenMap = choosenMap,
+                        isStarRatingMode = isStarRatingMode,
+                        setSortState = { sortState -> viewModel.setSortState(sortState) },
+                        scrollList = { lazyListState, coroutineScope -> viewModel.scrollList(lazyListState, coroutineScope) },
+                        toggleFavoriteStatus = { string -> viewModel.toggleFavoriteStatus(string) },
+                        pickChampForOwnTeam = { i, teamSide -> viewModel.pickChampForTeam(i, teamSide) },
+                        updateChampSearchQuery = {string -> viewModel.updateChampSearchQuery(string) },
+                        setBansPerTeam = { i, teamSide -> viewModel.setBansPerTeam(i, teamSide) }
                     )
                 }
             }
@@ -447,109 +474,8 @@ fun MainActivityComposable(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun availableChampCaruselComposable(
-    composeHeadlineColor: Color,
-    viewModel: MainActivityViewModel,
-    sortState: Any,
-    composeTextColor: Color,
-    chosableChampList: List<ChampData>,
-    composeOwnTeamColor: Color,
-    composeTheirTeamColor: Color
-) {
-    HorizontalMultiBrowseCarousel(
-        state = rememberCarouselState { chosableChampList.count() },
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(top = 16.dp, bottom = 16.dp),
-        preferredItemWidth = 186.dp,
-        itemSpacing = 8.dp,
-        contentPadding = PaddingValues(horizontal = 16.dp)
-    )
-    { i ->
-        val item = chosableChampList[i]
-        Image(
-            modifier = Modifier
-                .height(205.dp)
-                .maskClip(MaterialTheme.shapes.extraLarge),
-            painter = painterResource(id = Utilitys.mapChampNameToDrawable(item.ChampName)!!),
-            contentDescription = "Text",
-            contentScale = ContentScale.Crop
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun AvailableChampPortraitComposable(
-    viewModel: MainActivityViewModel = viewModel(
-        factory = MainActivityViewModelFactory(LocalContext.current.applicationContext as Application)
-    ),
-    sortState: SortState
-) {
-    val distinctChosableChampList by viewModel.distinctChosableChampList.collectAsState(emptyList())
-    val distinctAndUnfilteredChosableChampList by viewModel.distinctfilteredChosableChampList.collectAsState(
-        emptyList()
-    )
-    val fitTeamMax by viewModel.fitTeamMax.collectAsState(1)
-    val goodAgainstTeamMax by viewModel.goodAgainstTeamMax.collectAsState(1)
-    val ownScoreMax by viewModel.ownScoreMax.collectAsState(1)
-    val theirScoreMax by viewModel.theirScoreMax.collectAsState(1)
-    val choosenMap by viewModel.choosenMap.collectAsState("")
-    val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
-    val listState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
-
-    Column(modifier = Modifier.fillMaxSize()) {
-        SegmentedButtonToOrderChamplistComposable(
-            setSortState = { sortState -> viewModel.setSortState(sortState) },
-            sortState = sortState,
-            onButtonClick = { viewModel.scrollList(listState, coroutineScope) }
-        )
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-            contentPadding = PaddingValues(bottom = 80.dp),
-            state = listState
-        ) {
-            items(
-                count = distinctChosableChampList.size,
-                key = { it -> distinctChosableChampList[it].key }) { i ->
-                if (distinctChosableChampList[i].isPicked) return@items
-                val currentChamp = distinctChosableChampList[i]
-                val currentChampUnfilt = distinctAndUnfilteredChosableChampList[i]
-
-                ChampPortraitItemComposable(
-                    champ = currentChamp,
-                    toggleChampFavorite = { viewModel.toggleFavoriteStatus(currentChamp.ChampName) },
-                    pickChampForOwnTeam = { viewModel.pickChampForTeam(i, TeamSide.OWN) },
-                    pickChampForTheirTeam = { viewModel.pickChampForTeam(i, TeamSide.THEIR) },
-                    updateChampSearchQuery = { viewModel.updateOwnChampSearchQuery("") },
-                    ownBan = { viewModel.setBansPerTeam(i, TeamSide.OWN) },
-                    theirBan = { viewModel.setBansPerTeam(i, TeamSide.THEIR) },
-                    champDrawable = Utilitys.mapChampNameToDrawable(currentChamp.ChampName)!!,
-                    index = i,
-                    mapFloat = currentChampUnfilt.mapFloat,
-                    ownTeamFloat = currentChampUnfilt.fitTeam / fitTeamMax.toFloat(),
-                    theirTeamFloat = currentChampUnfilt.goodAgainstTeam / goodAgainstTeamMax.toFloat(),
-                    mapName = stringResource(Utilitys.mapMapNameToStringRessource(choosenMap)!!),
-                    maxOwnScore = ownScoreMax,
-                    maxTheirScore = theirScoreMax,
-                    isStarRating = isStarRatingMode
-                )
-            }
-        }
-    }
-}
-
-private fun showToast(context: Context) {
-    Toast.makeText(context, "Not implemented yet", Toast.LENGTH_SHORT).show()
-}
-
-@Composable
-private fun availableChampListComposable(
+private fun AvailableChampListComposable(
     composeHeadlineColor: Color,
     viewModel: MainActivityViewModel,
     sortState: SortState,
@@ -583,7 +509,7 @@ private fun availableChampListComposable(
                 composeTheirTeamColor = composeTheirTeamColor,
                 pickChampForTeam = { i, teamSide -> viewModel.pickChampForTeam(i, teamSide) },
                 banChampForTeam = { i, teamSide -> viewModel.setBansPerTeam(i, teamSide) },
-                updateOwnChampSearchQuery = { string -> viewModel.updateOwnChampSearchQuery(string) },
+                updateOwnChampSearchQuery = { string -> viewModel.updateChampSearchQuery(string) },
                 //TODO set by repository
                 isStarRating = isStarRatingMode,
                 maxOwnScore = ownScoreMax,
@@ -591,223 +517,6 @@ private fun availableChampListComposable(
             )
         }
     }
-}
-
-@Composable
-private fun SearchAndFilterRowForChamps(
-    searchQueryOwnTChamps: String,
-    viewModel: MainActivityViewModel,
-    roleFilter: List<RoleEnum>,
-    composeTextColor: Color
-) {
-    val favFilter by viewModel.favFilter.collectAsState(false)
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.Bottom
-    ) {
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(start = 8.dp, end = 8.dp)
-                .weight(2f),
-            value = searchQueryOwnTChamps,
-            onValueChange = { newText: String ->
-                viewModel.setRoleFilter(null)
-                viewModel.updateOwnChampSearchQuery(newText)
-            },
-            label = {
-                Text(
-                    stringResource(R.string.main_activity_champs_suchen),
-                    fontSize = getResponsiveFontSize(),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            },
-            textStyle = TextStyle(fontSize = getResponsiveFontSize()),
-            trailingIcon = {
-                if (searchQueryOwnTChamps.isNotEmpty()) {
-                    Icon(
-                        Icons.Filled.Clear,
-                        contentDescription = "Clear text",
-                        modifier = Modifier.clickable {
-                            viewModel.updateOwnChampSearchQuery(
-                                ""
-                            )
-                        }
-                    )
-                }
-            }
-        )
-        Box(
-            modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.BottomStart
-        ) {
-            FilterChip(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp),
-                leadingIcon = {
-                    Icon(
-                        imageVector = (Icons.Filled.Favorite),
-                        contentDescription = "Heart",
-                        modifier = Modifier.size(FilterChipDefaults.IconSize)
-                    )
-                },
-                //TODO
-                selected = favFilter,
-                onClick = { viewModel.toggleFavFilter() },
-                label = {
-                    Text(
-                        stringResource(R.string.filter_favorite) , fontSize = getResponsiveFontSize(),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            )
-        }
-    }
-    Column(
-        verticalArrangement = Arrangement.Top
-    ) {
-        val imagePadding = 8.dp
-        val responsiveFontSize = getResponsiveFontSize()
-
-        Row(modifier = Modifier.padding(top = imagePadding)) {
-            FilterChip(
-                modifier = Modifier
-                    .weight(0.5f)
-                    .padding(start = imagePadding, end = imagePadding),
-                leadingIcon = {
-                    Icon(
-                        painterResource(id = R.drawable.tank),
-                        contentDescription = "Description of your image",
-                        modifier = Modifier.size(FilterChipDefaults.IconSize)
-                    )
-                },
-                selected = roleFilter.contains(RoleEnum.tank),
-                onClick = { viewModel.setRoleFilter(RoleEnum.tank) },
-                label = {
-                    Text(
-                        stringResource(R.string.main_acitivity_tank),
-                        fontSize = responsiveFontSize,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            )
-            FilterChip(
-                modifier = Modifier
-                    .weight(0.5f)
-                    .padding(start = imagePadding, end = imagePadding),
-                leadingIcon = {
-                    Icon(
-                        painterResource(id = R.drawable.ranged),
-                        contentDescription = "Description of your image",
-                        modifier = Modifier.size(FilterChipDefaults.IconSize)
-                    )
-                },
-                selected = roleFilter.contains(RoleEnum.ranged),
-                onClick = { viewModel.setRoleFilter(RoleEnum.ranged) },
-                label = {
-                    Text(
-                        stringResource(R.string.main_acitivity_ranged),
-                        fontSize = responsiveFontSize,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            )
-            FilterChip(
-                modifier = Modifier
-                    .weight(0.5f)
-                    .padding(start = imagePadding, end = imagePadding),
-                leadingIcon = {
-                    Icon(
-                        painterResource(id = R.drawable.melee),
-                        contentDescription = "Description of your image",
-                        modifier = Modifier.size(FilterChipDefaults.IconSize)
-                    )
-                },
-                selected = roleFilter.contains(RoleEnum.melee),
-                onClick = { viewModel.setRoleFilter(RoleEnum.melee) },
-                label = {
-                    Text(
-                        stringResource(R.string.main_acitivity_melee),
-                        fontSize = responsiveFontSize,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            )
-        }
-        Row {
-            FilterChip(
-                modifier = Modifier
-                    .weight(0.5f)
-                    .padding(start = imagePadding, end = imagePadding),
-                leadingIcon = {
-                    Icon(
-                        painterResource(id = R.drawable.heiler),
-                        contentDescription = "Description of your image",
-                        modifier = Modifier.size(FilterChipDefaults.IconSize)
-                    )
-                },
-                selected = roleFilter.contains(RoleEnum.heal),
-                onClick = { viewModel.setRoleFilter(RoleEnum.heal) },
-                label = {
-                    Text(
-                        stringResource(R.string.main_acitivity_heal), fontSize = responsiveFontSize,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            )
-            FilterChip(
-                modifier = Modifier
-                    .weight(0.5f)
-                    .padding(start = imagePadding, end = imagePadding),
-                leadingIcon = {
-                    Icon(
-                        painterResource(id = R.drawable.bruiser),
-                        contentDescription = "Description of your image",
-                        modifier = Modifier.size(FilterChipDefaults.IconSize)
-                    )
-                },
-                selected = roleFilter.contains(RoleEnum.bruiser),
-                onClick = { viewModel.setRoleFilter(RoleEnum.bruiser) },
-                label = {
-                    Text(
-                        stringResource(R.string.main_acitivity_bruiser),
-                        fontSize = responsiveFontSize,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            )
-            FilterChip(
-                modifier = Modifier
-                    .weight(0.5f)
-                    .padding(start = imagePadding, end = imagePadding),
-                leadingIcon = {
-                    Icon(
-                        painterResource(id = R.drawable.support),
-                        contentDescription = "Description of your image",
-                        modifier = Modifier.size(FilterChipDefaults.IconSize)
-                    )
-                },
-                selected = roleFilter.contains(RoleEnum.support),
-                onClick = { viewModel.setRoleFilter(RoleEnum.support) },
-                label = {
-                    Text(
-                        stringResource(R.string.main_acitivity_support),
-                        fontSize = responsiveFontSize,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            )
-        }
-    }
-
 }
 
 @Composable
@@ -846,21 +555,5 @@ fun getColorByHexStringForET(hexColorString: String): Color {
 fun GreetingPreview() {
     HotsDraftAdviserTheme {
         MainActivityComposable()
-    }
-}
-
-@Composable
-fun getResponsiveFontSize(): TextUnit {
-    val configuration = LocalConfiguration.current
-    val screenWidthDp = configuration.screenWidthDp.dp
-
-    // Beispielhafte Logik:
-    // Kleinere Schriftgröße für schmalere Bildschirme
-    return if (screenWidthDp < 360.dp) {
-        12.sp
-    } else if (screenWidthDp < 480.dp) {
-        14.sp
-    } else {
-        16.sp // Ihre aktuelle fontSize
     }
 }

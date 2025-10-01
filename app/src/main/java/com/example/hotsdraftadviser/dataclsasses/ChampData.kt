@@ -1,5 +1,6 @@
 package com.example.hotsdraftadviser.dataclsasses
 
+import androidx.compose.runtime.key
 import com.example.hotsdraftadviser.Difficulty
 import com.example.hotsdraftadviser.GameOrigin
 import com.example.hotsdraftadviser.RoleEnum
@@ -31,6 +32,7 @@ data class ChampData(
 
 // Beispielhafte Instanz Ihrer ChampData-Klasse
 val exampleChampDataSgtHammer = ChampData(
+    key = 1,
     ChampName = "SgtHammer",
     ChampRole = listOf("assassine"),
     ChampRoleAlt = listOf(RoleEnum.ranged),
@@ -62,6 +64,7 @@ val exampleChampDataSgtHammer = ChampData(
 )
 
 val exampleChampDataAbathur = ChampData(
+    key = 2,
     ChampName = "Abathur",
     ChampRole = listOf("support"),
     ChampRoleAlt = listOf(RoleEnum.support),

@@ -2,10 +2,7 @@ package com.example.hotsdraftadviser
 
 import android.app.Application
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -661,7 +658,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         _filterMapsString.value = query
     }
 
-    fun updateOwnChampSearchQuery(query: String) {
+    fun updateChampSearchQuery(query: String) {
         _filterChampString.value = query
     }
 
