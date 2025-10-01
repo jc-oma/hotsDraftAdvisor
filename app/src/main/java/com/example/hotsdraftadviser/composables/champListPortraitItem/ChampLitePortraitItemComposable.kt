@@ -1,0 +1,106 @@
+package com.example.hotsdraftadviser.composables.champListPortraitItem
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
+import androidx.compose.material3.ProgressIndicatorDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.example.hotsdraftadviser.R
+import com.example.hotsdraftadviser.TeamSide
+import com.example.hotsdraftadviser.dataclsasses.ChampData
+import com.example.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
+
+
+@Composable
+fun ChampLitePortraitItemComposable(
+    chosableChamp: ChampData,
+    /*
+    index: Int,
+    pickChampForTeam: (Int, TeamSide) -> Unit,
+    banChampForTeam: (Int, TeamSide) -> Unit,
+    updateOwnChampSearchQuery: (String) -> Unit,
+    isStarRating: Boolean,
+     */
+    maxOwnScore: Int
+    //maxTheirScore: Int
+) {
+    Column {
+        val maxProgress = 0.834f
+        val progress = maxProgress * chosableChamp.scoreOwn/maxOwnScore
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.size(140.dp)
+        ) {
+            Image(
+                painter = painterResource(R.drawable.chen_round_portrait),
+                contentDescription = "Abathur",
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(CircleShape)
+                    .drawWithContent {
+                        drawContent()
+                        drawRect(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    Color.Black
+                                ),
+                                startY = size.height * 3 / 5,
+                                endY = size.height
+                            )
+                        )
+                    }
+            )
+            CircularProgressIndicator(
+                progress = maxProgress,
+                modifier = Modifier
+                    .size(85.dp)
+                    .rotate(-150f),
+                color = Color.Gray,
+                strokeWidth = 5.dp,
+                trackColor = Color.Transparent,
+                strokeCap = StrokeCap.Butt,
+            )
+            CircularProgressIndicator(
+                progress = progress,
+                modifier = Modifier
+                    .size(85.dp)
+                    .rotate(-150f),
+                color = Color.Yellow,
+                strokeWidth = 5.dp,
+                trackColor = Color.Transparent,
+                strokeCap = StrokeCap.Butt,
+            )
+            Text(
+                text = "555",
+                color = Color.White,
+                modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp)
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ChampLitePortraitItemComposablePreview(){
+    ChampLitePortraitItemComposable(
+        chosableChamp = exampleChampDataSgtHammer,
+        maxOwnScore = 123
+    )
+}
