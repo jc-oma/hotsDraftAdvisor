@@ -1,6 +1,8 @@
 package com.example.hotsdraftadviser.composables.champListPortraitItem
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -8,10 +10,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
-import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
@@ -22,7 +24,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.hotsdraftadviser.R
-import com.example.hotsdraftadviser.TeamSide
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
 
@@ -42,11 +43,14 @@ fun ChampLitePortraitItemComposable(
 ) {
     Column {
         val maxProgress = 0.834f
-        val progress = maxProgress * chosableChamp.scoreOwn/maxOwnScore
+        val scoreFloat = chosableChamp.scoreOwn.toFloat()/maxOwnScore.toFloat()
+        val progress = maxProgress * scoreFloat
+        val champLevelPercent = (scoreFloat*100).toInt()
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier.size(140.dp)
         ) {
+
             Image(
                 painter = painterResource(R.drawable.chen_round_portrait),
                 contentDescription = "Abathur",
@@ -88,10 +92,28 @@ fun ChampLitePortraitItemComposable(
                 strokeCap = StrokeCap.Butt,
             )
             Text(
-                text = "555",
+                text = champLevelPercent.toString(),
                 color = Color.White,
                 modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp)
             )
+            /*
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(Color.Blue)
+                    .border(2.dp, Color.White, CircleShape)
+            )
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(Color.Red)
+                    .border(2.dp, Color.White, CircleShape)
+            )
+             */
         }
     }
 }
