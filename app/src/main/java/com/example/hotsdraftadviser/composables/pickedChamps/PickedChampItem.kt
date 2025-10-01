@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -62,7 +63,7 @@ fun RowScope.PickedChampItem(
         contentAlignment = Alignment.Center
     ) {
         Image(
-            modifier = Modifier.height(height).fillMaxWidth(),
+            modifier = Modifier.height(height).fillMaxWidth().clip(RoundedCornerShape(4.dp)),
             painter = painter,
             contentScale = ContentScale.Crop,
             contentDescription = teamPickedChamp.localName!!,

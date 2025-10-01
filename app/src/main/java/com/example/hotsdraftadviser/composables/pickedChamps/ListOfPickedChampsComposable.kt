@@ -54,7 +54,7 @@ fun ListOfPickedChampsComposable(
                 Row(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surface)) {
                     if (ownPickedChamps.size > i) {
                         PickedChampItem(
-                            composeOwnTeamColor,
+                            Color.Blue,
                             composeTextColor,
                             removePickForTeam = { removePick(i, TeamSide.OWN) },
                             teamPickedChamp = ownPickedChamps[i],
@@ -69,7 +69,7 @@ fun ListOfPickedChampsComposable(
                     }
                     if (theirPickedChamps.size > i) {
                         PickedChampItem(
-                            composeTheirTeamColor,
+                            Color.Red,
                             composeTextColor,
                             removePickForTeam = { removePick(i, TeamSide.THEIR) },
                             teamPickedChamp = theirPickedChamps[i],
@@ -85,7 +85,7 @@ fun ListOfPickedChampsComposable(
                 }
             }
         }
-        Row(modifier = Modifier.height(32.dp)) {
+        Row(modifier = Modifier.height(32.dp).padding(top = 2.dp)) {
             if (isStarrating) {
 
                 val ownScoreFlaot = ownPickScore.toFloat()
@@ -105,14 +105,22 @@ fun ListOfPickedChampsComposable(
                 )
             } else {
                 Text(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f)
+                        .padding(end = 8.dp),
                     text = ownScorePercent.toString(),
                     textAlign = TextAlign.Right
                 )
                 Text(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(0.5f)
+                        .padding(start = 8.dp),
+                    text = "VS",
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    modifier = Modifier.weight(1f)
+                        .padding(start = 8.dp),
                     text = theirScorePercent.toString(),
-                    textAlign = TextAlign.Right
+                    textAlign = TextAlign.Left
                 )
             }
         }

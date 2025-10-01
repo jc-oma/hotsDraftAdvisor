@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalWindowInfo
@@ -108,7 +109,7 @@ fun ChampPortraitItemComposable(
                     )
             ) {
                 Image(
-                    modifier = Modifier.height(LocalWindowInfo.current.containerSize.height.dp / 15f),
+                    modifier = Modifier.height(LocalWindowInfo.current.containerSize.height.dp / 15f).clip(RoundedCornerShape(4.dp)),
                     contentScale = ContentScale.Crop,
                     painter = painterResource(id = champDrawable),
                     contentDescription = champ.ChampName
