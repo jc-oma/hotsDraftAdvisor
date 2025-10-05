@@ -59,7 +59,7 @@ fun AvailableChampLiteComposable(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(2.dp),
             contentPadding = PaddingValues(bottom = 2.dp),
-            columns = GridCells.Adaptive(minSize = 75.dp)
+            columns = GridCells.Adaptive(minSize = 120.dp)
         ) {
             items(
                 count = distinctChosableChampList.size,

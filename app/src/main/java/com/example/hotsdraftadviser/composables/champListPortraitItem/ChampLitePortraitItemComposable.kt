@@ -20,7 +20,10 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.hotsdraftadviser.R
@@ -48,14 +51,14 @@ fun ChampLitePortraitItemComposable(
         val champLevelPercent = (scoreFloat*100).toInt()
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier.size(140.dp)
+            modifier = Modifier.size(120.dp)
         ) {
 
             Image(
                 painter = painterResource(R.drawable.chen_round_portrait),
                 contentDescription = "Abathur",
                 modifier = Modifier
-                    .size(80.dp)
+                    .size(69.dp)
                     .clip(CircleShape)
                     .drawWithContent {
                         drawContent()
@@ -74,27 +77,48 @@ fun ChampLitePortraitItemComposable(
             CircularProgressIndicator(
                 progress = maxProgress,
                 modifier = Modifier
-                    .size(85.dp)
+                    .size(81.dp)
                     .rotate(-150f),
                 color = Color.Gray,
-                strokeWidth = 5.dp,
+                strokeWidth = 4.dp,
                 trackColor = Color.Transparent,
-                strokeCap = StrokeCap.Butt,
+                strokeCap = StrokeCap.Round,
+            )
+            CircularProgressIndicator(
+                progress = 1f,
+                modifier = Modifier
+                    .size(69.dp)
+                    .rotate(-150f),
+                color = Color.Black.copy(alpha = 1f),
+                strokeWidth = 2.dp,
+                trackColor = Color.Transparent,
+                strokeCap = StrokeCap.Round,
+            )
+            CircularProgressIndicator(
+                progress = progress,
+                modifier = Modifier
+                    .size(80.dp)
+                    .rotate(-150f),
+                color = colorResource(R.color.my_custom_gold),
+                strokeWidth = 3.dp,
+                trackColor = Color.Transparent,
+                strokeCap = StrokeCap.Round,
             )
             CircularProgressIndicator(
                 progress = progress,
                 modifier = Modifier
                     .size(85.dp)
                     .rotate(-150f),
-                color = Color.Yellow,
-                strokeWidth = 5.dp,
+                color = Color.Yellow.copy(alpha = 0.3f),
+                strokeWidth = 8.dp,
                 trackColor = Color.Transparent,
-                strokeCap = StrokeCap.Butt,
+                strokeCap = StrokeCap.Round,
             )
             Text(
                 text = champLevelPercent.toString(),
                 color = Color.White,
-                modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp)
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 16.dp)
             )
             /*
             Box(

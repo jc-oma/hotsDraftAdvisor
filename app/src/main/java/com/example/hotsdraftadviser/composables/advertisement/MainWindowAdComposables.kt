@@ -46,12 +46,13 @@ fun MainWindowAdBanner() {
 @Composable
 fun MainWindowAdInterstitial(context: Context, viewModel: MainActivityViewModel) {
     val sampleInterstitialID = "ca-app-pub-3940256099942544/1033173712"
+    val liveInterstitialID = "ca-app-pub-5121116206728666/2015372638"
     var mInterstitialAd: InterstitialAd? = null
     val btnText = remember { mutableStateOf("Loading interstitial Ad") }
     val btnEnable = remember { mutableStateOf(false) }
 
     fun loadInterstitialAd(context: Context) {
-        InterstitialAd.load(context, sampleInterstitialID, AdRequest.Builder().build(),
+        InterstitialAd.load(context, liveInterstitialID, AdRequest.Builder().build(),
             object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
                     mInterstitialAd = null
