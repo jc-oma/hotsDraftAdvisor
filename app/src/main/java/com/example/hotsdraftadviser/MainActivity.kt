@@ -145,61 +145,6 @@ fun MainActivityComposable(
         //--- AdBanners here ---
         //MainWindowAdBanner()
 
-        if (choosenMap.isNotEmpty()) {
-            Row {
-                val shape = RoundedCornerShape(4.dp)
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(start = 8.dp, end = 8.dp)
-                        .background(
-                            composeMapTextColor.copy(alpha = 0.7f),
-                            shape = shape
-                        )
-                        .height(48.dp)
-                        .border(1.dp, composeTextColor, shape = shape)
-                        .clickable {
-                            viewModel.clearChoosenMap()
-                        }
-                        .clip(shape),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Image(
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop,
-                        painter = painterResource(id = Utilitys.mapMapNameToDrawable(choosenMap)!!),
-                        contentDescription = choosenMap,
-                        colorFilter = ColorFilter.tint(
-                            Color.Black.copy(alpha = 0.5f),
-                            blendMode = BlendMode.Darken
-                        )
-                    )
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        Text(
-                            text = choosenMap,
-                            fontSize = 20.sp,
-                            color = Color.White, // Besser lesbar auf dunklem Gradienten
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 12.dp)
-                        )
-                    }
-                }
-                MenuMainActivityComposable(
-                    modifier = Modifier.weight(0.24f),
-                    onDisclaymer = { viewModel.toggleDisclaymer() },
-                    onToggleListMode = { viewModel.toggleListMode() },
-                    onToggleStarRating = { viewModel.toggleStarRateMode() },
-                    onTutorial = { viewModel.toggleTutorial() },
-                    isListMode = isListMode,
-                    isStarRating = isStarRatingMode
-                )
-            }
-        }
         if (choosenMap.isEmpty()) {
             Column(modifier = Modifier.wrapContentSize())
             {
@@ -230,7 +175,8 @@ fun MainActivityComposable(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     // Suchfeld
                     MapSearchBar(
-                        searchQueryMaps, { viewModel.updateMapsSearchQuery(it) },
+                        searchQueryMaps = searchQueryMaps,
+                        updateMapsSearchQuery = { viewModel.updateMapsSearchQuery(it) },
                         modifier = Modifier.weight(1f)
                     )
                     Box(
@@ -339,6 +285,60 @@ fun MainActivityComposable(
                         }
                     }
                 }
+            }
+        } else {
+            Row {
+                val shape = RoundedCornerShape(4.dp)
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(start = 8.dp, end = 8.dp)
+                        .background(
+                            composeMapTextColor.copy(alpha = 0.7f),
+                            shape = shape
+                        )
+                        .height(48.dp)
+                        .border(1.dp, composeTextColor, shape = shape)
+                        .clickable {
+                            viewModel.clearChoosenMap()
+                        }
+                        .clip(shape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop,
+                        painter = painterResource(id = Utilitys.mapMapNameToDrawable(choosenMap)!!),
+                        contentDescription = choosenMap,
+                        colorFilter = ColorFilter.tint(
+                            Color.Black.copy(alpha = 0.5f),
+                            blendMode = BlendMode.Darken
+                        )
+                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        Text(
+                            text = choosenMap,
+                            fontSize = 20.sp,
+                            color = Color.White, // Besser lesbar auf dunklem Gradienten
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 12.dp)
+                        )
+                    }
+                }
+                MenuMainActivityComposable(
+                    modifier = Modifier.weight(0.24f),
+                    onDisclaymer = { viewModel.toggleDisclaymer() },
+                    onToggleListMode = { viewModel.toggleListMode() },
+                    onToggleStarRating = { viewModel.toggleStarRateMode() },
+                    onTutorial = { viewModel.toggleTutorial() },
+                    isListMode = isListMode,
+                    isStarRating = isStarRatingMode
+                )
             }
         }
 

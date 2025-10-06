@@ -33,10 +33,7 @@ fun MenuMainActivityComposable(
     onTutorial: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
-    Box(
-        modifier = modifier
-            .padding(16.dp)
-    ) {
+    Box() {
         IconButton(onClick = { expanded = !expanded }) {
             Icon(Icons.Default.MoreVert, contentDescription = "More options")
         }

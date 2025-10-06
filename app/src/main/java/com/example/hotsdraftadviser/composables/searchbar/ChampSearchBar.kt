@@ -1,8 +1,6 @@
 package com.example.hotsdraftadviser.composables.searchbar
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
@@ -13,22 +11,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.hotsdraftadviser.R
 import com.example.hotsdraftadviser.RoleEnum
 import com.example.hotsdraftadviser.composables.filter.getResponsiveFontSize
 
 @Composable
-fun RowScope.ChampSearchBar(
-    searchQueryOwnTChamps: String,
+fun ChampSearchBar(
+    modifier: Modifier,
+    searchQueryChamps: String,
     setRoleFilter: (RoleEnum?) -> Unit,
     updateChampSearchQuery: (String) -> Unit
 ) {
     OutlinedTextField(
-        modifier = Modifier
-            .padding(start = 8.dp, end = 8.dp)
-            .weight(2f),
-        value = searchQueryOwnTChamps,
+        modifier = modifier,
+        value = searchQueryChamps,
         onValueChange = { newText: String ->
             setRoleFilter(null)
             updateChampSearchQuery(newText)
@@ -43,7 +40,7 @@ fun RowScope.ChampSearchBar(
         },
         textStyle = TextStyle(fontSize = getResponsiveFontSize()),
         trailingIcon = {
-            if (searchQueryOwnTChamps.isNotEmpty()) {
+            if (searchQueryChamps.isNotEmpty()) {
                 Icon(
                     Icons.Filled.Clear,
                     contentDescription = "Clear text",
@@ -53,5 +50,16 @@ fun RowScope.ChampSearchBar(
                 )
             }
         }
+    )
+}
+
+@Preview
+@Composable
+private fun ChampSearchBarPreview() {
+    ChampSearchBar(
+        modifier = Modifier,
+        searchQueryChamps = "Hello",
+        setRoleFilter = {},
+        updateChampSearchQuery = {}
     )
 }

@@ -12,9 +12,9 @@ import com.example.hotsdraftadviser.R
 
 @Composable
 fun MapSearchBar(
+    modifier: Modifier,
     searchQueryMaps: String,
-    updateMapsSearchQuery: (String) -> Unit,
-    modifier: Modifier
+    updateMapsSearchQuery: (String) -> Unit
 ) {
     OutlinedTextField(
         modifier = modifier,
