@@ -228,7 +228,7 @@ fun SearchAndFilterRowForChampsSmall(
 }
 
 @Composable
-private fun getResponsiveFontSize(): TextUnit {
+fun getResponsiveFontSize(): TextUnit {
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp.dp
 
@@ -243,7 +243,7 @@ private fun getResponsiveFontSize(): TextUnit {
 
 @Preview
 @Composable
-private fun SearchAndFilterRowForChampsSmallPreview() {
+fun SearchAndFilterRowForChampsSmallPreview() {
     SearchAndFilterRowForChampsSmall(
         searchQueryOwnTChamps = "Hammer",
         roleFilter = listOf(RoleEnum.tank, RoleEnum.melee),

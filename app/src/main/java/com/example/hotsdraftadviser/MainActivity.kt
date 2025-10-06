@@ -1,9 +1,7 @@
 package com.example.hotsdraftadviser
 
 import android.app.Application
-import android.content.Context
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -21,7 +19,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,6 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -58,6 +56,7 @@ import com.example.hotsdraftadviser.composables.menus.DisclaimerComposable
 import com.example.hotsdraftadviser.composables.menus.MenuMainActivityComposable
 import com.example.hotsdraftadviser.composables.menus.tutorial.TutorialCarouselComposable
 import com.example.hotsdraftadviser.composables.pickedChamps.ListOfPickedChampsComposable
+import com.example.hotsdraftadviser.composables.searchbar.MapSearchBar
 import com.example.hotsdraftadviser.composables.videostream.VideoStreamComposable
 import com.example.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -214,7 +213,8 @@ fun MainActivityComposable(
                         text = stringResource(R.string.main_activity_chose_map),
                         fontSize = 18.sp,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight.Bold
                     )
 
                     MenuMainActivityComposable(
@@ -229,13 +229,9 @@ fun MainActivityComposable(
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     // Suchfeld
-                    OutlinedTextField(
-                        modifier = Modifier.weight(1f),
-                        value = searchQueryMaps,
-                        onValueChange = { newText ->
-                            viewModel.updateMapsSearchQuery(newText)
-                        },
-                        label = { Text(stringResource(R.string.main_activity_maps_suchen)) }
+                    MapSearchBar(
+                        searchQueryMaps, { viewModel.updateMapsSearchQuery(it) },
+                        modifier = Modifier.weight(1f)
                     )
                     Box(
                         modifier = Modifier

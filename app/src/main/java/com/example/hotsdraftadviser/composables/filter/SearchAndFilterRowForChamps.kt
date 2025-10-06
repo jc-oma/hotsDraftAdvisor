@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hotsdraftadviser.R
 import com.example.hotsdraftadviser.RoleEnum
+import com.example.hotsdraftadviser.composables.searchbar.ChampSearchBar
 
 @Composable
 fun SearchAndFilterRowForChamps(
@@ -45,36 +47,7 @@ fun SearchAndFilterRowForChamps(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.Bottom
         ) {
-            OutlinedTextField(
-                modifier = Modifier
-                    .padding(start = 8.dp, end = 8.dp)
-                    .weight(2f),
-                value = searchQueryOwnTChamps,
-                onValueChange = { newText: String ->
-                    setRoleFilter(null)
-                    updateChampSearchQuery(newText)
-                },
-                label = {
-                    Text(
-                        stringResource(R.string.main_activity_champs_suchen),
-                        fontSize = getResponsiveFontSize(),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
-                textStyle = TextStyle(fontSize = getResponsiveFontSize()),
-                trailingIcon = {
-                    if (searchQueryOwnTChamps.isNotEmpty()) {
-                        Icon(
-                            Icons.Filled.Clear,
-                            contentDescription = "Clear text",
-                            modifier = Modifier.clickable {
-                                updateChampSearchQuery("")
-                            }
-                        )
-                    }
-                }
-            )
+            ChampSearchBar(searchQueryOwnTChamps, setRoleFilter, updateChampSearchQuery)
             Box(
                 modifier = Modifier.weight(1f),
                 contentAlignment = Alignment.BottomStart
@@ -246,20 +219,6 @@ fun SearchAndFilterRowForChamps(
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun getResponsiveFontSize(): TextUnit {
-    val configuration = LocalConfiguration.current
-    val screenWidthDp = configuration.screenWidthDp.dp
-
-    return if (screenWidthDp < 360.dp) {
-        12.sp
-    } else if (screenWidthDp < 480.dp) {
-        14.sp
-    } else {
-        16.sp // Ihre aktuelle fontSize
     }
 }
 
