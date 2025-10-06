@@ -11,7 +11,7 @@
     <path
         android:pathData="M256,0L256,0A256,256 0,0 1,512 256L512,256A256,256 0,0 1,256 512L256,512A256,256 0,0 1,0 256L0,256A256,256 0,0 1,256 0z">
       <aapt:attr name="android:fillColor">
-        <gradient 
+        <gradient
             android:startX="-0"
             android:startY="0"
             android:endX="-0"
@@ -29,7 +29,7 @@
         android:strokeWidth="8"
         android:strokeColor="#c0b283">
       <aapt:attr name="android:fillColor">
-        <gradient 
+        <gradient
             android:startX="49.71"
             android:startY="41.15"
             android:endX="49.71"
