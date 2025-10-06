@@ -55,7 +55,7 @@ fun AvailableChampPortraitComposable(
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(6.dp),
-            contentPadding = PaddingValues(bottom = 80.dp),
+            contentPadding = PaddingValues(bottom = 180.dp),
             state = listState
         ) {
             items(

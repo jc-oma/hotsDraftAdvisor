@@ -46,7 +46,7 @@ fun AvailableChampListComposable(
         )
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(bottom = 80.dp) // Fügt Padding am unteren Rand hinzu
+            contentPadding = PaddingValues(bottom = 180.dp) // Fügt Padding am unteren Rand hinzu
         ) {
             items(chosableChampList.size) { i ->
                 if (chosableChampList[i].isPicked) return@items

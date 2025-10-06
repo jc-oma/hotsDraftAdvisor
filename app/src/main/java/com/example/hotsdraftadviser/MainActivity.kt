@@ -12,79 +12,54 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
-import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.hotsdraftadviser.composables.advertisement.MainWindowAdInterstitial
 import com.example.hotsdraftadviser.composables.champListPortraitItem.AvailableChampListComposable
 import com.example.hotsdraftadviser.composables.champListPortraitItem.AvailableChampPortraitComposable
-import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampListItem
 import com.example.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
 import com.example.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexStringForET
-import com.example.hotsdraftadviser.composables.filter.SearchAndFilterRowForChamps
 import com.example.hotsdraftadviser.composables.filter.SearchAndFilterRowForChampsSmall
 import com.example.hotsdraftadviser.composables.menus.DisclaimerComposable
 import com.example.hotsdraftadviser.composables.menus.MenuMainActivityComposable
 import com.example.hotsdraftadviser.composables.menus.tutorial.TutorialCarouselComposable
 import com.example.hotsdraftadviser.composables.pickedChamps.ListOfPickedChampsComposable
-import com.example.hotsdraftadviser.dataclsasses.ChampData
-import com.example.hotsdraftadviser.composables.segmentedButton.SegmentedButtonToOrderChamplistComposable
 import com.example.hotsdraftadviser.composables.videostream.VideoStreamComposable
 import com.example.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
-import kotlinx.coroutines.coroutineScope
 import kotlinx.serialization.ExperimentalSerializationApi
 
 class MainActivity : ComponentActivity() {
@@ -195,7 +170,10 @@ fun MainActivityComposable(
                         contentScale = ContentScale.Crop,
                         painter = painterResource(id = Utilitys.mapMapNameToDrawable(choosenMap)!!),
                         contentDescription = choosenMap,
-                        colorFilter = ColorFilter.tint(Color.Black.copy(alpha = 0.5f), blendMode = BlendMode.Darken)
+                        colorFilter = ColorFilter.tint(
+                            Color.Black.copy(alpha = 0.5f),
+                            blendMode = BlendMode.Darken
+                        )
                     )
                     Box(
                         modifier = Modifier
@@ -289,7 +267,12 @@ fun MainActivityComposable(
                 if (mapList.isEmpty()) {
                     Text("Lade Maps oder keine Maps gefunden...")
                 } else {
-                    LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 140.dp)) {
+                    LazyVerticalGrid(
+                        contentPadding = PaddingValues(bottom = 180.dp),
+                        columns = GridCells.Adaptive(
+                            minSize = 140.dp
+                        )
+                    ) {
                         items(mapList.size) { i ->
                             val mapShape = RoundedCornerShape(4.dp)
                             Box(
@@ -410,7 +393,11 @@ fun MainActivityComposable(
                 roleFilter = roleFilter,
                 favFilter = favFilter,
                 setRoleFilter = { roleEnum -> viewModel.setRoleFilter(roleEnum) },
-                updateChampSearchQuery = { queryString -> viewModel.updateChampSearchQuery(queryString) },
+                updateChampSearchQuery = { queryString ->
+                    viewModel.updateChampSearchQuery(
+                        queryString
+                    )
+                },
                 toggleFavFilter = { viewModel.toggleFavFilter() }
             )
 
@@ -419,7 +406,9 @@ fun MainActivityComposable(
             if (chosableChampList.isEmpty()) {
                 Text("Lade Champs oder keine Champs gefunden...")
             } else {
-                val distinctChosableChampList by viewModel.distinctChosableChampList.collectAsState(emptyList())
+                val distinctChosableChampList by viewModel.distinctChosableChampList.collectAsState(
+                    emptyList()
+                )
                 val distinctAndUnfilteredChosableChampList by viewModel.distinctfilteredChosableChampList.collectAsState(
                     emptyList()
                 )
@@ -436,9 +425,19 @@ fun MainActivityComposable(
                         composeTextColor = composeTextColor,
                         chosableChampList = chosableChampList,
                         setSortState = { sortState -> viewModel.setSortState(sortState) },
-                        onButtonClick = { listState, coroutineScope -> viewModel.scrollList(listState, coroutineScope)},
-                        pickChampForTeam = { i, teamSide -> viewModel.pickChampForTeam(i, teamSide)},
-                        setBansPerTeam = { i, teamSide -> viewModel.setBansPerTeam(i, teamSide)},
+                        onButtonClick = { listState, coroutineScope ->
+                            viewModel.scrollList(
+                                listState,
+                                coroutineScope
+                            )
+                        },
+                        pickChampForTeam = { i, teamSide ->
+                            viewModel.pickChampForTeam(
+                                i,
+                                teamSide
+                            )
+                        },
+                        setBansPerTeam = { i, teamSide -> viewModel.setBansPerTeam(i, teamSide) },
                         updateChampSearchQuery = { string -> viewModel.updateChampSearchQuery(string) },
                         isStarRatingMode = isStarRatingMode,
                         ownScoreMax = ownScoreMax,
@@ -456,10 +455,20 @@ fun MainActivityComposable(
                         choosenMap = choosenMap,
                         isStarRatingMode = isStarRatingMode,
                         setSortState = { sortState -> viewModel.setSortState(sortState) },
-                        scrollList = { lazyListState, coroutineScope -> viewModel.scrollList(lazyListState, coroutineScope) },
+                        scrollList = { lazyListState, coroutineScope ->
+                            viewModel.scrollList(
+                                lazyListState,
+                                coroutineScope
+                            )
+                        },
                         toggleFavoriteStatus = { string -> viewModel.toggleFavoriteStatus(string) },
-                        pickChampForOwnTeam = { i, teamSide -> viewModel.pickChampForTeam(i, teamSide) },
-                        updateChampSearchQuery = {string -> viewModel.updateChampSearchQuery(string) },
+                        pickChampForOwnTeam = { i, teamSide ->
+                            viewModel.pickChampForTeam(
+                                i,
+                                teamSide
+                            )
+                        },
+                        updateChampSearchQuery = { string -> viewModel.updateChampSearchQuery(string) },
                         setBansPerTeam = { i, teamSide -> viewModel.setBansPerTeam(i, teamSide) }
                     )
                 }
