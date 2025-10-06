@@ -90,7 +90,6 @@ fun SearchAndFilterRowForChamps(
                             modifier = Modifier.size(FilterChipDefaults.IconSize)
                         )
                     },
-                    //TODO
                     selected = favFilter,
                     onClick = { toggleFavFilter() },
                     label = {

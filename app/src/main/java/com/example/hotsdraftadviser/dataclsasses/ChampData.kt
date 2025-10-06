@@ -94,3 +94,35 @@ val exampleChampDataAbathur = ChampData(
     localName = "Abathur",
     difficulty = Difficulty.EXTREME
 )
+
+val exampleChampDataAuriel = ChampData(
+    key = 2,
+    ChampName = "Auriel",
+    ChampRole = listOf("heal"),
+    ChampRoleAlt = listOf(RoleEnum.heal),
+    StrongAgainst = listOf(
+        StrongAgainstData("Lunara", 123),
+        StrongAgainstData("SgtHammer", 423)
+    ),
+    WeakAgainst = listOf(
+        WeakAgainstData("Tyrael", 64),
+        WeakAgainstData("Tyrande", 43)
+    ),
+    GoodTeamWith = listOf(
+        GoodTeamWith("Illidan", 23),
+        GoodTeamWith("Tyrael", 43)
+    ),
+    MapScore = listOf(
+        MapScoreData("Verfluchtes Tal", 80),
+        MapScoreData("Türme des Unheils", 75),
+        MapScoreData("Schlachtfeld der Ewigkeit", 70)
+    ),
+    scoreOwn = 75,
+    scoreTheir = 123,
+    isPicked = false,
+    pickedBy = TeamSide.NONE,
+    isAFavoriteChamp = true,
+    origin = GameOrigin.DIABLO,
+    localName = "Auriel",
+    difficulty = Difficulty.HARD
+)

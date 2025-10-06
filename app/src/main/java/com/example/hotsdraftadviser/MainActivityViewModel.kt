@@ -327,7 +327,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    //TODO: Implement bans Teamside
     fun setBansPerTeam(i: Int, teamSide: TeamSide) {
         viewModelScope.launch {
             val currentChampList = _distinctchoosableChampList.first()

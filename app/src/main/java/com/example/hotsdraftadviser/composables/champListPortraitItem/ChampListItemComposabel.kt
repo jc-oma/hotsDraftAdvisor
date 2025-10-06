@@ -24,20 +24,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.hotsdraftadviser.TeamSide
+import com.example.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
 import com.example.hotsdraftadviser.composables.starRating.StarRatingComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
-import com.example.hotsdraftadviser.getColorByHexString
-import com.example.hotsdraftadviser.getColorByHexStringForET
 import kotlin.math.max
 
 @Composable
 fun ChampListItem(
     chosableChamp: ChampData,
     index: Int,
-    composeOwnTeamColor: Color,
     composeTextColor: Color,
-    composeTheirTeamColor: Color,
     pickChampForTeam: (Int, TeamSide) -> Unit,
     banChampForTeam: (Int, TeamSide) -> Unit,
     updateOwnChampSearchQuery: (String) -> Unit,
@@ -181,18 +178,12 @@ fun ChampListItem(
 @Composable
 private fun ChampListItemPreview() {
     val textColor = "f8f8f9ff"
-    val theirTeamColor = "5C1A1BFF"
-    val ownTeamColor = "533088ff"
     val composeTextColor = getColorByHexString(textColor)
-    val composeOwnTeamColor = getColorByHexString(ownTeamColor)
-    val composeTheirTeamColor = getColorByHexStringForET(theirTeamColor)
 
     ChampListItem(
         chosableChamp = exampleChampDataSgtHammer,
         index = 1,
-        composeOwnTeamColor = composeOwnTeamColor,
         composeTextColor = composeTextColor,
-        composeTheirTeamColor = composeTheirTeamColor,
         pickChampForTeam = { _, _ -> {} },
         banChampForTeam = { _, _ -> {} },
         updateOwnChampSearchQuery = {},

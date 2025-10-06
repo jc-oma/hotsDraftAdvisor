@@ -24,11 +24,11 @@ import androidx.compose.ui.unit.dp
 import com.example.hotsdraftadviser.R
 import com.example.hotsdraftadviser.TeamSide
 import com.example.hotsdraftadviser.Utilitys
+import com.example.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
 import com.example.hotsdraftadviser.composables.starRating.StarRatingComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
 import com.example.hotsdraftadviser.dataclsasses.exampleChampDataAbathur
-import com.example.hotsdraftadviser.getColorByHexString
 import kotlin.math.max
 
 @Composable

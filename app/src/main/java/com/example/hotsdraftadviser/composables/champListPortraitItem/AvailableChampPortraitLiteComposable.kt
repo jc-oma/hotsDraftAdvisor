@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -14,22 +13,19 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.hotsdraftadviser.SortState
 import com.example.hotsdraftadviser.TeamSide
-import com.example.hotsdraftadviser.Utilitys
 import com.example.hotsdraftadviser.composables.segmentedButton.SegmentedButtonToOrderChamplistComposable
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampDataAbathur
 import com.example.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
 import kotlinx.coroutines.CoroutineScope
-import kotlin.text.get
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AvailableChampLiteComposable(
+fun AvailableChampPortraitLiteComposable(
     sortState: SortState,
     distinctChosableChampList: List<ChampData>,
     distinctAndUnfilteredChosableChampList: List<ChampData>,
@@ -80,7 +76,7 @@ fun AvailableChampLiteComposable(
 @Preview
 @Composable
 private fun AvailableChampPortraitComposablePreview() {
-    AvailableChampLiteComposable(
+    AvailableChampPortraitLiteComposable(
         sortState = SortState.OWNPOINTS,
         distinctChosableChampList = listOf(exampleChampDataAbathur, exampleChampDataSgtHammer),
         distinctAndUnfilteredChosableChampList = listOf(exampleChampDataAbathur, exampleChampDataSgtHammer),

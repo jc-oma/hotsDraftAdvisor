@@ -27,8 +27,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.hotsdraftadviser.R
+import com.example.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
 import com.example.hotsdraftadviser.dataclsasses.TutorialItem
-import com.example.hotsdraftadviser.getColorByHexString
 
 @Preview
 @OptIn(ExperimentalMaterial3Api::class)

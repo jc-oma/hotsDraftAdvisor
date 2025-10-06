@@ -11,13 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.hotsdraftadviser.R
 import com.example.hotsdraftadviser.SortState
-import com.example.hotsdraftadviser.getColorByHexString
+import com.example.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
 
 @Composable
 fun SegmentedButtonToOrderChamplistComposable(
@@ -59,7 +58,8 @@ fun SegmentedButtonToOrderChamplistComposable(
 @Composable
 private fun SegmentedPreview() {
     SegmentedButtonToOrderChamplistComposable(
-        {}, SortState.OWNPOINTS,
+        setSortState = {},
+        sortState = SortState.OWNPOINTS,
         onButtonClick = {}
     )
 }

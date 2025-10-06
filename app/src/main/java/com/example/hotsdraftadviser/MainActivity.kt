@@ -69,8 +69,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.hotsdraftadviser.composables.advertisement.MainWindowAdInterstitial
+import com.example.hotsdraftadviser.composables.champListPortraitItem.AvailableChampListComposable
 import com.example.hotsdraftadviser.composables.champListPortraitItem.AvailableChampPortraitComposable
 import com.example.hotsdraftadviser.composables.champListPortraitItem.ChampListItem
+import com.example.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
+import com.example.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexStringForET
 import com.example.hotsdraftadviser.composables.filter.SearchAndFilterRowForChamps
 import com.example.hotsdraftadviser.composables.filter.SearchAndFilterRowForChampsSmall
 import com.example.hotsdraftadviser.composables.menus.DisclaimerComposable
@@ -81,6 +84,7 @@ import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.composables.segmentedButton.SegmentedButtonToOrderChamplistComposable
 import com.example.hotsdraftadviser.composables.videostream.VideoStreamComposable
 import com.example.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
+import kotlinx.coroutines.coroutineScope
 import kotlinx.serialization.ExperimentalSerializationApi
 
 class MainActivity : ComponentActivity() {
@@ -428,13 +432,17 @@ fun MainActivityComposable(
 
                 if (isListMode) {
                     AvailableChampListComposable(
-                        composeHeadlineColor,
-                        viewModel,
-                        sortState,
-                        composeTextColor,
-                        chosableChampList,
-                        composeOwnTeamColor,
-                        composeTheirTeamColor
+                        sortState = sortState,
+                        composeTextColor = composeTextColor,
+                        chosableChampList = chosableChampList,
+                        setSortState = { sortState -> viewModel.setSortState(sortState) },
+                        onButtonClick = { listState, coroutineScope -> viewModel.scrollList(listState, coroutineScope)},
+                        pickChampForTeam = { i, teamSide -> viewModel.pickChampForTeam(i, teamSide)},
+                        setBansPerTeam = { i, teamSide -> viewModel.setBansPerTeam(i, teamSide)},
+                        updateChampSearchQuery = { string -> viewModel.updateChampSearchQuery(string) },
+                        isStarRatingMode = isStarRatingMode,
+                        ownScoreMax = ownScoreMax,
+                        theirScoreMax = theirScoreMax
                     )
                 } else {
                     AvailableChampPortraitComposable(
@@ -473,82 +481,6 @@ fun MainActivityComposable(
                 onClose = { viewModel.toggleTutorial() })
         }
     }
-}
-
-@Composable
-private fun AvailableChampListComposable(
-    composeHeadlineColor: Color,
-    viewModel: MainActivityViewModel,
-    sortState: SortState,
-    composeTextColor: Color,
-    chosableChampList: List<ChampData>,
-    composeOwnTeamColor: Color,
-    composeTheirTeamColor: Color
-) {
-    val ownScoreMax by viewModel.ownScoreMax.collectAsState(1)
-    val theirScoreMax by viewModel.theirScoreMax.collectAsState(1)
-    val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
-    val listState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
-
-    SegmentedButtonToOrderChamplistComposable(
-        setSortState = { sortState -> viewModel.setSortState(sortState) },
-        sortState = sortState,
-        onButtonClick = { viewModel.scrollList(listState, coroutineScope) }
-    )
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(bottom = 80.dp) // Fügt Padding am unteren Rand hinzu
-    ) {
-        items(chosableChampList.size) { i ->
-            if (chosableChampList[i].isPicked) return@items
-            ChampListItem(
-                chosableChampList[i],
-                index = i,
-                composeOwnTeamColor = composeOwnTeamColor,
-                composeTextColor = composeTextColor,
-                composeTheirTeamColor = composeTheirTeamColor,
-                pickChampForTeam = { i, teamSide -> viewModel.pickChampForTeam(i, teamSide) },
-                banChampForTeam = { i, teamSide -> viewModel.setBansPerTeam(i, teamSide) },
-                updateOwnChampSearchQuery = { string -> viewModel.updateChampSearchQuery(string) },
-                //TODO set by repository
-                isStarRating = isStarRatingMode,
-                maxOwnScore = ownScoreMax,
-                maxTheirScore = theirScoreMax
-            )
-        }
-    }
-}
-
-@Composable
-fun getColorByHexString(hexColorString: String): Color {
-    if (hexColorString.length != 8) {
-        val red = hexColorString.substring(0, 2).toInt(16)
-        val green = hexColorString.substring(2, 4).toInt(16)
-        val blue = hexColorString.substring(4, 6).toInt(16)
-        val alpha = hexColorString.substring(6, 8).toInt(16)
-        return Color(red = red, green = green, blue = blue, alpha = alpha)
-    }
-    val alpha = hexColorString.substring(0, 2).toInt(16)
-    val red = hexColorString.substring(2, 4).toInt(16)
-    val green = hexColorString.substring(4, 6).toInt(16)
-    val blue = hexColorString.substring(6, 8).toInt(16)
-
-    return Color(red = red, green = green, blue = blue, alpha = alpha)
-}
-
-@Composable
-fun getColorByHexStringForET(hexColorString: String): Color {
-    if (hexColorString.length != 8) {
-        throw IllegalArgumentException("Hex color string must be 8 characters long (RRGGBBAA or AARRGGBB)")
-    }
-
-    val red = hexColorString.substring(0, 2).toInt(16)
-    val green = hexColorString.substring(2, 4).toInt(16)
-    val blue = hexColorString.substring(4, 6).toInt(16)
-    val alpha = hexColorString.substring(6, 8).toInt(16)
-
-    return Color(red = red, green = green, blue = blue, alpha = alpha)
 }
 
 @Preview(showBackground = true)

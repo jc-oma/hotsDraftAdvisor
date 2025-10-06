@@ -31,9 +31,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.hotsdraftadviser.R
 import com.example.hotsdraftadviser.Utilitys
+import com.example.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
 import com.example.hotsdraftadviser.dataclsasses.ChampData
 import com.example.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
-import com.example.hotsdraftadviser.getColorByHexString
 
 
 @Composable
