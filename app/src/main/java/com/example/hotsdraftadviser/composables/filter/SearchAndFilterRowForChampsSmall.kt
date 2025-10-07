@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hotsdraftadviser.R
 import com.example.hotsdraftadviser.RoleEnum
+import com.example.hotsdraftadviser.composables.composabaleUtilitis.getResponsiveFontSize
 import com.example.hotsdraftadviser.composables.searchbar.ChampSearchBar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -197,20 +198,6 @@ fun SearchAndFilterRowForChampsSmall(
                 )
             }
         }
-    }
-}
-
-@Composable
-fun getResponsiveFontSize(): TextUnit {
-    val configuration = LocalConfiguration.current
-    val screenWidthDp = configuration.screenWidthDp.dp
-
-    return if (screenWidthDp < 360.dp) {
-        12.sp
-    } else if (screenWidthDp < 480.dp) {
-        14.sp
-    } else {
-        16.sp // Ihre aktuelle fontSize
     }
 }
 

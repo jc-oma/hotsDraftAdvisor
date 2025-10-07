@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.hotsdraftadviser.R
 import com.example.hotsdraftadviser.RoleEnum
-import com.example.hotsdraftadviser.composables.filter.getResponsiveFontSize
+import com.example.hotsdraftadviser.composables.composabaleUtilitis.getResponsiveFontSize
 
 @Composable
 fun ChampSearchBar(

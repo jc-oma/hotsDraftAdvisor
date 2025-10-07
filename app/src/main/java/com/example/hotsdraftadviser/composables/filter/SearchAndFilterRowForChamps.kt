@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.hotsdraftadviser.R
 import com.example.hotsdraftadviser.RoleEnum
+import com.example.hotsdraftadviser.composables.composabaleUtilitis.getResponsiveFontSize
 import com.example.hotsdraftadviser.composables.searchbar.ChampSearchBar
 
 @Composable
