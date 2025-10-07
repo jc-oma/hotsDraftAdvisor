@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.hotsdraftadviser"
+    namespace = "com.jcdevelopment.hotsdraftadviser"
     compileSdk = 36
 
     defaultConfig {
