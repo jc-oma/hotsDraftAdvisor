@@ -49,7 +49,6 @@ fun ChampSearchBar(
                 Icon(Icons.Default.Search, contentDescription = "Search")
                 Text(
                     text = " " + stringResource(R.string.main_activity_champs_suchen),
-                    fontSize = getResponsiveFontSize(),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )

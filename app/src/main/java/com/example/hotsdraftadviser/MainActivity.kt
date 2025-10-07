@@ -2,6 +2,9 @@ package com.example.hotsdraftadviser
 
 import android.app.Application
 import android.os.Bundle
+import android.view.MotionEvent
+import androidx.activity.addCallback
+import androidx.activity.viewModels
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -24,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -62,18 +66,30 @@ import com.example.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
 import kotlinx.serialization.ExperimentalSerializationApi
 
 class MainActivity : ComponentActivity() {
+    private val viewModel: MainActivityViewModel by viewModels {
+        MainActivityViewModelFactory(application as Application)
+    }
+
     @OptIn(ExperimentalSerializationApi::class)
     override fun onResume() {
         super.onResume()
+        onBackPressedDispatcher.addCallback(this) {
+            // This lambda is where you define your custom back press logic.
+            // Example: If a map is chosen, clear it. Otherwise, perform default back press.
+            if (viewModel.choosenMap.value.isNotEmpty()) {
+                viewModel.clearChoosenMap()
+            } else {
+                isEnabled = false
+                onBackPressed()
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
-            val viewModel: MainActivityViewModel = viewModel(
-                factory = MainActivityViewModelFactory(LocalContext.current.applicationContext as Application)
-            )
             HotsDraftAdviserTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
@@ -84,7 +100,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 ) { innerPadding ->
-                    MainActivityComposable()
+                    MainActivityComposable(viewModel = viewModel)
                 }
             }
         }
@@ -194,6 +210,7 @@ fun MainActivityComposable(
                             .padding(start = 8.dp)
                     )*/
                 }
+                Spacer(modifier = Modifier.height(8.dp))
                 if (mapList.isEmpty()) {
                     Text("Lade Maps oder keine Maps gefunden...")
                 } else {
@@ -277,6 +294,7 @@ fun MainActivityComposable(
         } else {
             Row {
                 val shape = RoundedCornerShape(4.dp)
+                Spacer(modifier = Modifier.weight(0.15f))
                 Box(
                     modifier = Modifier
                         .weight(1f)
