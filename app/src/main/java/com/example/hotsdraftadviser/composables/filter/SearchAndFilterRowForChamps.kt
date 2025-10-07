@@ -44,8 +44,8 @@ fun SearchAndFilterRowForChamps(
                     .padding(start = 8.dp, end = 8.dp)
                     .weight(2f),
                 searchQueryChamps = searchQueryOwnTChamps,
-                setRoleFilter = setRoleFilter,
-                updateChampSearchQuery = updateChampSearchQuery
+                setRoleFilter = {it -> setRoleFilter(it)},
+                updateChampSearchQuery = {it -> updateChampSearchQuery(it)}
             )
             Box(
                 modifier = Modifier.weight(1f),

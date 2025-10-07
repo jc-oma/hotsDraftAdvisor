@@ -4,8 +4,8 @@
     <string name="title_activity_main">HotsDraftAdviser</string>
     <string name="disclaimer">Heroes of the Storm™ is a trademark or registered trademark of Blizzard Entertainment, Inc., in the U.S. and/or other countries. HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</string>
     <string name="main_activity_chose_map">Please chose your map first:</string>
-    <string name="main_activity_maps_suchen">🔍 Search for specific map...</string>
-    <string name="main_activity_champs_suchen">🔍 Search for specific champ...</string>
+    <string name="main_activity_maps_suchen">Search for specific map...</string>
+    <string name="main_activity_champs_suchen">Search for specific champ...</string>
     <string name="main_acitivity_menu_disclaimer">Disclaim</string>
     <string name="main_acitivity_menu_starrating">Star Rating</string>
     <string name="main_acitivity_menu_number_rating">Number Rating</string>

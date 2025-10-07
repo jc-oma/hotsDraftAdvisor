@@ -175,14 +175,11 @@ fun MainActivityComposable(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     // Suchfeld
                     MapSearchBar(
-                        searchQueryMaps = searchQueryMaps,
+                        searchQuery = searchQueryMaps,
                         updateMapsSearchQuery = { viewModel.updateMapsSearchQuery(it) },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        label = stringResource(R.string.main_activity_maps_suchen)
                     )
-                    Box(
-                        modifier = Modifier
-                            .weight(0.2f)
-                    ) { }
                     //TODO show when ML detects something
                     /*
                     Text(
@@ -196,16 +193,7 @@ fun MainActivityComposable(
                         modifier = Modifier
                             .padding(start = 8.dp)
                     )*/
-                    Box(
-                        modifier = Modifier
-                            .weight(0.2f)
-                    )
                 }
-                Box(
-                    modifier = Modifier
-                        .height(8.dp)
-                        .fillMaxWidth()
-                ) { }
                 if (mapList.isEmpty()) {
                     Text("Lade Maps oder keine Maps gefunden...")
                 } else {

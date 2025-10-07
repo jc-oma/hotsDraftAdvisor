@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.verticalScroll
@@ -48,39 +49,24 @@ fun SimpleSearchBar(
     // Controls expansion state of the search bar
     var expanded by rememberSaveable { mutableStateOf(false) }
 
-    Box(modifier = Modifier.height(48.dp)) {
-        SearchBar(
-            modifier = Modifier.fillMaxSize(),
-            inputField = {
-                SearchBarDefaults.InputField(
-                    query = searchQueryMaps,
-                    onQueryChange = {updateMapsSearchQuery(it)},
-                    onSearch = {expanded = false },
-                    expanded = expanded,
-                    onExpandedChange = { expanded = false },
-                    placeholder = { initialText },
-                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") }
-                )
-            },
-            expanded = expanded,
-            onExpandedChange = { expanded = false },
-        ) {
-            // Display search results in a scrollable column
-            Column(Modifier.verticalScroll(rememberScrollState())) {
-                searchResults.forEach { result ->
-                    ListItem(
-                        headlineContent = { Text(result) },
-                        modifier = Modifier
-                            .clickable {
-                                expanded = false
-                            }
-                            .fillMaxWidth()
-                    )
-                }
-            }
-        }
-    }
+    SearchBar(
+        modifier = modifier,
+        inputField = {
+            SearchBarDefaults.InputField(
+                query = searchQueryMaps,
+                onQueryChange = { updateMapsSearchQuery(it) },
+                onSearch = { expanded = false },
+                expanded = expanded,
+                onExpandedChange = { expanded = false },
+                placeholder = { initialText },
+                leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") }
+            )
+        },
+        expanded = expanded,
+        onExpandedChange = { expanded = false },
+    ) {}
 }
+
 
 @Preview
 @Composable

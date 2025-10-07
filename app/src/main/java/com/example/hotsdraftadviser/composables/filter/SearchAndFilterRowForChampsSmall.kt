@@ -1,6 +1,5 @@
 package com.example.hotsdraftadviser.composables.filter
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,28 +8,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hotsdraftadviser.R
 import com.example.hotsdraftadviser.RoleEnum
+import com.example.hotsdraftadviser.composables.searchbar.ChampSearchBar
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchAndFilterRowForChampsSmall(
     searchQueryOwnTChamps: String,
@@ -45,35 +41,11 @@ fun SearchAndFilterRowForChampsSmall(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.Bottom
         ) {
-            OutlinedTextField(
-                modifier = Modifier
-                    .padding(start = 8.dp, end = 8.dp)
-                    .weight(2f),
-                value = searchQueryOwnTChamps,
-                onValueChange = { newText: String ->
-                    setRoleFilter(null)
-                    updateChampSearchQuery(newText)
-                },
-                label = {
-                    Text(
-                        stringResource(R.string.main_activity_champs_suchen),
-                        fontSize = getResponsiveFontSize(),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
-                textStyle = TextStyle(fontSize = getResponsiveFontSize()),
-                trailingIcon = {
-                    if (searchQueryOwnTChamps.isNotEmpty()) {
-                        Icon(
-                            Icons.Filled.Clear,
-                            contentDescription = "Clear text",
-                            modifier = Modifier.clickable {
-                                updateChampSearchQuery("")
-                            }
-                        )
-                    }
-                }
+            ChampSearchBar(
+                modifier = Modifier.weight(2f),
+                searchQueryOwnTChamps,
+                setRoleFilter,
+                updateChampSearchQuery
             )
         }
         Column(
@@ -215,7 +187,8 @@ fun SearchAndFilterRowForChampsSmall(
                             Icon(
                                 imageVector = (Icons.Filled.Favorite),
                                 contentDescription = "Heart",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize))
+                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                            )
                         }
                     },
                     selected = favFilter,
