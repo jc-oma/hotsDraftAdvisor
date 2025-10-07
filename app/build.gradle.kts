@@ -11,7 +11,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.hotsdraftadviser"
+        applicationId = "com.jcdevelopment.hotsdraftadviser"
         minSdk = 31
         targetSdk = 36
         versionCode = 1
