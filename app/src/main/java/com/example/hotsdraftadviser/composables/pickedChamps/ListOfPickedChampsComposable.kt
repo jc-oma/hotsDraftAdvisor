@@ -108,19 +108,22 @@ fun ListOfPickedChampsComposable(
                     modifier = Modifier.weight(1f)
                         .padding(end = 8.dp),
                     text = ownScorePercent.toString(),
-                    textAlign = TextAlign.Right
+                    textAlign = TextAlign.Right,
+                    fontWeight = FontWeight.Bold
                 )
                 Text(
                     modifier = Modifier.weight(0.5f)
                         .padding(start = 8.dp),
                     text = "VS",
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold
                 )
                 Text(
                     modifier = Modifier.weight(1f)
                         .padding(start = 8.dp),
                     text = theirScorePercent.toString(),
-                    textAlign = TextAlign.Left
+                    textAlign = TextAlign.Left,
+                    fontWeight = FontWeight.Bold
                 )
             }
         }
