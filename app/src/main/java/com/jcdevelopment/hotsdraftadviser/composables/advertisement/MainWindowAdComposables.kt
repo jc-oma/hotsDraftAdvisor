@@ -89,15 +89,20 @@ fun MainWindowAdInterstitial(context: Context, viewModel: MainActivityViewModel)
     }
 
     loadInterstitialAd(context)
+
     val coroutineScope = rememberCoroutineScope()
+    fun showAd() {
+        coroutineScope.launch {
+            showInterstitialAd(context) {
+                Toast.makeText(context, "Game reset!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     FloatingActionButton (
         onClick = {
             viewModel.resetAll()
-            coroutineScope.launch {
-                showInterstitialAd(context) {
-                    Toast.makeText(context, "Game reset!", Toast.LENGTH_SHORT).show()
-                }
-            }
+            showAd()
         }
     ) {
         Icon(Icons.Filled.Refresh, "Reset selections")

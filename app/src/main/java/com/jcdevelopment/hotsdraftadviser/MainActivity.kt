@@ -56,7 +56,7 @@ import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getCol
 import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexStringForET
 import com.jcdevelopment.hotsdraftadviser.composables.filter.SearchAndFilterRowForChampsSmall
 import com.jcdevelopment.hotsdraftadviser.composables.menus.DisclaimerComposable
-import com.jcdevelopment.hotsdraftadviser.composables.menus.MenuMainActivityComposable
+import com.jcdevelopment.hotsdraftadviser.composables.menus.MenuComposable
 import com.jcdevelopment.hotsdraftadviser.composables.menus.tutorial.TutorialCarouselComposable
 import com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.ListOfPickedChampsComposable
 import com.jcdevelopment.hotsdraftadviser.composables.searchbar.MapSearchBar
@@ -177,7 +177,7 @@ fun MainActivityComposable(
                         fontWeight = FontWeight.Bold
                     )
 
-                    MenuMainActivityComposable(
+                    MenuComposable(
                         modifier = Modifier.weight(0.2f),
                         onDisclaymer = { viewModel.toggleDisclaymer() },
                         onToggleListMode = { viewModel.toggleListMode() },
@@ -335,7 +335,7 @@ fun MainActivityComposable(
                         )
                     }
                 }
-                MenuMainActivityComposable(
+                MenuComposable(
                     modifier = Modifier.weight(0.24f),
                     onDisclaymer = { viewModel.toggleDisclaymer() },
                     onToggleListMode = { viewModel.toggleListMode() },

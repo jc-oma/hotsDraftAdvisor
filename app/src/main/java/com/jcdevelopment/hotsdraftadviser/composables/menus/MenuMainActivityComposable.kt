@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.jcdevelopment.hotsdraftadviser.R
 
 @Composable
-fun MenuMainActivityComposable(
+fun MenuComposable(
     modifier: Modifier = Modifier,
     isStarRating: Boolean,
     isListMode: Boolean,
@@ -75,7 +75,7 @@ fun MenuMainActivityComposable(
 @Preview
 @Composable
 fun MenuMainActivitPreview() {
-    MenuMainActivityComposable(
+    MenuComposable(
         onDisclaymer = {}, onToggleListMode = {}, onTutorial = {},
         onToggleStarRating = {}, isListMode = true, isStarRating = true
     )
