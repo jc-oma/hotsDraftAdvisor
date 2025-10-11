@@ -102,7 +102,8 @@ fun MainWindowAdInterstitial(context: Context, viewModel: MainActivityViewModel)
     FloatingActionButton (
         onClick = {
             viewModel.resetAll()
-            showAd()
+            //TODO activate when ad is ready
+            //showAd()
         }
     ) {
         Icon(Icons.Filled.Refresh, "Reset selections")
