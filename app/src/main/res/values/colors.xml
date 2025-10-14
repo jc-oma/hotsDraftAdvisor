@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="my_custom_gold">#E1C486</color>
     <color name="my_custom_sky_blue">#62B5FB</color>
+
+    <color name="champ_evaluation_bar">#B3BFF2</color>
 </resources>

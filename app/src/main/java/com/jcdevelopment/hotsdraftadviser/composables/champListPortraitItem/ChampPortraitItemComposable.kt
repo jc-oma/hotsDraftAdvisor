@@ -32,6 +32,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -153,24 +154,25 @@ fun ChampPortraitItemComposable(
                 ) {
                     Column() {
                         val barHeight = 10.dp
+                        val barColor = colorResource(R.color.champ_evaluation_bar)
                         ChampEvaluationComposable(
                             label = stringResource(R.string.portrait_value_on, mapName),
                             progressFloat = mapFloat,
-                            colorOwn = Color.Blue,
+                            colorOwn = barColor,
                             barHeight = barHeight
                         )
                         Box(modifier = Modifier.height(2.dp))
                         ChampEvaluationComposable(
                             label = stringResource(R.string.portrait_it_in_own_team),
                             progressFloat = ownTeamFloat,
-                            colorOwn = Color.Blue,
+                            colorOwn = barColor,
                             barHeight = barHeight
                         )
                         Box(modifier = Modifier.height(2.dp))
                         ChampEvaluationComposable(
                             label = stringResource(R.string.portrait_good_against_enemy_team),
                             progressFloat = theirTeamFloat,
-                            colorOwn = Color.Blue,
+                            colorOwn = barColor,
                             barHeight = barHeight
                         )
                         Box(modifier = Modifier.height(8.dp))
