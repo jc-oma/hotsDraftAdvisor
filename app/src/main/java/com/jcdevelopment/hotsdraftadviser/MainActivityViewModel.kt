@@ -604,15 +604,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    private fun setIDsForChampData() {
-        var id = 0
-        _allChampsData.value = _allChampsData.value.map { champ ->
-            champ.copy(
-                key = id++
-            )
-        }
-    }
-
     private fun setUniqueMapsInMapScore() {
         _allChampsData.value = _allChampsData.value.map { champ ->
             val uniqueMapScores = champ.MapScore
@@ -727,7 +718,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     _allChampsData.value = champData
 
                     checkIfChampIsFavorite()
-                    setIDsForChampData()
                     setUniqueMapsInMapScore()
                     setUniqueCahmpsInChampScores()
                     _allChampsData.value = _allChampsData.value.map { champ ->

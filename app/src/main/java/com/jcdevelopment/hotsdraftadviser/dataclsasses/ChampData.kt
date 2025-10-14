@@ -1,14 +1,16 @@
 package com.jcdevelopment.hotsdraftadviser.dataclsasses
 
+import androidx.compose.ui.input.key.key
 import com.jcdevelopment.hotsdraftadviser.Difficulty
 import com.jcdevelopment.hotsdraftadviser.GameOrigin
 import com.jcdevelopment.hotsdraftadviser.RoleEnum
 import com.jcdevelopment.hotsdraftadviser.TeamSide
 import kotlinx.serialization.Serializable
+import java.util.concurrent.atomic.AtomicInteger
 
 @Serializable
 data class ChampData(
-    val key: Int = 0,
+    var key: Int = 0,
     val ChampName: String,
     val ChampRole: List<String>,
     val ChampRoleAlt: List<RoleEnum>,
@@ -27,7 +29,17 @@ data class ChampData(
     var difficulty: Difficulty = Difficulty.EASY,
     var origin: GameOrigin? = null,
     var localName: String? = null
-)
+) {
+    companion object {
+        private val idCounter = AtomicInteger(0)
+    }
+
+    init {
+        if (this.key == 0) {
+            this.key = idCounter.getAndIncrement()
+        }
+    }
+}
 
 // Beispielhafte Instanz Ihrer ChampData-Klasse
 val exampleChampDataSgtHammer = ChampData(

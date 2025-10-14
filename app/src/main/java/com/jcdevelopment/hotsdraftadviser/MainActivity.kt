@@ -49,6 +49,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.jcdevelopment.hotsdraftadviser.Utilitys.mapMapNameToStringRessource
 import com.jcdevelopment.hotsdraftadviser.composables.advertisement.MainWindowAdInterstitial
 import com.jcdevelopment.hotsdraftadviser.composables.champListPortraitItem.AvailableChampListComposable
 import com.jcdevelopment.hotsdraftadviser.composables.champListPortraitItem.AvailableChampPortraitComposable
@@ -325,7 +326,7 @@ fun MainActivityComposable(
                             .fillMaxSize()
                     ) {
                         Text(
-                            text = choosenMap,
+                            text = stringResource(mapMapNameToStringRessource(choosenMap)!!),
                             fontSize = 20.sp,
                             color = Color.White, // Besser lesbar auf dunklem Gradienten
                             textAlign = TextAlign.Center,

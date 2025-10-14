@@ -124,17 +124,19 @@ fun ChampPortraitItemComposable(
                     verticalAlignment = Alignment.Bottom,
                     modifier = Modifier.padding(top = 8.dp)
                 ) {
-                    Text(
-                        modifier = Modifier.padding(start = 4.dp),
-                        fontStyle = FontStyle.Italic,
-                        style = TextStyle(
-                            textDecoration = TextDecoration.Underline,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp
-                        ),
-                        //TODO Index wieder hinzufügen wenn Bug List gefixt? -> (index + 1).toString() + ". " +
-                        text = champ.localName!!
-                    )
+                    champ.localName?.let {
+                        Text(
+                            modifier = Modifier.padding(start = 4.dp),
+                            fontStyle = FontStyle.Italic,
+                            style = TextStyle(
+                                textDecoration = TextDecoration.Underline,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 18.sp
+                            ),
+                            //TODO Index wieder hinzufügen wenn Bug List gefixt? -> (index + 1).toString() + ". " +
+                            text = it
+                        )
+                    }
                     //TODO später richtig einbauen
                     /*
                     Icon(
@@ -155,7 +157,6 @@ fun ChampPortraitItemComposable(
                             label = stringResource(R.string.portrait_value_on, mapName),
                             progressFloat = mapFloat,
                             colorOwn = Color.Blue,
-                            colorTheir = Color.Red,
                             barHeight = barHeight
                         )
                         Box(modifier = Modifier.height(2.dp))
@@ -163,7 +164,6 @@ fun ChampPortraitItemComposable(
                             label = stringResource(R.string.portrait_it_in_own_team),
                             progressFloat = ownTeamFloat,
                             colorOwn = Color.Blue,
-                            colorTheir = Color.Red,
                             barHeight = barHeight
                         )
                         Box(modifier = Modifier.height(2.dp))
@@ -171,7 +171,6 @@ fun ChampPortraitItemComposable(
                             label = stringResource(R.string.portrait_good_against_enemy_team),
                             progressFloat = theirTeamFloat,
                             colorOwn = Color.Blue,
-                            colorTheir = Color.Red,
                             barHeight = barHeight
                         )
                         Box(modifier = Modifier.height(8.dp))

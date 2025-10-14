@@ -12,9 +12,9 @@ android {
 
     defaultConfig {
         applicationId = "com.jcdevelopment.hotsdraftadviser"
-        minSdk = 31
+        minSdk = 26
         targetSdk = 36
-        versionCode = 10
+        versionCode = 11
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -50,14 +50,12 @@ android {
 dependencies {
     implementation(libs.play.services.ads)
 
-    val room_version = "2.7.2"
-
-    implementation("androidx.room:room-runtime:$room_version")
-    ksp("androidx.room:room-compiler:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
-    implementation("androidx.room:room-guava:$room_version")
-    testImplementation("androidx.room:room-testing:$room_version")
-    implementation("androidx.room:room-paging:$room_version")
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.guava)
+    testImplementation(libs.androidx.room.testing)
+    implementation(libs.androidx.room.paging)
 
     implementation(libs.kotlinx.coroutines.play.services)
     // CameraX core library using the camera2 implementation

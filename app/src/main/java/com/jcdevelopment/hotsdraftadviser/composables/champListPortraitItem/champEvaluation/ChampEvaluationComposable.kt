@@ -40,9 +40,8 @@ fun ChampEvaluationComposable(
     label: String,
     progressFloat: Float,
     colorOwn: Color = Color(0xFF4CAF50), // Standard Grün
-    colorTheir: Color = Color(0xFFF44336), // Standard Rot
     backgroundColor: Color = Color.LightGray.copy(alpha = 0.3f),
-    borderColor: Color = Color.Gray.copy(alpha = 0.5f),
+    borderColor: Color = Color.Gray,
     barHeight: Dp = 32.dp
 ) {
     // Fortschritte auf den Bereich [0, 1] begrenzen
@@ -114,7 +113,7 @@ fun ChampEvaluationComposable(
                     modifier = Modifier
                         .fillMaxHeight()
                         .width(2.dp)
-                        .background(Color(("#7a68a5" ).toColorInt()))
+                        .background(borderColor)
                 )
                 Box(modifier = Modifier
                     .fillMaxHeight()
@@ -123,7 +122,7 @@ fun ChampEvaluationComposable(
                     modifier = Modifier
                         .fillMaxHeight()
                         .width(2.dp)
-                        .background(Color(("#7a68a5" ).toColorInt()))
+                        .background(borderColor)
                 )
                 Box(modifier = Modifier
                     .fillMaxHeight()
