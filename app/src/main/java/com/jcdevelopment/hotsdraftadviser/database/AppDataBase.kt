@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.jcdevelopment.hotsdraftadviser.database.champPersist.ChampDao
+import com.jcdevelopment.hotsdraftadviser.database.champPersist.ChampEntity
 import com.jcdevelopment.hotsdraftadviser.database.favoritChamps.FavoriteChampionDao
 import com.jcdevelopment.hotsdraftadviser.database.favoritChamps.FavoriteChampionEntity
 import com.jcdevelopment.hotsdraftadviser.database.isFirstStart.FirstStartSetting
@@ -15,7 +17,13 @@ import com.jcdevelopment.hotsdraftadviser.database.isStarRating.IsStarRatingEnti
 import com.jcdevelopment.hotsdraftadviser.database.isStreamingEnabled.StreamingSetting
 import com.jcdevelopment.hotsdraftadviser.database.isStreamingEnabled.StreamingSettingDao
 
-@Database(entities = [StreamingSetting::class, FirstStartSetting::class, FavoriteChampionEntity::class, IsListModeEntity::class, IsStarRatingEntity::class], version = 5, exportSchema = false) // Setze exportSchema = true für Produktions-Apps mit Schema-Export
+
+@Database(
+    //TODO remove when still not Building
+    entities = [StreamingSetting::class, FirstStartSetting::class, FavoriteChampionEntity::class, IsListModeEntity::class, IsStarRatingEntity::class, ChampEntity::class],
+    version = 6,
+    exportSchema = false
+) // Setze exportSchema = true für Produktions-Apps mit Schema-Export
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun streamingSettingDao(): StreamingSettingDao
@@ -23,6 +31,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun favoriteChampionDao(): FavoriteChampionDao
     abstract fun isListShownSettingDao(): IsListModeDao
     abstract fun isStarRatingSettingDao(): IsStarRatingDao
+    abstract fun champDao(): ChampDao
 
     companion object {
         // Singleton verhindert, dass mehrere Instanzen der Datenbank gleichzeitig geöffnet werden.
