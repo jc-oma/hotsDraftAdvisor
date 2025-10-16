@@ -21,7 +21,6 @@ import com.jcdevelopment.hotsdraftadviser.database.isStreamingEnabled.StreamingS
 
 
 @Database(
-    //TODO remove when still not Building
     entities = [StreamingSetting::class, FirstStartSetting::class, FavoriteChampionEntity::class, IsListModeEntity::class, IsStarRatingEntity::class, ChampEntity::class],
     version = 6,
     exportSchema = false

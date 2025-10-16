@@ -1,5 +1,6 @@
 package com.jcdevelopment.hotsdraftadviser.composables.pickedChamps
 
+import android.app.Application
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,6 +27,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jcdevelopment.hotsdraftadviser.R
@@ -61,12 +63,25 @@ fun RowScope.PickedChampItem(
             .clickable { removePickForTeam() },
         contentAlignment = Alignment.Center
     ) {
+        val name :String = if (teamPickedChamp.localName == null) {
+            stringResource(
+                id = Utilitys.mapChampNameToStringRessource(teamPickedChamp.ChampName)!!
+            )
+
+        } else teamPickedChamp.localName!!
+
         Image(
-            modifier = Modifier.height(height).fillMaxWidth().clip(RoundedCornerShape(4.dp)),
+            modifier = Modifier
+                .height(height)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(4.dp)),
             painter = painter,
             contentScale = ContentScale.Crop,
-            contentDescription = teamPickedChamp.localName!!,
-            colorFilter = ColorFilter.tint(Color.Black.copy(alpha = 0.5f), blendMode = BlendMode.Darken)
+            contentDescription = name,
+            colorFilter = ColorFilter.tint(
+                Color.Black.copy(alpha = 0.5f),
+                blendMode = BlendMode.Darken
+            )
         )
         /*
         Box(
@@ -79,8 +94,12 @@ fun RowScope.PickedChampItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Box(modifier = Modifier.padding(start = 12.dp, top = 2.dp, bottom = 2.dp).height(18.dp),
-                contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier
+                    .padding(start = 12.dp, top = 2.dp, bottom = 2.dp)
+                    .height(18.dp),
+                contentAlignment = Alignment.Center
+            ) {
                 Row {
                     teamPickedChamp.ChampRoleAlt.forEach { it ->
                         Icon(
@@ -95,7 +114,7 @@ fun RowScope.PickedChampItem(
                 modifier = Modifier
                     .weight(1f)
                     .padding(horizontal = 4.dp),
-                text = teamPickedChamp.localName!!,
+                text = name,
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                 maxLines = 1,
                 color = Color.White

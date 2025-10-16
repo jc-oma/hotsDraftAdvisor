@@ -43,6 +43,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jcdevelopment.hotsdraftadviser.R
+import com.jcdevelopment.hotsdraftadviser.Utilitys
 import com.jcdevelopment.hotsdraftadviser.composables.ChampEvaluationComposable
 import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
 import com.jcdevelopment.hotsdraftadviser.dataclsasses.ChampData
@@ -75,7 +76,8 @@ fun ChampPortraitItemComposable(
     val composeBoarderColor = getColorByHexString(boardercolor)
     var fav by remember { mutableStateOf(champ.isAFavoriteChamp) }
     val scoreOwnPercent = max((champ.scoreOwn.toFloat() / maxOwnScore.toFloat() * 100).toInt(), 0)
-    val scoreTheirPercent = max((champ.scoreTheir.toFloat() / maxTheirScore.toFloat() * 100).toInt(), 0)
+    val scoreTheirPercent =
+        max((champ.scoreTheir.toFloat() / maxTheirScore.toFloat() * 100).toInt(), 0)
 
     Box(
         modifier = Modifier
@@ -110,7 +112,9 @@ fun ChampPortraitItemComposable(
                     )
             ) {
                 Image(
-                    modifier = Modifier.height(LocalWindowInfo.current.containerSize.height.dp / 15f).clip(RoundedCornerShape(4.dp)),
+                    modifier = Modifier
+                        .height(LocalWindowInfo.current.containerSize.height.dp / 15f)
+                        .clip(RoundedCornerShape(4.dp)),
                     contentScale = ContentScale.Crop,
                     painter = painterResource(id = champDrawable),
                     contentDescription = champ.ChampName
@@ -125,19 +129,24 @@ fun ChampPortraitItemComposable(
                     verticalAlignment = Alignment.Bottom,
                     modifier = Modifier.padding(top = 8.dp)
                 ) {
-                    champ.localName?.let {
-                        Text(
-                            modifier = Modifier.padding(start = 4.dp),
-                            fontStyle = FontStyle.Italic,
-                            style = TextStyle(
-                                textDecoration = TextDecoration.Underline,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 18.sp
-                            ),
-                            //TODO Index wieder hinzufügen wenn Bug List gefixt? -> (index + 1).toString() + ". " +
-                            text = it
+                    val name :String = if (champ.localName == null) {
+                        stringResource(
+                            id = Utilitys.mapChampNameToStringRessource(champ.ChampName)!!
                         )
-                    }
+
+                    } else champ.localName!!
+                    Text(
+                        modifier = Modifier.padding(start = 4.dp),
+                        fontStyle = FontStyle.Italic,
+                        style = TextStyle(
+                            textDecoration = TextDecoration.Underline,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        ),
+                        //TODO Index wieder hinzufügen wenn Bug List gefixt? -> (index + 1).toString() + ". " +
+                        text = name
+                    )
+
                     //TODO später richtig einbauen
                     /*
                     Icon(

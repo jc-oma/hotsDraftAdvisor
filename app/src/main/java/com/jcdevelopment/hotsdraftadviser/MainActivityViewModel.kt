@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
 import com.jcdevelopment.hotsdraftadviser.database.AppDatabase
+import com.jcdevelopment.hotsdraftadviser.database.champPersist.ChampEntity
+import com.jcdevelopment.hotsdraftadviser.database.champPersist.ChampRepository
 import com.jcdevelopment.hotsdraftadviser.database.favoritChamps.FavoriteChampionsRepository
 import com.jcdevelopment.hotsdraftadviser.database.isFirstStart.FirstStartRepository
 import com.jcdevelopment.hotsdraftadviser.database.isListShown.IsListModeRepository
@@ -17,6 +19,7 @@ import com.jcdevelopment.hotsdraftadviser.database.isStreamingEnabled.StreamingS
 import com.jcdevelopment.hotsdraftadviser.dataclsasses.ChampData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -31,6 +34,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
 import java.io.IOException
+import kotlin.collections.List
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
     private val streamingSettingsRepository: StreamingSettingsRepository by lazy {
@@ -123,6 +127,25 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
+    private val champRepository: ChampRepository by lazy {
+        Log.d("ViewModelInit", "Initializing ChampRepository...")
+        try {
+            Log.d("ViewModelInit", "Getting database instance for ChampRepository...")
+            val db = AppDatabase.getDatabase(application)
+            Log.d("ViewModelInit", "Database instance obtained for ChampRepository: $db")
+            Log.d("ViewModelInit", "Getting DAO for ChampRepository...")
+            val dao = db.champDao()
+            Log.d("ViewModelInit", "DAO obtained for ChampRepository: $dao")
+            val repoInstance = ChampRepository(dao)
+            Log.d("ViewModelInit", "ChampRepository instance created: $repoInstance")
+            repoInstance
+        } catch (e: Exception) {
+            Log.e("ViewModelInit", "Error initializing ChampRepository", e)
+            throw e
+        }
+    }
+
+
     // Dein isStreamingEnabled als StateFlow, das von der Datenbank gespeist wird
     val isStreamingEnabled: StateFlow<Boolean> = streamingSettingsRepository.isStreamingEnabled
         .stateIn(
@@ -145,6 +168,42 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private val _isStreamingEnabled = MutableStateFlow(true)
 
     private val _allChampsData = MutableStateFlow<List<ChampData>>(emptyList())
+    private val _allChampsDatabase = MutableStateFlow<List<ChampData>>(emptyList())
+
+    init {
+        viewModelScope.launch {
+            champRepository.allChamps
+                .map { champEntities ->
+                    champEntities.map { champEntity ->
+                        ChampData(
+                            ChampName = champEntity.ChampName,
+                            key = champEntity.key,
+                            ChampRole = champEntity.ChampRole,
+                            ChampRoleAlt = champEntity.ChampRoleAlt,
+                            StrongAgainst = champEntity.StrongAgainst,
+                            WeakAgainst = champEntity.WeakAgainst,
+                            GoodTeamWith = champEntity.GoodTeamWith,
+                            MapScore = champEntity.MapScore,
+                            mapFloat = 0f,
+                            fitTeam = 0,
+                            goodAgainstTeam = 0,
+                            scoreOwn = 0,
+                            scoreTheir = 0,
+                            isPicked = false,
+                            pickedBy = TeamSide.NONE,
+                            isAFavoriteChamp = favoriteChampionsRepository.isChampionFavorite(champEntity.ChampName),
+                            difficulty = Utilitys.mapDifficultyForChamp(champEntity.ChampName)!!,
+                            origin = Utilitys.mapChampToOrigin(champEntity.ChampName)!!,
+                            localName = application.getString(
+                                Utilitys.mapChampNameToStringRessource(
+                                    champEntity.ChampName
+                                )!!
+                            )
+                        )
+                    }
+                }.collect { _allChampsDatabase.value = it }
+        }
+    }
 
     private val _filterMapsString = MutableStateFlow<String>("")
     private val _filterChampString = MutableStateFlow<String>("")
@@ -710,6 +769,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 null
             }
 
+            //TODO ist leer obwohl es befüllt worden sein müsste
+            _allChampsDatabase.value
+
             if (jsonString != null) {
                 try {
                     champData = Json.decodeFromStream<List<ChampData>>(jsonString)
@@ -720,6 +782,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     checkIfChampIsFavorite()
                     setUniqueMapsInMapScore()
                     setUniqueCahmpsInChampScores()
+                    saveChampstoDB()
                     _allChampsData.value = _allChampsData.value.map { champ ->
                         val application = getApplication<Application>()
                         champ.copy(
@@ -739,6 +802,23 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             } else {
                 Log.e("TAG", "JSON-String konnte nicht aus Assets geladen werden.")
             }
+        }
+    }
+
+    private suspend fun CoroutineScope.saveChampstoDB() {
+        _allChampsData.value.forEach {
+            champRepository.insert(
+                ChampEntity(
+                    ChampName = it.ChampName,
+                    key = it.key,
+                    ChampRole = it.ChampRole,
+                    ChampRoleAlt = it.ChampRoleAlt,
+                    StrongAgainst = it.StrongAgainst,
+                    WeakAgainst = it.WeakAgainst,
+                    GoodTeamWith = it.GoodTeamWith,
+                    MapScore = it.MapScore,
+                )
+            )
         }
     }
 
