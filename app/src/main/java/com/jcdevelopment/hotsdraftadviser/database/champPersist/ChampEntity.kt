@@ -10,7 +10,8 @@ import com.jcdevelopment.hotsdraftadviser.dataclsasses.WeakAgainstData
 
 @Entity(tableName = "champions")
 data class ChampEntity(
-    @PrimaryKey var key: Int = 0,
+    @PrimaryKey(autoGenerate = true)
+    var key: Int = 0,
     val ChampName: String,
     val ChampRole: List<String>,
     val ChampRoleAlt: List<RoleEnum>,

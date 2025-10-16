@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.jcdevelopment.hotsdraftadviser.database.champPersist.ChampDao
 import com.jcdevelopment.hotsdraftadviser.database.champPersist.ChampEntity
+import com.jcdevelopment.hotsdraftadviser.database.champPersist.Converters
 import com.jcdevelopment.hotsdraftadviser.database.favoritChamps.FavoriteChampionDao
 import com.jcdevelopment.hotsdraftadviser.database.favoritChamps.FavoriteChampionEntity
 import com.jcdevelopment.hotsdraftadviser.database.isFirstStart.FirstStartSetting
@@ -24,6 +26,7 @@ import com.jcdevelopment.hotsdraftadviser.database.isStreamingEnabled.StreamingS
     version = 6,
     exportSchema = false
 ) // Setze exportSchema = true für Produktions-Apps mit Schema-Export
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun streamingSettingDao(): StreamingSettingDao
