@@ -1,5 +1,6 @@
 package com.jcdevelopment.hotsdraftadviser
 
+import android.R
 import android.app.Application
 import android.util.Log
 import androidx.compose.foundation.lazy.LazyListState
@@ -9,8 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
 import com.jcdevelopment.hotsdraftadviser.database.AppDatabase
-import com.jcdevelopment.hotsdraftadviser.database.champPersist.ChampEntity
 import com.jcdevelopment.hotsdraftadviser.database.champPersist.ChampRepository
+import com.jcdevelopment.hotsdraftadviser.database.champPersist.champString.ChampStringCodeEntity
+import com.jcdevelopment.hotsdraftadviser.database.champPersist.champString.ChampStringCodeRepository
 import com.jcdevelopment.hotsdraftadviser.database.favoritChamps.FavoriteChampionsRepository
 import com.jcdevelopment.hotsdraftadviser.database.isFirstStart.FirstStartRepository
 import com.jcdevelopment.hotsdraftadviser.database.isListShown.IsListModeRepository
@@ -18,8 +20,8 @@ import com.jcdevelopment.hotsdraftadviser.database.isStarRating.IsStarRatingRepo
 import com.jcdevelopment.hotsdraftadviser.database.isStreamingEnabled.StreamingSettingsRepository
 import com.jcdevelopment.hotsdraftadviser.dataclsasses.ChampData
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -31,119 +33,29 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
 import java.io.IOException
 import kotlin.collections.List
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
-    private val streamingSettingsRepository: StreamingSettingsRepository by lazy {
-        Log.d("ViewModelInit", "Initializing repository...")
-        try {
-            Log.d("ViewModelInit", "Getting database instance...")
-            val db = AppDatabase.getDatabase(application)
-            Log.d("ViewModelInit", "Database instance obtained: $db")
-            Log.d("ViewModelInit", "Getting DAO...")
-            val dao = db.streamingSettingDao()
-            Log.d("ViewModelInit", "DAO obtained: $dao")
-            val repoInstance = StreamingSettingsRepository(dao)
-            Log.d("ViewModelInit", "Repository instance created: $repoInstance")
-            repoInstance
-        } catch (e: Exception) {
-            Log.e("ViewModelInit", "Error initializing repository", e)
-            throw e
-        }
-    }
+    private val db = AppDatabase.getDatabase(application)
 
-    private val isListModeRepository: IsListModeRepository by lazy {
-        Log.d("ViewModelInit", "Initializing repository...")
-        try {
-            Log.d("ViewModelInit", "Getting database instance...")
-            val db = AppDatabase.getDatabase(application)
-            Log.d("ViewModelInit", "Database instance obtained: $db")
-            Log.d("ViewModelInit", "Getting DAO...")
-            val dao = db.isListShownSettingDao()
-            Log.d("ViewModelInit", "DAO obtained: $dao")
-            val repoInstance = IsListModeRepository(dao)
-            Log.d("ViewModelInit", "Repository instance created: $repoInstance")
-            repoInstance
-        } catch (e: Exception) {
-            Log.e("ViewModelInit", "Error initializing repository", e)
-            throw e
-        }
-    }
-
-    private val favoriteChampionsRepository: FavoriteChampionsRepository by lazy {
-        Log.d("ViewModelInit", "Initializing repository...")
-        try {
-            Log.d("ViewModelInit", "Getting database instance...")
-            val db = AppDatabase.getDatabase(application)
-            Log.d("ViewModelInit", "Database instance obtained: $db")
-            Log.d("ViewModelInit", "Getting DAO...")
-            val dao = db.favoriteChampionDao()
-            Log.d("ViewModelInit", "DAO obtained: $dao")
-            val repoInstance = FavoriteChampionsRepository(dao)
-            Log.d("ViewModelInit", "Repository instance created: $repoInstance")
-            repoInstance
-        } catch (e: Exception) {
-            Log.e("ViewModelInit", "Error initializing repository", e)
-            throw e
-        }
-    }
-
-    private val starRateRepository: IsStarRatingRepository by lazy {
-        Log.d("ViewModelInit", "Initializing repository...")
-        try {
-            Log.d("ViewModelInit", "Getting database instance...")
-            val db = AppDatabase.getDatabase(application)
-            Log.d("ViewModelInit", "Database instance obtained: $db")
-            Log.d("ViewModelInit", "Getting DAO...")
-            val dao = db.isStarRatingSettingDao()
-            Log.d("ViewModelInit", "DAO obtained: $dao")
-            val repoInstance = IsStarRatingRepository(dao)
-            Log.d("ViewModelInit", "Repository instance created: $repoInstance")
-            repoInstance
-        } catch (e: Exception) {
-            Log.e("ViewModelInit", "Error initializing repository", e)
-            throw e
-        }
-    }
-
-    private val isFirstStartRepository: FirstStartRepository by lazy {
-        Log.d("ViewModelInit", "Initializing repository...")
-        try {
-            Log.d("ViewModelInit", "Getting database instance...")
-            val db = AppDatabase.getDatabase(application)
-            Log.d("ViewModelInit", "Database instance obtained: $db")
-            Log.d("ViewModelInit", "Getting DAO...")
-            val dao = db.firstStartSettingDao()
-            Log.d("ViewModelInit", "DAO obtained: $dao")
-            val repoInstance = FirstStartRepository(dao)
-            Log.d("ViewModelInit", "Repository instance created: $repoInstance")
-            repoInstance
-        } catch (e: Exception) {
-            Log.e("ViewModelInit", "Error initializing repository", e)
-            throw e
-        }
-    }
-
-    private val champRepository: ChampRepository by lazy {
-        Log.d("ViewModelInit", "Initializing ChampRepository...")
-        try {
-            Log.d("ViewModelInit", "Getting database instance for ChampRepository...")
-            val db = AppDatabase.getDatabase(application)
-            Log.d("ViewModelInit", "Database instance obtained for ChampRepository: $db")
-            Log.d("ViewModelInit", "Getting DAO for ChampRepository...")
-            val dao = db.champDao()
-            Log.d("ViewModelInit", "DAO obtained for ChampRepository: $dao")
-            val repoInstance = ChampRepository(dao)
-            Log.d("ViewModelInit", "ChampRepository instance created: $repoInstance")
-            repoInstance
-        } catch (e: Exception) {
-            Log.e("ViewModelInit", "Error initializing ChampRepository", e)
-            throw e
-        }
-    }
+    private val streamingSettingsRepository: StreamingSettingsRepository =
+        StreamingSettingsRepository(db.streamingSettingDao())
+    private val isListModeRepository: IsListModeRepository =
+        IsListModeRepository(db.isListShownSettingDao())
+    private val favoriteChampionsRepository: FavoriteChampionsRepository =
+        FavoriteChampionsRepository(db.favoriteChampionDao())
+    private val starRateRepository: IsStarRatingRepository =
+        IsStarRatingRepository(db.isStarRatingSettingDao())
+    private val isFirstStartRepository: FirstStartRepository =
+        FirstStartRepository(db.firstStartSettingDao())
+    private val champRepository: ChampRepository = ChampRepository(db.champDao())
+    private val champStringRepository: ChampStringCodeRepository =
+        ChampStringCodeRepository(db.champStringCodeDao())
 
 
     // Dein isStreamingEnabled als StateFlow, das von der Datenbank gespeist wird
@@ -162,48 +74,27 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
+    val stringCode: StateFlow<ChampStringCodeEntity?> = champStringRepository.champStringCode
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = ChampStringCodeEntity(jsonString = "")
+        )
+
+    init {
+        viewModelScope.launch {
+            stringCode.collect { string ->
+                Log.d("StringCodeViewModel", "stringcode from DB (Flow): $string")
+            }
+        }
+    }
+
     private val _isDisclaymerShown = MutableStateFlow(false)
     private val _isTutorialShown = MutableStateFlow(false)
     private val _isListMode = MutableStateFlow(false)
     private val _isStreamingEnabled = MutableStateFlow(true)
 
     private val _allChampsData = MutableStateFlow<List<ChampData>>(emptyList())
-    private val _allChampsDatabase = MutableStateFlow<List<ChampData>>(emptyList())
-
-    init {
-        viewModelScope.launch {
-            champRepository.allChamps
-                .map { champEntities ->
-                    champEntities.map { champEntity ->
-                        ChampData(
-                            ChampName = champEntity.ChampName,
-                            key = champEntity.key,
-                            ChampRole = champEntity.ChampRole,
-                            ChampRoleAlt = champEntity.ChampRoleAlt,
-                            StrongAgainst = champEntity.StrongAgainst,
-                            WeakAgainst = champEntity.WeakAgainst,
-                            GoodTeamWith = champEntity.GoodTeamWith,
-                            MapScore = champEntity.MapScore,
-                            mapFloat = 0f,
-                            fitTeam = 0,
-                            goodAgainstTeam = 0,
-                            scoreOwn = 0,
-                            scoreTheir = 0,
-                            isPicked = false,
-                            pickedBy = TeamSide.NONE,
-                            isAFavoriteChamp = favoriteChampionsRepository.isChampionFavorite(champEntity.ChampName),
-                            difficulty = Utilitys.mapDifficultyForChamp(champEntity.ChampName)!!,
-                            origin = Utilitys.mapChampToOrigin(champEntity.ChampName)!!,
-                            localName = application.getString(
-                                Utilitys.mapChampNameToStringRessource(
-                                    champEntity.ChampName
-                                )!!
-                            )
-                        )
-                    }
-                }.collect { _allChampsDatabase.value = it }
-        }
-    }
 
     private val _filterMapsString = MutableStateFlow<String>("")
     private val _filterChampString = MutableStateFlow<String>("")
@@ -446,7 +337,13 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             } else {
                 if (isFiltered) {
                     champs.filter { champ ->
-                        (champ.ChampName.contains(filter, ignoreCase = true) || champ.localName!!.contains(filter, ignoreCase = true)) && !champ.isPicked
+                        (champ.ChampName.contains(
+                            filter,
+                            ignoreCase = true
+                        ) || champ.localName!!.contains(
+                            filter,
+                            ignoreCase = true
+                        )) && !champ.isPicked
                     }
                 } else {
                     champs
@@ -757,8 +654,11 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     @OptIn(ExperimentalSerializationApi::class)
     private fun loadJson() {
+        var dbChampJson: String?
         var champData: List<ChampData> = listOf()
-        viewModelScope.launch {
+
+        viewModelScope.launch(Dispatchers.IO) {
+            dbChampJson = champStringRepository.champStringCode.first()?.jsonString
             val jsonString = try {
                 application.assets.open("output.json")
             } catch (ioException: IOException) {
@@ -769,20 +669,31 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 null
             }
 
-            //TODO ist leer obwohl es befüllt worden sein müsste
-            _allChampsDatabase.value
-
-            if (jsonString != null) {
+            if (jsonString != null || dbChampJson != null) {
                 try {
-                    champData = Json.decodeFromStream<List<ChampData>>(jsonString)
+                    champData = if (jsonString != null) {
+                        Json.decodeFromStream<List<ChampData>>(jsonString)
+                    } else if (dbChampJson != null) {
+                        Json.decodeFromString<List<ChampData>>(dbChampJson!!)
+                    } else {
+                        listOf()
+                    }
+
                     Log.d("TAG", "ChampData erfolgreich gemappt: ${champData}")
 
                     _allChampsData.value = champData
+                    val champDataInJson = Json.encodeToString(champData)
+
+                    champStringRepository.saveOrUpdate(
+                        ChampStringCodeEntity(
+                            version = 0,
+                            jsonString = champDataInJson
+                        )
+                    )
 
                     checkIfChampIsFavorite()
                     setUniqueMapsInMapScore()
                     setUniqueCahmpsInChampScores()
-                    saveChampstoDB()
                     _allChampsData.value = _allChampsData.value.map { champ ->
                         val application = getApplication<Application>()
                         champ.copy(
@@ -795,6 +706,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                             )
                         )
                     }
+
                 } catch (e: Exception) {
                     Log.e("TAG", "Fehler beim Mappen der ChampData JSON-Daten: ${e.message}")
                     e.printStackTrace()
@@ -802,23 +714,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             } else {
                 Log.e("TAG", "JSON-String konnte nicht aus Assets geladen werden.")
             }
-        }
-    }
-
-    private suspend fun CoroutineScope.saveChampstoDB() {
-        _allChampsData.value.forEach {
-            champRepository.insert(
-                ChampEntity(
-                    ChampName = it.ChampName,
-                    key = it.key,
-                    ChampRole = it.ChampRole,
-                    ChampRoleAlt = it.ChampRoleAlt,
-                    StrongAgainst = it.StrongAgainst,
-                    WeakAgainst = it.WeakAgainst,
-                    GoodTeamWith = it.GoodTeamWith,
-                    MapScore = it.MapScore,
-                )
-            )
         }
     }
 

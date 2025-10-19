@@ -7,7 +7,15 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.jcdevelopment.hotsdraftadviser.database.champPersist.ChampDao
 import com.jcdevelopment.hotsdraftadviser.database.champPersist.ChampEntity
+import com.jcdevelopment.hotsdraftadviser.database.champPersist.ChampMapScoreEntity
+import com.jcdevelopment.hotsdraftadviser.database.champPersist.ChampRoleJunctionEntity
+import com.jcdevelopment.hotsdraftadviser.database.champPersist.ChampionMatchupEntity
+import com.jcdevelopment.hotsdraftadviser.database.champPersist.ChampionWithMatchups
 import com.jcdevelopment.hotsdraftadviser.database.champPersist.Converters
+import com.jcdevelopment.hotsdraftadviser.database.champPersist.MapEntity
+import com.jcdevelopment.hotsdraftadviser.database.champPersist.RoleEntity
+import com.jcdevelopment.hotsdraftadviser.database.champPersist.champString.ChampStringCodeDao
+import com.jcdevelopment.hotsdraftadviser.database.champPersist.champString.ChampStringCodeEntity
 import com.jcdevelopment.hotsdraftadviser.database.favoritChamps.FavoriteChampionDao
 import com.jcdevelopment.hotsdraftadviser.database.favoritChamps.FavoriteChampionEntity
 import com.jcdevelopment.hotsdraftadviser.database.isFirstStart.FirstStartSetting
@@ -21,8 +29,19 @@ import com.jcdevelopment.hotsdraftadviser.database.isStreamingEnabled.StreamingS
 
 
 @Database(
-    entities = [StreamingSetting::class, FirstStartSetting::class, FavoriteChampionEntity::class, IsListModeEntity::class, IsStarRatingEntity::class, ChampEntity::class],
-    version = 6,
+    entities = [StreamingSetting::class,
+        FirstStartSetting::class,
+        FavoriteChampionEntity::class,
+        IsListModeEntity::class,
+        IsStarRatingEntity::class,
+        ChampEntity::class,
+        ChampionMatchupEntity::class,
+        MapEntity::class,
+        ChampMapScoreEntity::class,
+        RoleEntity::class,
+        ChampRoleJunctionEntity::class,
+        ChampStringCodeEntity::class],
+    version = 12,
     exportSchema = false
 ) // Setze exportSchema = true für Produktions-Apps mit Schema-Export
 @TypeConverters(Converters::class)
@@ -34,6 +53,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun isListShownSettingDao(): IsListModeDao
     abstract fun isStarRatingSettingDao(): IsStarRatingDao
     abstract fun champDao(): ChampDao
+    abstract fun champStringCodeDao(): ChampStringCodeDao
 
     companion object {
         // Singleton verhindert, dass mehrere Instanzen der Datenbank gleichzeitig geöffnet werden.
