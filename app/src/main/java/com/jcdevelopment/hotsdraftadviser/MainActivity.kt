@@ -58,6 +58,7 @@ import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getCol
 import com.jcdevelopment.hotsdraftadviser.composables.filter.SearchAndFilterRowForChampsSmall
 import com.jcdevelopment.hotsdraftadviser.composables.menus.DisclaimerComposable
 import com.jcdevelopment.hotsdraftadviser.composables.menus.FloatingActionButtonMainActivity
+import com.jcdevelopment.hotsdraftadviser.composables.menus.FloatingActionButtonMenu
 import com.jcdevelopment.hotsdraftadviser.composables.menus.MenuComposable
 import com.jcdevelopment.hotsdraftadviser.composables.menus.tutorial.TutorialCarouselComposable
 import com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.ListOfPickedChampsComposable
@@ -100,6 +101,8 @@ class MainActivity : ComponentActivity() {
                                 viewModel.resetAll()
                             }
                         )
+                        //TODO menu with the animated floating button
+                        //FloatingActionButtonMenu()
                     }
                 ) { innerPadding ->
                     MainActivityComposable(viewModel = viewModel)
