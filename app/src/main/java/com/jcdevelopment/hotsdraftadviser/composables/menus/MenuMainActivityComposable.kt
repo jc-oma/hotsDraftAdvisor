@@ -40,11 +40,17 @@ fun MenuComposable(
         ) {
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.main_acitivity_menu_tutorial)) },
-                onClick = { onTutorial() }
+                onClick = {
+                    onTutorial()
+                    expanded = false
+                }
             )
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.main_acitivity_menu_disclaimer)) },
-                onClick = { onDisclaymer() }
+                onClick = {
+                    onDisclaymer()
+                    expanded = false
+                }
             )
             DropdownMenuItem(
                 text = {
@@ -54,7 +60,10 @@ fun MenuComposable(
                         )
                     )
                 },
-                onClick = { onToggleStarRating() }
+                onClick = {
+                    onToggleStarRating()
+                    expanded = false
+                }
             )
             DropdownMenuItem(
                 text = {
@@ -66,7 +75,10 @@ fun MenuComposable(
                         }
                     }
                 },
-                onClick = { onToggleListMode() }
+                onClick = {
+                    onToggleListMode()
+                    expanded = false
+                }
             )
         }
     }
