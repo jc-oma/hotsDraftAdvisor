@@ -14,7 +14,7 @@ class ChampStringCodeRepository @Inject constructor(
 ) {
 
     /**
-     * Stellt einen Flow bereit, der die aktuellen App-Einstellungen (ChampStringCodeEntity) enthält.
+     * Stellt einen Flow bereit, der die aktuellen Champ-Einstellungen (ChampStringCodeEntity) enthält.
      * Dieser Flow aktualisiert sich automatisch, wenn die Daten in der Datenbank geändert werden.
      */
     val champStringCode: Flow<ChampStringCodeEntity?> = champStringCodeDao.getChampStringCode()
