@@ -1,6 +1,5 @@
 package com.jcdevelopment.hotsdraftadviser
 
-import android.R
 import android.app.Application
 import android.util.Log
 import androidx.compose.foundation.lazy.LazyListState
@@ -18,7 +17,7 @@ import com.jcdevelopment.hotsdraftadviser.database.isFirstStart.FirstStartReposi
 import com.jcdevelopment.hotsdraftadviser.database.isListShown.IsListModeRepository
 import com.jcdevelopment.hotsdraftadviser.database.isStarRating.IsStarRatingRepository
 import com.jcdevelopment.hotsdraftadviser.database.isStreamingEnabled.StreamingSettingsRepository
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.ChampData
+import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -33,7 +32,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream

@@ -1,6 +1,5 @@
-package com.jcdevelopment.hotsdraftadviser.dataclsasses
+package com.jcdevelopment.hotsdraftadviser.dataclasses
 
-import androidx.compose.ui.input.key.key
 import com.jcdevelopment.hotsdraftadviser.Difficulty
 import com.jcdevelopment.hotsdraftadviser.GameOrigin
 import com.jcdevelopment.hotsdraftadviser.RoleEnum

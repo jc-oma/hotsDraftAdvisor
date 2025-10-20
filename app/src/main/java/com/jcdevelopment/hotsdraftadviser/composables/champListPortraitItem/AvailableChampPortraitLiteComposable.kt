@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.dp
 import com.jcdevelopment.hotsdraftadviser.SortState
 import com.jcdevelopment.hotsdraftadviser.TeamSide
 import com.jcdevelopment.hotsdraftadviser.composables.segmentedButton.SegmentedButtonToOrderChamplistComposable
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.ChampData
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.exampleChampDataAbathur
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
+import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
+import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataAbathur
+import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataSgtHammer
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)

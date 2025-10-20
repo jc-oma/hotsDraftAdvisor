@@ -50,7 +50,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jcdevelopment.hotsdraftadviser.Utilitys.mapMapNameToStringRessource
-import com.jcdevelopment.hotsdraftadviser.composables.advertisement.MainWindowAdInterstitial
 import com.jcdevelopment.hotsdraftadviser.composables.champListPortraitItem.AvailableChampListComposable
 import com.jcdevelopment.hotsdraftadviser.composables.champListPortraitItem.AvailableChampPortraitComposable
 import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
@@ -58,7 +57,6 @@ import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getCol
 import com.jcdevelopment.hotsdraftadviser.composables.filter.SearchAndFilterRowForChampsSmall
 import com.jcdevelopment.hotsdraftadviser.composables.menus.DisclaimerComposable
 import com.jcdevelopment.hotsdraftadviser.composables.menus.FloatingActionButtonMainActivity
-import com.jcdevelopment.hotsdraftadviser.composables.menus.FloatingActionButtonMenu
 import com.jcdevelopment.hotsdraftadviser.composables.menus.MenuComposable
 import com.jcdevelopment.hotsdraftadviser.composables.menus.tutorial.TutorialCarouselComposable
 import com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.ListOfPickedChampsComposable

@@ -2,8 +2,6 @@ package com.jcdevelopment.hotsdraftadviser.database.champPersist
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.jcdevelopment.hotsdraftadviser.RoleEnum
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.MapScoreData
 
 @Entity(tableName = "champions")
 data class ChampEntity(

@@ -23,8 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jcdevelopment.hotsdraftadviser.R
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.ChampData
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
+import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
+import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataSgtHammer
 
 
 @Composable

@@ -46,8 +46,8 @@ import com.jcdevelopment.hotsdraftadviser.R
 import com.jcdevelopment.hotsdraftadviser.Utilitys
 import com.jcdevelopment.hotsdraftadviser.composables.ChampEvaluationComposable
 import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.ChampData
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
+import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
+import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataSgtHammer
 import com.jcdevelopment.hotsdraftadviser.composables.starRating.StarRatingComposable
 import kotlin.math.max
 

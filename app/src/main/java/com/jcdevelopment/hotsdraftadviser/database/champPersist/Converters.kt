@@ -2,10 +2,10 @@ package com.jcdevelopment.hotsdraftadviser.database.champPersist
 
 import androidx.room.TypeConverter
 import com.jcdevelopment.hotsdraftadviser.RoleEnum
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.GoodTeamWith
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.MapScoreData
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.StrongAgainstData
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.WeakAgainstData
+import com.jcdevelopment.hotsdraftadviser.dataclasses.GoodTeamWith
+import com.jcdevelopment.hotsdraftadviser.dataclasses.MapScoreData
+import com.jcdevelopment.hotsdraftadviser.dataclasses.StrongAgainstData
+import com.jcdevelopment.hotsdraftadviser.dataclasses.WeakAgainstData
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 

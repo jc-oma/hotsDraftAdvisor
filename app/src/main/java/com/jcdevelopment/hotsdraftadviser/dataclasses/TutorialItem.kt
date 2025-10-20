@@ -1,4 +1,4 @@
-package com.jcdevelopment.hotsdraftadviser.dataclsasses
+package com.jcdevelopment.hotsdraftadviser.dataclasses
 
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp

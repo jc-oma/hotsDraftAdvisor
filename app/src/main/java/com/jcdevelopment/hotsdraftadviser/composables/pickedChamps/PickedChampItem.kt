@@ -1,6 +1,5 @@
 package com.jcdevelopment.hotsdraftadviser.composables.pickedChamps
 
-import android.app.Application
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -33,8 +32,8 @@ import androidx.compose.ui.unit.dp
 import com.jcdevelopment.hotsdraftadviser.R
 import com.jcdevelopment.hotsdraftadviser.Utilitys
 import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.ChampData
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
+import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
+import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataSgtHammer
 
 
 @Composable

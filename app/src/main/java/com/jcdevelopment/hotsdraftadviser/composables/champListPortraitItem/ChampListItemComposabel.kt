@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.dp
 import com.jcdevelopment.hotsdraftadviser.TeamSide
 import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
 import com.jcdevelopment.hotsdraftadviser.composables.starRating.StarRatingComposable
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.ChampData
-import com.jcdevelopment.hotsdraftadviser.dataclsasses.exampleChampDataSgtHammer
+import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
+import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataSgtHammer
 import kotlin.math.max
 
 @Composable
