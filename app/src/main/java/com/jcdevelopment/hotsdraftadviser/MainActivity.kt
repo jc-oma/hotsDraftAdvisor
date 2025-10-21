@@ -132,6 +132,8 @@ fun MainActivityComposable(
     val ownPickScore by viewModel.ownPickScore.collectAsState()
     val theirPickScore by viewModel.theirPickScore.collectAsState()
 
+    val targetUIStateByChoosenMap by viewModel.targetState.collectAsState()
+
     val theirPickedChamps by viewModel.pickedTheirTeamChamps.collectAsState()
     val ownPickedChamps by viewModel.pickedOwnTeamChamps.collectAsState()
 
@@ -150,6 +152,9 @@ fun MainActivityComposable(
 
     var detectedObjectLabels by remember { mutableStateOf<List<String>>(emptyList()) }
 
+    var targetStateMapName by remember { mutableStateOf<String>("") }
+
+
     val isStreamingEnabled by viewModel.isStreamingEnabled.collectAsState()
 
     val isDisclaymerShown by viewModel.isDisclaymerShown.collectAsState()
@@ -160,7 +165,7 @@ fun MainActivityComposable(
 
     SharedTransitionLayout {
         AnimatedContent(
-            targetState = choosenMap.isEmpty()
+            targetState = targetUIStateByChoosenMap
         ) { targetState ->
             val animatedVisibilityScope = this@AnimatedContent
             val sharedTransitionScope = this@SharedTransitionLayout
@@ -254,6 +259,7 @@ fun MainActivityComposable(
                                             .clip(mapShape)
                                             .clickable {
                                                 viewModel.setChosenMapByName(map)
+                                                targetStateMapName = map
                                             },
                                         contentAlignment = Alignment.Center
                                     ) {
@@ -291,17 +297,23 @@ fun MainActivityComposable(
                                                     )
                                                 )
                                         ) {
-                                            Text(
-                                                modifier = Modifier.fillMaxWidth(),
-                                                text = stringResource(
-                                                    Utilitys.mapMapNameToStringRessource(
-                                                        map
-                                                    )!!
-                                                ),
-                                                color = Color.White,
-                                                fontSize = 14.sp,
-                                                textAlign = TextAlign.Center,
-                                            )
+                                            with(sharedTransitionScope) {
+                                                Text(
+                                                    modifier = Modifier.fillMaxWidth().sharedElement(
+                                                        rememberSharedContentState(key = "text$map"),
+                                                        animatedVisibilityScope = animatedVisibilityScope
+                                                    )
+                                                    ,
+                                                    text = stringResource(
+                                                        Utilitys.mapMapNameToStringRessource(
+                                                            map
+                                                        )!!
+                                                    ),
+                                                    color = Color.White,
+                                                    fontSize = 14.sp,
+                                                    textAlign = TextAlign.Center,
+                                                )
+                                            }
                                         }
                                     }
                                 }
@@ -340,13 +352,13 @@ fun MainActivityComposable(
                                     modifier = Modifier
                                         .fillMaxSize()
                                         .sharedElement(
-                                            rememberSharedContentState(key = "image$choosenMap"),
+                                            rememberSharedContentState(key = "image$targetStateMapName"),
                                             animatedVisibilityScope = animatedVisibilityScope
                                         ),
                                     contentScale = ContentScale.Crop,
                                     painter = painterResource(
                                         id = Utilitys.mapMapNameToDrawable(
-                                            choosenMap
+                                            targetStateMapName
                                         )!!
                                     ),
                                     contentDescription = choosenMap,
@@ -360,17 +372,27 @@ fun MainActivityComposable(
                                 modifier = Modifier
                                     .fillMaxSize()
                             ) {
-                                Text(
-                                    text = stringResource(mapMapNameToStringRessource(choosenMap)!!),
-                                    fontSize = 20.sp,
-                                    color = Color.White, // Besser lesbar auf dunklem Gradienten
-                                    overflow = Ellipsis,
-                                    textAlign = TextAlign.Center,
-                                    maxLines = 1,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(top = 12.dp, start = 12.dp, end = 12.dp)
-                                )
+                                with(sharedTransitionScope) {
+                                    Text(
+                                        text = stringResource(
+                                            mapMapNameToStringRessource(
+                                                targetStateMapName
+                                            )!!
+                                        ),
+                                        fontSize = 20.sp,
+                                        color = Color.White, // Besser lesbar auf dunklem Gradienten
+                                        overflow = Ellipsis,
+                                        textAlign = TextAlign.Center,
+                                        maxLines = 1,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(top = 12.dp, start = 12.dp, end = 12.dp)
+                                            .sharedElement(
+                                                rememberSharedContentState(key = "text$targetStateMapName"),
+                                                animatedVisibilityScope = animatedVisibilityScope
+                                            ),
+                                    )
+                                }
                             }
                         }
                         MenuComposable(

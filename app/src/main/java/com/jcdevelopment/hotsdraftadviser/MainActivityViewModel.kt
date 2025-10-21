@@ -21,6 +21,7 @@ import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -88,6 +89,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private val _isDisclaymerShown = MutableStateFlow(false)
+    private val _targetState = MutableStateFlow(true)
     private val _isTutorialShown = MutableStateFlow(false)
     private val _isListMode = MutableStateFlow(false)
     private val _isStreamingEnabled = MutableStateFlow(true)
@@ -125,6 +127,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             initialValue = false
         )
     val favFilter: StateFlow<Boolean> = _favFilter.asStateFlow()
+
+    val targetState: StateFlow<Boolean> = _targetState
 
     val allChampsData = _allChampsData.asStateFlow()
     val mapList: StateFlow<List<String>> = getSortedUniqueMaps()
@@ -246,8 +250,11 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun setChosenMapByName(name: String) {
         viewModelScope.launch {
+            delay(550)
             _choosenMap.value = name
         }
+
+        _targetState.value = false
     }
 
 
@@ -711,6 +718,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun clearChoosenMap() {
         _choosenMap.value = ""
+        _targetState.value = true
     }
 
     fun setRoleFilter(role: RoleEnum?) {
