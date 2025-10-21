@@ -162,4 +162,5 @@ HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</
     <string name="picked_list_their_team">Rotes Team</string>
 
     <string name="empty_String" translatable="false"> </string>
+    <string name="champ_portrait_hint">Tippe auf die Buttons neben %1$s um ihn/sie zu wählen oder zu bannen.</string>
 </resources>

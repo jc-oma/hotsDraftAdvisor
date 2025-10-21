@@ -159,4 +159,5 @@
     <string name="segment_button_name">Name</string>
     <string name="picked_list_own_team">Own Team</string>
     <string name="picked_list_their_team">Their Team</string>
+    <string name="champ_portrait_hint">Click on the Buttons next to %1$s to pick or ban him.</string>
 </resources>

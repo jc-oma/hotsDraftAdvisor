@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Block
@@ -31,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -42,6 +44,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import android.widget.Toast
 import com.jcdevelopment.hotsdraftadviser.R
 import com.jcdevelopment.hotsdraftadviser.Utilitys
 import com.jcdevelopment.hotsdraftadviser.composables.ChampEvaluationComposable
@@ -111,10 +114,18 @@ fun ChampPortraitItemComposable(
                         shape = RoundedCornerShape(4.dp)
                     )
             ) {
+                val context = LocalContext.current
                 Image(
                     modifier = Modifier
                         .height(LocalWindowInfo.current.containerSize.height.dp / 15f)
-                        .clip(RoundedCornerShape(4.dp)),
+                        .clip(RoundedCornerShape(4.dp))
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.champ_portrait_hint, champ.ChampName),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
                     contentScale = ContentScale.Crop,
                     painter = painterResource(id = champDrawable),
                     contentDescription = champ.ChampName
