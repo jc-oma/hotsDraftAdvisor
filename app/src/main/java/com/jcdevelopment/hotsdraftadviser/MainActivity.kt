@@ -242,35 +242,38 @@ fun MainActivityComposable(
                             ) {
                                 items(mapList) { map ->
                                     val mapShape = RoundedCornerShape(4.dp)
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                            .weight(1f)
-                                            .padding(2.dp)
-                                            .background(
-                                                composeMapTextColor.copy(alpha = 0.7f),
-                                                shape = mapShape
-                                            )
-                                            .border(
-                                                1.dp,
-                                                composeTextColor,
-                                                shape = mapShape
-                                            )
-                                            .clip(mapShape)
-                                            .clickable {
-                                                viewModel.setChosenMapByName(map)
-                                                targetStateMapName = map
-                                            },
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        with(sharedTransitionScope) {
+                                    with(sharedTransitionScope) {
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .weight(1f)
+                                                .padding(2.dp)
+                                                .background(
+                                                    composeMapTextColor.copy(alpha = 0.7f),
+                                                    shape = mapShape
+                                                )
+                                                .sharedBounds(
+                                                    sharedContentState = rememberSharedContentState(
+                                                        key = "image$map"
+                                                    ),
+                                                    animatedVisibilityScope = animatedVisibilityScope
+                                                )
+                                                .border(
+                                                    1.dp,
+                                                    composeTextColor,
+                                                    shape = mapShape
+                                                )
+                                                .clip(mapShape)
+                                                .clickable {
+                                                    viewModel.setChosenMapByName(map)
+                                                    targetStateMapName = map
+                                                },
+                                            contentAlignment = Alignment.Center
+                                        ) {
+
                                             Image(
                                                 modifier = Modifier
-                                                    .fillMaxSize()
-                                                    .sharedElement(
-                                                        rememberSharedContentState(key = "image$map"),
-                                                        animatedVisibilityScope = animatedVisibilityScope
-                                                    ),
+                                                    .fillMaxSize(),
                                                 contentScale = ContentScale.Crop,
                                                 painter = painterResource(
                                                     id = Utilitys.mapMapNameToDrawable(
@@ -279,31 +282,28 @@ fun MainActivityComposable(
                                                 ),
                                                 contentDescription = map
                                             )
-                                        }
-                                        Box(
-                                            contentAlignment = Alignment.BottomCenter,
-                                            modifier = Modifier
-                                                .align(Alignment.BottomCenter)
-                                                .height(84.dp)
-                                                .fillMaxWidth()
-                                                .background(
-                                                    brush = Brush.verticalGradient(
-                                                        colors = listOf(
-                                                            Color.Black.copy(alpha = 0.0f), // Start: Transparentes Schwarz (oder ein helleres Schwarz)
-                                                            Color.Black.copy(alpha = 0.3f), // Optional: Ein Übergangspunkt
-                                                            Color.Black.copy(alpha = 0.7f), // Optional: Ein weiterer Übergangspunkt
-                                                            Color.Black                     // Ende: Vollständig deckendes Schwarz
+
+                                            Box(
+                                                contentAlignment = Alignment.BottomCenter,
+                                                modifier = Modifier
+                                                    .align(Alignment.BottomCenter)
+                                                    .height(84.dp)
+                                                    .fillMaxWidth()
+                                                    .background(
+                                                        brush = Brush.verticalGradient(
+                                                            colors = listOf(
+                                                                Color.Black.copy(alpha = 0.0f), // Start: Transparentes Schwarz (oder ein helleres Schwarz)
+                                                                Color.Black.copy(alpha = 0.3f), // Optional: Ein Übergangspunkt
+                                                                Color.Black.copy(alpha = 0.7f), // Optional: Ein weiterer Übergangspunkt
+                                                                Color.Black                     // Ende: Vollständig deckendes Schwarz
+                                                            )
                                                         )
                                                     )
-                                                )
-                                        ) {
-                                            with(sharedTransitionScope) {
+                                            ) {
+
                                                 Text(
-                                                    modifier = Modifier.fillMaxWidth().sharedElement(
-                                                        rememberSharedContentState(key = "text$map"),
-                                                        animatedVisibilityScope = animatedVisibilityScope
-                                                    )
-                                                    ,
+                                                    modifier = Modifier
+                                                        .fillMaxWidth(),
                                                     text = stringResource(
                                                         Utilitys.mapMapNameToStringRessource(
                                                             map
@@ -313,6 +313,7 @@ fun MainActivityComposable(
                                                     fontSize = 14.sp,
                                                     textAlign = TextAlign.Center,
                                                 )
+
                                             }
                                         }
                                     }
@@ -331,30 +332,31 @@ fun MainActivityComposable(
                     Row {
                         val shape = RoundedCornerShape(4.dp)
                         Spacer(modifier = Modifier.weight(0.15f))
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(start = 8.dp, end = 8.dp)
-                                .background(
-                                    composeMapTextColor.copy(alpha = 0.7f),
-                                    shape = shape
-                                )
-                                .height(48.dp)
-                                .border(1.dp, composeTextColor, shape = shape)
-                                .clickable {
-                                    viewModel.clearChoosenMap()
-                                }
-                                .clip(shape),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            with(sharedTransitionScope) {
+                        with(sharedTransitionScope) {
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(start = 8.dp, end = 8.dp)
+                                    .background(
+                                        composeMapTextColor.copy(alpha = 0.7f),
+                                        shape = shape
+                                    )
+                                    .height(48.dp)
+                                    .border(1.dp, composeTextColor, shape = shape)
+                                    .clickable {
+                                        viewModel.clearChoosenMap()
+                                    }
+                                    .clip(shape)
+                                    .sharedBounds(
+                                        sharedContentState = rememberSharedContentState(key = "image$targetStateMapName"),
+                                        animatedVisibilityScope = animatedVisibilityScope
+                                    ),
+                                contentAlignment = Alignment.Center
+                            ) {
+
                                 Image(
                                     modifier = Modifier
-                                        .fillMaxSize()
-                                        .sharedElement(
-                                            rememberSharedContentState(key = "image$targetStateMapName"),
-                                            animatedVisibilityScope = animatedVisibilityScope
-                                        ),
+                                        .fillMaxSize(),
                                     contentScale = ContentScale.Crop,
                                     painter = painterResource(
                                         id = Utilitys.mapMapNameToDrawable(
@@ -367,12 +369,12 @@ fun MainActivityComposable(
                                         blendMode = BlendMode.Darken
                                     )
                                 )
-                            }
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                            ) {
-                                with(sharedTransitionScope) {
+
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                ) {
+
                                     Text(
                                         text = stringResource(
                                             mapMapNameToStringRessource(
@@ -386,12 +388,9 @@ fun MainActivityComposable(
                                         maxLines = 1,
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .padding(top = 12.dp, start = 12.dp, end = 12.dp)
-                                            .sharedElement(
-                                                rememberSharedContentState(key = "text$targetStateMapName"),
-                                                animatedVisibilityScope = animatedVisibilityScope
-                                            ),
+                                            .padding(top = 12.dp, start = 12.dp, end = 12.dp),
                                     )
+
                                 }
                             }
                         }
