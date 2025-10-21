@@ -338,7 +338,7 @@ fun MainActivityComposable(
                                     .weight(1f)
                                     .padding(start = 8.dp, end = 8.dp)
                                     .background(
-                                        composeMapTextColor.copy(alpha = 0.7f),
+                                        composeScreenBackgroundColor,
                                         shape = shape
                                     )
                                     .height(48.dp)
