@@ -2,6 +2,7 @@ package com.jcdevelopment.hotsdraftadviser
 
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.activity.ComponentActivity
@@ -54,7 +55,9 @@ import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.android.datatransport.BuildConfig
 import com.jcdevelopment.hotsdraftadviser.Utilitys.mapMapNameToStringRessource
+import com.jcdevelopment.hotsdraftadviser.composables.OutdatedAppComposable
 import com.jcdevelopment.hotsdraftadviser.composables.champListPortraitItem.AvailableChampListComposable
 import com.jcdevelopment.hotsdraftadviser.composables.champListPortraitItem.AvailableChampPortraitComposable
 import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
@@ -78,6 +81,8 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalSerializationApi::class)
     override fun onResume() {
         super.onResume()
+
+        viewModel.fetchMinVersionCode()
         onBackPressedDispatcher.addCallback(this) {
             // This lambda is where you define your custom back press logic.
             // Example: If a map is chosen, clear it. Otherwise, perform default back press.
@@ -136,6 +141,7 @@ fun MainActivityComposable(
 
     val theirPickedChamps by viewModel.pickedTheirTeamChamps.collectAsState()
     val ownPickedChamps by viewModel.pickedOwnTeamChamps.collectAsState()
+    val minVersionCode by viewModel.minVersionCode.collectAsState()
 
     val screenBackgroundColor = "150e35ff"
     val textColor = "f8f8f9ff"
@@ -163,61 +169,71 @@ fun MainActivityComposable(
     val isFirstStart by viewModel.isFirstStart.collectAsState()
     val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
 
-    SharedTransitionLayout {
-        AnimatedContent(
-            targetState = targetUIStateByChoosenMap
-        ) { targetState ->
-            val animatedVisibilityScope = this@AnimatedContent
-            val sharedTransitionScope = this@SharedTransitionLayout
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(composeScreenBackgroundColor)
-            ) {
-                Box(modifier = Modifier.height(52.dp))
 
-                //TODO
-                //--- AdBanners here ---
-                //MainWindowAdBanner()
+    val context = LocalContext.current
+    val currentAppVersion = try {
+        context.packageManager.getPackageInfo(context.packageName, 0).versionCode
+    } catch (e: Exception) {
+        1 // Fallback version code
+    }
 
-                if (targetState) {
-                    Column(modifier = Modifier.wrapContentSize())
-                    {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = stringResource(R.string.main_activity_chose_map),
-                                fontSize = 18.sp,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.weight(1f),
-                                fontWeight = FontWeight.Bold
-                            )
+    if ((minVersionCode.minVersionCode ?: 1) <= currentAppVersion) {
+        SharedTransitionLayout {
+            AnimatedContent(
+                targetState = targetUIStateByChoosenMap
+            ) { targetState ->
+                val animatedVisibilityScope = this@AnimatedContent
+                val sharedTransitionScope = this@SharedTransitionLayout
 
-                            MenuComposable(
-                                modifier = Modifier.weight(0.2f),
-                                onDisclaymer = { viewModel.toggleDisclaymer() },
-                                onToggleListMode = { viewModel.toggleListMode() },
-                                onToggleStarRating = { viewModel.toggleStarRateMode() },
-                                onTutorial = { viewModel.toggleTutorial() },
-                                isListMode = isListMode,
-                                isStarRating = isStarRatingMode
-                            )
-                        }
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            // Suchfeld
-                            MapSearchBar(
-                                searchQuery = searchQueryMaps,
-                                updateMapsSearchQuery = { viewModel.updateMapsSearchQuery(it) },
-                                modifier = Modifier.weight(1f),
-                                label = stringResource(R.string.main_activity_maps_suchen)
-                            )
-                            //TODO show when ML detects something
-                            /*
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(composeScreenBackgroundColor)
+                ) {
+                    Box(modifier = Modifier.height(52.dp))
+
+                    //TODO
+                    //--- AdBanners here ---
+                    //MainWindowAdBanner()
+
+                    if (targetState) {
+                        Column(modifier = Modifier.wrapContentSize())
+                        {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.main_activity_chose_map),
+                                    fontSize = 18.sp,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier.weight(1f),
+                                    fontWeight = FontWeight.Bold
+                                )
+
+                                MenuComposable(
+                                    modifier = Modifier.weight(0.2f),
+                                    onDisclaymer = { viewModel.toggleDisclaymer() },
+                                    onToggleListMode = { viewModel.toggleListMode() },
+                                    onToggleStarRating = { viewModel.toggleStarRateMode() },
+                                    onTutorial = { viewModel.toggleTutorial() },
+                                    isListMode = isListMode,
+                                    isStarRating = isStarRatingMode
+                                )
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                // Suchfeld
+                                MapSearchBar(
+                                    searchQuery = searchQueryMaps,
+                                    updateMapsSearchQuery = { viewModel.updateMapsSearchQuery(it) },
+                                    modifier = Modifier.weight(1f),
+                                    label = stringResource(R.string.main_activity_maps_suchen)
+                                )
+                                //TODO show when ML detects something
+                                /*
                         Text(
                             modifier = Modifier
                                 .weight(0.4f),
@@ -229,197 +245,197 @@ fun MainActivityComposable(
                             modifier = Modifier
                                 .padding(start = 8.dp)
                         )*/
-                        }
-                        Spacer(modifier = Modifier.height(8.dp))
-                        if (mapList.isEmpty()) {
-                            Text("Lade Maps oder keine Maps gefunden...")
-                        } else {
-                            LazyVerticalGrid(
-                                contentPadding = PaddingValues(bottom = 180.dp),
-                                columns = GridCells.Adaptive(
-                                    minSize = 140.dp
-                                )
-                            ) {
-                                items(mapList) { map ->
-                                    val mapShape = RoundedCornerShape(4.dp)
-                                    with(sharedTransitionScope) {
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxSize()
-                                                .weight(1f)
-                                                .padding(2.dp)
-                                                .background(
-                                                    composeMapTextColor.copy(alpha = 0.7f),
-                                                    shape = mapShape
-                                                )
-                                                .sharedBounds(
-                                                    sharedContentState = rememberSharedContentState(
-                                                        key = "image$map"
-                                                    ),
-                                                    animatedVisibilityScope = animatedVisibilityScope
-                                                )
-                                                .border(
-                                                    1.dp,
-                                                    composeTextColor,
-                                                    shape = mapShape
-                                                )
-                                                .clip(mapShape)
-                                                .clickable {
-                                                    viewModel.setChosenMapByName(map)
-                                                    targetStateMapName = map
-                                                },
-                                            contentAlignment = Alignment.Center
-                                        ) {
-
-                                            Image(
-                                                modifier = Modifier
-                                                    .fillMaxSize(),
-                                                contentScale = ContentScale.Crop,
-                                                painter = painterResource(
-                                                    id = Utilitys.mapMapNameToDrawable(
-                                                        map
-                                                    )!!
-                                                ),
-                                                contentDescription = map
-                                            )
-
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+                            if (mapList.isEmpty()) {
+                                Text("Lade Maps oder keine Maps gefunden...")
+                            } else {
+                                LazyVerticalGrid(
+                                    contentPadding = PaddingValues(bottom = 180.dp),
+                                    columns = GridCells.Adaptive(
+                                        minSize = 140.dp
+                                    )
+                                ) {
+                                    items(mapList) { map ->
+                                        val mapShape = RoundedCornerShape(4.dp)
+                                        with(sharedTransitionScope) {
                                             Box(
-                                                contentAlignment = Alignment.BottomCenter,
                                                 modifier = Modifier
-                                                    .align(Alignment.BottomCenter)
-                                                    .height(84.dp)
-                                                    .fillMaxWidth()
+                                                    .fillMaxSize()
+                                                    .weight(1f)
+                                                    .padding(2.dp)
                                                     .background(
-                                                        brush = Brush.verticalGradient(
-                                                            colors = listOf(
-                                                                Color.Black.copy(alpha = 0.0f), // Start: Transparentes Schwarz (oder ein helleres Schwarz)
-                                                                Color.Black.copy(alpha = 0.3f), // Optional: Ein Übergangspunkt
-                                                                Color.Black.copy(alpha = 0.7f), // Optional: Ein weiterer Übergangspunkt
-                                                                Color.Black                     // Ende: Vollständig deckendes Schwarz
-                                                            )
-                                                        )
+                                                        composeMapTextColor.copy(alpha = 0.7f),
+                                                        shape = mapShape
                                                     )
+                                                    .sharedBounds(
+                                                        sharedContentState = rememberSharedContentState(
+                                                            key = "image$map"
+                                                        ),
+                                                        animatedVisibilityScope = animatedVisibilityScope
+                                                    )
+                                                    .border(
+                                                        1.dp,
+                                                        composeTextColor,
+                                                        shape = mapShape
+                                                    )
+                                                    .clip(mapShape)
+                                                    .clickable {
+                                                        viewModel.setChosenMapByName(map)
+                                                        targetStateMapName = map
+                                                    },
+                                                contentAlignment = Alignment.Center
                                             ) {
 
-                                                Text(
+                                                Image(
                                                     modifier = Modifier
-                                                        .fillMaxWidth(),
-                                                    text = stringResource(
-                                                        Utilitys.mapMapNameToStringRessource(
+                                                        .fillMaxSize(),
+                                                    contentScale = ContentScale.Crop,
+                                                    painter = painterResource(
+                                                        id = Utilitys.mapMapNameToDrawable(
                                                             map
                                                         )!!
                                                     ),
-                                                    color = Color.White,
-                                                    fontSize = 14.sp,
-                                                    textAlign = TextAlign.Center,
+                                                    contentDescription = map
                                                 )
 
+                                                Box(
+                                                    contentAlignment = Alignment.BottomCenter,
+                                                    modifier = Modifier
+                                                        .align(Alignment.BottomCenter)
+                                                        .height(84.dp)
+                                                        .fillMaxWidth()
+                                                        .background(
+                                                            brush = Brush.verticalGradient(
+                                                                colors = listOf(
+                                                                    Color.Black.copy(alpha = 0.0f), // Start: Transparentes Schwarz (oder ein helleres Schwarz)
+                                                                    Color.Black.copy(alpha = 0.3f), // Optional: Ein Übergangspunkt
+                                                                    Color.Black.copy(alpha = 0.7f), // Optional: Ein weiterer Übergangspunkt
+                                                                    Color.Black                     // Ende: Vollständig deckendes Schwarz
+                                                                )
+                                                            )
+                                                        )
+                                                ) {
+
+                                                    Text(
+                                                        modifier = Modifier
+                                                            .fillMaxWidth(),
+                                                        text = stringResource(
+                                                            Utilitys.mapMapNameToStringRessource(
+                                                                map
+                                                            )!!
+                                                        ),
+                                                        color = Color.White,
+                                                        fontSize = 14.sp,
+                                                        textAlign = TextAlign.Center,
+                                                    )
+
+                                                }
                                             }
                                         }
                                     }
-                                }
-                                item {
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .height(48.dp)
-                                    ) { }
+                                    item {
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(48.dp)
+                                        ) { }
+                                    }
                                 }
                             }
                         }
-                    }
-                } else {
-                    Row {
-                        val shape = RoundedCornerShape(4.dp)
-                        Spacer(modifier = Modifier.weight(0.15f))
-                        with(sharedTransitionScope) {
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .padding(start = 8.dp, end = 8.dp)
-                                    .background(
-                                        composeScreenBackgroundColor,
-                                        shape = shape
-                                    )
-                                    .height(48.dp)
-                                    .border(1.dp, composeTextColor, shape = shape)
-                                    .clickable {
-                                        viewModel.clearChoosenMap()
-                                    }
-                                    .clip(shape)
-                                    .sharedBounds(
-                                        sharedContentState = rememberSharedContentState(key = "image$targetStateMapName"),
-                                        animatedVisibilityScope = animatedVisibilityScope
-                                    ),
-                                contentAlignment = Alignment.Center
-                            ) {
-
-                                Image(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentScale = ContentScale.Crop,
-                                    painter = painterResource(
-                                        id = Utilitys.mapMapNameToDrawable(
-                                            targetStateMapName
-                                        )!!
-                                    ),
-                                    contentDescription = choosenMap,
-                                    colorFilter = ColorFilter.tint(
-                                        Color.Black.copy(alpha = 0.5f),
-                                        blendMode = BlendMode.Darken
-                                    )
-                                )
-
+                    } else {
+                        Row {
+                            val shape = RoundedCornerShape(4.dp)
+                            Spacer(modifier = Modifier.weight(0.15f))
+                            with(sharedTransitionScope) {
                                 Box(
                                     modifier = Modifier
-                                        .fillMaxSize()
+                                        .weight(1f)
+                                        .padding(start = 8.dp, end = 8.dp)
+                                        .background(
+                                            composeScreenBackgroundColor,
+                                            shape = shape
+                                        )
+                                        .height(48.dp)
+                                        .border(1.dp, composeTextColor, shape = shape)
+                                        .clickable {
+                                            viewModel.clearChoosenMap()
+                                        }
+                                        .clip(shape)
+                                        .sharedBounds(
+                                            sharedContentState = rememberSharedContentState(key = "image$targetStateMapName"),
+                                            animatedVisibilityScope = animatedVisibilityScope
+                                        ),
+                                    contentAlignment = Alignment.Center
                                 ) {
 
-                                    Text(
-                                        text = stringResource(
-                                            mapMapNameToStringRessource(
+                                    Image(
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        contentScale = ContentScale.Crop,
+                                        painter = painterResource(
+                                            id = Utilitys.mapMapNameToDrawable(
                                                 targetStateMapName
                                             )!!
                                         ),
-                                        fontSize = 20.sp,
-                                        color = Color.White, // Besser lesbar auf dunklem Gradienten
-                                        overflow = Ellipsis,
-                                        textAlign = TextAlign.Center,
-                                        maxLines = 1,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(top = 12.dp, start = 12.dp, end = 12.dp),
+                                        contentDescription = choosenMap,
+                                        colorFilter = ColorFilter.tint(
+                                            Color.Black.copy(alpha = 0.5f),
+                                            blendMode = BlendMode.Darken
+                                        )
                                     )
 
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                    ) {
+
+                                        Text(
+                                            text = stringResource(
+                                                mapMapNameToStringRessource(
+                                                    targetStateMapName
+                                                )!!
+                                            ),
+                                            fontSize = 20.sp,
+                                            color = Color.White, // Besser lesbar auf dunklem Gradienten
+                                            overflow = Ellipsis,
+                                            textAlign = TextAlign.Center,
+                                            maxLines = 1,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(top = 12.dp, start = 12.dp, end = 12.dp),
+                                        )
+
+                                    }
                                 }
                             }
+                            MenuComposable(
+                                modifier = Modifier.weight(0.24f),
+                                onDisclaymer = { viewModel.toggleDisclaymer() },
+                                onToggleListMode = { viewModel.toggleListMode() },
+                                onToggleStarRating = { viewModel.toggleStarRateMode() },
+                                onTutorial = { viewModel.toggleTutorial() },
+                                isListMode = isListMode,
+                                isStarRating = isStarRatingMode
+                            )
                         }
-                        MenuComposable(
-                            modifier = Modifier.weight(0.24f),
-                            onDisclaymer = { viewModel.toggleDisclaymer() },
-                            onToggleListMode = { viewModel.toggleListMode() },
-                            onToggleStarRating = { viewModel.toggleStarRateMode() },
-                            onTutorial = { viewModel.toggleTutorial() },
-                            isListMode = isListMode,
-                            isStarRating = isStarRatingMode
-                        )
                     }
-                }
 
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(10.dp)
-                ) { }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(10.dp)
+                    ) { }
 
-                //Composable um das tracken der Champs mit der Videostream zu testen
-                if (isStreamingEnabled) {
-                    VideoStreamComposable()
-                }
+                    //Composable um das tracken der Champs mit der Videostream zu testen
+                    if (isStreamingEnabled) {
+                        VideoStreamComposable()
+                    }
 
-                //Composable um das tracken der Champs mit der Kamera zu testen
-                /*CameraComposable(
+                    //Composable um das tracken der Champs mit der Kamera zu testen
+                    /*CameraComposable(
                 onObjectsDetected = { labels -> detectedObjectLabels = labels }
             )
 
@@ -432,147 +448,150 @@ fun MainActivityComposable(
                 }
             )*/
 
-                if (choosenMap.isNotEmpty()) {
-                    if (!(theirPickedChamps.isEmpty() && ownPickedChamps.isEmpty())) {
-                        ListOfPickedChampsComposable(
-                            composeHeadlineColor,
-                            ownPickedChamps,
-                            theirPickedChamps,
-                            composeOwnTeamColor,
-                            composeTextColor,
-                            { i, teamSide -> viewModel.removePick(i, teamSide) },
-                            composeTheirTeamColor,
-                            ownPickScore,
-                            theirPickScore,
-                            isStarRatingMode
-                        )
-                    }
-                    val favFilter by viewModel.favFilter.collectAsState(false)
-                    SearchAndFilterRowForChampsSmall(
-                        searchQueryOwnTChamps = searchQueryOwnTChamps,
-                        roleFilter = roleFilter,
-                        favFilter = favFilter,
-                        setRoleFilter = { roleEnum -> viewModel.setRoleFilter(roleEnum) },
-                        updateChampSearchQuery = { queryString ->
-                            viewModel.updateChampSearchQuery(
-                                queryString
+                    if (choosenMap.isNotEmpty()) {
+                        if (!(theirPickedChamps.isEmpty() && ownPickedChamps.isEmpty())) {
+                            ListOfPickedChampsComposable(
+                                composeHeadlineColor,
+                                ownPickedChamps,
+                                theirPickedChamps,
+                                composeOwnTeamColor,
+                                composeTextColor,
+                                { i, teamSide -> viewModel.removePick(i, teamSide) },
+                                composeTheirTeamColor,
+                                ownPickScore,
+                                theirPickScore,
+                                isStarRatingMode
                             )
-                        },
-                        toggleFavFilter = { viewModel.toggleFavFilter() }
-                    )
-
-                    Box(modifier = Modifier.height(8.dp))
-
-                    if (chosableChampList.isEmpty()) {
-                        Text("Lade Champs oder keine Champs gefunden...")
-                    } else {
-                        val distinctChosableChampList by viewModel.distinctChosableChampList.collectAsState(
-                            emptyList()
+                        }
+                        val favFilter by viewModel.favFilter.collectAsState(false)
+                        SearchAndFilterRowForChampsSmall(
+                            searchQueryOwnTChamps = searchQueryOwnTChamps,
+                            roleFilter = roleFilter,
+                            favFilter = favFilter,
+                            setRoleFilter = { roleEnum -> viewModel.setRoleFilter(roleEnum) },
+                            updateChampSearchQuery = { queryString ->
+                                viewModel.updateChampSearchQuery(
+                                    queryString
+                                )
+                            },
+                            toggleFavFilter = { viewModel.toggleFavFilter() }
                         )
-                        val distinctAndUnfilteredChosableChampList by viewModel.distinctfilteredChosableChampList.collectAsState(
-                            emptyList()
-                        )
-                        val fitTeamMax by viewModel.fitTeamMax.collectAsState(1)
-                        val goodAgainstTeamMax by viewModel.goodAgainstTeamMax.collectAsState(1)
-                        val ownScoreMax by viewModel.ownScoreMax.collectAsState(1)
-                        val theirScoreMax by viewModel.theirScoreMax.collectAsState(1)
-                        val choosenMap by viewModel.choosenMap.collectAsState("")
-                        val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
 
-                        if (isListMode) {
-                            AvailableChampListComposable(
-                                sortState = sortState,
-                                composeTextColor = composeTextColor,
-                                chosableChampList = chosableChampList,
-                                setSortState = { sortState -> viewModel.setSortState(sortState) },
-                                onButtonClick = { listState, coroutineScope ->
-                                    viewModel.scrollList(
-                                        listState,
-                                        coroutineScope
-                                    )
-                                },
-                                pickChampForTeam = { i, teamSide ->
-                                    viewModel.pickChampForTeam(
-                                        i,
-                                        teamSide
-                                    )
-                                },
-                                setBansPerTeam = { i, teamSide ->
-                                    viewModel.setBansPerTeam(
-                                        i,
-                                        teamSide
-                                    )
-                                },
-                                updateChampSearchQuery = { string ->
-                                    viewModel.updateChampSearchQuery(
-                                        string
-                                    )
-                                },
-                                isStarRatingMode = isStarRatingMode,
-                                ownScoreMax = ownScoreMax,
-                                theirScoreMax = theirScoreMax
-                            )
+                        Box(modifier = Modifier.height(8.dp))
+
+                        if (chosableChampList.isEmpty()) {
+                            Text("Lade Champs oder keine Champs gefunden...")
                         } else {
-                            AvailableChampPortraitComposable(
-                                sortState = sortState,
-                                distinctChosableChampList = distinctChosableChampList,
-                                distinctAndUnfilteredChosableChampList = distinctAndUnfilteredChosableChampList,
-                                fitTeamMax = fitTeamMax,
-                                goodAgainstTeamMax = goodAgainstTeamMax,
-                                ownScoreMax = ownScoreMax,
-                                theirScoreMax = theirScoreMax,
-                                choosenMap = choosenMap,
-                                isStarRatingMode = isStarRatingMode,
-                                setSortState = { sortState -> viewModel.setSortState(sortState) },
-                                scrollList = { lazyListState, coroutineScope ->
-                                    viewModel.scrollList(
-                                        lazyListState,
-                                        coroutineScope
-                                    )
-                                },
-                                toggleFavoriteStatus = { string ->
-                                    viewModel.toggleFavoriteStatus(
-                                        string
-                                    )
-                                },
-                                pickChampForOwnTeam = { i, teamSide ->
-                                    viewModel.pickChampForTeam(
-                                        i,
-                                        teamSide
-                                    )
-                                },
-                                updateChampSearchQuery = { string ->
-                                    viewModel.updateChampSearchQuery(
-                                        string
-                                    )
-                                },
-                                setBansPerTeam = { i, teamSide ->
-                                    viewModel.setBansPerTeam(
-                                        i,
-                                        teamSide
-                                    )
-                                }
+                            val distinctChosableChampList by viewModel.distinctChosableChampList.collectAsState(
+                                emptyList()
                             )
+                            val distinctAndUnfilteredChosableChampList by viewModel.distinctfilteredChosableChampList.collectAsState(
+                                emptyList()
+                            )
+                            val fitTeamMax by viewModel.fitTeamMax.collectAsState(1)
+                            val goodAgainstTeamMax by viewModel.goodAgainstTeamMax.collectAsState(1)
+                            val ownScoreMax by viewModel.ownScoreMax.collectAsState(1)
+                            val theirScoreMax by viewModel.theirScoreMax.collectAsState(1)
+                            val choosenMap by viewModel.choosenMap.collectAsState("")
+                            val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
+
+                            if (isListMode) {
+                                AvailableChampListComposable(
+                                    sortState = sortState,
+                                    composeTextColor = composeTextColor,
+                                    chosableChampList = chosableChampList,
+                                    setSortState = { sortState -> viewModel.setSortState(sortState) },
+                                    onButtonClick = { listState, coroutineScope ->
+                                        viewModel.scrollList(
+                                            listState,
+                                            coroutineScope
+                                        )
+                                    },
+                                    pickChampForTeam = { i, teamSide ->
+                                        viewModel.pickChampForTeam(
+                                            i,
+                                            teamSide
+                                        )
+                                    },
+                                    setBansPerTeam = { i, teamSide ->
+                                        viewModel.setBansPerTeam(
+                                            i,
+                                            teamSide
+                                        )
+                                    },
+                                    updateChampSearchQuery = { string ->
+                                        viewModel.updateChampSearchQuery(
+                                            string
+                                        )
+                                    },
+                                    isStarRatingMode = isStarRatingMode,
+                                    ownScoreMax = ownScoreMax,
+                                    theirScoreMax = theirScoreMax
+                                )
+                            } else {
+                                AvailableChampPortraitComposable(
+                                    sortState = sortState,
+                                    distinctChosableChampList = distinctChosableChampList,
+                                    distinctAndUnfilteredChosableChampList = distinctAndUnfilteredChosableChampList,
+                                    fitTeamMax = fitTeamMax,
+                                    goodAgainstTeamMax = goodAgainstTeamMax,
+                                    ownScoreMax = ownScoreMax,
+                                    theirScoreMax = theirScoreMax,
+                                    choosenMap = choosenMap,
+                                    isStarRatingMode = isStarRatingMode,
+                                    setSortState = { sortState -> viewModel.setSortState(sortState) },
+                                    scrollList = { lazyListState, coroutineScope ->
+                                        viewModel.scrollList(
+                                            lazyListState,
+                                            coroutineScope
+                                        )
+                                    },
+                                    toggleFavoriteStatus = { string ->
+                                        viewModel.toggleFavoriteStatus(
+                                            string
+                                        )
+                                    },
+                                    pickChampForOwnTeam = { i, teamSide ->
+                                        viewModel.pickChampForTeam(
+                                            i,
+                                            teamSide
+                                        )
+                                    },
+                                    updateChampSearchQuery = { string ->
+                                        viewModel.updateChampSearchQuery(
+                                            string
+                                        )
+                                    },
+                                    setBansPerTeam = { i, teamSide ->
+                                        viewModel.setBansPerTeam(
+                                            i,
+                                            teamSide
+                                        )
+                                    }
+                                )
+                            }
                         }
                     }
                 }
-            }
-            if (isDisclaymerShown) {
-                Column {
-                    Box(modifier = Modifier.height(48.dp))
-                    DisclaimerComposable(onClose = { viewModel.toggleDisclaymer() })
+                if (isDisclaymerShown) {
+                    Column {
+                        Box(modifier = Modifier.height(48.dp))
+                        DisclaimerComposable(onClose = { viewModel.toggleDisclaymer() })
+                    }
                 }
-            }
 
-            if (isTutorialShown || isFirstStart) {
-                Column {
-                    Box(modifier = Modifier.height(48.dp))
-                    TutorialCarouselComposable(
-                        modifier = Modifier.fillMaxSize(),
-                        onClose = { viewModel.toggleTutorial() })
+                if (isTutorialShown || isFirstStart) {
+                    Column {
+                        Box(modifier = Modifier.height(48.dp))
+                        TutorialCarouselComposable(
+                            modifier = Modifier.fillMaxSize(),
+                            onClose = { viewModel.toggleTutorial() })
+                    }
                 }
             }
         }
+    } else {
+        OutdatedAppComposable()
     }
 }
 

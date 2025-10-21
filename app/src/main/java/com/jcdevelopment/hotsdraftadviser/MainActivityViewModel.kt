@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
+import com.jcdevelopment.hotsdraftadviser.ApiService.hotsApi
 import com.jcdevelopment.hotsdraftadviser.database.AppDatabase
 import com.jcdevelopment.hotsdraftadviser.database.champPersist.ChampRepository
 import com.jcdevelopment.hotsdraftadviser.database.champPersist.champString.ChampStringCodeEntity
@@ -18,6 +19,7 @@ import com.jcdevelopment.hotsdraftadviser.database.isListShown.IsListModeReposit
 import com.jcdevelopment.hotsdraftadviser.database.isStarRating.IsStarRatingRepository
 import com.jcdevelopment.hotsdraftadviser.database.isStreamingEnabled.StreamingSettingsRepository
 import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
+import com.jcdevelopment.hotsdraftadviser.dataclasses.MinVerionCode
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -33,9 +35,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
+import okhttp3.Response
 import java.io.IOException
 import kotlin.collections.List
 
@@ -102,6 +104,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private val _sortState = MutableStateFlow<SortState>(SortState.OWNPOINTS)
     private val _roleFilter = MutableStateFlow<List<RoleEnum>>(emptyList())
     private val _favFilter = MutableStateFlow<Boolean>(false)
+    private val _minVersionCode = MutableStateFlow<MinVerionCode>(MinVerionCode(0))
     private val maxPicks = 5
 
     val isDisclaymerShown: StateFlow<Boolean> = _isDisclaymerShown.asStateFlow()
@@ -141,6 +144,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val pickedTheirTeamChamps: StateFlow<List<ChampData>> = getPickedTheirTeamChamps(TeamSide.THEIR)
     val pickedOwnTeamChamps: StateFlow<List<ChampData>> = getPickedTheirTeamChamps(TeamSide.OWN)
 
+    val minVersionCode: StateFlow<MinVerionCode> = _minVersionCode.asStateFlow()
+
+
     private fun getPickedTheirTeamChamps(team: TeamSide): StateFlow<List<ChampData>> =
         _allChampsData.map { champs -> champs.filter { it.pickedBy == team } }.stateIn(
             scope = viewModelScope,
@@ -179,6 +185,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     val theirScoreMax = allChampsDistinct.map { list -> list.maxOfOrNull { it.scoreTheir } ?: 1 }
         .stateIn(
+
+
+
+
+
+            
             scope = viewModelScope,
             started = SharingStarted.Lazily,
             initialValue = 1
@@ -791,6 +803,17 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     fun scrollList(listState: LazyListState, coroutineScope: CoroutineScope) {
         coroutineScope.launch {
             listState.animateScrollToItem(0)
+        }
+    }
+
+    fun fetchMinVersionCode() {
+        viewModelScope.launch {
+            try {
+                _minVersionCode.value = hotsApi.getMinVersionCode()
+                Log.d("ApiServiceDebug", "Erfolgreich gemappt: $_minVersionCode")
+            } catch (e: Exception) {
+                Log.e("ApiServiceDebug", "Fehler beim Mappen des JSON", e)
+            }
         }
     }
 }

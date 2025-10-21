@@ -40,7 +40,7 @@ fun MainWindowAdInterstitialDeprcated(
 
     fun loadInterstitialAd(context: Context) {
         InterstitialAd.load(
-            context, sampleInterstitialID, AdRequest.Builder().build(),
+            context, liveInterstitialID, AdRequest.Builder().build(),
             object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
                     mInterstitialAd = null

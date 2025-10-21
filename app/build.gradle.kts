@@ -14,7 +14,7 @@ android {
         applicationId = "com.jcdevelopment.hotsdraftadviser"
         minSdk = 26
         targetSdk = 36
-        versionCode = 11
+        versionCode = 12
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -49,6 +49,12 @@ android {
 
 dependencies {
     implementation(libs.play.services.ads)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
+    implementation(libs.kotlinx.serialization.json.v190)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
 
     val room_version = "2.7.2"
 
