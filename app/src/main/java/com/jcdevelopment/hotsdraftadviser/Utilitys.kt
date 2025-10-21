@@ -118,7 +118,8 @@ object Utilitys {
             "Towers of Doom" -> return R.drawable.map_towers_of_doom_card
             "Volskaya Foundry" -> return R.drawable.map_volskaya_foundry_card
             "Warhead Junction" -> return R.drawable.map_warhead_junction_card
-            else -> return null
+            //TODO Fix
+            else -> return R.drawable.map_empty
         }
     }
 
@@ -141,7 +142,8 @@ object Utilitys {
             "Volskaya Foundry" -> return R.string.map_name_Volskaya_Foundry
             "Warhead Junction" -> return R.string.map_name_Warhead_Junction
 
-            else -> return null
+            //TODO FIX
+            else -> return R.string.empty_String
         }
     }
 

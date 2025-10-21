@@ -244,18 +244,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    fun setChosenMapByIndex(index: Int) {
+    fun setChosenMapByName(name: String) {
         viewModelScope.launch {
-            val currentMapList = mapList.first()
-
-            if (index >= 0 && index < currentMapList.size) {
-                _choosenMap.value = currentMapList[index]
-            } else {
-                _choosenMap.value = ""
-                println("Warnung: Ungültiger Index ($index) für mapList. choosenMap wurde auf einen leeren String gesetzt.")
-            }
+            _choosenMap.value = name
         }
     }
+
 
     fun pickChampForTeam(index: Int, teamSide: TeamSide) {
         viewModelScope.launch {
