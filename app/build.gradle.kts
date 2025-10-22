@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json.v190)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
+    implementation(libs.androidx.compose.material3.window.size.class1)
 
     val room_version = "2.7.2"
 

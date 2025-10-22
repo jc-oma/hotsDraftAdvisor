@@ -32,6 +32,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -95,12 +97,16 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         setContent {
             val resetCounter by viewModel.resetCounter.collectAsState()
+            val windowSizeClass =
+                androidx.compose.material3.windowsizeclass.calculateWindowSizeClass(this)
+            val isTablet = windowSizeClass.widthSizeClass > WindowWidthSizeClass.Compact
 
             HotsDraftAdviserTheme {
                 Scaffold(
@@ -117,7 +123,7 @@ class MainActivity : ComponentActivity() {
                         //FloatingActionButtonMenu()
                     }
                 ) { innerPadding ->
-                    MainActivityComposable(viewModel = viewModel)
+                    MainActivityComposable(viewModel = viewModel, isTablet)
                 }
             }
         }
@@ -129,8 +135,10 @@ class MainActivity : ComponentActivity() {
 fun MainActivityComposable(
     viewModel: MainActivityViewModel = viewModel(
         factory = MainActivityViewModelFactory(LocalContext.current.applicationContext as Application)
-    )
+    ),
+    isTablet: Boolean
 ) {
+
     val mapList by viewModel.filteredMaps.collectAsState(emptyList())
     val choosenMap by viewModel.choosenMap.collectAsState("")
     val chosableChampList by viewModel.chosableChampList.collectAsState(emptyList())
@@ -575,8 +583,8 @@ fun MainActivityComposable(
                                         viewModel.setBansPerTeam(
                                             i,
                                             teamSide
-                                        )
-                                    }
+                                        ) },
+                                    isTablets = isTablet
                                 )
                             }
                         }
@@ -608,6 +616,6 @@ fun MainActivityComposable(
 @Composable
 fun GreetingPreview() {
     HotsDraftAdviserTheme {
-        MainActivityComposable()
+        MainActivityComposable(isTablet = false)
     }
 }

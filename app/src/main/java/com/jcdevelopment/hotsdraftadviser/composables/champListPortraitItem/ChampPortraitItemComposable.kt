@@ -70,7 +70,8 @@ fun ChampPortraitItemComposable(
     mapName: String,
     maxOwnScore: Int,
     maxTheirScore: Int,
-    isStarRating: Boolean
+    isStarRating: Boolean,
+    isTablet: Boolean
 ) {
     val screenBackgroundColor = "150e35ff"
     val composeScreenBackgroundColor = getColorByHexString(screenBackgroundColor)
@@ -346,6 +347,7 @@ private fun ChampPortraitComposablePreview() {
         mapName = "Hanamura",
         maxOwnScore = 144,
         maxTheirScore = 75,
-        isStarRating = false
+        isStarRating = false,
+        isTablet = false
     )
 }

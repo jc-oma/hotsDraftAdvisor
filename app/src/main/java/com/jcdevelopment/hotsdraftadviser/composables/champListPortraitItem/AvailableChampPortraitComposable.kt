@@ -42,6 +42,7 @@ fun AvailableChampPortraitComposable(
     pickChampForOwnTeam: (Int, TeamSide) -> Unit,
     updateChampSearchQuery: (String) -> Unit,
     setBansPerTeam: (Int, TeamSide) -> Unit,
+    isTablets: Boolean,
 ) {
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -82,7 +83,8 @@ fun AvailableChampPortraitComposable(
                     mapName = stringResource(Utilitys.mapMapNameToStringRessource(choosenMap)!!),
                     maxOwnScore = ownScoreMax,
                     maxTheirScore = theirScoreMax,
-                    isStarRating = isStarRatingMode
+                    isStarRating = isStarRatingMode,
+                    isTablet = isTablets
                 )
             }
         }
@@ -107,6 +109,7 @@ private fun AvailableChampPortraitComposablePreview() {
         toggleFavoriteStatus = {},
         pickChampForOwnTeam = { _, _ -> {} },
         updateChampSearchQuery = { _ -> {} },
-        setBansPerTeam = { _, _ -> {} }
+        setBansPerTeam = { _, _ -> {} },
+        isTablets = false
     )
 }
