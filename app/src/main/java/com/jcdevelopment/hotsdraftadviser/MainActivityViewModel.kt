@@ -185,12 +185,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     val theirScoreMax = allChampsDistinct.map { list -> list.maxOfOrNull { it.scoreTheir } ?: 1 }
         .stateIn(
-
-
-
-
-
-            
             scope = viewModelScope,
             started = SharingStarted.Lazily,
             initialValue = 1
@@ -751,6 +745,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun resetAll() {
         viewModelScope.launch {
+            _targetState.value = true
             _filterMapsString.value = ""
             _filterChampString.value = ""
             _choosenMap.value = ""
