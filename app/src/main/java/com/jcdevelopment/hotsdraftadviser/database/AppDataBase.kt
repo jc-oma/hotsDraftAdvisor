@@ -26,6 +26,8 @@ import com.jcdevelopment.hotsdraftadviser.database.isStarRating.IsStarRatingDao
 import com.jcdevelopment.hotsdraftadviser.database.isStarRating.IsStarRatingEntity
 import com.jcdevelopment.hotsdraftadviser.database.isStreamingEnabled.StreamingSetting
 import com.jcdevelopment.hotsdraftadviser.database.isStreamingEnabled.StreamingSettingDao
+import com.jcdevelopment.hotsdraftadviser.database.resetCounter.ResetCounterDao
+import com.jcdevelopment.hotsdraftadviser.database.resetCounter.ResetCounterEntity
 
 
 @Database(
@@ -40,8 +42,9 @@ import com.jcdevelopment.hotsdraftadviser.database.isStreamingEnabled.StreamingS
         ChampMapScoreEntity::class,
         RoleEntity::class,
         ChampRoleJunctionEntity::class,
-        ChampStringCodeEntity::class],
-    version = 12,
+        ChampStringCodeEntity::class,
+        ResetCounterEntity::class],
+    version = 13,
     exportSchema = false
 ) // Setze exportSchema = true für Produktions-Apps mit Schema-Export
 @TypeConverters(Converters::class)
@@ -54,6 +57,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun isStarRatingSettingDao(): IsStarRatingDao
     abstract fun champDao(): ChampDao
     abstract fun champStringCodeDao(): ChampStringCodeDao
+    abstract fun resetCounterDao(): ResetCounterDao
 
     companion object {
         // Singleton verhindert, dass mehrere Instanzen der Datenbank gleichzeitig geöffnet werden.

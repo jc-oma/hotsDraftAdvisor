@@ -2,7 +2,6 @@ package com.jcdevelopment.hotsdraftadviser
 
 import android.app.Application
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.activity.ComponentActivity
@@ -56,7 +55,6 @@ import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.android.datatransport.BuildConfig
 import com.jcdevelopment.hotsdraftadviser.Utilitys.mapMapNameToStringRessource
 import com.jcdevelopment.hotsdraftadviser.composables.OutdatedAppComposable
 import com.jcdevelopment.hotsdraftadviser.composables.advertisement.MainWindowAdBanner
@@ -102,6 +100,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
+            val resetCounter by viewModel.resetCounter.collectAsState()
+
             HotsDraftAdviserTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
@@ -109,7 +109,9 @@ class MainActivity : ComponentActivity() {
                         FloatingActionButtonMainActivity(
                             resetSelections = {
                                 viewModel.resetAll()
-                            }
+                                viewModel.incrementResetCounter()
+                            },
+                            resetCount = resetCounter
                         )
                         //TODO menu with the animated floating button
                         //FloatingActionButtonMenu()
@@ -162,6 +164,7 @@ fun MainActivityComposable(
 
     var targetStateMapName by remember { mutableStateOf<String>("") }
 
+    val resetCount by viewModel.resetCounter.collectAsState()
 
     val isStreamingEnabled by viewModel.isStreamingEnabled.collectAsState()
 
@@ -322,7 +325,7 @@ fun MainActivityComposable(
                                                         modifier = Modifier
                                                             .fillMaxWidth(),
                                                         text = stringResource(
-                                                            Utilitys.mapMapNameToStringRessource(
+                                                            mapMapNameToStringRessource(
                                                                 map
                                                             )!!
                                                         ),

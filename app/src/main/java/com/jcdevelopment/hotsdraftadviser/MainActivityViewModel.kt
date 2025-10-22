@@ -18,6 +18,7 @@ import com.jcdevelopment.hotsdraftadviser.database.isFirstStart.FirstStartReposi
 import com.jcdevelopment.hotsdraftadviser.database.isListShown.IsListModeRepository
 import com.jcdevelopment.hotsdraftadviser.database.isStarRating.IsStarRatingRepository
 import com.jcdevelopment.hotsdraftadviser.database.isStreamingEnabled.StreamingSettingsRepository
+import com.jcdevelopment.hotsdraftadviser.database.resetCounter.ResetCounterRepository
 import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
 import com.jcdevelopment.hotsdraftadviser.dataclasses.MinVerionCode
 import kotlinx.coroutines.CoroutineScope
@@ -37,7 +38,6 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
-import okhttp3.Response
 import java.io.IOException
 import kotlin.collections.List
 
@@ -58,6 +58,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private val champStringRepository: ChampStringCodeRepository =
         ChampStringCodeRepository(db.champStringCodeDao())
 
+    private val resetCounterRepository: ResetCounterRepository =
+        ResetCounterRepository(db.resetCounterDao())
 
     // Dein isStreamingEnabled als StateFlow, das von der Datenbank gespeist wird
     val isStreamingEnabled: StateFlow<Boolean> = streamingSettingsRepository.isStreamingEnabled
@@ -75,7 +77,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    val stringCode: StateFlow<ChampStringCodeEntity?> = champStringRepository.champStringCode
+    val champDBStringCode: StateFlow<ChampStringCodeEntity?> = champStringRepository.champStringCode
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
@@ -84,11 +86,18 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     init {
         viewModelScope.launch {
-            stringCode.collect { string ->
+            champDBStringCode.collect { string ->
                 Log.d("StringCodeViewModel", "stringcode from DB (Flow): $string")
             }
         }
     }
+
+    val resetCounter: StateFlow<Int> = resetCounterRepository.resetCount
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = 0
+        )
 
     private val _isDisclaymerShown = MutableStateFlow(false)
     private val _targetState = MutableStateFlow(true)
@@ -798,6 +807,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     fun scrollList(listState: LazyListState, coroutineScope: CoroutineScope) {
         coroutineScope.launch {
             listState.animateScrollToItem(0)
+        }
+    }
+
+    fun incrementResetCounter() {
+        viewModelScope.launch {
+            resetCounterRepository.incrementClickCount()
         }
     }
 
