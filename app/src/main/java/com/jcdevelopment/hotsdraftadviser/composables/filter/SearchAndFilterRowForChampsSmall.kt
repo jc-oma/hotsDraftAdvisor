@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -32,7 +34,8 @@ fun SearchAndFilterRowForChampsSmall(
     favFilter: Boolean,
     setRoleFilter: (RoleEnum?) -> Unit,
     updateChampSearchQuery: (String) -> Unit,
-    toggleFavFilter: () -> Unit
+    toggleFavFilter: () -> Unit,
+    isTablet: Boolean
 ) {
     Column {
         Row(
@@ -53,10 +56,20 @@ fun SearchAndFilterRowForChampsSmall(
             val responsiveFontSize = getResponsiveFontSize()
 
             Row(modifier = Modifier.padding(top = imagePadding)) {
-                FilterChip(
-                    modifier = Modifier
+                val modifier = if (isTablet) Modifier
+                    .weight(0.5f)
+                    .padding(start = imagePadding, end = imagePadding)
+                    .height(48.dp)
+                else
+                    Modifier
                         .weight(0.5f)
-                        .padding(start = imagePadding, end = imagePadding),
+                        .padding(start = imagePadding, end = imagePadding)
+
+                val modifierIcon = if (isTablet) Modifier.fillMaxSize().padding(4.dp) else
+                    Modifier.size(FilterChipDefaults.IconSize)
+
+                FilterChip(
+                    modifier = modifier,
                     leadingIcon = {
                         Box(
                             modifier = Modifier.fillMaxWidth(),
@@ -65,7 +78,7 @@ fun SearchAndFilterRowForChampsSmall(
                             Icon(
                                 painterResource(id = R.drawable.tank),
                                 contentDescription = "Description of your image",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                modifier = modifierIcon
                             )
                         }
                     },
@@ -74,9 +87,7 @@ fun SearchAndFilterRowForChampsSmall(
                     label = {}
                 )
                 FilterChip(
-                    modifier = Modifier
-                        .weight(0.5f)
-                        .padding(start = imagePadding, end = imagePadding),
+                    modifier = modifier,
                     leadingIcon = {
                         Box(
                             modifier = Modifier.fillMaxWidth(),
@@ -85,7 +96,7 @@ fun SearchAndFilterRowForChampsSmall(
                             Icon(
                                 painterResource(id = R.drawable.ranged),
                                 contentDescription = "Description of your image",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                modifier = modifierIcon
                             )
                         }
                     },
@@ -94,9 +105,7 @@ fun SearchAndFilterRowForChampsSmall(
                     label = {}
                 )
                 FilterChip(
-                    modifier = Modifier
-                        .weight(0.5f)
-                        .padding(start = imagePadding, end = imagePadding),
+                    modifier = modifier,
                     leadingIcon = {
                         Box(
                             modifier = Modifier.fillMaxWidth(),
@@ -105,7 +114,7 @@ fun SearchAndFilterRowForChampsSmall(
                             Icon(
                                 painterResource(id = R.drawable.melee),
                                 contentDescription = "Description of your image",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                modifier = modifierIcon
                             )
                         }
                     },
@@ -114,9 +123,7 @@ fun SearchAndFilterRowForChampsSmall(
                     label = {}
                 )
                 FilterChip(
-                    modifier = Modifier
-                        .weight(0.5f)
-                        .padding(start = imagePadding, end = imagePadding),
+                    modifier = modifier,
                     leadingIcon = {
                         Box(
                             modifier = Modifier.fillMaxWidth(),
@@ -125,7 +132,7 @@ fun SearchAndFilterRowForChampsSmall(
                             Icon(
                                 painterResource(id = R.drawable.heiler),
                                 contentDescription = "Description of your image",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                modifier = modifierIcon
                             )
                         }
                     },
@@ -134,9 +141,7 @@ fun SearchAndFilterRowForChampsSmall(
                     label = {}
                 )
                 FilterChip(
-                    modifier = Modifier
-                        .weight(0.5f)
-                        .padding(start = imagePadding, end = imagePadding),
+                    modifier = modifier,
                     leadingIcon = {
                         Box(
                             modifier = Modifier.fillMaxWidth(),
@@ -145,7 +150,7 @@ fun SearchAndFilterRowForChampsSmall(
                             Icon(
                                 painterResource(id = R.drawable.bruiser),
                                 contentDescription = "Description of your image",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                modifier = modifierIcon
                             )
                         }
                     },
@@ -154,9 +159,7 @@ fun SearchAndFilterRowForChampsSmall(
                     label = {}
                 )
                 FilterChip(
-                    modifier = Modifier
-                        .weight(0.5f)
-                        .padding(start = imagePadding, end = imagePadding),
+                    modifier = modifier,
                     leadingIcon = {
                         Box(
                             modifier = Modifier.fillMaxWidth(),
@@ -165,7 +168,7 @@ fun SearchAndFilterRowForChampsSmall(
                             Icon(
                                 painterResource(id = R.drawable.support),
                                 contentDescription = "Description of your image",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                modifier = modifierIcon
                             )
                         }
                     },
@@ -174,9 +177,7 @@ fun SearchAndFilterRowForChampsSmall(
                     label = {}
                 )
                 FilterChip(
-                    modifier = Modifier
-                        .weight(0.5f)
-                        .padding(start = 8.dp, end = 8.dp),
+                    modifier = modifier,
                     leadingIcon = {
                         Box(
                             modifier = Modifier.fillMaxWidth(),
@@ -185,7 +186,7 @@ fun SearchAndFilterRowForChampsSmall(
                             Icon(
                                 imageVector = (Icons.Filled.Favorite),
                                 contentDescription = "Heart",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                modifier = modifierIcon
                             )
                         }
                     },
@@ -207,6 +208,7 @@ fun SearchAndFilterRowForChampsSmallPreview() {
         favFilter = false,
         setRoleFilter = {},
         updateChampSearchQuery = {},
-        toggleFavFilter = {}
+        toggleFavFilter = {},
+        isTablet = true
     )
 }

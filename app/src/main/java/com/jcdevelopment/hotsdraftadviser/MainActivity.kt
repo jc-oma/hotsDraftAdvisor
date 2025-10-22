@@ -265,7 +265,7 @@ fun MainActivityComposable(
                                 LazyVerticalGrid(
                                     contentPadding = PaddingValues(bottom = 180.dp),
                                     columns = GridCells.Adaptive(
-                                        minSize = 140.dp
+                                        minSize = if (isTablet) 280.dp else 140.dp
                                     )
                                 ) {
                                     items(mapList) { map ->
@@ -491,7 +491,8 @@ fun MainActivityComposable(
                                     queryString
                                 )
                             },
-                            toggleFavFilter = { viewModel.toggleFavFilter() }
+                            toggleFavFilter = { viewModel.toggleFavFilter() },
+                            isTablet = isTablet
                         )
 
                         Box(modifier = Modifier.height(8.dp))

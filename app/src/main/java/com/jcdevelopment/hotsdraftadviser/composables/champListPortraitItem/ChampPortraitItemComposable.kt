@@ -116,8 +116,28 @@ fun ChampPortraitItemComposable(
             ) {
                 val context = LocalContext.current
 
+                val imageModifier = Modifier
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(4.dp))
+                    .clickable {
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.champ_portrait_hint, champ.ChampName),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
                 Image(
-                    modifier = Modifier
+                    modifier = if (isTablet) Modifier
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(4.dp))
+                        .clickable {
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.champ_portrait_hint, champ.ChampName),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else  imageModifier
                         .height(LocalWindowInfo.current.containerSize.height.dp / 15f)
                         .clip(RoundedCornerShape(4.dp))
                         .clickable {
@@ -141,7 +161,7 @@ fun ChampPortraitItemComposable(
                     verticalAlignment = Alignment.Bottom,
                     modifier = Modifier.padding(top = 8.dp)
                 ) {
-                    val name :String = if (champ.localName == null) {
+                    val name: String = if (champ.localName == null) {
                         stringResource(
                             id = Utilitys.mapChampNameToStringRessource(champ.ChampName)!!
                         )
@@ -173,8 +193,10 @@ fun ChampPortraitItemComposable(
                         .fillMaxSize(),
                     contentAlignment = Alignment.BottomStart
                 ) {
+                    val spacerHeight = if (isTablet) 8.dp else 2.dp
+                    val spacerHeightbot = if (isTablet) 24.dp else 8.dp
                     Column() {
-                        val barHeight = 10.dp
+                        val barHeight = if (isTablet) 20.dp else 10.dp
                         val barColor = colorResource(R.color.champ_evaluation_bar)
                         ChampEvaluationComposable(
                             label = stringResource(R.string.portrait_value_on, mapName),
@@ -182,21 +204,21 @@ fun ChampPortraitItemComposable(
                             colorOwn = barColor,
                             barHeight = barHeight
                         )
-                        Box(modifier = Modifier.height(2.dp))
+                        Box(modifier = Modifier.height(spacerHeight))
                         ChampEvaluationComposable(
                             label = stringResource(R.string.portrait_it_in_own_team),
                             progressFloat = ownTeamFloat,
                             colorOwn = barColor,
                             barHeight = barHeight
                         )
-                        Box(modifier = Modifier.height(2.dp))
+                        Box(modifier = Modifier.height(spacerHeight))
                         ChampEvaluationComposable(
                             label = stringResource(R.string.portrait_good_against_enemy_team),
                             progressFloat = theirTeamFloat,
                             colorOwn = barColor,
                             barHeight = barHeight
                         )
-                        Box(modifier = Modifier.height(8.dp))
+                        Box(modifier = Modifier.height(spacerHeightbot))
                         Row(modifier = Modifier.heightIn(min = (32.dp))) {
                             Box(
                                 modifier = Modifier
@@ -348,6 +370,6 @@ private fun ChampPortraitComposablePreview() {
         maxOwnScore = 144,
         maxTheirScore = 75,
         isStarRating = false,
-        isTablet = false
+        isTablet = true
     )
 }
