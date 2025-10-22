@@ -103,14 +103,12 @@ fun MainWindowAdInterstitial(
 ) {
     val context = LocalContext.current
     var mInterstitialAd: InterstitialAd? = null
-    val sampleInterstitialID = "ca-app-pub-3940256099942544/1033173712"
-    val liveInterstitialID = "ca-app-pub-5121116206728666/2015372638"
 
     // Lade-Logik für die Werbung
     val adRequest = AdRequest.Builder().build()
     InterstitialAd.load(
         context,
-        sampleInterstitialID,
+        liveInterstitialID,
         adRequest,
         object : InterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {

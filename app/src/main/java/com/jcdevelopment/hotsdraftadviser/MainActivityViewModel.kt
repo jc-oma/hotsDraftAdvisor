@@ -758,7 +758,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     scoreOwn = 0,
                     scoreTheir = 0
                 )
-            } // Setze isPicked für alle Champs zurück
+            }
         }
 
     }
