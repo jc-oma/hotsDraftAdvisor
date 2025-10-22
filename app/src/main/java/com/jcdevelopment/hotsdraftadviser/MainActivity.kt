@@ -451,16 +451,13 @@ fun MainActivityComposable(
                     if (choosenMap.isNotEmpty()) {
                         if (!(theirPickedChamps.isEmpty() && ownPickedChamps.isEmpty())) {
                             ListOfPickedChampsComposable(
-                                composeHeadlineColor,
-                                ownPickedChamps,
-                                theirPickedChamps,
-                                composeOwnTeamColor,
-                                composeTextColor,
-                                { i, teamSide -> viewModel.removePick(i, teamSide) },
-                                composeTheirTeamColor,
-                                ownPickScore,
-                                theirPickScore,
-                                isStarRatingMode
+                                ownPickedChamps = ownPickedChamps,
+                                theirPickedChamps = theirPickedChamps,
+                                composeTextColor = composeTextColor,
+                                removePick = { i, teamSide -> viewModel.removePick(i, teamSide) },
+                                ownPickScore = ownPickScore,
+                                theirPickScore = theirPickScore,
+                                isStarrating = isStarRatingMode
                             )
                         }
                         val favFilter by viewModel.favFilter.collectAsState(false)

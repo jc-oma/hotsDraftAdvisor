@@ -30,13 +30,10 @@ import kotlin.math.max
 
 @Composable
 fun ListOfPickedChampsComposable(
-    composeHeadlineColor: Color,
     ownPickedChamps: List<ChampData>,
     theirPickedChamps: List<ChampData>,
-    composeOwnTeamColor: Color,
     composeTextColor: Color,
     removePick: (Int, TeamSide) -> Unit,
-    composeTheirTeamColor: Color,
     ownPickScore: Int,
     theirPickScore: Int,
     isStarrating: Boolean
@@ -137,13 +134,10 @@ fun ListOfPickedChampsComposablePreview() {
     val ownTeamColor = "533088ff"
 
     ListOfPickedChampsComposable(
-        composeHeadlineColor = getColorByHexString(headlineColor),
         ownPickedChamps = listOf(exampleChampDataSgtHammer, exampleChampDataAbathur),
         theirPickedChamps = listOf(exampleChampDataSgtHammer, exampleChampDataSgtHammer),
-        composeOwnTeamColor = getColorByHexString(ownTeamColor),
         composeTextColor = getColorByHexString(textColor),
         removePick = { _, _ -> {} },
-        composeTheirTeamColor = getColorByHexString(theirTeamColor),
         ownPickScore = 321,
         theirPickScore = 83,
         isStarrating = false
