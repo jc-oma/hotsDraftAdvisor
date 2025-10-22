@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -58,6 +59,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.datatransport.BuildConfig
 import com.jcdevelopment.hotsdraftadviser.Utilitys.mapMapNameToStringRessource
 import com.jcdevelopment.hotsdraftadviser.composables.OutdatedAppComposable
+import com.jcdevelopment.hotsdraftadviser.composables.advertisement.MainWindowAdBanner
 import com.jcdevelopment.hotsdraftadviser.composables.champListPortraitItem.AvailableChampListComposable
 import com.jcdevelopment.hotsdraftadviser.composables.champListPortraitItem.AvailableChampPortraitComposable
 import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
@@ -168,7 +170,6 @@ fun MainActivityComposable(
     val isListMode by viewModel.isListMode.collectAsState()
     val isFirstStart by viewModel.isFirstStart.collectAsState()
     val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
-
 
 
     val context = LocalContext.current
@@ -333,6 +334,14 @@ fun MainActivityComposable(
                                                 }
                                             }
                                         }
+                                    }
+                                    item(
+                                        span = { GridItemSpan(maxLineSpan) })
+                                    {
+                                        MainWindowAdBanner(
+                                            modifier = Modifier
+                                                .padding(top = 8.dp)
+                                        )
                                     }
                                     item {
                                         Box(
