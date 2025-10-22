@@ -190,7 +190,7 @@ fun MainActivityComposable(
         1 // Fallback version code
     }
 
-    if ((minVersionCode.minVersionCode ?: 1) <= currentAppVersion) {
+    if ((minVersionCode.minVersionCode ?: currentAppVersion) <= currentAppVersion) {
         SharedTransitionLayout {
             AnimatedContent(
                 targetState = targetUIStateByChoosenMap
