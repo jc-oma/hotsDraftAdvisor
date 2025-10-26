@@ -1,46 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">HotsDraftAdviser</string>
     <string name="title_activity_main">HotsDraftAdviser</string>
-    <string name="disclaimer">Heroes of the Storm™ is a trademark or registered trademark of Blizzard Entertainment, Inc., in the U.S. and/or other countries.
-HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</string>
-    <string name="main_activity_chose_map">Bitte wähle zuerst eine Map aus:</string>
-    <string name="main_activity_maps_suchen">Maps suchen…</string>
-    <string name="main_activity_champs_suchen">Champs suchen…</string>
+    <string name="disclaimer">Heroes of the Storm™ is a trademark or registered trademark of Blizzard Entertainment, Inc., in the U.S. and/or other countries. HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</string>
+    <string name="main_activity_chose_map">Please chose your map first:</string>
+    <string name="main_activity_maps_suchen">Search for a map…</string>
+    <string name="main_activity_champs_suchen">Search for a champ…</string>
+    <string name="main_acitivity_menu_disclaimer">Disclaim</string>
+    <string name="main_acitivity_menu_starrating">Star Rating</string>
     <string name="main_acitivity_menu_tutorial" translatable="false">Tutorial</string>
-    <string name="main_acitivity_menu_disclaimer">Rechtliches</string>
-    <string name="main_acitivity_menu_starrating">Sternenwertung</string>
-    <string name="main_acitivity_menu_number_rating">Zahlenwertung</string>
-    <string name="main_acitivity_pickscore_own_team">Wertung blaues Team</string>
-    <string name="main_acitivity_pickscore_their_team">Wertung rotes Team</string>
+    <string name="main_acitivity_menu_number_rating">Number Rating</string>
+    <string name="main_acitivity_pickscore_own_team">PickScore Own Team</string>
+    <string name="main_acitivity_pickscore_their_team">Pickscore Their Team</string>
     <string name="main_acitivity_tank" translatable="false">Tank</string>
-    <string name="main_acitivity_melee">Nahkampf</string>
-    <string name="main_acitivity_heal">Heiler</string>
-    <string name="main_acitivity_ranged">Fernkampf</string>
-    <string name="main_acitivity_bruiser">Frontbrecher</string>
-    <string name="main_acitivity_support">Unterstützer</string>
-    <string name="filter_favorite">Favoriten</string>
-    <string name="main_acitivity_ban_own">Ban blau</string>
-    <string name="main_acitivity_ban_their">Ban rot</string>
-    <string name="tutorial_you_got_it_desc">Vielen Dank, dass Du meine App geladen hast. \nHi, Ich will dir mit dieser App zur besseren Heldenauswahl in gewerteten - und ungewerteten Spielen in Heroes of the Storm verhelfen.</string>
-    <string name="tutorial_start_it">Los geht\'s!</string>
-    <string name="tutorial_start_it_desc">Starte einfach die Suche eines gewerteten oder ungewerteten Spiels.</string>
-    <string name="tutorial_map_it">Karte finden!</string>
-    <string name="tutorial_map_it_desc">Wenn Du ein Spiel gefunden hast, tippe einfach auf die entsprechende Karte. Die App unterstützt dich sofort, indem sie die besten Helden für die Map anzeigt.</string>
-    <string name="tutorial_watch_it">Bleib dran!</string>
-    <string name="tutorial_watch_it_desc">Sobald die Heldenauswahl beginnt, wähle die Helden aus, die deine Mitspieler in der Vorauswahl anzeigen. Tippe einfach auf die Fläche mit den Teamfarben neben dem Helden.</string>
-    <string name="tutorial_calc_it_desc">Während die Prepicks deiner Mitspieler angezeigt werden und Du die Teams in der App befüllst und der Gegner wählt, berechnet die App welche Helden am besten zu deinem Team oder dem gegnerischen Team passen.\nDas Gesamtergebnis wird als Sterne oder Zahl angezeigt.</string>
-    <string name="tutorial_calc_it">Jede Entscheidung wird gezählt</string>
-    <string name="tutorial_filter_it">Filter deine Auswahl</string>
-    <string name="tutorial_filter_it_desc">Du kannst jeder Zeit nach Rollen der Helden filtern und deine Favoriten setzen.</string>
-    <string name="tutorial_change_it">Auswahl ändern</string>
-    <string name="tutorial_change_it_desc">Wenn sich die Vorauswahlen ändern oder Du dich einfach mal vertippt hast, kannst du die Helden mit einem Tippen wieder zurück in die Auswahl schicken.</string>
-    <string name="tutorial_restart_it">Neustart!</string>
-    <string name="tutorial_restart_it_desc">Wenn das Spiel vorbei ist und Du einen neuen neun Draft starten möchtest, kannst Du die App unten links neu starten.</string>
-    <string name="tutorial_customize_it">Personalisieren der Anzeige</string>
-    <string name="tutorial_customize_it_desc">Du kannst im Menue entscheiden, ob Du eine einfache Bewertung in Sternen oder Anhand eines Vergleichswert bis 100 möchtest. Zusätzlich kann die Anzeige der Liste verändert werden.</string>
-    <string name="tutorial_that_s_it">Das war\'s!</string>
-    <string name="tutorial_that_s_it_desc">Viel Glück und GG!</string>
-    <string name="tutorial_you_got_it">Du hast es!</string>
+    <string name="main_acitivity_ranged">Ranged</string>
+    <string name="main_acitivity_melee">Melee</string>
+    <string name="main_acitivity_heal">Heal</string>
+    <string name="filter_favorite">Favorite</string>
+    <string name="main_acitivity_bruiser">Bruiser</string>
+    <string name="main_acitivity_support">Support</string>
+    <string name="main_acitivity_ban_own">Ban Own</string>
+    <string name="main_acitivity_ban_their">Ban Their</string>
+    <string name="tutorial_you_got_it">You got it!</string>
+    <string name="tutorial_you_got_it_desc">First of all thank you for giving me a chance. \nHi, I want you to improve your drafting skills by this assisting tool.</string>
+    <string name="tutorial_start_it">Start it!</string>
+    <string name="tutorial_start_it_desc">You start searching for a ranked or unranked game.</string>
+    <string name="tutorial_map_it">Map it!</string>
+    <string name="tutorial_map_it_desc">When the game starts, chose the map on your app by tapping the tile. The app calculates the best heroes to pick or to ban.</string>
+    <string name="tutorial_watch_it">Watch it!</string>
+    <string name="tutorial_watch_it_desc">When the draft starts, chose the champs from the list in your app which are prepicked by your team mates in game. You can pick each champ by tapping the team colored surface area.</string>
+    <string name="tutorial_calc_it_desc">While your team mates are choosing and the enemy team is setting up their team, the app calculates every choice and shows you what\'s the best pick or ban for your team.\nOn the bottom left blue is the value for your team and in red on the right is the red team value if picked.</string>
+    <string name="tutorial_calc_it">Calculate it!</string>
+    <string name="tutorial_filter_it">Filter it!</string>
+    <string name="tutorial_filter_it_desc">You can always filter champs by role or name. You are also able to set and filter your own favorite champs.</string>
+    <string name="tutorial_change_it">Change it!</string>
+    <string name="tutorial_change_it_desc">You can always remove a champ from picked list by tapping it. You can also tap the chosen map to change it.</string>
+    <string name="tutorial_restart_it">Restart it!</string>
+    <string name="tutorial_restart_it_desc">When your finished and want to start a new game tap the restart button at the bottom left.</string>
+    <string name="tutorial_customize_it">Customize it!</string>
+    <string name="tutorial_customize_it_desc">Instead of evaluating the champs with stars you can chose a number based rating in the three dot menu. You can also change the champ view to a smaller list view.</string>
+    <string name="tutorial_that_s_it">That\'s it!</string>
+    <string name="tutorial_that_s_it_desc"><![CDATA[GL & GG]]></string>
 
     <string name="champ_name_abathur">Abathur</string>
     <string name="champ_name_Alarak">Alarak</string>
@@ -53,13 +53,13 @@ HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</
     <string name="champ_name_Auriel">Auriel</string>
     <string name="champ_name_Azmodan">Azmodan</string>
     <string name="champ_name_Blaze">Blaze</string>
-    <string name="champ_name_Brightwing">Funkelchen</string>
+    <string name="champ_name_Brightwing">Brightwing</string>
     <string name="champ_name_Cassia">Cassia</string>
     <string name="champ_name_Chen">Chen</string>
     <string name="champ_name_Cho">Cho</string>
     <string name="champ_name_Chogall">Chogall</string>
     <string name="champ_name_Chromie">Chromie</string>
-    <string name="champ_name_Deathwing">Todesschwinge</string>
+    <string name="champ_name_Deathwing">Deathwing</string>
     <string name="champ_name_Deckard">Deckard</string>
     <string name="champ_name_Dehaka">Dehaka</string>
     <string name="champ_name_Diablo">Diablo</string>
@@ -71,7 +71,7 @@ HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</
     <string name="champ_name_Garrosh">Garrosh</string>
     <string name="champ_name_Gazlowe">Gazlowe</string>
     <string name="champ_name_Genji">Genji</string>
-    <string name="champ_name_Greymane">Graumähne</string>
+    <string name="champ_name_Greymane">Greymane</string>
     <string name="champ_name_Guldan">Guldan</string>
     <string name="champ_name_Hanzo">Hanzo</string>
     <string name="champ_name_Hogger">Hogger</string>
@@ -111,12 +111,12 @@ HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</
     <string name="champ_name_Samuro">Samuro</string>
     <string name="champ_name_SgtHammer">Sergeant Hammer</string>
     <string name="champ_name_Sonya">Sonya</string>
-    <string name="champ_name_Stitches">Kleiner</string>
+    <string name="champ_name_Stitches">Stitches</string>
     <string name="champ_name_Stukov">Stukov</string>
     <string name="champ_name_Sylvanas">Sylvanas</string>
     <string name="champ_name_Tassadar">Tassadar</string>
-    <string name="champ_name_Butcher">Der Schlächter</string>
-    <string name="champ_name_LostVikings">Lost Vikings</string>
+    <string name="champ_name_Butcher">The Butcher</string>
+    <string name="champ_name_LostVikings">The Lost Vikings</string>
     <string name="champ_name_Thrall">Thrall</string>
     <string name="champ_name_Tracer">Tracer</string>
     <string name="champ_name_Tychus">Tychus</string>
@@ -126,7 +126,7 @@ HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</
     <string name="champ_name_Valeera">Valeera</string>
     <string name="champ_name_Valla">Valla</string>
     <string name="champ_name_Varian">Varian</string>
-    <string name="champ_name_Whitemane">Weißsträhne</string>
+    <string name="champ_name_Whitemane">Whitemane</string>
     <string name="champ_name_Xul">Xul</string>
     <string name="champ_name_Yrel">Yrel</string>
     <string name="champ_name_Zagara">Zagara</string>
@@ -134,35 +134,35 @@ HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</
     <string name="champ_name_Zarya">Zarya</string>
     <string name="champ_name_Zuljin">Zuljin</string>
 
-    <string name="map_name_Alterac_Pass">Alteracpass</string>
-    <string name="map_name_Battlefield_of_Eternity">Schlachtfeld der Ewigkeit</string>
-    <string name="map_name_Black_Hearts_Bay">Schwarzherzbucht</string>
-    <string name="map_name_Braxis_Holdout">Endstation Braxis</string>
-    <string name="map_name_Cursed_Hollow">Verfluchtes Tal</string>
-    <string name="map_name_Dragonshire">Drachengärten</string>
-    <string name="map_name_Garden_of_Terror">Garten der Ängste</string>
-    <string name="map_name_Hanamura">Tempel von Hanamura</string>
-    <string name="map_name_Haunted_Mines">Geisterminen</string>
-    <string name="map_name_Infernal_Shrines">Höllenschreine</string>
-    <string name="map_name_Lost_Caverns">Vergessene Höhlen</string>
-    <string name="map_name_Sky_Temple">Tempel des Himmels</string>
-    <string name="map_name_Tomb_of_the_Spider_Queen">Grabkammer der Spinnenkönigin</string>
-    <string name="map_name_Towers_of_Doom">Türme des Unheils</string>
-    <string name="map_name_Volskaya_Foundry">Volskaya-Fertigung</string>
-    <string name="map_name_Warhead_Junction">Sprengkopfmanufaktur</string>
-    <string name="button_close">OK</string>
+    <string name="map_name_Alterac_Pass">Alterac Pass</string>
+    <string name="map_name_Battlefield_of_Eternity">Battlefield of Eternity</string>
+    <string name="map_name_Black_Hearts_Bay">Black Hearts Bay</string>
+    <string name="map_name_Braxis_Holdout">Braxis Holdout</string>
+    <string name="map_name_Cursed_Hollow">Cursed Hollow</string>
+    <string name="map_name_Dragonshire">Dragonshire</string>
+    <string name="map_name_Garden_of_Terror">Garden of Terror</string>
+    <string name="map_name_Hanamura">Hanamura</string>
+    <string name="map_name_Haunted_Mines">Haunted Mines</string>
+    <string name="map_name_Infernal_Shrines">Infernal Shrines</string>
+    <string name="map_name_Lost_Caverns">Lost Caverns</string>
+    <string name="map_name_Sky_Temple">Sky Temple</string>
+    <string name="map_name_Tomb_of_the_Spider_Queen">Tomb of the Spider Queen</string>
+    <string name="map_name_Towers_of_Doom">Towers of Doom</string>
+    <string name="map_name_Volskaya_Foundry">Volskaya Foundry</string>
+    <string name="map_name_Warhead_Junction">Warhead Junction</string>
+    <string name="button_close">Got it</string>
 
-    <string name="portrait_value_on">Stärke auf %1$s</string>
-    <string name="portrait_it_in_own_team">Passend für\'s eigene Team</string>
-    <string name="portrait_good_against_enemy_team">Stärke gegen rotes Team</string>
-    <string name="segment_button_best_pick">Beste Wahl</string>
-    <string name="segment_button_best_ban">Bester Bann</string>
+    <string name="portrait_value_on">Value on %1$s</string>
+    <string name="portrait_it_in_own_team">Fit in own Team</string>
+    <string name="portrait_good_against_enemy_team">Good against enemy Team</string>
+
+    <string name="segment_button_best_pick">Best Pick</string>
+    <string name="segment_button_best_ban">Best Ban</string>
     <string name="segment_button_name">Name</string>
-    <string name="picked_list_own_team">Blaues Team</string>
-    <string name="picked_list_their_team">Rotes Team</string>
+    <string name="picked_list_own_team">Own Team</string>
+    <string name="picked_list_their_team">Their Team</string>
+    <string name="champ_portrait_hint">Click on the Buttons next to %1$s to pick or ban him.</string>
 
     <string name="empty_String" translatable="false"> </string>
-    <string name="champ_portrait_hint">Tippe auf die Buttons neben %1$s um ihn/sie zu wählen oder zu bannen.</string>
-
-    <string name="outdated_app">Die App muss aktualisiert werden. Bitte geh in den Play Store.</string>
+    <string name="outdated_app">This App is outdated. Please go to the Play Store.</string>
 </resources>
