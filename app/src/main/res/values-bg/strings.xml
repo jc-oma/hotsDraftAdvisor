@@ -162,4 +162,7 @@
     <string name="champ_portrait_hint">Натиснете бутоните до %1$s, за да го изберете или забраните.</string>
 
     <string name="outdated_app">Това приложение е остаряло. Моля, посетете Play Store.</string>
+
+    <string name="loading_state_maps">Зареждане на карти или не са наме рени карти…</string>
+    <string name="loading_state_champs">Зареждане на шампиони или не са намерени шампиони...</string>
 </resources>

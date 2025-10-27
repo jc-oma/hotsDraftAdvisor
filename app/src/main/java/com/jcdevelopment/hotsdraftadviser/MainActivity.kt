@@ -260,7 +260,7 @@ fun MainActivityComposable(
                             }
                             Spacer(modifier = Modifier.height(8.dp))
                             if (mapList.isEmpty()) {
-                                Text("Lade Maps oder keine Maps gefunden...")
+                                Text(stringResource(R.string.loading_state_maps))
                             } else {
                                 LazyVerticalGrid(
                                     contentPadding = PaddingValues(bottom = 180.dp),
@@ -498,7 +498,7 @@ fun MainActivityComposable(
                         Box(modifier = Modifier.height(8.dp))
 
                         if (chosableChampList.isEmpty()) {
-                            Text("Lade Champs oder keine Champs gefunden...")
+                            Text(stringResource(R.string.loading_state_champs))
                         } else {
                             val distinctChosableChampList by viewModel.distinctChosableChampList.collectAsState(
                                 emptyList()

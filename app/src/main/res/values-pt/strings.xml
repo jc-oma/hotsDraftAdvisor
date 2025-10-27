@@ -162,4 +162,6 @@
     <string name="champ_portrait_hint">Clique nos botões ao lado de %1$s para o escolher ou banir.</string>
 
     <string name="outdated_app">Esta aplicação está desatualizada. Por favor, vá à Play Store.</string>
+    <string name="loading_state_maps">Carregando mapas ou nenhum mapa encontrado…</string>
+    <string name="loading_state_champs">Carregando campeões ou nenhum campeão encontrado…</string>
 </resources>

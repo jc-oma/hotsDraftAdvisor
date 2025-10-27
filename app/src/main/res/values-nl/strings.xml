@@ -162,4 +162,6 @@
     <string name="champ_portrait_hint">Klik op de knoppen naast %1$s om hem te kiezen of te bannen.</string>
 
     <string name="outdated_app">Deze app is verouderd. Ga alstublieft naar de Play Store.</string>
+    <string name="loading_state_maps">Kaarten laden of geen kaarten gevonden…</string>
+    <string name="loading_state_champs">Kampioenen laden of geen kampioenen gevonden…</string>
 </resources>

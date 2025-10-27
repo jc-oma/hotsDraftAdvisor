@@ -165,4 +165,6 @@
 
     <string name="empty_String" translatable="false"> </string>
     <string name="outdated_app">This App is outdated. Please go to the Play Store.</string>
+    <string name="loading_state_maps">Loading Maps or no maps found…</string>
+    <string name="loading_state_champs">Loading Champs or no champs found…</string>
 </resources>

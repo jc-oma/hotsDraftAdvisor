@@ -162,4 +162,6 @@
     <string name="champ_portrait_hint">Kliknij przyciski obok %1$s, aby go wybrać lub zbanować.</string>
 
     <string name="outdated_app">Ta aplikacja jest nieaktualna. Przejdź do Sklepu Play.</string>
+    <string name="loading_state_maps">Ładowanie map lub nie znaleziono map…</string>
+    <string name="loading_state_champs">Ładowanie bohaterów lub nie znaleziono bohaterów…</string>
 </resources>

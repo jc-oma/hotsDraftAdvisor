@@ -162,4 +162,6 @@
     <string name="champ_portrait_hint">Clicca sui pulsanti accanto a %1$s per selezionarlo o bannarlo.</string>
 
     <string name="outdated_app">Questa app è obsoleta. Per favore, vai al Play Store.</string>
+    <string name="loading_state_maps">Caricamento mappe o nessuna mappa trovata…</string>
+    <string name="loading_state_champs">Caricamento campioni o nessun campione trovato…</string>
 </resources>

@@ -162,4 +162,6 @@
     <string name="champ_portrait_hint">Нажмите на кнопки рядом с %1$s, чтобы выбрать или забанить его.</string>
 
     <string name="outdated_app">Это приложение устарело. Пожалуйста, перейдите в Play Store.</string>
+    <string name="loading_state_maps">Загрузка карт или карты не найдены…</string>
+    <string name="loading_state_champs">Загрузка чемпионов или чемпионы не найдены…</string>
 </resources>
