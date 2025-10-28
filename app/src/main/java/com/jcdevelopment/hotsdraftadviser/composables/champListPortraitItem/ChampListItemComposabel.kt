@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,10 +42,14 @@ fun ChampListItem(
     maxOwnScore: Int,
     maxTheirScore: Int
 ) {
-    val scoreOwnPercent = max((chosableChamp.scoreOwn.toFloat() / maxOwnScore.toFloat() * 100).toInt(), 0)
-    val scoreTheirPercent = max((chosableChamp.scoreTheir.toFloat() / maxTheirScore.toFloat() * 100).toInt(), 0)
-    Row(modifier = Modifier.heightIn(min = 32.dp),
-        verticalAlignment = Alignment.CenterVertically) {
+    val scoreOwnPercent =
+        max((chosableChamp.scoreOwn.toFloat() / maxOwnScore.toFloat() * 100).toInt(), 0)
+    val scoreTheirPercent =
+        max((chosableChamp.scoreTheir.toFloat() / maxTheirScore.toFloat() * 100).toInt(), 0)
+    Row(
+        modifier = Modifier.heightIn(min = 32.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Text(
             modifier = Modifier.weight(1f),
             text = chosableChamp.localName!!,
@@ -179,15 +184,17 @@ private fun ChampListItemPreview() {
     val textColor = "f8f8f9ff"
     val composeTextColor = getColorByHexString(textColor)
 
-    ChampListItem(
-        chosableChamp = exampleChampDataSgtHammer,
-        index = 1,
-        composeTextColor = composeTextColor,
-        pickChampForTeam = { _, _ -> {} },
-        banChampForTeam = { _, _ -> {} },
-        updateOwnChampSearchQuery = {},
-        isStarRating = false,
-        maxOwnScore = 123,
-        maxTheirScore = 75
-    )
+    Row (modifier = Modifier.height(32.dp)) {
+        ChampListItem(
+            chosableChamp = exampleChampDataSgtHammer,
+            index = 1,
+            composeTextColor = composeTextColor,
+            pickChampForTeam = { _, _ -> {} },
+            banChampForTeam = { _, _ -> {} },
+            updateOwnChampSearchQuery = {},
+            isStarRating = false,
+            maxOwnScore = 123,
+            maxTheirScore = 75
+        )
+    }
 }
