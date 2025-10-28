@@ -176,7 +176,7 @@ fun ChampPortraitItemComposable(
                             fontSize = 18.sp
                         ),
                         //TODO Index wieder hinzufügen wenn Bug List gefixt? -> (index + 1).toString() + ". " +
-                        text = name
+                        text = (index + 1).toString() + ". " + name
                     )
 
                     //TODO später richtig einbauen

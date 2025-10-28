@@ -115,6 +115,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private val _favFilter = MutableStateFlow<Boolean>(false)
     private val _minVersionCode = MutableStateFlow<MinVerionCode>(MinVerionCode(0))
     private val maxPicks = 5
+    private var pickcounter: MutableMap<TeamSide, Int> =
+        mutableMapOf(TeamSide.OWN to 0, TeamSide.THEIR to 0)
 
     val isDisclaymerShown: StateFlow<Boolean> = _isDisclaymerShown.asStateFlow()
     val isTutorialShown: StateFlow<Boolean> = _isTutorialShown.asStateFlow()
@@ -164,14 +166,14 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         )
 
     val unfilteredChosableChampList: StateFlow<List<ChampData>> =
-        dataFlowForChampListWithScores(false, false)
+        dataFlowForChampListWithScores(false, false, false)
 
-    val _choosableChampList = dataFlowForChampListWithScores(true, false)
+    val _choosableChampList = dataFlowForChampListWithScores(true, false, true)
 
-    val _distinctchoosableChampList = dataFlowForChampListWithScores(true, true)
+    val _distinctchoosableChampList = dataFlowForChampListWithScores(true, true, true)
     val chosableChampList: StateFlow<List<ChampData>> = _choosableChampList
     val distinctChosableChampList: StateFlow<List<ChampData>> = _distinctchoosableChampList
-    val allChampsDistinct = dataFlowForChampListWithScores(false, true)
+    val allChampsDistinct = dataFlowForChampListWithScores(false, true, false)
 
     val distinctfilteredChosableChampList: StateFlow<List<ChampData>> = combine(
         allChampsDistinct,
@@ -277,9 +279,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         viewModelScope.launch {
             val currentChampList = _distinctchoosableChampList.first()
             val alreadyPicked = currentChampList.filter { it.isPicked && it.pickedBy == teamSide }
+            val isChogall = currentChampList[index].ChampName == "Chogall"
+            var teamCounter = pickcounter[teamSide] ?: 0
 
-            if (alreadyPicked.size < maxPicks) {
-                if (!(alreadyPicked.size > maxPicks - 1 && currentChampList[index].ChampName == "Chogall")) {
+            if (isChogall) {
+                if (teamCounter < maxPicks - 1) {
+                    pickcounter[teamSide] = teamCounter + 2
                     val pickedChamp =
                         currentChampList.find { it.ChampName == currentChampList[index].ChampName }
                             ?.copy(isPicked = true, pickedBy = teamSide)
@@ -287,6 +292,14 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     _allChampsData.value =
                         _allChampsData.value.map { if (it.ChampName == pickedChamp.ChampName) pickedChamp else it }
                 }
+            } else if (teamCounter < maxPicks) {
+                pickcounter[teamSide] = teamCounter + 1
+                val pickedChamp =
+                    currentChampList.find { it.ChampName == currentChampList[index].ChampName }
+                        ?.copy(isPicked = true, pickedBy = teamSide)
+                        ?: return@launch // Frühzeitiger Ausstieg, falls der Champ nicht gefunden wird
+                _allChampsData.value =
+                    _allChampsData.value.map { if (it.ChampName == pickedChamp.ChampName) pickedChamp else it }
             }
         }
     }
@@ -310,6 +323,13 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
                 _allChampsData.value =
                     _allChampsData.value.map { if (it.ChampName == updatedChamp.ChampName) updatedChamp else it }
+
+                if (teamPicks[index].ChampName == "Chogall") {
+                    pickcounter[teamSide] = pickcounter[teamSide]!! - 2
+                } else {
+                    pickcounter[teamSide] = pickcounter[teamSide]!! - 1
+                }
+
             } else {
                 Log.w(
                     "ViewModel",
@@ -335,7 +355,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     private fun dataFlowForChampListWithScores(
         isFiltered: Boolean,
-        isDistincted: Boolean
+        isDistincted: Boolean,
+        isFilterPicks: Boolean
     ): StateFlow<List<ChampData>> {
         var copy = calculateChampsPerPicks()
         var list = combine(
@@ -366,7 +387,15 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
             val lowerCaseSearchString = mapSearchString.lowercase()
 
-            val calculatedChamps = filteredByNameChamps.map { champ ->
+            val filteredByPickedChamps = if (isFilterPicks) {
+                filteredByNameChamps.filter { champ ->
+                    !champ.isPicked
+                }
+            } else {
+                filteredByNameChamps
+            }
+
+            val calculatedChamps = filteredByPickedChamps.map { champ ->
                 val updatedChamp = champ.copy()
 
                 if (!mapSearchString.isEmpty()) {
@@ -754,6 +783,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun resetAll() {
         viewModelScope.launch {
+            pickcounter[TeamSide.OWN] = 0
+            pickcounter[TeamSide.THEIR] = 0
             _targetState.value = true
             _filterMapsString.value = ""
             _filterChampString.value = ""

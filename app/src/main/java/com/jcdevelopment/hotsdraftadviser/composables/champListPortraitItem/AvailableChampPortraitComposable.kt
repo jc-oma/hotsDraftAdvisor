@@ -62,7 +62,6 @@ fun AvailableChampPortraitComposable(
             items(
                 count = distinctChosableChampList.size,
                 key = { it -> distinctChosableChampList[it].key }) { i ->
-                if (distinctChosableChampList[i].isPicked) return@items
                 //TODO hier drunter manchmal out of bounds Exception
                 val currentChamp = distinctChosableChampList[i]
                 val currentChampUnfilt = distinctAndUnfilteredChosableChampList[i]
