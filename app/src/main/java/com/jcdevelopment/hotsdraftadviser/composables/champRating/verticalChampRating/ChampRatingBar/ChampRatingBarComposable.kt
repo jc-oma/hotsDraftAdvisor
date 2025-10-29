@@ -1,4 +1,4 @@
-package com.jcdevelopment.hotsdraftadviser.composables.champRating.ChampRatingBar
+package com.jcdevelopment.hotsdraftadviser.composables.champRating.verticalChampRating.ChampRatingBar
 
 import androidx.annotation.FloatRange
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
