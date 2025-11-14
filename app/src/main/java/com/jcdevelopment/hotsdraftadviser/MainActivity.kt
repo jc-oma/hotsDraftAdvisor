@@ -205,10 +205,6 @@ fun MainActivityComposable(
                 ) {
                     Box(modifier = Modifier.height(52.dp))
 
-                    //TODO
-                    //--- AdBanners here ---
-                    //MainWindowAdBanner()
-
                     if (targetState) {
                         Column(modifier = Modifier.wrapContentSize())
                         {
@@ -258,10 +254,6 @@ fun MainActivityComposable(
                                 .padding(start = 8.dp)
                         )*/
                             }
-                            MainWindowAdBanner(
-                                modifier = Modifier
-                                    .padding(top = 8.dp)
-                            )
                             Spacer(modifier = Modifier.height(8.dp))
                             if (mapList.isEmpty()) {
                                 Text(stringResource(R.string.loading_state_maps))
@@ -465,10 +457,6 @@ fun MainActivityComposable(
             )*/
 
                     if (choosenMap.isNotEmpty()) {
-                        MainWindowAdBanner(
-                            modifier = Modifier
-                                .padding(top = 6.dp, bottom = 6.dp)
-                        )
                         if (!(theirPickedChamps.isEmpty() && ownPickedChamps.isEmpty())) {
                             ListOfPickedChampsComposable(
                                 ownPickedChamps = ownPickedChamps,
@@ -611,6 +599,9 @@ fun MainActivityComposable(
         }
     } else {
         OutdatedAppComposable()
+    }
+    Box(Modifier.fillMaxSize(),contentAlignment = Alignment.BottomCenter){
+        MainWindowAdBanner()
     }
 }
 
