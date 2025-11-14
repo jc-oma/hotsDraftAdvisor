@@ -370,6 +370,6 @@ private fun ChampPortraitComposablePreview() {
         maxOwnScore = 144,
         maxTheirScore = 75,
         isStarRating = false,
-        isTablet = true
+        isTablet = false
     )
 }

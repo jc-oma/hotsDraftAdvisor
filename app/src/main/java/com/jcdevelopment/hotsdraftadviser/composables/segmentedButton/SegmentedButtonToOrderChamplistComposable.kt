@@ -27,8 +27,6 @@ fun SegmentedButtonToOrderChamplistComposable(
         stringResource(R.string.segment_button_best_ban),
         stringResource(R.string.segment_button_name)
     )
-    val screenBackgroundColor = "150e35ff"
-    val composeScreenBackgroundColor = getColorByHexString(screenBackgroundColor)
 
     SingleChoiceSegmentedButtonRow(
         modifier = Modifier

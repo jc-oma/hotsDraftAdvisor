@@ -50,7 +50,7 @@ fun AvailableChampListComposable(
         ) {
             items(chosableChampList.size) { i ->
                 if (chosableChampList[i].isPicked) return@items
-                ChampListItem(
+                ChampListItemComposable(
                     chosableChampList[i],
                     index = i,
                     composeTextColor = composeTextColor,

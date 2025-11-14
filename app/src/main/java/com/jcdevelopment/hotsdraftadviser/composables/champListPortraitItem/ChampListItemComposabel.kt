@@ -31,7 +31,7 @@ import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataSgtHammer
 import kotlin.math.max
 
 @Composable
-fun ChampListItem(
+fun ChampListItemComposable(
     chosableChamp: ChampData,
     index: Int,
     composeTextColor: Color,
@@ -185,7 +185,7 @@ private fun ChampListItemPreview() {
     val composeTextColor = getColorByHexString(textColor)
 
     Row (modifier = Modifier.height(32.dp)) {
-        ChampListItem(
+        ChampListItemComposable(
             chosableChamp = exampleChampDataSgtHammer,
             index = 1,
             composeTextColor = composeTextColor,

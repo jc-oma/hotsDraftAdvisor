@@ -258,6 +258,10 @@ fun MainActivityComposable(
                                 .padding(start = 8.dp)
                         )*/
                             }
+                            MainWindowAdBanner(
+                                modifier = Modifier
+                                    .padding(top = 8.dp)
+                            )
                             Spacer(modifier = Modifier.height(8.dp))
                             if (mapList.isEmpty()) {
                                 Text(stringResource(R.string.loading_state_maps))
@@ -345,14 +349,6 @@ fun MainActivityComposable(
                                                 }
                                             }
                                         }
-                                    }
-                                    item(
-                                        span = { GridItemSpan(maxLineSpan) })
-                                    {
-                                        MainWindowAdBanner(
-                                            modifier = Modifier
-                                                .padding(top = 8.dp)
-                                        )
                                     }
                                     item {
                                         Box(
@@ -469,6 +465,10 @@ fun MainActivityComposable(
             )*/
 
                     if (choosenMap.isNotEmpty()) {
+                        MainWindowAdBanner(
+                            modifier = Modifier
+                                .padding(top = 6.dp, bottom = 6.dp)
+                        )
                         if (!(theirPickedChamps.isEmpty() && ownPickedChamps.isEmpty())) {
                             ListOfPickedChampsComposable(
                                 ownPickedChamps = ownPickedChamps,
@@ -584,7 +584,8 @@ fun MainActivityComposable(
                                         viewModel.setBansPerTeam(
                                             i,
                                             teamSide
-                                        ) },
+                                        )
+                                    },
                                     isTablets = isTablet
                                 )
                             }

@@ -14,7 +14,7 @@ android {
         applicationId = "com.jcdevelopment.hotsdraftadviser"
         minSdk = 26
         targetSdk = 36
-        versionCode = 18
+        versionCode = 21
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -57,7 +57,8 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.androidx.compose.material3.window.size.class1)
 
-    val room_version = "2.7.2"
+    //2.7.2
+    val room_version = "2.8.3"
 
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
