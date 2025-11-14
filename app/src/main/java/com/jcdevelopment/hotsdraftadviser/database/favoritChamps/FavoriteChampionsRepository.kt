@@ -1,12 +1,12 @@
 package com.jcdevelopment.hotsdraftadviser.database.favoritChamps
 
-import kotlinx.coroutines.flow.Flow;
-import javax.inject.Inject;
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 // Du kannst @Singleton verwenden, wenn du Hilt oder ein anderes DI-Framework nutzt,
 // um sicherzustellen, dass nur eine Instanz des Repositories erstellt wird.
 // @Singleton
-class FavoriteChampionsRepository @Inject constructor( // @Inject für Dependency Injection (z.B. mit Hilt)
+class FavoriteChampionsRepository @Inject constructor(
     private val favoriteChampionDao: FavoriteChampionDao
 ) {
 

@@ -68,6 +68,8 @@ fun VideoStreamComposable(viewModel: VideoStreamViewModel = viewModel()) {
         }
     }
 
+    //TODO CAMERA & TensorFloor
+    /*
     LaunchedEffect(isPlayerActuallyPlaying, playerViewRef) {
         val viewAvailable = playerViewRef != null
         if (isPlayerActuallyPlaying && viewAvailable) {
@@ -78,8 +80,11 @@ fun VideoStreamComposable(viewModel: VideoStreamViewModel = viewModel()) {
             viewModel.stopFrameProcessing()
         }
     }
+     */
 
+    //TODO CAMERA & TensorFloor
     // Effekt zum Starten/Stoppen der Frame-Verarbeitung basierend auf Player-Status UND playerViewRef
+    /*
     LaunchedEffect(playerViewRef) {
         val isPlaying = playerInstance?.isPlaying == true
         val viewAvailable = playerViewRef != null
@@ -94,6 +99,7 @@ fun VideoStreamComposable(viewModel: VideoStreamViewModel = viewModel()) {
             viewModel.stopFrameProcessing()
         }
     }
+     */
 
 
     Column(

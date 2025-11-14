@@ -1,6 +1,6 @@
 package com.jcdevelopment.hotsdraftadviser
-
-import com.google.android.datatransport.BuildConfig
+//TODO CAMERA & TensorFloor
+//import com.google.android.datatransport.BuildConfig
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.jcdevelopment.hotsdraftadviser.dataclasses.HotsApiService
 import kotlinx.serialization.json.Json
@@ -15,11 +15,14 @@ object ApiService {
         isLenient = true          // Erlaubt etwas lockerere JSON-Formatierung
     }
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
-        level = if (BuildConfig.DEBUG) {
+        //TODO CAMERA & TensorFloor
+        /*level = if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor.Level.BODY
         } else {
+
+         */
             HttpLoggingInterceptor.Level.BODY
-        }
+        //}
     }
 
     private val okHttpClient = OkHttpClient.Builder()

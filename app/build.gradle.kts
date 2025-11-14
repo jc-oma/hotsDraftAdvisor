@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     kotlin("plugin.serialization")
     id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -14,7 +15,7 @@ android {
         applicationId = "com.jcdevelopment.hotsdraftadviser"
         minSdk = 26
         targetSdk = 36
-        versionCode = 22
+        versionCode = 24
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -48,6 +49,9 @@ android {
 }
 
 dependencies {
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
     implementation(libs.play.services.ads)
 
     implementation(libs.retrofit)
@@ -70,7 +74,7 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines.play.services)
     // CameraX core library using the camera2 implementation
-    implementation(libs.androidx.camera.core)
+     /* implementation(libs.androidx.camera.core)
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.video)
@@ -89,6 +93,7 @@ dependencies {
     implementation(libs.tensorflow.lite.gpu)
     // Optional: Wenn dein Modell Metadaten enthält (empfohlen)
     implementation(libs.tensorflow.lite.support) //
+      */
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -141,5 +146,5 @@ dependencies {
     implementation (libs.exoplayer.rtsp) // Für RTP/RTSP-Quellen
     implementation (libs.exoplayer.ui) // Für PlayerView
 
-    implementation (libs.opencv)
+    //implementation (libs.opencv)
 }

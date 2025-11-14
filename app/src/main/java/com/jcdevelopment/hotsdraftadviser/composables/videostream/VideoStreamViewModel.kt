@@ -21,10 +21,13 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSource
+//TODO CAMERA & TensorFloor
+/*
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+ */
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -34,6 +37,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+//TODO OPENCV
+/*
 import org.opencv.android.Utils
 import org.opencv.core.Mat
 import org.opencv.core.MatOfDMatch
@@ -41,6 +46,7 @@ import org.opencv.core.MatOfKeyPoint
 import org.opencv.features2d.DescriptorMatcher
 import org.opencv.features2d.ORB
 import org.opencv.imgproc.Imgproc
+*/
 import androidx.core.graphics.createBitmap
 import com.jcdevelopment.hotsdraftadviser.R
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
@@ -67,11 +73,14 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     val featureMatchResults: StateFlow<Map<String, Int>> = _featureMatchResults.asStateFlow()
     private var frameProcessingJob: Job? = null
 
+    //TODO OPENCV
     // OpenCV
-    private var featureDetector: ORB? = null
+    /*private var featureDetector: ORB? = null
     private var descriptorMatcher: DescriptorMatcher? = null
     private val templateDescriptors = mutableMapOf<String, Mat>()
     private val templateKeypoints = mutableMapOf<String, MatOfKeyPoint>()
+    */
+
     //TODO alle Templates
     private var templateNames = listOf("thrall", "blaze_text") // Namen müssen .bmp entsprechen
     private val templateResourceIds = mapOf(
@@ -81,10 +90,13 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
 
     private val udpPort = 1234 // UDP-Port für OBS
 
+    //TODO CAMERA & TensorFloor
+    /*
 //text recognition
     private val textRecognizer: TextRecognizer by lazy {
         TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
     }
+     */
 
     // StateFlow für die erkannten Texte (z.B. eine Liste von Strings oder strukturiertere Daten)
     private val _recognizedTexts = MutableStateFlow<List<String>>(emptyList())
@@ -96,6 +108,8 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
         //initializeOpenCVComponents()
     }
 
+    ////TODO OPENCV
+    /*
     private fun initializeOpenCVComponents(matcherType: Int = DescriptorMatcher.BRUTEFORCE_HAMMINGLUT) {
         viewModelScope.launch(Dispatchers.IO) { // OpenCV Init kann etwas dauern
             try {
@@ -139,6 +153,7 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
             }
         }
     }
+     */
 
     private fun initializePlayer() {
         val minBufferMs = 500 // Beispiel: 0.5 Sekunden
@@ -265,7 +280,8 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     // In VideoStreamViewModel.kt
-
+//TODO CAMERA & TensorFloor
+    /*
     fun startFrameProcessing(playerView: PlayerView, intervalMs: Long = 1000) {
         if (frameProcessingJob?.isActive == true) {
             Log.w(TAG, "Frame processing already active.")
@@ -357,9 +373,12 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
             }
         }
     }
+     */
 
 
+    //TODO CAMERA & TensorFloor
     // processFrameWithMLKitTextRecognition remains a suspend function
+    /*
     private suspend fun processFrameWithMLKitTextRecognition(frameBitmap: Bitmap) {
         if (frameBitmap.isRecycled) { // Good defensive check
             Log.w(TAG, "processFrame: Bitmap is already recycled for ${System.identityHashCode(frameBitmap)}")
@@ -388,6 +407,10 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
         Log.d(TAG, "processFrame: Finished processing bitmap ${System.identityHashCode(frameBitmap)}")
     }
 
+     */
+
+    //TODO OPENCV
+    /*
     private fun processFrameWithOpenCV(frameBitmap: Bitmap) {
         if (featureDetector == null || descriptorMatcher == null || templateDescriptors.isEmpty()) {
             Log.w(TAG, "OpenCV components not ready or no templates loaded.")
@@ -429,7 +452,7 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
         currentFrameMat.release()
         frameKeypoints.release()
         frameDescriptors.release()
-    }
+    }*/
 
     fun stopFrameProcessing() {
         frameProcessingJob?.cancel()

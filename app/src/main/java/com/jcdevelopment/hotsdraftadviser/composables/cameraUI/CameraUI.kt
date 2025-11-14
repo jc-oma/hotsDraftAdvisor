@@ -9,9 +9,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CameraViewComposable(detectedObjectLabels: List<String>) {
     var detectedObjectLabels1 = detectedObjectLabels
+    //TODO CAMERA & TensorFloor
+    /*
     CameraDetectionComposable(
         onObjectsDetected = { labels -> detectedObjectLabels1 = labels }
     )
+     */
 
     Text(
         modifier = Modifier.padding(16.dp),

@@ -1,5 +1,7 @@
 package com.jcdevelopment.hotsdraftadviser.composables.cameraUI
 
+//TODO CAMERA & TensorFloor
+/*
 import android.Manifest
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -153,3 +155,5 @@ fun CameraDetectionComposable(
         }
     }
 }
+
+ */
