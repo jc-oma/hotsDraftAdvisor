@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jcdevelopment.hotsdraftadviser.TeamSide
 import com.jcdevelopment.hotsdraftadviser.Utilitys
-import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
+import com.jcdevelopment.hotsdraftadviser.composables.utilitiComposables.getColorByHexString
 import com.jcdevelopment.hotsdraftadviser.composables.starRating.StarRatingComposable
 import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
 import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataSgtHammer
@@ -53,7 +53,7 @@ fun ListOfPickedChampsComposable(
                             removePickForTeam = { removePick(i, TeamSide.OWN) },
                             teamPickedChamp = ownPickedChamps[i],
                             painter = painterResource(
-                                id = Utilitys.mapChampNameToDrawable(
+                                id = Utilitys.mapChampNameToPortraitDrawable(
                                     ownPickedChamps[i].ChampName
                                 )!!
                             )
@@ -68,7 +68,7 @@ fun ListOfPickedChampsComposable(
                             removePickForTeam = { removePick(i, TeamSide.THEIR) },
                             teamPickedChamp = theirPickedChamps[i],
                             painter = painterResource(
-                                id = Utilitys.mapChampNameToDrawable(
+                                id = Utilitys.mapChampNameToPortraitDrawable(
                                     theirPickedChamps[i].ChampName
                                 )!!
                             )

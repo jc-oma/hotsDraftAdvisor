@@ -1,4 +1,4 @@
-package com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis
+package com.jcdevelopment.hotsdraftadviser.composables.utilitiComposables
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color

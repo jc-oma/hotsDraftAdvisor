@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jcdevelopment.hotsdraftadviser.SortState
 import com.jcdevelopment.hotsdraftadviser.TeamSide
-import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexStringForET
+import com.jcdevelopment.hotsdraftadviser.composables.utilitiComposables.getColorByHexStringForET
 import com.jcdevelopment.hotsdraftadviser.composables.segmentedButton.SegmentedButtonToOrderChamplistComposable
 import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
 import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataAbathur

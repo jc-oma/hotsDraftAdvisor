@@ -13,7 +13,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.jcdevelopment.hotsdraftadviser.SortState
-import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
 import com.jcdevelopment.hotsdraftadviser.R
 
 @Composable

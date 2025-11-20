@@ -1,4 +1,4 @@
-package com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis
+package com.jcdevelopment.hotsdraftadviser.composables.utilitiComposables
 
 import android.graphics.BlurMaskFilter
 import androidx.compose.ui.Modifier

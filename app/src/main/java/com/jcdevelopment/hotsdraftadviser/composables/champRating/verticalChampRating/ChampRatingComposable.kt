@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jcdevelopment.hotsdraftadviser.composables.champRating.verticalChampRating.ChampRatingBar.ChampRatingBarComposable
-import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
+import com.jcdevelopment.hotsdraftadviser.composables.utilitiComposables.getColorByHexString
 import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
 import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataAbathur
 import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataAuriel

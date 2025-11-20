@@ -24,7 +24,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jcdevelopment.hotsdraftadviser.TeamSide
-import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
+import com.jcdevelopment.hotsdraftadviser.composables.utilitiComposables.getColorByHexString
 import com.jcdevelopment.hotsdraftadviser.composables.starRating.StarRatingComposable
 import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
 import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataSgtHammer

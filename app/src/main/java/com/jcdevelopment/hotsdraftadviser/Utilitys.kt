@@ -147,7 +147,7 @@ object Utilitys {
         }
     }
 
-    fun mapChampNameToDrawable(champName: String): Int? {
+    fun mapChampNameToPortraitDrawable(champName: String): Int? {
         when (champName) {
             "Abathur" -> return R.drawable.abathur_card_portrait
             "Alarak" -> return R.drawable.alarak_card_portrait
@@ -240,6 +240,105 @@ object Utilitys {
             "Zeratul" -> return R.drawable.zeratul_card_portrait
             "Zarya" -> return R.drawable.zarya_card_portrait
             "Zuljin" -> return R.drawable.zuljin_card_portrait
+
+
+            else -> return null
+        }
+    }
+
+    fun mapChampNameToRoundPortraitDrawable(champName: String): Int? {
+        when (champName) {
+            "Abathur" -> return R.drawable.round_portrait_abathur
+            "Alarak" -> return R.drawable.round_portrait_alarak
+            "Alexstrasza" -> return R.drawable.round_portrait_alexstrasza
+            "Ana" -> return R.drawable.round_portrait_ana
+            "Anduin" -> return R.drawable.round_portrait_anduin
+            "Anubarak" -> return R.drawable.round_portrait_anubarak
+            "Artanis" -> return R.drawable.round_portrait_artanis
+            "Arthas" -> return R.drawable.round_portrait_arthas
+            "Auriel" -> return R.drawable.round_portrait_auriel
+            "Azmodan" -> return R.drawable.round_portrait_azmodan
+            "Blaze" -> return R.drawable.round_portrait_blaze
+            "Brightwing" -> return R.drawable.round_portrait_brightwing
+            "Cassia" -> return R.drawable.round_portrait_cassia
+            "Chen" -> return R.drawable.round_portrait_chen
+            "Cho" -> return R.drawable.round_portrait_chogall
+            "Chogall" -> return R.drawable.round_portrait_chogall
+            "Chromie" -> return R.drawable.round_portrait_chromie
+            "Deathwing" -> return R.drawable.round_portrait_deathwing
+            "Deckard" -> return R.drawable.round_portrait_deckard
+            "Dehaka" -> return R.drawable.round_portrait_dehaka
+            "Diablo" -> return R.drawable.round_portrait_diablo
+            "DVA" -> return R.drawable.round_portrait_dva
+            "ETC" -> return R.drawable.round_portrait_etc
+            "Falstad" -> return R.drawable.round_portrait_falstad
+            "Fenix" -> return R.drawable.round_portrait_fenix
+            "Gall" -> return R.drawable.round_portrait_chogall
+            "Garrosh" -> return R.drawable.round_portrait_garrosh
+            "Gazlowe" -> return R.drawable.round_portrait_gazlowe
+            "Genji" -> return R.drawable.round_portrait_genji
+            "Greymane" -> return R.drawable.round_portrait_greymane
+            "Guldan" -> return R.drawable.round_portrait_guldan
+            "Hanzo" -> return R.drawable.round_portrait_hanzo
+            "Hogger" -> return R.drawable.round_portrait_hogger
+            "Illidan" -> return R.drawable.round_portrait_illidan
+            "Imperius" -> return R.drawable.round_portrait_imperius
+            "Jaina" -> return R.drawable.round_portrait_jaina
+            "Johanna" -> return R.drawable.round_portrait_johanna
+            "Junkrat" -> return R.drawable.round_portrait_junkrat
+            "Kaelthas" -> return R.drawable.round_portrait_kaelthas
+            "Kelthuzad" -> return R.drawable.round_portrait_kelthuzad
+            "Kerrigan" -> return R.drawable.round_portrait_kerrigan
+            "Kharazim" -> return R.drawable.round_portrait_kharazim
+            "Leoric" -> return R.drawable.round_portrait_leoric
+            "Lili" -> return R.drawable.round_portrait_lili
+            "Li-Ming" -> return R.drawable.round_portrait_liming
+            "LtMorales" -> return R.drawable.round_portrait_ltmorales
+            "Lucio" -> return R.drawable.round_portrait_lucio
+            "Lunara" -> return R.drawable.round_portrait_lunara
+            "Maiev" -> return R.drawable.round_portrait_maiev
+            "Malfurion" -> return R.drawable.round_portrait_malfurion
+            "Malganis" -> return R.drawable.round_portrait_malganis
+            "Malthael" -> return R.drawable.round_portrait_malthael
+            "Medivh" -> return R.drawable.round_portrait_medivh
+            "Mei" -> return R.drawable.round_portrait_mei
+            "Mephisto" -> return R.drawable.round_portrait_mephisto
+            "Muradin" -> return R.drawable.round_portrait_muradin
+            "Murky" -> return R.drawable.round_portrait_murky
+            "Nazeebo" -> return R.drawable.round_portrait_nazeebo
+            "Nova" -> return R.drawable.round_portrait_nova
+            "Orphea" -> return R.drawable.round_portrait_orphea
+            "Probius" -> return R.drawable.round_portrait_probius
+            "Qhira" -> return R.drawable.round_portrait_qhira
+            "Ragnaros" -> return R.drawable.round_portrait_ragnaros
+            "Raynor" -> return R.drawable.round_portrait_raynor
+            "Rehgar" -> return R.drawable.round_portrait_rehgar
+            "Rexxar" -> return R.drawable.round_portrait_rexxar
+            "Samuro" -> return R.drawable.round_portrait_samuro
+            "SgtHammer" -> return R.drawable.round_portrait_sgthammer
+            "Sonya" -> return R.drawable.round_portrait_sonya
+            "Stitches" -> return R.drawable.round_portrait_stitches
+            "Stukov" -> return R.drawable.round_portrait_stukov
+            "Sylvanas" -> return R.drawable.round_portrait_sylvanas
+            "Tassadar" -> return R.drawable.round_portrait_tassadar
+            "Butcher" -> return R.drawable.round_portrait_the_butcher
+            "LostVikings" -> return R.drawable.round_portrait_the_lost_vikings
+            "Thrall" -> return R.drawable.round_portrait_thrall
+            "Tracer" -> return R.drawable.round_portrait_tracer
+            "Tychus" -> return R.drawable.round_portrait_tychus
+            "Tyrael" -> return R.drawable.round_portrait_tyrael
+            "Tyrande" -> return R.drawable.round_portrait_tyrande
+            "Uther" -> return R.drawable.round_portrait_uther
+            "Valeera" -> return R.drawable.round_portrait_valeera
+            "Valla" -> return R.drawable.round_portrait_valla
+            "Varian" -> return R.drawable.round_portrait_varian
+            "Whitemane" -> return R.drawable.round_portrait_whitemane
+            "Xul" -> return R.drawable.round_portrait_xul
+            "Yrel" -> return R.drawable.round_portrait_yrel
+            "Zagara" -> return R.drawable.round_portrait_zagara
+            "Zeratul" -> return R.drawable.round_portrait_zeratul
+            "Zarya" -> return R.drawable.round_portrait_zarya
+            "Zuljin" -> return R.drawable.round_portrait_zuljin
 
 
             else -> return null

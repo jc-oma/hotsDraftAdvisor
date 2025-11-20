@@ -78,7 +78,7 @@ fun AvailableChampPortraitComposable(
                     updateChampSearchQuery = { updateChampSearchQuery("") },
                     ownBan = { setBansPerTeam(i, TeamSide.OWN) },
                     theirBan = { setBansPerTeam(i, TeamSide.THEIR) },
-                    champDrawable = Utilitys.mapChampNameToDrawable(distinctChosableChampList[i].ChampName)!!,
+                    champDrawable = Utilitys.mapChampNameToPortraitDrawable(distinctChosableChampList[i].ChampName)!!,
                     index = i,
                     mapFloat = distinctAndUnfilteredChosableChampList[i].mapFloat,
                     ownTeamFloat = distinctAndUnfilteredChosableChampList[i].fitTeam / fitTeamMax.toFloat(),

@@ -30,7 +30,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -62,8 +61,8 @@ import com.jcdevelopment.hotsdraftadviser.composables.OutdatedAppComposable
 import com.jcdevelopment.hotsdraftadviser.composables.advertisement.MainWindowAdBanner
 import com.jcdevelopment.hotsdraftadviser.composables.champListPortraitItem.AvailableChampListComposable
 import com.jcdevelopment.hotsdraftadviser.composables.champListPortraitItem.AvailableChampPortraitComposable
-import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
-import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexStringForET
+import com.jcdevelopment.hotsdraftadviser.composables.utilitiComposables.getColorByHexString
+import com.jcdevelopment.hotsdraftadviser.composables.utilitiComposables.getColorByHexStringForET
 import com.jcdevelopment.hotsdraftadviser.composables.filter.SearchAndFilterRowForChampsSmall
 import com.jcdevelopment.hotsdraftadviser.composables.menus.DisclaimerComposable
 import com.jcdevelopment.hotsdraftadviser.composables.menus.FloatingActionButtonMainActivity

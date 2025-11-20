@@ -47,7 +47,7 @@ import android.widget.Toast
 import com.jcdevelopment.hotsdraftadviser.R
 import com.jcdevelopment.hotsdraftadviser.Utilitys
 import com.jcdevelopment.hotsdraftadviser.composables.ChampEvaluationComposable
-import com.jcdevelopment.hotsdraftadviser.composables.composabaleUtilitis.getColorByHexString
+import com.jcdevelopment.hotsdraftadviser.composables.utilitiComposables.getColorByHexString
 import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
 import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataSgtHammer
 import com.jcdevelopment.hotsdraftadviser.composables.starRating.StarRatingComposable
