@@ -55,6 +55,7 @@ import kotlin.math.max
 
 @Composable
 fun ChampPortraitItemComposable(
+    modifier: Modifier = Modifier,
     champ: ChampData,
     toggleChampFavorite: () -> Unit,
     pickChampForOwnTeam: () -> Unit,
@@ -83,7 +84,7 @@ fun ChampPortraitItemComposable(
         max((champ.scoreTheir.toFloat() / maxTheirScore.toFloat() * 100).toInt(), 0)
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .heightIn(min = (LocalWindowInfo.current.containerSize.width / 7f).dp)
             .background(composeScreenBackgroundColor)

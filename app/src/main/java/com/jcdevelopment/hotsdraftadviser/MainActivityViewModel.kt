@@ -308,7 +308,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         viewModelScope.launch {
             val currentChampList = _distinctchoosableChampList.first()
             val bannedChamp = currentChampList[i].copy(isPicked = true)
-            updateChampDataWithPickStatus(bannedChamp, true, teamSide)
+            updateChampDataWithPickStatus(bannedChamp)
         }
     }
 
@@ -340,15 +340,16 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private fun updateChampDataWithPickStatus(
-        champ: ChampData,
-        isPicked: Boolean,
-        teamSide: TeamSide
+        champ: ChampData
     ) {
         val currentChampData = _allChampsData.value.toMutableList()
         val indexInAllChamps = currentChampData.indexOfFirst { it.ChampName == champ.ChampName }
+        val indexIfChogal = currentChampData.indexOfLast { it.ChampName == champ.ChampName }
         if (indexInAllChamps != -1) {
             currentChampData[indexInAllChamps] =
-                currentChampData[indexInAllChamps].copy(isPicked = isPicked)
+                currentChampData[indexInAllChamps].copy(isPicked = true)
+            currentChampData[indexIfChogal] =
+                currentChampData[indexInAllChamps].copy(isPicked = true)
             _allChampsData.value = currentChampData.toList()
         }
     }

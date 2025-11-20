@@ -24,7 +24,6 @@ fun MainWindowAdBanner(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .height(50.dp)
-            .padding(2.dp)
             .background(color = Color.White, shape = RoundedCornerShape(4.dp)),
         factory = {
             AdView(it).apply {

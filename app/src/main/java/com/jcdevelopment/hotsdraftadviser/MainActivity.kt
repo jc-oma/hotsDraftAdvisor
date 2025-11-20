@@ -600,8 +600,21 @@ fun MainActivityComposable(
     } else {
         OutdatedAppComposable()
     }
-    Box(Modifier.fillMaxSize(),contentAlignment = Alignment.BottomCenter){
-        MainWindowAdBanner()
+
+    Box(
+        Modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.BottomCenter
+    ) {
+        Column {
+            MainWindowAdBanner()
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp)
+                    .background(Color.White)
+            )
+        }
     }
 }
 

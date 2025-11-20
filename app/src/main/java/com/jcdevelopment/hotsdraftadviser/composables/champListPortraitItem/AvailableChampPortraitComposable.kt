@@ -1,5 +1,7 @@
 package com.jcdevelopment.hotsdraftadviser.composables.champListPortraitItem
 
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -62,11 +64,13 @@ fun AvailableChampPortraitComposable(
             items(
                 count = distinctChosableChampList.size,
                 key = { it -> distinctChosableChampList[it].key }) { i ->
-                //TODO hier drunter manchmal out of bounds Exception
-                val currentChamp = distinctChosableChampList[i]
-                val currentChampUnfilt = distinctAndUnfilteredChosableChampList[i]
 
                 ChampPortraitItemComposable(
+                    modifier = Modifier.animateItem(fadeInSpec = tween<Float>(
+                        durationMillis = 2500,
+                        delayMillis = 100,
+                        easing = LinearOutSlowInEasing
+                    )),
                     champ = distinctChosableChampList[i],
                     toggleChampFavorite = { toggleFavoriteStatus(distinctChosableChampList[i].ChampName) },
                     pickChampForOwnTeam = { pickChampForOwnTeam(i, TeamSide.OWN) },

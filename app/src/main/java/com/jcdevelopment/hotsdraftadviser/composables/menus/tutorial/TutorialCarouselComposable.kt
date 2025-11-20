@@ -101,7 +101,7 @@ fun TutorialCarouselComposable(modifier: Modifier = Modifier, onClose: () -> Uni
     Card(
         modifier = modifier
             .fillMaxSize()
-            .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 48.dp)
+            .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 112.dp)
     ) {
         Column(
             modifier = Modifier
