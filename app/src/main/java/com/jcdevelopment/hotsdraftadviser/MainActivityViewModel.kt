@@ -352,6 +352,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 _bannedChamps.value = _bannedChamps.value - currentBannedList[index]
                 _allChampsData.value =
                     _allChampsData.value.map { if (it.ChampName == champToUnban.ChampName) champToUnban else it }
+                pickcounter[teamSide] = pickcounter[teamSide]!! - 1
             }
         }
     }
