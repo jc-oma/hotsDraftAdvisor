@@ -115,8 +115,14 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private val _favFilter = MutableStateFlow<Boolean>(false)
     private val _minVersionCode = MutableStateFlow<MinVerionCode>(MinVerionCode(0))
     private val maxPicks = 5
+    private val maxBans = 3
     private var pickcounter: MutableMap<TeamSide, Int> =
-        mutableMapOf(TeamSide.OWN to 0, TeamSide.THEIR to 0)
+        mutableMapOf(
+            TeamSide.OWN to 0,
+            TeamSide.THEIR to 0,
+            TeamSide.BANNEDOWN to 0,
+            TeamSide.BANNEDTHEIR to 0
+        )
 
     val isDisclaymerShown: StateFlow<Boolean> = _isDisclaymerShown.asStateFlow()
     val isTutorialShown: StateFlow<Boolean> = _isTutorialShown.asStateFlow()
@@ -168,11 +174,26 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val unfilteredChosableChampList: StateFlow<List<ChampData>> =
         dataFlowForChampListWithScores(false, false, false)
 
-    val _choosableChampList = dataFlowForChampListWithScores(true, false, true)
+    private val _choosableChampList = dataFlowForChampListWithScores(true, false, true)
 
-    val _distinctchoosableChampList = dataFlowForChampListWithScores(true, true, true)
+    private val _distinctchoosableChampList = dataFlowForChampListWithScores(true, true, true)
+    private val _bannedChamps = MutableStateFlow<List<ChampData>>(emptyList())
+
     val chosableChampList: StateFlow<List<ChampData>> = _choosableChampList
     val distinctChosableChampList: StateFlow<List<ChampData>> = _distinctchoosableChampList
+    val bannedChamps: StateFlow<List<ChampData>> = _bannedChamps
+    val theirsBannedChamps: StateFlow<List<ChampData>> =
+        _bannedChamps.map { it.filter { it.pickedBy == TeamSide.BANNEDTHEIR } }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = emptyList<ChampData>()
+        )
+    val ownBannedChamps: StateFlow<List<ChampData>> =
+        _bannedChamps.map { it.filter { it.pickedBy == TeamSide.BANNEDOWN } }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = emptyList<ChampData>()
+        )
     val allChampsDistinct = dataFlowForChampListWithScores(false, true, false)
 
     val distinctfilteredChosableChampList: StateFlow<List<ChampData>> = combine(
@@ -307,8 +328,31 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     fun setBansPerTeam(i: Int, teamSide: TeamSide) {
         viewModelScope.launch {
             val currentChampList = _distinctchoosableChampList.first()
-            val bannedChamp = currentChampList[i].copy(isPicked = true)
-            updateChampDataWithPickStatus(bannedChamp)
+            var teamCounter = pickcounter[teamSide] ?: 0
+            if (teamCounter < maxBans) {
+                val bannedChamp = currentChampList[i].copy(isPicked = true, pickedBy = teamSide)
+                _bannedChamps.value = _bannedChamps.value + bannedChamp
+                updateChampDataWithPickStatus(bannedChamp)
+                pickcounter[teamSide] = teamCounter + 1
+            }
+        }
+    }
+
+    fun removeBan(index: Int, teamSide: TeamSide) {
+        viewModelScope.launch {
+            val currentBannedList = if (teamSide == TeamSide.BANNEDOWN) {
+                ownBannedChamps.value
+            } else {
+                theirsBannedChamps.value
+            }
+
+            if (index < currentBannedList.size) {
+                val champToUnban =
+                    currentBannedList[index].copy(isPicked = false, pickedBy = TeamSide.NONE)
+                _bannedChamps.value = _bannedChamps.value - currentBannedList[index]
+                _allChampsData.value =
+                    _allChampsData.value.map { if (it.ChampName == champToUnban.ChampName) champToUnban else it }
+            }
         }
     }
 
@@ -786,12 +830,15 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         viewModelScope.launch {
             pickcounter[TeamSide.OWN] = 0
             pickcounter[TeamSide.THEIR] = 0
+            pickcounter[TeamSide.BANNEDOWN] = 0
+            pickcounter[TeamSide.BANNEDTHEIR] = 0
             _targetState.value = true
             _filterMapsString.value = ""
             _filterChampString.value = ""
             _choosenMap.value = ""
             _sortState.value = SortState.OWNPOINTS
             _roleFilter.value = emptyList()
+            _bannedChamps.value = emptyList()
             _allChampsData.value = _allChampsData.value.map {
                 it.copy(
                     isPicked = false,

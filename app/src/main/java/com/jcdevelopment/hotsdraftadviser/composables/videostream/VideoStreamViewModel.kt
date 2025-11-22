@@ -85,7 +85,7 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     private var templateNames = listOf("thrall", "blaze_text") // Namen müssen .bmp entsprechen
     private val templateResourceIds = mapOf(
         "thrall" to R.drawable.thrall,
-        "blaze_text" to R.drawable.blaze_text
+        "blaze_text" to R.drawable.round_portrait_blaze
     )
 
     private val udpPort = 1234 // UDP-Port für OBS

@@ -21,7 +21,7 @@ import kotlin.math.roundToInt
 @Composable
 fun StarRatingComposable(
     ratingFloat: Float,
-    modifier: Modifier = Modifier, // Akzeptiere einen Modifier von außen
+    modifier: Modifier = Modifier,
     maxRating: Int = 5,
     filledStar: ImageVector = Icons.Filled.Star,
     emptyStar: ImageVector = Icons.Outlined.StarBorder,

@@ -136,7 +136,7 @@ private fun PickedsChampItemPreview() {
             removePickForTeam = {},
             teamPickedChamp = exampleChampDataSgtHammer,
             painter = painterResource(
-                id = R.drawable.sgthammer_card_portrait
+                id = R.drawable.card_portrait_sgthammer
             )
         )
     }

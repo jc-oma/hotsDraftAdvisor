@@ -94,7 +94,7 @@ fun SearchAndFilterRowForChampsSmall(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                painterResource(id = R.drawable.ranged),
+                                painterResource(id = R.drawable.icon_ranged),
                                 contentDescription = "Description of your image",
                                 modifier = modifierIcon
                             )
@@ -112,7 +112,7 @@ fun SearchAndFilterRowForChampsSmall(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                painterResource(id = R.drawable.melee),
+                                painterResource(id = R.drawable.icon_melee),
                                 contentDescription = "Description of your image",
                                 modifier = modifierIcon
                             )
@@ -130,7 +130,7 @@ fun SearchAndFilterRowForChampsSmall(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                painterResource(id = R.drawable.heiler),
+                                painterResource(id = R.drawable.icon_heiler),
                                 contentDescription = "Description of your image",
                                 modifier = modifierIcon
                             )
@@ -148,7 +148,7 @@ fun SearchAndFilterRowForChampsSmall(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                painterResource(id = R.drawable.bruiser),
+                                painterResource(id = R.drawable.icon_bruiser),
                                 contentDescription = "Description of your image",
                                 modifier = modifierIcon
                             )

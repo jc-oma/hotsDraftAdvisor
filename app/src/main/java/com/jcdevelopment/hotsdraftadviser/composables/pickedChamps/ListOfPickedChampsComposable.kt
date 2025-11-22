@@ -45,7 +45,11 @@ fun ListOfPickedChampsComposable(
     Column() {
         LazyColumn {
             items(ownPickedChamps.size.coerceAtLeast(theirPickedChamps.size)) { i ->
-                Row(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surface)) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.surface)
+                ) {
                     if (ownPickedChamps.size > i) {
                         PickedChampItem(
                             Color.Blue,
@@ -79,7 +83,9 @@ fun ListOfPickedChampsComposable(
                 }
             }
         }
-        Row(modifier = Modifier.height(32.dp).padding(top = 2.dp)) {
+        Row(modifier = Modifier
+            .height(32.dp)
+            .padding(top = 2.dp)) {
             if (isStarrating) {
 
                 val ownScoreFlaot = ownPickScore.toFloat()
@@ -87,33 +93,38 @@ fun ListOfPickedChampsComposable(
                 val maxFloat = ownScoreFlaot.coerceAtLeast(theirScoreFlaot)
                 val starColor = if (!isSystemInDarkTheme()) Color.Black else Color.White
 
+                val ratingFloatOwn = if (maxFloat == 0f) 0f else ownScoreFlaot / maxFloat
                 StarRatingComposable(
-                    ratingFloat = ownScoreFlaot / maxFloat, modifier = Modifier
+                    ratingFloat = ratingFloatOwn, modifier = Modifier
                         .fillMaxHeight()
                         .weight(1f), starColorFilled = starColor
                 )
+                val ratingFloatTheir = if (maxFloat == 0f) 0f else theirScoreFlaot / maxFloat
                 StarRatingComposable(
-                    ratingFloat = theirScoreFlaot / maxFloat, modifier = Modifier
+                    ratingFloat = ratingFloatTheir, modifier = Modifier
                         .fillMaxHeight()
                         .weight(1f), starColorFilled = starColor
                 )
             } else {
                 Text(
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier
+                        .weight(1f)
                         .padding(end = 8.dp),
                     text = ownScorePercent.toString(),
                     textAlign = TextAlign.Right,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    modifier = Modifier.weight(0.5f)
+                    modifier = Modifier
+                        .weight(0.5f)
                         .padding(start = 8.dp),
                     text = "VS",
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier
+                        .weight(1f)
                         .padding(start = 8.dp),
                     text = theirScorePercent.toString(),
                     textAlign = TextAlign.Left,
@@ -127,7 +138,7 @@ fun ListOfPickedChampsComposable(
 
 @Preview
 @Composable
-fun ListOfPickedChampsComposablePreview() {
+private fun ListOfPickedChampsComposablePreview() {
     val textColor = "f8f8f9ff"
     val headlineColor = "6e35d8ff"
     val theirTeamColor = "5C1A1BFF"
@@ -140,6 +151,6 @@ fun ListOfPickedChampsComposablePreview() {
         removePick = { _, _ -> {} },
         ownPickScore = 321,
         theirPickScore = 83,
-        isStarrating = false
+        isStarrating = true
     )
 }

@@ -51,7 +51,7 @@ fun ChampLitePortraitItemComposable(
         ) {
 
             Image(
-                painter = painterResource(R.drawable.chen_round_portrait),
+                painter = painterResource(R.drawable.round_portrait_chen),
                 contentDescription = "Abathur",
                 modifier = Modifier
                     .size(69.dp)

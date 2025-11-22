@@ -33,6 +33,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -68,6 +69,7 @@ import com.jcdevelopment.hotsdraftadviser.composables.menus.DisclaimerComposable
 import com.jcdevelopment.hotsdraftadviser.composables.menus.FloatingActionButtonMainActivity
 import com.jcdevelopment.hotsdraftadviser.composables.menus.MenuComposable
 import com.jcdevelopment.hotsdraftadviser.composables.menus.tutorial.TutorialCarouselComposable
+import com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.ListOfBannedChampItem
 import com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.ListOfPickedChampsComposable
 import com.jcdevelopment.hotsdraftadviser.composables.searchbar.MapSearchBar
 import com.jcdevelopment.hotsdraftadviser.composables.videostream.VideoStreamComposable
@@ -104,7 +106,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val resetCounter by viewModel.resetCounter.collectAsState()
             val windowSizeClass =
-                androidx.compose.material3.windowsizeclass.calculateWindowSizeClass(this)
+                calculateWindowSizeClass(this)
             val isTablet = windowSizeClass.widthSizeClass > WindowWidthSizeClass.Compact
 
             HotsDraftAdviserTheme {
@@ -152,6 +154,9 @@ fun MainActivityComposable(
 
     val theirPickedChamps by viewModel.pickedTheirTeamChamps.collectAsState()
     val ownPickedChamps by viewModel.pickedOwnTeamChamps.collectAsState()
+    val bannedChamps by viewModel.bannedChamps.collectAsState()
+    val ownBannedChamps by viewModel.ownBannedChamps.collectAsState()
+    val theirsBannedChamps by viewModel.theirsBannedChamps.collectAsState()
     val minVersionCode by viewModel.minVersionCode.collectAsState()
 
     val screenBackgroundColor = "150e35ff"
@@ -456,6 +461,26 @@ fun MainActivityComposable(
             )*/
 
                     if (choosenMap.isNotEmpty()) {
+                        if (bannedChamps.isNotEmpty()) {
+                            Row(modifier = Modifier.padding(bottom = 4.dp)) {
+                                ListOfBannedChampItem(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .height(48.dp),
+                                    bannedChamps = ownBannedChamps,
+                                    teamSide = TeamSide.BANNEDOWN,
+                                    removeBan = { i, teamSide -> viewModel.removeBan(i, teamSide) }
+                                )
+                                ListOfBannedChampItem(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .height(48.dp),
+                                    bannedChamps = theirsBannedChamps,
+                                    teamSide = TeamSide.BANNEDTHEIR,
+                                    removeBan = { i, teamSide -> viewModel.removeBan(i, teamSide) }
+                                )
+                            }
+                        }
                         if (!(theirPickedChamps.isEmpty() && ownPickedChamps.isEmpty())) {
                             ListOfPickedChampsComposable(
                                 ownPickedChamps = ownPickedChamps,

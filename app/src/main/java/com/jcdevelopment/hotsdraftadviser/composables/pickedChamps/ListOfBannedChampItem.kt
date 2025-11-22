@@ -1,14 +1,13 @@
 package com.jcdevelopment.hotsdraftadviser.composables.pickedChamps
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,18 +22,21 @@ import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataSgtHammer
 fun ListOfBannedChampItem(
     modifier: Modifier = Modifier,
     bannedChamps: List<ChampData>,
-    removeBan: (Int, TeamSide) -> Unit,
-    painter: Painter
+    teamSide: TeamSide,
+    removeBan: (Int, TeamSide) -> Unit
 ) {
     LazyRow(modifier = modifier) {
         items(bannedChamps.size) { i ->
-            Box(modifier = Modifier.fillMaxSize()) {
+            Box(modifier = Modifier.fillMaxSize()
+                .padding(start = 8.dp)
+                .clickable(
+                    onClick = { removeBan(i, teamSide) },
+                )) {
                 Image(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 4.3.dp, end = 4.3.dp, bottom = 4.3.dp, top = 3.5.dp),
+                        .fillMaxSize(),
                     painter = painterResource(
-                        Utilitys.mapChampNameToRoundPortraitDrawable(
+                        Utilitys.mapChampNameToBannedPortraitDrawable(
                             bannedChamps[i].ChampName
                         )!!
                     ),
@@ -42,8 +44,7 @@ fun ListOfBannedChampItem(
                 )
                 Image(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 3.5.dp),
+                        .fillMaxSize(),
                     painter = painterResource(R.drawable.frame_ban),
                     contentDescription = ""
                 )
@@ -58,9 +59,7 @@ private fun ListOfBannedChampItemPreview() {
     ListOfBannedChampItem(
         modifier = Modifier.fillMaxSize(),
         bannedChamps = listOf(exampleChampDataSgtHammer, exampleChampDataAbathur),
-        removeBan = { _, _ -> {} },
-        painter = painterResource(
-            id = R.drawable.round_portrait_sgthammer
-        )
+        teamSide = TeamSide.OWN,
+        removeBan = { _, _ -> {} }
     )
 }

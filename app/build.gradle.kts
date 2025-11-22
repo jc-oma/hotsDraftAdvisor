@@ -15,8 +15,8 @@ android {
         applicationId = "com.jcdevelopment.hotsdraftadviser"
         minSdk = 26
         targetSdk = 36
-        versionCode = 29
-        versionName = "1.0.3"
+        versionCode = 30
+        versionName = "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

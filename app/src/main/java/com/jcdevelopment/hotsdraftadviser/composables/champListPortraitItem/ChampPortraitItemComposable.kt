@@ -362,7 +362,7 @@ private fun ChampPortraitComposablePreview() {
         updateChampSearchQuery = {},
         ownBan = {},
         theirBan = {},
-        champDrawable = R.drawable.sgthammer_card_portrait,
+        champDrawable = R.drawable.card_portrait_sgthammer,
         index = 0,
         mapFloat = 0.7f,
         ownTeamFloat = 0.4f,
