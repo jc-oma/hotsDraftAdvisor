@@ -30,9 +30,8 @@ import com.jcdevelopment.hotsdraftadviser.TeamSide
 fun VideoStreamComposable(
     viewModel: VideoStreamViewModel = viewModel(),
     onRecognizedTeamPicks: (List<Pair<String, TeamSide>>) -> Unit = {},
-    onRecognizedMapsText: (List<String>) -> Unit = {}
+    onRecognizedMapsText: (List<String>) -> Unit = {},
 ) {
-    val context = LocalContext.current
     // Hole den Player aus dem ViewModel. collectAsState sorgt für Recomposition bei Änderungen.
     val playerInstance by viewModel.player.collectAsState()
     val isPlayerActuallyPlaying: Boolean by viewModel.isActuallyPlaying.collectAsState()
@@ -47,7 +46,47 @@ fun VideoStreamComposable(
     val recognizedTextsLeft by viewModel.recognizedTextsLeft.collectAsState()
     val recognizedTextsRight by viewModel.recognizedTextsRight.collectAsState()
     val recognizedTextsTop by viewModel.recognizedTextsTop.collectAsState()
+    VideoStreamComposable(
+        onRecognizedTeamPicks = { it -> onRecognizedTeamPicks(it) },
+        onRecognizedMapsText = { it -> onRecognizedMapsText(it) },
+        playerInstance = playerInstance,
+        isPlayerActuallyPlaying = isPlayerActuallyPlaying,
+        isStreaming = isStreaming,
+        errorMessage = errorMessage,
+        featureMatchResults = featureMatchResults,
+        playerViewRef = playerViewRef,
+        recognizedTexts = recognizedTexts,
+        recognizedTextsLeft = recognizedTextsLeft,
+        recognizedTextsRight = recognizedTextsRight,
+        recognizedTextsTop = recognizedTextsTop,
+        stopFrameProcessing = { viewModel.stopFrameProcessing() },
+        startFrameProcessing = { playerView -> viewModel.startFrameProcessing(playerView) },
+        stopStreaming = { viewModel.stopStreaming() },
+        startStreaming = { viewModel.startStreaming() }
+    )
+}
 
+@Composable
+fun VideoStreamComposable(
+    onRecognizedTeamPicks: (List<Pair<String, TeamSide>>) -> Unit = {},
+    onRecognizedMapsText: (List<String>) -> Unit = {},
+    playerInstance: ExoPlayer?,
+    isPlayerActuallyPlaying: Boolean,
+    isStreaming: Boolean,
+    errorMessage: String?,
+    featureMatchResults: Map<String, Int>,
+    playerViewRef: PlayerView?,
+    recognizedTexts: List<String>,
+    recognizedTextsLeft: List<String>,
+    recognizedTextsRight: List<String>,
+    recognizedTextsTop: List<String>,
+    stopFrameProcessing: () -> Unit,
+    startFrameProcessing: (PlayerView) -> Unit,
+    stopStreaming: () -> Unit,
+    startStreaming: () -> Unit
+) {
+    val context = LocalContext.current
+    var playerViewRefTmp by remember { mutableStateOf(playerViewRef) }
 
     LaunchedEffect(recognizedTextsLeft, recognizedTextsRight, recognizedTextsTop) {
         val combinedList = mutableListOf<Pair<String, TeamSide>>()
@@ -69,7 +108,7 @@ fun VideoStreamComposable(
             when (event) {
                 Lifecycle.Event.ON_PAUSE -> {
                     playerInstance?.pause()
-                    viewModel.stopFrameProcessing()
+                    stopFrameProcessing()
                 }
 
                 Lifecycle.Event.ON_RESUME -> {
@@ -85,7 +124,7 @@ fun VideoStreamComposable(
                 }
 
                 Lifecycle.Event.ON_DESTROY -> {
-                    viewModel.stopFrameProcessing()
+                    stopFrameProcessing()
                     // Player wird im VM onCleared freigegeben
                 }
 
@@ -100,19 +139,19 @@ fun VideoStreamComposable(
 
     //TODO CAMERA & TensorFloor
     LaunchedEffect(isPlayerActuallyPlaying, playerViewRef) {
-        val viewAvailable = playerViewRef != null
+        val viewAvailable = playerViewRefTmp != null
         if (isPlayerActuallyPlaying && viewAvailable) {
             Log.d(
                 "VideoStreamingScreen",
                 "LaunchedEffect: Player IS ACTUALLY playing AND view is available. Starting frame processing."
             )
-            playerViewRef?.let { pv -> viewModel.startFrameProcessing(pv) }
+            playerViewRefTmp?.let { startFrameProcessing(it) }
         } else {
             Log.d(
                 "VideoStreamingScreen",
                 "LaunchedEffect: Conditions not met (isActuallyPlaying=$isPlayerActuallyPlaying, viewAvailable=$viewAvailable). Stopping frame processing."
             )
-            viewModel.stopFrameProcessing()
+            stopFrameProcessing()
         }
     }
 
@@ -136,7 +175,7 @@ fun VideoStreamComposable(
      */
 
     val isCollapsed = remember { mutableStateOf(false) }
-    val modifier = Modifier.drawWithContent{
+    val modifier = Modifier.drawWithContent {
         if (!isCollapsed.value) { // Nur zeichnen, wenn nicht eingeklappt
             drawContent()
         }
@@ -165,7 +204,7 @@ fun VideoStreamComposable(
                                 "VideoStreamingScreen",
                                 "AndroidView Factory: PlayerView created and ref set."
                             )
-                            playerViewRef = view // WICHTIG: Referenz hier setzen
+                            playerViewRefTmp = view // WICHTIG: Referenz hier setzen
                             // Kein direkter Start mehr hier, LaunchedEffect übernimmt das
                         }
                     },
@@ -203,10 +242,10 @@ fun VideoStreamComposable(
                 onClick = {
                     if (playerInstance?.isPlaying == true) {
                         Log.d("VideoStreamingScreen", "Stop Streaming button clicked.")
-                        viewModel.stopStreaming() // Stoppt Player, LaunchedEffect stoppt Frame Processing
+                        stopStreaming() // Stoppt Player, LaunchedEffect stoppt Frame Processing
                     } else {
                         Log.d("VideoStreamingScreen", "Start Streaming button clicked.")
-                        viewModel.startStreaming() // Startet Player, LaunchedEffect startet Frame Processing wenn Bedingungen erfüllt
+                        startStreaming() // Startet Player, LaunchedEffect startet Frame Processing wenn Bedingungen erfüllt
                     }
                 },
                 enabled = playerInstance != null,
@@ -235,5 +274,5 @@ fun VideoStreamComposable(
 
 @Preview(showBackground = true)
 @Composable
-private fun VideoStreamViewModelPreview(){
+private fun VideoStreamViewModelPreview() {
 }
