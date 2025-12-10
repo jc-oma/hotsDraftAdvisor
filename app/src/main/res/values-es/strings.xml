@@ -7,6 +7,7 @@
     <string name="main_activity_maps_suchen">Buscar un mapa…</string>
     <string name="main_activity_champs_suchen">Buscar un campeón…</string>
     <string name="main_acitivity_menu_disclaimer">Descargo de responsabilidad</string>
+    <string name="main_acitivity_menu_streaming_mode">Cambiar el modo de transmisión</string>
     <string name="main_acitivity_menu_starrating">Puntuación por Estrellas</string>
     <string name="main_acitivity_menu_number_rating">Puntuación Numérica</string>
     <string name="main_acitivity_pickscore_own_team">Puntuación de Pique Equipo Propio</string>

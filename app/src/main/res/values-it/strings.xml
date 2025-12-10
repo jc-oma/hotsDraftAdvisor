@@ -7,6 +7,7 @@
     <string name="main_activity_maps_suchen">Cerca una mappa…</string>
     <string name="main_activity_champs_suchen">Cerca un campione…</string>
     <string name="main_acitivity_menu_disclaimer">Dichiarazione di non responsabilità</string>
+    <string name="main_acitivity_menu_streaming_mode">Kambia Modo di Streaming</string>
     <string name="main_acitivity_menu_starrating">Valutazione a Stelle</string>
     <string name="main_acitivity_menu_number_rating">Valutazione Numerica</string>
     <string name="main_acitivity_pickscore_own_team">Punteggio Scelta Squadra Propria</string>

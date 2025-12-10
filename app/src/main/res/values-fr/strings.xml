@@ -7,6 +7,7 @@
     <string name="main_activity_maps_suchen">Rechercher des cartes…</string>
     <string name="main_activity_champs_suchen">Rechercher des héros…</string>
     <string name="main_acitivity_menu_disclaimer">Mentions légales</string>
+    <string name="main_acitivity_menu_streaming_mode">Changer de mode de diffusion</string>
     <string name="main_acitivity_menu_starrating">Évaluation par étoiles</string>
     <string name="main_acitivity_menu_number_rating">Évaluation par chiffres</string>
     <string name="main_acitivity_pickscore_own_team">Score de l\'équipe bleue</string>

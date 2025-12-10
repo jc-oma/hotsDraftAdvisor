@@ -7,6 +7,7 @@
     <string name="main_activity_maps_suchen">Търсене на карта…</string>
     <string name="main_activity_champs_suchen">Търсене на герой…</string>
     <string name="main_acitivity_menu_disclaimer">Отказ от отговорност</string>
+    <string name="main_acitivity_menu_streaming_mode">Превключване на режим на стрийминг</string>
     <string name="main_acitivity_menu_starrating">Оценка със звезди</string>
     <string name="main_acitivity_menu_number_rating">Числова оценка</string>
     <string name="main_acitivity_pickscore_own_team">Резултат на собствения отбор</string>

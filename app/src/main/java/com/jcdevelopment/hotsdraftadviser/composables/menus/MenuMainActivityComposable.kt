@@ -27,6 +27,7 @@ fun MenuComposable(
     onDisclaymer: () -> Unit,
     onToggleListMode: () -> Unit,
     onToggleStarRating: () -> Unit,
+    onToggleStreaming: () -> Unit,
     onTutorial: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -49,6 +50,13 @@ fun MenuComposable(
                 text = { Text(stringResource(R.string.main_acitivity_menu_disclaimer)) },
                 onClick = {
                     onDisclaymer()
+                    expanded = false
+                }
+            )
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.main_acitivity_menu_streaming_mode)) },
+                onClick = {
+                    onToggleStreaming()
                     expanded = false
                 }
             )
@@ -89,6 +97,7 @@ fun MenuComposable(
 fun MenuMainActivitPreview() {
     MenuComposable(
         onDisclaymer = {}, onToggleListMode = {}, onTutorial = {},
-        onToggleStarRating = {}, isListMode = true, isStarRating = true
+        onToggleStarRating = {}, isListMode = true, isStarRating = true,
+        onToggleStreaming = {}
     )
 }

@@ -50,6 +50,8 @@ android {
 
 dependencies {
     implementation(libs.hilt.android)
+    implementation(libs.play.services.mlkit.text.recognition.common)
+    implementation(libs.play.services.mlkit.text.recognition)
     ksp(libs.hilt.compiler)
 
     implementation(libs.play.services.ads)

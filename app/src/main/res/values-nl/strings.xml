@@ -7,6 +7,7 @@
     <string name="main_activity_maps_suchen">Zoek naar een kaart…</string>
     <string name="main_activity_champs_suchen">Zoek naar een held…</string>
     <string name="main_acitivity_menu_disclaimer">Disclaimer</string>
+    <string name="main_acitivity_menu_streaming_mode">Schakel streamingmodus</string>
     <string name="main_acitivity_menu_starrating">Sterbeoordeling</string>
     <string name="main_acitivity_menu_number_rating">Cijferbeoordeling</string>
     <string name="main_acitivity_pickscore_own_team">PickScore Eigen Team</string>

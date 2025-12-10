@@ -7,6 +7,7 @@
     <string name="main_activity_maps_suchen">Поиск карты…</string>
     <string name="main_activity_champs_suchen">Поиск героя…</string>
     <string name="main_acitivity_menu_disclaimer">Отказ от ответственности</string>
+    <string name="main_acitivity_menu_streaming_mode">Переключить режим потоковой передачи</string>
     <string name="main_acitivity_menu_starrating">Оценка звёздами</string>
     <string name="main_acitivity_menu_number_rating">Числовая оценка</string>
     <string name="main_acitivity_pickscore_own_team">Счёт выбора своей команды</string>

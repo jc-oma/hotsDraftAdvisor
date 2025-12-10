@@ -40,6 +40,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
 import java.io.IOException
 import kotlin.collections.List
+import kotlin.math.min
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
     private val db = AppDatabase.getDatabase(application)
@@ -109,6 +110,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     private val _filterMapsString = MutableStateFlow<String>("")
     private val _filterChampString = MutableStateFlow<String>("")
+
+    private val _mapList = MutableStateFlow<List<String>>(emptyList())
     private val _choosenMap = MutableStateFlow<String>("")
     private val _sortState = MutableStateFlow<SortState>(SortState.OWNPOINTS)
     private val _roleFilter = MutableStateFlow<List<RoleEnum>>(emptyList())
@@ -151,7 +154,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val targetState: StateFlow<Boolean> = _targetState
 
     val allChampsData = _allChampsData.asStateFlow()
-    val mapList: StateFlow<List<String>> = getSortedUniqueMaps()
+    val mapList: StateFlow<List<String>> = _mapList.asStateFlow()
     val filterMapsString: StateFlow<String> = _filterMapsString.asStateFlow()
     val filteredMaps: StateFlow<List<String>> = filterMapsByString(mapList, filterMapsString)
 
@@ -293,6 +296,20 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
 
         _targetState.value = false
+    }
+
+    fun setChosenMapByTextRecognition(name: String) {
+        if (/*_choosenMap.value.isEmpty() && */name.isNotEmpty()) {
+            val match = findClosestMatch(name.lowercase(), _mapList.value)
+            if (match != null) {
+                viewModelScope.launch {
+                    delay(550)
+                    _choosenMap.value = match
+                }
+            }
+
+            _targetState.value = false
+        }
     }
 
 
@@ -699,26 +716,24 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun getSortedUniqueMaps(): StateFlow<List<String>> {
-        val list = _allChampsData.map { champs ->
-            champs.map { champ ->
-                champ.MapScore.map { map ->
-                    map.MapName
-                }.distinct()
-                    .sorted()
+    fun getSortedUniqueMaps(): MutableStateFlow<List<String>> {
+        viewModelScope.launch {
+            _allChampsData.map { champs ->
+                champs.map { champ ->
+                    champ.MapScore.map { map ->
+                        map.MapName
+                    }.distinct()
+                        .sorted()
+                }
             }
+                .map { nestedList ->
+                    nestedList.flatten()
+                        .distinct()
+                }
+                .distinctUntilChanged()
+                .collect { _mapList.value = it }
         }
-            .map { nestedList ->
-                nestedList.flatten()
-                    .distinct()
-            }
-            .distinctUntilChanged()
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.Lazily,
-                initialValue = emptyList()
-            )
-        return list
+        return _mapList
     }
 
     private fun filterMapsByString(
@@ -784,6 +799,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     setUniqueMapsInMapScore()
                     setUniqueCahmpsInChampScores()
                     _allChampsData.value = _allChampsData.value.map { champ ->
+                        getSortedUniqueMaps()
                         val application = getApplication<Application>()
                         champ.copy(
                             difficulty = Utilitys.mapDifficultyForChamp(champ.ChampName)!!,
@@ -868,11 +884,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun toggleStreaming() {
-        val currentValue = isStreamingEnabled.value // Hole den aktuellen Wert vom StateFlow
+        val currentValue = isStreamingEnabled.value
         val newValue = !currentValue
         viewModelScope.launch {
             streamingSettingsRepository.updateStreamingEnabled(newValue)
-            // Der StateFlow `isStreamingEnabled` wird automatisch durch den Flow aus dem Repo aktualisiert.
             Log.d("VideoStreamViewModel", "Toggled isStreamingEnabled to: $newValue (saved to DB)")
         }
     }
@@ -906,6 +921,21 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             }
         }
     }
+
+    fun pickByTextRecognition(teamPairs: List<Pair<String, TeamSide>>) {
+        teamPairs.forEach { teamPair ->
+            //TODO "WÄHLT", "PICKING" usw. returnen
+            if (teamPair.first == "WÄHLT") return@forEach
+            val champNames = _allChampsData.value.map { it.ChampName }
+            val match = findClosestMatch(teamPair.first.lowercase(), champNames)
+            val index = _distinctchoosableChampList.value.indexOfFirst { it.ChampName == match }
+            val teamSide = teamPair.second
+
+            if (index != -1) {
+                pickChampForTeam(index = index, teamSide = teamSide)
+            }
+        }
+    }
 }
 
 class MainActivityViewModelFactory(private val application: Application) :
@@ -929,4 +959,29 @@ enum class SortState {
 
 enum class Difficulty {
     EASY, MEDIUM, HARD, EXTREME
+}
+
+fun levenshtein(a: String, b: String): Int {
+    val dp = Array(a.length + 1) { IntArray(b.length + 1) }
+
+    for (i in 0..a.length) dp[i][0] = i
+    for (j in 0..b.length) dp[0][j] = j
+
+    for (i in 1..a.length) {
+        for (j in 1..b.length) {
+            val cost = if (a[i - 1] == b[j - 1]) 0 else 1
+            dp[i][j] = min(
+                min(dp[i - 1][j] + 1, dp[i][j - 1] + 1),
+                dp[i - 1][j - 1] + cost
+            )
+        }
+    }
+    return dp[a.length][b.length]
+}
+
+// Function to find the closest match from a list
+fun findClosestMatch(target: String, candidates: List<String>): String? {
+    if (candidates.isEmpty()) return null
+
+    return candidates.minByOrNull { levenshtein(target.lowercase(), it.lowercase()) }
 }

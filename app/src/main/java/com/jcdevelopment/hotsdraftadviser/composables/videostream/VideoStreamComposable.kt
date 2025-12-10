@@ -1,25 +1,37 @@
 package com.jcdevelopment.hotsdraftadviser.composables.videostream
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerView
+import com.jcdevelopment.hotsdraftadviser.TeamSide
 
-// Composable für die Videoanzeige
 @Composable
-fun VideoStreamComposable(viewModel: VideoStreamViewModel = viewModel()) {
+fun VideoStreamComposable(
+    viewModel: VideoStreamViewModel = viewModel(),
+    onRecognizedTeamPicks: (List<Pair<String, TeamSide>>) -> Unit = {},
+    onRecognizedMapsText: (List<String>) -> Unit = {}
+) {
     val context = LocalContext.current
     // Hole den Player aus dem ViewModel. collectAsState sorgt für Recomposition bei Änderungen.
     val playerInstance by viewModel.player.collectAsState()
@@ -32,18 +44,34 @@ fun VideoStreamComposable(viewModel: VideoStreamViewModel = viewModel()) {
     var playerViewRef: PlayerView? by remember { mutableStateOf(null) }
 
     val recognizedTexts by viewModel.recognizedTexts.collectAsState()
+    val recognizedTextsLeft by viewModel.recognizedTextsLeft.collectAsState()
+    val recognizedTextsRight by viewModel.recognizedTextsRight.collectAsState()
+    val recognizedTextsTop by viewModel.recognizedTextsTop.collectAsState()
+
+
+    LaunchedEffect(recognizedTextsLeft, recognizedTextsRight, recognizedTextsTop) {
+        val combinedList = mutableListOf<Pair<String, TeamSide>>()
+        combinedList.addAll(recognizedTextsLeft.map { it to TeamSide.OWN })
+        combinedList.addAll(recognizedTextsRight.map { it to TeamSide.THEIR })
+        onRecognizedTeamPicks(combinedList)
+        onRecognizedMapsText(recognizedTextsTop)
+    }
 
     // Lebenszyklus-Management für den PlayerView und den ExoPlayer
     // (besonders wichtig, wenn der Player nicht im ViewModel wäre, aber gute Praxis)
-    val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     // Lifecycle Management für Player Pause/Resume und Zerstörung
-    DisposableEffect(lifecycleOwner, playerInstance) { // playerViewRef hier nicht mehr als Key nötig
+    DisposableEffect(
+        lifecycleOwner,
+        playerInstance
+    ) { // playerViewRef hier nicht mehr als Key nötig
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
                 Lifecycle.Event.ON_PAUSE -> {
                     playerInstance?.pause()
                     viewModel.stopFrameProcessing()
                 }
+
                 Lifecycle.Event.ON_RESUME -> {
                     // Player ggf. wieder starten, wenn er playWhenReady hat
                     if (playerInstance?.playWhenReady == true &&
@@ -55,10 +83,12 @@ fun VideoStreamComposable(viewModel: VideoStreamViewModel = viewModel()) {
                     }
                     // Das eigentliche Starten der Frame-Verarbeitung wird nun vom LaunchedEffect unten gehandhabt
                 }
+
                 Lifecycle.Event.ON_DESTROY -> {
                     viewModel.stopFrameProcessing()
                     // Player wird im VM onCleared freigegeben
                 }
+
                 else -> {}
             }
         }
@@ -69,18 +99,22 @@ fun VideoStreamComposable(viewModel: VideoStreamViewModel = viewModel()) {
     }
 
     //TODO CAMERA & TensorFloor
-    /*
     LaunchedEffect(isPlayerActuallyPlaying, playerViewRef) {
         val viewAvailable = playerViewRef != null
         if (isPlayerActuallyPlaying && viewAvailable) {
-            Log.d("VideoStreamingScreen", "LaunchedEffect: Player IS ACTUALLY playing AND view is available. Starting frame processing.")
+            Log.d(
+                "VideoStreamingScreen",
+                "LaunchedEffect: Player IS ACTUALLY playing AND view is available. Starting frame processing."
+            )
             playerViewRef?.let { pv -> viewModel.startFrameProcessing(pv) }
         } else {
-            Log.d("VideoStreamingScreen", "LaunchedEffect: Conditions not met (isActuallyPlaying=$isPlayerActuallyPlaying, viewAvailable=$viewAvailable). Stopping frame processing.")
+            Log.d(
+                "VideoStreamingScreen",
+                "LaunchedEffect: Conditions not met (isActuallyPlaying=$isPlayerActuallyPlaying, viewAvailable=$viewAvailable). Stopping frame processing."
+            )
             viewModel.stopFrameProcessing()
         }
     }
-     */
 
     //TODO CAMERA & TensorFloor
     // Effekt zum Starten/Stoppen der Frame-Verarbeitung basierend auf Player-Status UND playerViewRef
@@ -101,9 +135,15 @@ fun VideoStreamComposable(viewModel: VideoStreamViewModel = viewModel()) {
     }
      */
 
+    val isCollapsed = remember { mutableStateOf(false) }
+    val modifier = Modifier.drawWithContent{
+        if (!isCollapsed.value) { // Nur zeichnen, wenn nicht eingeklappt
+            drawContent()
+        }
+    }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -111,7 +151,7 @@ fun VideoStreamComposable(viewModel: VideoStreamViewModel = viewModel()) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(16 / 9f) // Oder eine andere gewünschte Aspect Ratio
+                .aspectRatio(16 / 9f)
                 .padding(8.dp)
         ) {
             if (playerInstance != null) {
@@ -121,17 +161,23 @@ fun VideoStreamComposable(viewModel: VideoStreamViewModel = viewModel()) {
                             player = playerInstance
                             useController = false
                         }.also { view ->
-                            Log.d("VideoStreamingScreen", "AndroidView Factory: PlayerView created and ref set.")
+                            Log.d(
+                                "VideoStreamingScreen",
+                                "AndroidView Factory: PlayerView created and ref set."
+                            )
                             playerViewRef = view // WICHTIG: Referenz hier setzen
                             // Kein direkter Start mehr hier, LaunchedEffect übernimmt das
                         }
                     },
                     update = { view ->
-                        Log.d("VideoStreamingScreen", "AndroidView Update: view.player = playerInstance.")
+                        Log.d(
+                            "VideoStreamingScreen",
+                            "AndroidView Update: view.player = playerInstance."
+                        )
                         view.player = playerInstance
                         // Kein direkter Start mehr hier, LaunchedEffect übernimmt das
                     },
-                    modifier = Modifier.fillMaxSize()
+                    modifier = modifier.fillMaxSize()
                 )
             } else {
                 Text("Player wird initialisiert...")
@@ -140,7 +186,19 @@ fun VideoStreamComposable(viewModel: VideoStreamViewModel = viewModel()) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Row( /* ... Start/Stop Button ... */ ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                Icons.Default.ArrowDropUp,
+                contentDescription = "Description of your image",
+                modifier = Modifier
+                    .clickable(
+                        onClick = { isCollapsed.value = !isCollapsed.value }
+                    )
+                    .weight(1f),
+            )
             Button(
                 onClick = {
                     if (playerInstance?.isPlaying == true) {
@@ -151,15 +209,19 @@ fun VideoStreamComposable(viewModel: VideoStreamViewModel = viewModel()) {
                         viewModel.startStreaming() // Startet Player, LaunchedEffect startet Frame Processing wenn Bedingungen erfüllt
                     }
                 },
-                enabled = playerInstance != null
+                enabled = playerInstance != null,
+                modifier = Modifier.weight(2f)
             ) {
                 Text(if (playerInstance?.isPlaying == true) "Stop Streaming" else "Start Streaming")
             }
+            Spacer(Modifier.weight(1f))
         }
 
         Spacer(modifier = Modifier.height(10.dp))
         recognizedTexts.forEach { text ->
             Text(text = "Erkannt: $text")
+            Log.d("VideoStreamingScreen", "Text recognized: $text")
+
         }
         errorMessage?.let {
             Text(
@@ -169,4 +231,9 @@ fun VideoStreamComposable(viewModel: VideoStreamViewModel = viewModel()) {
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun VideoStreamViewModelPreview(){
 }

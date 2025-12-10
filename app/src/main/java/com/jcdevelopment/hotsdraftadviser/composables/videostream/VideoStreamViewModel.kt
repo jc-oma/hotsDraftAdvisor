@@ -2,7 +2,6 @@ package com.jcdevelopment.hotsdraftadviser.composables.videostream
 
 import android.app.Application
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -50,6 +49,10 @@ import org.opencv.imgproc.Imgproc
 import androidx.core.graphics.createBitmap
 import com.jcdevelopment.hotsdraftadviser.R
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.TextRecognizer
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -69,7 +72,8 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage.asStateFlow()
 
-    private val _featureMatchResults = MutableStateFlow<Map<String, Int>>(emptyMap()) // Name -> Anzahl Matches
+    private val _featureMatchResults =
+        MutableStateFlow<Map<String, Int>>(emptyMap()) // Name -> Anzahl Matches
     val featureMatchResults: StateFlow<Map<String, Int>> = _featureMatchResults.asStateFlow()
     private var frameProcessingJob: Job? = null
 
@@ -91,16 +95,21 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     private val udpPort = 1234 // UDP-Port für OBS
 
     //TODO CAMERA & TensorFloor
-    /*
-//text recognition
+
     private val textRecognizer: TextRecognizer by lazy {
         TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
     }
-     */
+
 
     // StateFlow für die erkannten Texte (z.B. eine Liste von Strings oder strukturiertere Daten)
     private val _recognizedTexts = MutableStateFlow<List<String>>(emptyList())
+    private val _recognizedTextsLeft = MutableStateFlow<List<String>>(emptyList())
+    private val _recognizedTextsRight = MutableStateFlow<List<String>>(emptyList())
+    private val _recognizedMap = MutableStateFlow<List<String>>(emptyList())
     val recognizedTexts: StateFlow<List<String>> = _recognizedTexts.asStateFlow()
+    val recognizedTextsLeft: StateFlow<List<String>> = _recognizedTextsLeft.asStateFlow()
+    val recognizedTextsRight: StateFlow<List<String>> = _recognizedTextsRight.asStateFlow()
+    val recognizedTextsTop: StateFlow<List<String>> = _recognizedMap.asStateFlow()
 
 
     init {
@@ -180,14 +189,17 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                             Log.d(TAG, "Player state: IDLE")
                             _isStreaming.value = false
                         }
+
                         Player.STATE_BUFFERING -> {
                             Log.d(TAG, "Player state: BUFFERING")
                             _isStreaming.value = false // Oder einen eigenen Ladezustand anzeigen
                         }
+
                         Player.STATE_READY -> {
                             Log.d(TAG, "Player state: READY")
                             _isStreaming.value = true
                         }
+
                         Player.STATE_ENDED -> {
                             Log.d(TAG, "Player state: ENDED")
                             _isStreaming.value = false
@@ -219,7 +231,8 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
 
                 override fun onPlayerError(error: PlaybackException) {
                     Log.e(TAG, "Player Error: ${error.message}", error)
-                    _errorMessage.value = "Player Error: ${error.errorCodeName} - ${error.localizedMessage}"
+                    _errorMessage.value =
+                        "Player Error: ${error.errorCodeName} - ${error.localizedMessage}"
                     _isStreaming.value = false
                     // Optional: Versuche, den Player neu zu initialisieren oder Fehler zu behandeln
                     // cleanUpPlayer()
@@ -242,7 +255,8 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                 return
             }
 
-            val udpListenerUrl = "udp://0.0.0.0:$udpPort" // Lausche auf allen Interfaces auf Port 1234
+            val udpListenerUrl =
+                "udp://0.0.0.0:$udpPort" // Lausche auf allen Interfaces auf Port 1234
             Log.i(TAG, "Attempting to start streaming from UDP listener: $udpListenerUrl")
             _errorMessage.value = null
 
@@ -253,16 +267,24 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                 dataSourceFactory, // Hier die DefaultDataSource.Factory übergeben
                 DefaultExtractorsFactory()
             )
-            val mediaSource: MediaSource = mediaSourceFactory.createMediaSource(MediaItem.fromUri(udpListenerUrl))
+            val mediaSource: MediaSource =
+                mediaSourceFactory.createMediaSource(MediaItem.fromUri(udpListenerUrl))
 
             viewModelScope.launch {
                 try {
                     exoPlayer.setMediaSource(mediaSource)
                     exoPlayer.prepare()
                     exoPlayer.playWhenReady = true
-                    Log.i(TAG, "ExoPlayer.prepare() called with UdpDataSource (via DefaultDataSource). Waiting for stream...")
+                    Log.i(
+                        TAG,
+                        "ExoPlayer.prepare() called with UdpDataSource (via DefaultDataSource). Waiting for stream..."
+                    )
                 } catch (e: Exception) {
-                    Log.e(TAG, "Error setting up media source or preparing player with UdpDataSource", e)
+                    Log.e(
+                        TAG,
+                        "Error setting up media source or preparing player with UdpDataSource",
+                        e
+                    )
                     _errorMessage.value = "Setup Error (UDP): ${e.localizedMessage}"
                 }
             }
@@ -281,7 +303,6 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
 
     // In VideoStreamViewModel.kt
 //TODO CAMERA & TensorFloor
-    /*
     fun startFrameProcessing(playerView: PlayerView, intervalMs: Long = 1000) {
         if (frameProcessingJob?.isActive == true) {
             Log.w(TAG, "Frame processing already active.")
@@ -297,91 +318,112 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
         val handler = Handler(Looper.getMainLooper())
 
         // Die Frame-Verarbeitungs-Coroutine läuft auf Dispatchers.Default für CPU-intensive Arbeit (OpenCV)
-        frameProcessingJob = viewModelScope.launch(Dispatchers.Default) { // Use a background dispatcher
-            Log.i(TAG, "Starting frame processing loop for ML Kit on ${Thread.currentThread().name}...")
-            try {
-                while (isActive) {
-                    var isPlayerPlayingAndSurfaceValid = false
-                    withContext(Dispatchers.Main) { // Wechsle zum Hauptthread für Player-Zugriff
-                        isPlayerPlayingAndSurfaceValid =
-                            player.value?.isPlaying == true && surfaceView.holder?.surface?.isValid == true
-                    }
+        frameProcessingJob =
+            viewModelScope.launch(Dispatchers.Default) { // Use a background dispatcher
+                Log.i(
+                    TAG,
+                    "Starting frame processing loop for ML Kit on ${Thread.currentThread().name}..."
+                )
+                try {
+                    while (isActive) {
+                        var isPlayerPlayingAndSurfaceValid = false
+                        withContext(Dispatchers.Main) { // Wechsle zum Hauptthread für Player-Zugriff
+                            isPlayerPlayingAndSurfaceValid =
+                                player.value?.isPlaying == true && surfaceView.holder?.surface?.isValid == true
+                        }
 
-                    if (!isPlayerPlayingAndSurfaceValid) {
-                        Log.d(TAG, "Player not playing or surface not valid on ${Thread.currentThread().name}. Skipping frame.")
-                        // Das delay kann weiterhin im DefaultDispatcher bleiben
-                        delay(intervalMs)
-                        continue
-                    }
-
-                    // Create bitmap for each frame
-                    val currentFrameBitmap = createBitmap(
-                        surfaceView.width.coerceAtLeast(1),
-                        surfaceView.height.coerceAtLeast(1)
-                    )
-
-                    var copySuccess: Boolean = false
-
-                    try {
-                        // Using suspendCoroutine for PixelCopy to make it suspending
-                        copySuccess = suspendCoroutine { continuation ->
-                            PixelCopy.request(
-                                surfaceView, currentFrameBitmap,
-                                { result ->
-                                    if (result == PixelCopy.SUCCESS) {
-                                        continuation.resume(true)
-                                    } else {
-                                        Log.e(TAG, "PixelCopy failed with result: $result")
-                                        continuation.resume(false)
-                                    }
-                                },
-                                handler // Ensure handler is on a thread with a Looper
+                        if (!isPlayerPlayingAndSurfaceValid) {
+                            Log.d(
+                                TAG,
+                                "Player not playing or surface not valid on ${Thread.currentThread().name}. Skipping frame."
                             )
+                            // Das delay kann weiterhin im DefaultDispatcher bleiben
+                            delay(intervalMs)
+                            continue
                         }
 
-                        if (copySuccess && isActive) {
-                            Log.d(TAG, "PixelCopy success. Processing frame with ML Kit.")
-                            // Directly await the suspend function.
-                            // The bitmap is not recycled until after this function returns.
-                            processFrameWithMLKitTextRecognition(currentFrameBitmap)
-                        } else if (!copySuccess) {
-                            Log.w(TAG, "PixelCopy did not succeed.")
+                        // Create bitmap for each frame
+                        val currentFrameBitmap = createBitmap(
+                            surfaceView.width.coerceAtLeast(1),
+                            surfaceView.height.coerceAtLeast(1)
+                        )
+
+                        var copySuccess: Boolean = false
+
+                        try {
+                            // Using suspendCoroutine for PixelCopy to make it suspending
+                            copySuccess = suspendCoroutine { continuation ->
+                                PixelCopy.request(
+                                    surfaceView, currentFrameBitmap,
+                                    { result ->
+                                        if (result == PixelCopy.SUCCESS) {
+                                            continuation.resume(true)
+                                        } else {
+                                            Log.e(TAG, "PixelCopy failed with result: $result")
+                                            continuation.resume(false)
+                                        }
+                                    },
+                                    handler // Ensure handler is on a thread with a Looper
+                                )
+                            }
+
+                            if (copySuccess && isActive) {
+                                Log.d(TAG, "PixelCopy success. Processing frame with ML Kit.")
+                                // Directly await the suspend function.
+                                // The bitmap is not recycled until after this function returns.
+                                processFrameWithMLKitTextRecognition(currentFrameBitmap)
+                            } else if (!copySuccess) {
+                                Log.w(TAG, "PixelCopy did not succeed.")
+                                // No need to recycle here, finally block will handle it
+                            }
+                        } catch (e: Exception) {
+                            Log.e(
+                                TAG,
+                                "Error during PixelCopy or ML Kit processing: ${e.message}",
+                                e
+                            )
                             // No need to recycle here, finally block will handle it
+                        } finally {
+                            // This is the ONLY place this specific bitmap should be recycled.
+                            // It happens after PixelCopy and processFrameWithMLKitTextRecognition (if successful)
+                            // have completed for this iteration.
+                            if (!currentFrameBitmap.isRecycled) {
+                                Log.d(
+                                    TAG,
+                                    "Recycling bitmap in loop iteration for ${
+                                        System.identityHashCode(currentFrameBitmap)
+                                    }"
+                                )
+                                currentFrameBitmap.recycle()
+                            }
                         }
-                    } catch (e: Exception) {
-                        Log.e(TAG, "Error during PixelCopy or ML Kit processing: ${e.message}", e)
-                        // No need to recycle here, finally block will handle it
-                    } finally {
-                        // This is the ONLY place this specific bitmap should be recycled.
-                        // It happens after PixelCopy and processFrameWithMLKitTextRecognition (if successful)
-                        // have completed for this iteration.
-                        if (!currentFrameBitmap.isRecycled) {
-                            Log.d(TAG, "Recycling bitmap in loop iteration for ${System.identityHashCode(currentFrameBitmap)}")
-                            currentFrameBitmap.recycle()
-                        }
-                    }
 
-                    if (!isActive) break
-                    delay(intervalMs)
+                        if (!isActive) break
+                        delay(intervalMs)
+                    }
+                } catch (e: CancellationException) {
+                    Log.i(TAG, "Frame processing job cancelled.")
+                } catch (e: Exception) {
+                    Log.e(TAG, "Unexpected error in frame processing loop: ${e.message}", e)
+                } finally {
+                    Log.i(
+                        TAG,
+                        "Frame processing loop (ML Kit) finished on ${Thread.currentThread().name}."
+                    )
                 }
-            } catch (e: CancellationException) {
-                Log.i(TAG, "Frame processing job cancelled.")
-            } catch (e: Exception) {
-                Log.e(TAG, "Unexpected error in frame processing loop: ${e.message}", e)
-            } finally {
-                Log.i(TAG, "Frame processing loop (ML Kit) finished on ${Thread.currentThread().name}.")
             }
-        }
     }
-     */
 
 
     //TODO CAMERA & TensorFloor
     // processFrameWithMLKitTextRecognition remains a suspend function
-    /*
+
     private suspend fun processFrameWithMLKitTextRecognition(frameBitmap: Bitmap) {
         if (frameBitmap.isRecycled) { // Good defensive check
-            Log.w(TAG, "processFrame: Bitmap is already recycled for ${System.identityHashCode(frameBitmap)}")
+            Log.w(
+                TAG,
+                "processFrame: Bitmap is already recycled for ${System.identityHashCode(frameBitmap)}"
+            )
             return
         }
         Log.d(TAG, "processFrame: Processing bitmap ${System.identityHashCode(frameBitmap)}")
@@ -390,24 +432,68 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
         // in a way that outlives this function if it were to launch its own async work
         // without copying the data. For ML Kit, this is generally safe as it processes immediately.
         val image = InputImage.fromBitmap(frameBitmap, 0)
+        //Pixel 9 - imageCenter = 503
+        //Samsung P6 lite - image Center = 578
+        val imageCenterX = frameBitmap.width / 2
+        val ownTeamBoundaryX = frameBitmap.width * 0.2f
+        val theirTeamBoundaryX = frameBitmap.width * 0.8f
+        val mapBoundaryY = frameBitmap.height * 0.1f
+
+        val pick0BoundaryY = mapBoundaryY
+        val pick1BoundaryY = frameBitmap.height * 0.25f
+        val pick2BoundaryY = frameBitmap.height * 0.415f
+        val pick3BoundaryY = frameBitmap.height * 0.572f
+        val pick4BoundaryY = frameBitmap.height * 0.73f
 
         try {
             val result = textRecognizer.process(image).await()
-            val allRecognizedText = result.textBlocks.flatMap { block ->
-                block.lines.map { line -> line.text }
+
+            val ownChampsTexts = mutableListOf<String>()
+            val theirChampsTexts = mutableListOf<String>()
+            val mapText = mutableListOf<String>()
+
+            for (block in result.textBlocks) {
+                // Hole den Begrenzungsrahmen (Bounding Box) des Blocks
+                val blockBoundingBox = block.boundingBox
+                if (blockBoundingBox != null) {
+                    // Prüfe, ob die Mitte des Textblocks links oder rechts von der Bildmitte liegt
+                    if (blockBoundingBox.centerX() < imageCenterX && blockBoundingBox.centerY() > mapBoundaryY) {
+                        // Dieser Block ist auf der linken Seite
+                        block.lines.forEach { line -> ownChampsTexts.add(line.text) }
+                    } else if (blockBoundingBox.centerX() > imageCenterX && blockBoundingBox.centerY() > mapBoundaryY) {
+                        // Dieser Block ist auf der rechten Seite
+                        block.lines.forEach { line -> theirChampsTexts.add(line.text) }
+                    } else {
+                        block.lines.forEach { line -> mapText.add(line.text) }
+                    }
+                }
             }
-            _recognizedTexts.value = allRecognizedText
-            // Log.d(TAG, "ML Kit Text Recognition successful. Texts: $allRecognizedText")
+            viewModelScope.launch {
+                //TODO ohne delay
+                delay(1550)
+                // Aktualisiere die entsprechenden StateFlows
+                _recognizedTextsLeft.value = ownChampsTexts
+                _recognizedTextsRight.value = theirChampsTexts
+            }
+            _recognizedMap.value = mapText
+
+
         } catch (e: Exception) {
-            Log.e(TAG, "ML Kit Text Recognition failed for bitmap ${System.identityHashCode(frameBitmap)}", e)
+            Log.e(
+                TAG,
+                "ML Kit Text Recognition failed for bitmap ${System.identityHashCode(frameBitmap)}",
+                e
+            )
             _errorMessage.value = "Text Recognition Error: ${e.localizedMessage}"
             _recognizedTexts.value = emptyList()
         }
         // DO NOT RECYCLE frameBitmap here. The caller (startFrameProcessing loop) owns it.
-        Log.d(TAG, "processFrame: Finished processing bitmap ${System.identityHashCode(frameBitmap)}")
+        Log.d(
+            TAG,
+            "processFrame: Finished processing bitmap ${System.identityHashCode(frameBitmap)}"
+        )
     }
 
-     */
 
     //TODO OPENCV
     /*
