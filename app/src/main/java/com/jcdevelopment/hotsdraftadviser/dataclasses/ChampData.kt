@@ -42,7 +42,7 @@ data class ChampData(
 
 // Beispielhafte Instanz Ihrer ChampData-Klasse
 val exampleChampDataSgtHammer = ChampData(
-    key = 1,
+    key = 2,
     ChampName = "SgtHammer",
     ChampRole = listOf("assassine"),
     ChampRoleAlt = listOf(RoleEnum.ranged),
@@ -74,7 +74,7 @@ val exampleChampDataSgtHammer = ChampData(
 )
 
 val exampleChampDataAbathur = ChampData(
-    key = 2,
+    key = 1,
     ChampName = "Abathur",
     ChampRole = listOf("support"),
     ChampRoleAlt = listOf(RoleEnum.support),
@@ -106,7 +106,7 @@ val exampleChampDataAbathur = ChampData(
 )
 
 val exampleChampDataAuriel = ChampData(
-    key = 2,
+    key = 3,
     ChampName = "Auriel",
     ChampRole = listOf("heal"),
     ChampRoleAlt = listOf(RoleEnum.heal),

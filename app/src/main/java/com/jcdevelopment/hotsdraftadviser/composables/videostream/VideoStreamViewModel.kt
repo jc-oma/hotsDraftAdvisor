@@ -77,21 +77,6 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     val featureMatchResults: StateFlow<Map<String, Int>> = _featureMatchResults.asStateFlow()
     private var frameProcessingJob: Job? = null
 
-    //TODO OPENCV
-    // OpenCV
-    /*private var featureDetector: ORB? = null
-    private var descriptorMatcher: DescriptorMatcher? = null
-    private val templateDescriptors = mutableMapOf<String, Mat>()
-    private val templateKeypoints = mutableMapOf<String, MatOfKeyPoint>()
-    */
-
-    //TODO alle Templates
-    private var templateNames = listOf("thrall", "blaze_text") // Namen müssen .bmp entsprechen
-    private val templateResourceIds = mapOf(
-        "thrall" to R.drawable.thrall,
-        "blaze_text" to R.drawable.round_portrait_blaze
-    )
-
     private val udpPort = 1234 // UDP-Port für OBS
 
     //TODO CAMERA & TensorFloor
@@ -114,55 +99,7 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
 
     init {
         initializePlayer()
-        //initializeOpenCVComponents()
     }
-
-    ////TODO OPENCV
-    /*
-    private fun initializeOpenCVComponents(matcherType: Int = DescriptorMatcher.BRUTEFORCE_HAMMINGLUT) {
-        viewModelScope.launch(Dispatchers.IO) { // OpenCV Init kann etwas dauern
-            try {
-                val nfeatures = 500
-                featureDetector = ORB.create(nfeatures)
-                descriptorMatcher = DescriptorMatcher.create(matcherType)
-
-                templateNames.forEach { name ->
-                    val resId = templateResourceIds[name]
-                    if (resId != null) {
-                        val bitmap = BitmapFactory.decodeResource(getApplication<Application>().resources, resId)
-                        if (bitmap != null) {
-                            val templateMat = Mat()
-                            Utils.bitmapToMat(bitmap, templateMat) // Bitmap zu Mat
-                            Imgproc.cvtColor(templateMat, templateMat, Imgproc.COLOR_RGBA2GRAY) // In Graustufen, falls nötig
-
-                            val keypoints = MatOfKeyPoint()
-                            val descriptors = Mat()
-                            featureDetector?.detectAndCompute(templateMat, Mat(), keypoints, descriptors)
-
-                            if (!descriptors.empty()) {
-                                templateKeypoints[name] = keypoints
-                                templateDescriptors[name] = descriptors
-                                Log.i(TAG, "Loaded template: $name, Descriptors: ${descriptors.rows()}")
-                            } else {
-                                Log.w(TAG, "No descriptors found for template: $name")
-                            }
-                            templateMat.release() // Mat freigeben
-                            bitmap.recycle()
-                        } else {
-                            Log.e(TAG, "Failed to decode bitmap for template: $name")
-                        }
-                    } else {
-                        Log.e(TAG, "Resource ID not found for template: $name")
-                    }
-                }
-                Log.i(TAG, "OpenCV components initialized. Matcher: $matcherType")
-            } catch (e: Exception) {
-                Log.e(TAG, "Error initializing OpenCV components", e)
-                // Handle error, z.B. UI benachrichtigen
-            }
-        }
-    }
-     */
 
     private fun initializePlayer() {
         val minBufferMs = 500 // Beispiel: 0.5 Sekunden
@@ -493,52 +430,6 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
             "processFrame: Finished processing bitmap ${System.identityHashCode(frameBitmap)}"
         )
     }
-
-
-    //TODO OPENCV
-    /*
-    private fun processFrameWithOpenCV(frameBitmap: Bitmap) {
-        if (featureDetector == null || descriptorMatcher == null || templateDescriptors.isEmpty()) {
-            Log.w(TAG, "OpenCV components not ready or no templates loaded.")
-            return
-        }
-
-        val currentFrameMat = Mat()
-        Utils.bitmapToMat(frameBitmap, currentFrameMat)
-        Imgproc.cvtColor(currentFrameMat, currentFrameMat, Imgproc.COLOR_RGBA2GRAY)
-
-        val frameKeypoints = MatOfKeyPoint()
-        val frameDescriptors = Mat()
-        featureDetector!!.detectAndCompute(currentFrameMat, Mat(), frameKeypoints, frameDescriptors)
-
-        val currentMatches = mutableMapOf<String, Int>()
-
-        if (!frameDescriptors.empty()) {
-            templateNames.forEach { name ->
-                val templateDesc = templateDescriptors[name]
-                if (templateDesc != null && !templateDesc.empty()) {
-                    val matches = MatOfDMatch()
-                    // descriptorMatcher!!.knnMatch(frameDescriptors, templateDesc, matches, 2) // Für Lowe's Ratio Test
-                    descriptorMatcher!!.match(frameDescriptors, templateDesc, matches) // Einfaches Matching
-                    // Filter matches (Beispiel: Gute Matches nach Distanz oder Lowe's Ratio Test)
-                    val goodMatchesList = matches.toList().filter { it.distance < 50 }
-                    currentMatches[name] = goodMatchesList.size
-
-                    matches.release()
-                } else {
-                    currentMatches[name] = 0
-                }
-            }
-        } else {
-            templateNames.forEach { name -> currentMatches[name] = 0 }
-        }
-        _featureMatchResults.value = currentMatches // Update UI
-
-        // Ressourcen freigeben
-        currentFrameMat.release()
-        frameKeypoints.release()
-        frameDescriptors.release()
-    }*/
 
     fun stopFrameProcessing() {
         frameProcessingJob?.cancel()

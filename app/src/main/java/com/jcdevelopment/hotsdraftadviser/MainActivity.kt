@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -73,7 +74,13 @@ import com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.ListOfBannedC
 import com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.ListOfPickedChampsComposable
 import com.jcdevelopment.hotsdraftadviser.composables.searchbar.MapSearchBar
 import com.jcdevelopment.hotsdraftadviser.composables.videostream.VideoStreamComposable
+import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
+import com.jcdevelopment.hotsdraftadviser.dataclasses.MinVerionCode
+import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataAbathur
+import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataAuriel
+import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataSgtHammer
 import com.jcdevelopment.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.serialization.ExperimentalSerializationApi
 
 class MainActivity : ComponentActivity() {
@@ -131,6 +138,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun MainActivityComposable(
@@ -139,10 +147,10 @@ fun MainActivityComposable(
     ),
     isTablet: Boolean
 ) {
-
     val mapList by viewModel.filteredMaps.collectAsState(emptyList())
     val choosenMap by viewModel.choosenMap.collectAsState("")
     val chosableChampList by viewModel.chosableChampList.collectAsState(emptyList())
+
     val sortState by viewModel.sortState.collectAsState(SortState.CHAMPNAME)
     val searchQueryMaps by viewModel.filterMapsString.collectAsState()
     val searchQueryOwnTChamps by viewModel.filterOwnChampString.collectAsState()
@@ -159,23 +167,6 @@ fun MainActivityComposable(
     val theirsBannedChamps by viewModel.theirsBannedChamps.collectAsState()
     val minVersionCode by viewModel.minVersionCode.collectAsState()
 
-    val screenBackgroundColor = "150e35ff"
-    val textColor = "f8f8f9ff"
-    val headlineColor = "6e35d8ff"
-    val theirTeamColor = "5C1A1BFF"
-    val ownTeamColor = "533088ff"
-    val mapTextColor = "AFEEEEff"
-    val composeScreenBackgroundColor = getColorByHexString(screenBackgroundColor)
-    val composeTextColor = getColorByHexString(textColor)
-    val composeHeadlineColor = getColorByHexString(headlineColor)
-    val composeOwnTeamColor = getColorByHexString(ownTeamColor)
-    val composeTheirTeamColor = getColorByHexStringForET(theirTeamColor)
-    val composeMapTextColor = getColorByHexStringForET(mapTextColor)
-
-    var detectedObjectLabels by remember { mutableStateOf<List<String>>(emptyList()) }
-
-    var targetStateMapName by remember { mutableStateOf<String>("") }
-
     val resetCount by viewModel.resetCounter.collectAsState()
 
     val isStreamingEnabled by viewModel.isStreamingEnabled.collectAsState()
@@ -184,13 +175,153 @@ fun MainActivityComposable(
     val isTutorialShown by viewModel.isTutorialShown.collectAsState()
     val isListMode by viewModel.isListMode.collectAsState()
     val isFirstStart by viewModel.isFirstStart.collectAsState()
+
+    val favFilter by viewModel.favFilter.collectAsState(false)
+
+    val distinctChosableChampList by viewModel.distinctChosableChampList.collectAsState(
+        emptyList()
+    )
+    val distinctAndUnfilteredChosableChampList by viewModel.distinctfilteredChosableChampList.collectAsState(
+        emptyList()
+    )
+    val fitTeamMax by viewModel.fitTeamMax.collectAsState(1)
+    val goodAgainstTeamMax by viewModel.goodAgainstTeamMax.collectAsState(
+        1
+    )
+    val ownScoreMax by viewModel.ownScoreMax.collectAsState(1)
+    val theirScoreMax by viewModel.theirScoreMax.collectAsState(1)
     val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
+
+    MainActivityComposable(
+        isTablet = isTablet,
+        mapList = mapList,
+        choosenMap = choosenMap,
+        chosableChampList = chosableChampList,
+        sortState = sortState,
+        searchQueryMaps = searchQueryMaps,
+        searchQueryOwnTChamps = searchQueryOwnTChamps,
+        roleFilter = roleFilter,
+        ownPickScore = ownPickScore,
+        theirPickScore = theirPickScore,
+        theirScoreMax = theirScoreMax,
+        ownScoreMax = ownScoreMax,
+        targetUIStateByChoosenMap = targetUIStateByChoosenMap,
+        theirPickedChamps = theirPickedChamps,
+        ownPickedChamps = ownPickedChamps,
+        bannedChamps = bannedChamps,
+        ownBannedChamps = ownBannedChamps,
+        theirsBannedChamps = theirsBannedChamps,
+        minVersionCode = minVersionCode,
+        resetCount = resetCount,
+        isStreamingEnabled = isStreamingEnabled,
+        isDisclaymerShown = isDisclaymerShown,
+        isTutorialShown = isTutorialShown,
+        isListMode = isListMode,
+        isFirstStart = isFirstStart,
+        isStarRatingMode = isStarRatingMode,
+        distinctChosableChampList = distinctChosableChampList,
+        distinctAndUnfilteredChosableChampList = distinctAndUnfilteredChosableChampList,
+        favFilter = favFilter,
+        fitTeamMax = fitTeamMax,
+        goodAgainstTeamMax = goodAgainstTeamMax,
+        pickByTextRecognition = { champList -> viewModel.pickByTextRecognition(champList) },
+        setChosenMapByTextRecognition = { maplist -> viewModel.setChosenMapByTextRecognition(mapList.first()) },
+        toggleDisclaymer = { viewModel.toggleDisclaymer() },
+        toggleListMode = { viewModel.toggleDisclaymer() },
+        toggleStarRateMode = { viewModel.toggleStarRateMode() },
+        toggleTutorial = { viewModel.toggleTutorial() },
+        toggleStreaming = { viewModel.toggleStreaming() },
+        updateMapsSearchQuery = { query -> viewModel.updateMapsSearchQuery(query) },
+        setChosenMapByName = { map -> viewModel.setChosenMapByName(map) },
+        clearChoosenMap = { viewModel.clearChoosenMap() },
+        removeBan = { i, teamSide -> viewModel.removeBan(i, teamSide) },
+        removePick = { i, teamSide -> viewModel.removePick(i, teamSide) },
+        setRoleFilter = { roleEnum -> viewModel.setRoleFilter(roleEnum) },
+        updateChampSearchQuery = { queryString -> viewModel.updateChampSearchQuery(queryString) },
+        setSortState = { sortState -> viewModel.setSortState(sortState) },
+        toggleFavFilter = { viewModel.toggleFavFilter() },
+        scrollList = { lazyListState, coroutineScope ->
+            viewModel.scrollList(
+                lazyListState,
+                coroutineScope
+            )
+        },
+        pickChampForTeam = { i, teamSide -> viewModel.pickChampForTeam(i, teamSide) },
+        setBansPerTeam = { i, teamSide -> viewModel.setBansPerTeam(i, teamSide) },
+        toggleFavoriteStatus = { string -> viewModel.toggleFavoriteStatus(string) }
+    )
+}
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Composable
+fun MainActivityComposable(
+    isTablet: Boolean,
+    mapList: List<String>,
+    choosenMap: String,
+    chosableChampList: List<ChampData>,
+    distinctChosableChampList: List<ChampData>,
+    distinctAndUnfilteredChosableChampList: List<ChampData>,
+    sortState: SortState,
+    searchQueryMaps: String,
+    searchQueryOwnTChamps: String,
+    roleFilter: List<RoleEnum>,
+    ownPickScore: Int,
+    theirPickScore: Int,
+    theirScoreMax: Int,
+    ownScoreMax: Int,
+    fitTeamMax: Int,
+    goodAgainstTeamMax: Int,
+    targetUIStateByChoosenMap: Boolean,
+    theirPickedChamps: List<ChampData>,
+    ownPickedChamps: List<ChampData>,
+    bannedChamps: List<ChampData>,
+    ownBannedChamps: List<ChampData>,
+    theirsBannedChamps: List<ChampData>,
+    minVersionCode: MinVerionCode,
+    resetCount: Int,
+    isStreamingEnabled: Boolean,
+    isDisclaymerShown: Boolean,
+    isTutorialShown: Boolean,
+    isListMode: Boolean,
+    isFirstStart: Boolean,
+    isStarRatingMode: Boolean,
+    favFilter: Boolean,
+    pickByTextRecognition: (teamPairs: List<Pair<String, TeamSide>>) -> Unit,
+    setChosenMapByTextRecognition: (String) -> Unit,
+    toggleFavoriteStatus: (String) -> Unit,
+    toggleDisclaymer: () -> Unit,
+    toggleListMode: () -> Unit,
+    toggleStarRateMode: () -> Unit,
+    toggleTutorial: () -> Unit,
+    toggleStreaming: () -> Unit,
+    updateMapsSearchQuery: (String) -> Unit,
+    setChosenMapByName: (String) -> Unit,
+    clearChoosenMap: () -> Unit,
+    removeBan: (Int, TeamSide) -> Unit,
+    removePick: (Int, TeamSide) -> Unit,
+    setBansPerTeam: (Int, TeamSide) -> Unit,
+    pickChampForTeam: (Int, TeamSide) -> Unit,
+    setRoleFilter: (RoleEnum?) -> Unit,
+    updateChampSearchQuery: (String) -> Unit,
+    setSortState: (SortState) -> Unit,
+    scrollList: (LazyListState, CoroutineScope) -> Unit,
+    toggleFavFilter: () -> Unit,
+) {
+    val screenBackgroundColor = "150e35ff"
+    val textColor = "f8f8f9ff"
+    val mapTextColor = "AFEEEEff"
+    val composeScreenBackgroundColor = getColorByHexString(screenBackgroundColor)
+    val composeTextColor = getColorByHexString(textColor)
+    val composeMapTextColor = getColorByHexStringForET(mapTextColor)
+
+    var targetStateMapName by remember { mutableStateOf<String>("") }
 
 
     val context = LocalContext.current
     val currentAppVersion = try {
         context.packageManager.getPackageInfo(context.packageName, 0).versionCode
     } catch (e: Exception) {
+        println("Error getting current app version: ${e.message}")
         1 // Fallback version code
     }
 
@@ -199,13 +330,14 @@ fun MainActivityComposable(
         if (isStreamingEnabled) {
             VideoStreamComposable(
                 onRecognizedTeamPicks = { champList ->
-                    viewModel.pickByTextRecognition(champList)
+                    pickByTextRecognition(champList)
                 },
                 onRecognizedMapsText = { mapList ->
                     if (mapList.isNotEmpty()) {
-                        viewModel.setChosenMapByTextRecognition(mapList.first())
+                        setChosenMapByTextRecognition(mapList.first())
                     }
-                }
+                },
+                toggleStreaming = { toggleStreaming() }
             )
         }
         // MANUAL INPUT
@@ -244,36 +376,23 @@ fun MainActivityComposable(
 
                                     MenuComposable(
                                         modifier = Modifier.weight(0.2f),
-                                        onDisclaymer = { viewModel.toggleDisclaymer() },
-                                        onToggleListMode = { viewModel.toggleListMode() },
-                                        onToggleStarRating = { viewModel.toggleStarRateMode() },
-                                        onTutorial = { viewModel.toggleTutorial() },
+                                        onDisclaymer = { toggleDisclaymer() },
+                                        onToggleListMode = { toggleListMode() },
+                                        onToggleStarRating = { toggleStarRateMode() },
+                                        onTutorial = { toggleTutorial() },
                                         isListMode = isListMode,
                                         isStarRating = isStarRatingMode,
-                                        onToggleStreaming = { viewModel.toggleStreaming() }
+                                        onToggleStreaming = { toggleStreaming() }
                                     )
                                 }
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     // Suchfeld
                                     MapSearchBar(
                                         searchQuery = searchQueryMaps,
-                                        updateMapsSearchQuery = { viewModel.updateMapsSearchQuery(it) },
+                                        updateMapsSearchQuery = { updateMapsSearchQuery(it) },
                                         modifier = Modifier.weight(1f),
                                         label = stringResource(R.string.main_activity_maps_suchen)
                                     )
-                                    //TODO show when ML detects something
-                                    /*
-                        Text(
-                            modifier = Modifier
-                                .weight(0.4f),
-                            text = "Video:"
-                        )
-                        Switch(
-                            checked = isStreamingEnabled,
-                            onCheckedChange = { viewModel.toggleStreaming() },
-                            modifier = Modifier
-                                .padding(start = 8.dp)
-                        )*/
                                 }
                                 Spacer(modifier = Modifier.height(8.dp))
                                 if (mapList.isEmpty()) {
@@ -310,7 +429,7 @@ fun MainActivityComposable(
                                                         )
                                                         .clip(mapShape)
                                                         .clickable {
-                                                            viewModel.setChosenMapByName(map)
+                                                            setChosenMapByName(map)
                                                             targetStateMapName = map
                                                         },
                                                     contentAlignment = Alignment.Center
@@ -389,7 +508,7 @@ fun MainActivityComposable(
                                             .height(48.dp)
                                             .border(1.dp, composeTextColor, shape = shape)
                                             .clickable {
-                                                viewModel.clearChoosenMap()
+                                                clearChoosenMap()
                                             }
                                             .clip(shape)
                                             .sharedBounds(
@@ -445,13 +564,13 @@ fun MainActivityComposable(
                                 }
                                 MenuComposable(
                                     modifier = Modifier.weight(0.24f),
-                                    onDisclaymer = { viewModel.toggleDisclaymer() },
-                                    onToggleListMode = { viewModel.toggleListMode() },
-                                    onToggleStarRating = { viewModel.toggleStarRateMode() },
-                                    onTutorial = { viewModel.toggleTutorial() },
+                                    onDisclaymer = { toggleDisclaymer() },
+                                    onToggleListMode = { toggleListMode() },
+                                    onToggleStarRating = { toggleStarRateMode() },
+                                    onTutorial = { toggleTutorial() },
                                     isListMode = isListMode,
                                     isStarRating = isStarRatingMode,
-                                    onToggleStreaming = { viewModel.toggleStreaming() }
+                                    onToggleStreaming = { toggleStreaming() }
                                 )
                             }
                         }
@@ -473,7 +592,7 @@ fun MainActivityComposable(
                                         bannedChamps = ownBannedChamps,
                                         teamSide = TeamSide.BANNEDOWN,
                                         removeBan = { i, teamSide ->
-                                            viewModel.removeBan(
+                                            removeBan(
                                                 i,
                                                 teamSide
                                             )
@@ -486,7 +605,7 @@ fun MainActivityComposable(
                                         bannedChamps = theirsBannedChamps,
                                         teamSide = TeamSide.BANNEDTHEIR,
                                         removeBan = { i, teamSide ->
-                                            viewModel.removeBan(
+                                            removeBan(
                                                 i,
                                                 teamSide
                                             )
@@ -500,7 +619,7 @@ fun MainActivityComposable(
                                     theirPickedChamps = theirPickedChamps,
                                     composeTextColor = composeTextColor,
                                     removePick = { i, teamSide ->
-                                        viewModel.removePick(
+                                        removePick(
                                             i,
                                             teamSide
                                         )
@@ -510,18 +629,16 @@ fun MainActivityComposable(
                                     isStarrating = isStarRatingMode
                                 )
                             }
-                            val favFilter by viewModel.favFilter.collectAsState(false)
+
                             SearchAndFilterRowForChampsSmall(
                                 searchQueryOwnTChamps = searchQueryOwnTChamps,
                                 roleFilter = roleFilter,
                                 favFilter = favFilter,
-                                setRoleFilter = { roleEnum -> viewModel.setRoleFilter(roleEnum) },
+                                setRoleFilter = { roleEnum -> setRoleFilter(roleEnum) },
                                 updateChampSearchQuery = { queryString ->
-                                    viewModel.updateChampSearchQuery(
-                                        queryString
-                                    )
+                                    updateChampSearchQuery(queryString)
                                 },
-                                toggleFavFilter = { viewModel.toggleFavFilter() },
+                                toggleFavFilter = { toggleFavFilter() },
                                 isTablet = isTablet
                             )
 
@@ -530,53 +647,25 @@ fun MainActivityComposable(
                             if (chosableChampList.isEmpty()) {
                                 Text(stringResource(R.string.loading_state_champs))
                             } else {
-                                val distinctChosableChampList by viewModel.distinctChosableChampList.collectAsState(
-                                    emptyList()
-                                )
-                                val distinctAndUnfilteredChosableChampList by viewModel.distinctfilteredChosableChampList.collectAsState(
-                                    emptyList()
-                                )
-                                val fitTeamMax by viewModel.fitTeamMax.collectAsState(1)
-                                val goodAgainstTeamMax by viewModel.goodAgainstTeamMax.collectAsState(
-                                    1
-                                )
-                                val ownScoreMax by viewModel.ownScoreMax.collectAsState(1)
-                                val theirScoreMax by viewModel.theirScoreMax.collectAsState(1)
-                                val choosenMap by viewModel.choosenMap.collectAsState("")
-                                val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
-
                                 if (isListMode) {
                                     AvailableChampListComposable(
                                         sortState = sortState,
                                         composeTextColor = composeTextColor,
                                         chosableChampList = chosableChampList,
                                         setSortState = { sortState ->
-                                            viewModel.setSortState(
-                                                sortState
-                                            )
+                                            setSortState(sortState)
                                         },
-                                        onButtonClick = { listState, coroutineScope ->
-                                            viewModel.scrollList(
-                                                listState,
-                                                coroutineScope
-                                            )
+                                        onButtonClick = { lazyListState, coroutineScope ->
+                                            scrollList(lazyListState, coroutineScope)
                                         },
                                         pickChampForTeam = { i, teamSide ->
-                                            viewModel.pickChampForTeam(
-                                                i,
-                                                teamSide
-                                            )
+                                            pickChampForTeam(i, teamSide)
                                         },
                                         setBansPerTeam = { i, teamSide ->
-                                            viewModel.setBansPerTeam(
-                                                i,
-                                                teamSide
-                                            )
+                                            setBansPerTeam(i, teamSide)
                                         },
                                         updateChampSearchQuery = { string ->
-                                            viewModel.updateChampSearchQuery(
-                                                string
-                                            )
+                                            updateChampSearchQuery(string)
                                         },
                                         isStarRatingMode = isStarRatingMode,
                                         ownScoreMax = ownScoreMax,
@@ -594,37 +683,22 @@ fun MainActivityComposable(
                                         choosenMap = choosenMap,
                                         isStarRatingMode = isStarRatingMode,
                                         setSortState = { sortState ->
-                                            viewModel.setSortState(
-                                                sortState
-                                            )
+                                            setSortState(sortState)
                                         },
                                         scrollList = { lazyListState, coroutineScope ->
-                                            viewModel.scrollList(
-                                                lazyListState,
-                                                coroutineScope
-                                            )
+                                            scrollList(lazyListState, coroutineScope)
                                         },
                                         toggleFavoriteStatus = { string ->
-                                            viewModel.toggleFavoriteStatus(
-                                                string
-                                            )
+                                            toggleFavoriteStatus(string)
                                         },
                                         pickChampForOwnTeam = { i, teamSide ->
-                                            viewModel.pickChampForTeam(
-                                                i,
-                                                teamSide
-                                            )
+                                            pickChampForTeam(i, teamSide)
                                         },
                                         updateChampSearchQuery = { string ->
-                                            viewModel.updateChampSearchQuery(
-                                                string
-                                            )
+                                            updateChampSearchQuery(string)
                                         },
                                         setBansPerTeam = { i, teamSide ->
-                                            viewModel.setBansPerTeam(
-                                                i,
-                                                teamSide
-                                            )
+                                            setBansPerTeam(i, teamSide)
                                         },
                                         isTablets = isTablet
                                     )
@@ -635,7 +709,7 @@ fun MainActivityComposable(
                     if (isDisclaymerShown) {
                         Column {
                             Box(modifier = Modifier.height(48.dp))
-                            DisclaimerComposable(onClose = { viewModel.toggleDisclaymer() })
+                            DisclaimerComposable(onClose = { toggleDisclaymer() })
                         }
                     }
 
@@ -644,7 +718,7 @@ fun MainActivityComposable(
                             Box(modifier = Modifier.height(48.dp))
                             TutorialCarouselComposable(
                                 modifier = Modifier.fillMaxSize(),
-                                onClose = { viewModel.toggleTutorial() })
+                                onClose = { toggleTutorial() })
                         }
                     }
                 }
@@ -673,8 +747,92 @@ fun MainActivityComposable(
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun MainActivityPreview() {
     HotsDraftAdviserTheme {
-        MainActivityComposable(isTablet = false)
+        MainActivityComposable(
+            isTablet = false,
+            mapList = listOf(
+                "Alterac Pass",
+                "Battlefield of Eternity",
+                "Black Hearts Bay",
+                "Braxis Holdout",
+                "Cursed Hollow",
+                "Dragonshire",
+                "Garden of Terror"
+            ),
+            choosenMap = "Alterac Pass",
+            chosableChampList = listOf(
+                exampleChampDataAbathur,
+                exampleChampDataSgtHammer, exampleChampDataAuriel
+            ),
+            sortState = SortState.CHAMPNAME,
+            searchQueryMaps = "",
+            searchQueryOwnTChamps = "",
+            roleFilter = emptyList(),
+            ownPickScore = 111,
+            theirPickScore = 123,
+            theirScoreMax = 156,
+            ownScoreMax = 134,
+            targetUIStateByChoosenMap = false,
+            theirPickedChamps = listOf(
+                exampleChampDataAbathur,
+                exampleChampDataSgtHammer, exampleChampDataAuriel
+            ),
+            ownPickedChamps = listOf(
+                exampleChampDataAbathur,
+                exampleChampDataSgtHammer, exampleChampDataAuriel
+            ),
+            bannedChamps = listOf(
+                exampleChampDataAbathur,
+                exampleChampDataSgtHammer, exampleChampDataAuriel
+            ),
+            ownBannedChamps = listOf(
+                exampleChampDataAbathur,
+                exampleChampDataSgtHammer, exampleChampDataAuriel
+            ),
+            theirsBannedChamps = listOf(
+                exampleChampDataAbathur,
+                exampleChampDataSgtHammer, exampleChampDataAuriel
+            ),
+            minVersionCode = MinVerionCode(0),
+            resetCount = 1,
+            isStreamingEnabled = false,
+            isDisclaymerShown = false,
+            isTutorialShown = false,
+            isListMode = false,
+            isFirstStart = false,
+            isStarRatingMode = false,
+            distinctChosableChampList = listOf(
+                exampleChampDataAbathur,
+                exampleChampDataSgtHammer, exampleChampDataAuriel
+            ),
+            distinctAndUnfilteredChosableChampList = listOf(
+                exampleChampDataAbathur,
+                exampleChampDataSgtHammer, exampleChampDataAuriel
+            ),
+            favFilter = false,
+            fitTeamMax = 100,
+            goodAgainstTeamMax = 100,
+            pickByTextRecognition = {},
+            setChosenMapByTextRecognition = {},
+            toggleDisclaymer = {},
+            toggleListMode = {},
+            toggleStarRateMode = {},
+            toggleTutorial = {},
+            toggleStreaming = {},
+            updateMapsSearchQuery = {},
+            setChosenMapByName = {},
+            clearChoosenMap = {},
+            removeBan = {_,_ ->},
+            removePick = {_,_ ->},
+            setRoleFilter = {_ ->},
+            updateChampSearchQuery = {_ ->},
+            setSortState = {_ ->},
+            toggleFavFilter = {},
+            scrollList = {_,_ ->},
+            pickChampForTeam =  {_,_ ->},
+            setBansPerTeam =  {_,_ ->},
+            toggleFavoriteStatus =  {_ ->}
+        )
     }
 }

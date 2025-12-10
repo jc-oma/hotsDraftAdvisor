@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -29,6 +30,7 @@ import com.jcdevelopment.hotsdraftadviser.TeamSide
 @Composable
 fun VideoStreamComposable(
     viewModel: VideoStreamViewModel = viewModel(),
+    toggleStreaming: () -> Unit = {},
     onRecognizedTeamPicks: (List<Pair<String, TeamSide>>) -> Unit = {},
     onRecognizedMapsText: (List<String>) -> Unit = {},
 ) {
@@ -63,7 +65,8 @@ fun VideoStreamComposable(
         stopFrameProcessing = { viewModel.stopFrameProcessing() },
         startFrameProcessing = { playerView -> viewModel.startFrameProcessing(playerView) },
         stopStreaming = { viewModel.stopStreaming() },
-        startStreaming = { viewModel.startStreaming() }
+        startStreaming = { viewModel.startStreaming() },
+        toggleStreaming = { toggleStreaming() }
     )
 }
 
@@ -84,9 +87,9 @@ fun VideoStreamComposable(
     stopFrameProcessing: () -> Unit,
     startFrameProcessing: (PlayerView) -> Unit,
     stopStreaming: () -> Unit,
-    startStreaming: () -> Unit
+    startStreaming: () -> Unit,
+    toggleStreaming: () -> Unit = {},
 ) {
-    val context = LocalContext.current
     var playerViewRefTmp by remember { mutableStateOf(playerViewRef) }
 
     LaunchedEffect(recognizedTextsLeft, recognizedTextsRight, recognizedTextsTop) {
@@ -156,25 +159,6 @@ fun VideoStreamComposable(
         }
     }
 
-    //TODO CAMERA & TensorFloor
-    // Effekt zum Starten/Stoppen der Frame-Verarbeitung basierend auf Player-Status UND playerViewRef
-    /*
-    LaunchedEffect(playerViewRef) {
-        val isPlaying = playerInstance?.isPlaying == true
-        val viewAvailable = playerViewRef != null
-
-        if (isPlaying && viewAvailable) {
-            Log.d("VideoStreamingScreen", "LaunchedEffect: Player is playing AND view is available. Starting frame processing.")
-            playerViewRef?.let { pv -> viewModel.startFrameProcessing(pv) }
-        } else {
-            // Stoppe die Verarbeitung, wenn der Player nicht spielt ODER die View nicht verfügbar ist
-            // (Letzteres ist selten, aber zur Sicherheit)
-            Log.d("VideoStreamingScreen", "LaunchedEffect: Conditions not met (isPlaying=$isPlaying, viewAvailable=$viewAvailable). Stopping frame processing.")
-            viewModel.stopFrameProcessing()
-        }
-    }
-     */
-
     val isCollapsed = remember { mutableStateOf(false) }
     val modifier = Modifier.drawWithContent {
         if (!isCollapsed.value) { // Nur zeichnen, wenn nicht eingeklappt
@@ -230,16 +214,18 @@ fun VideoStreamComposable(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            Spacer(modifier = Modifier.weight(0.1f))
             Icon(
-                Icons.Default.ArrowDropUp,
+                imageVector = Icons.Default.ArrowDropUp,
                 contentDescription = "Description of your image",
                 modifier = Modifier
                     .clickable(
                         onClick = { isCollapsed.value = !isCollapsed.value }
                     )
-                    .weight(1f),
+                    .weight(0.4f),
             )
             Button(
+                modifier = Modifier.weight(1f),
                 onClick = {
                     if (playerInstance?.isPlaying == true) {
                         Log.d("VideoStreamingScreen", "Stop Streaming button clicked.")
@@ -249,12 +235,23 @@ fun VideoStreamComposable(
                         startStreaming() // Startet Player, LaunchedEffect startet Frame Processing wenn Bedingungen erfüllt
                     }
                 },
-                enabled = playerInstance != null,
-                modifier = Modifier.weight(2f)
+                enabled = playerInstance != null
             ) {
-                Text(if (playerInstance?.isPlaying == true) "Stop Streaming" else "Start Streaming")
+                Text(
+                    text = if (playerInstance?.isPlaying == true) "Stop Streaming" else "Start Streaming",
+                    textAlign = TextAlign.Center
+                )
             }
-            Spacer(Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(0.05f))
+            Button(
+                modifier = Modifier.weight(1f),
+                onClick = { toggleStreaming() }) {
+                Text(
+                    text = "Manual Mode",
+                    textAlign = TextAlign.Center
+                )
+            }
+            Spacer(modifier = Modifier.weight(0.1f))
         }
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -278,20 +275,20 @@ fun VideoStreamComposable(
 private fun VideoStreamViewModelPreview() {
     VideoStreamComposable(
         onRecognizedTeamPicks = {},
-    onRecognizedMapsText  = {},
-    playerInstance = null,
-    isPlayerActuallyPlaying = true,
-    isStreaming = true,
-    errorMessage = "Alles kaputt",
-    featureMatchResults = emptyMap(),
-    playerViewRef = null,
-    recognizedTexts = listOf<String>("Abathur"),
-    recognizedTextsLeft = listOf<String>("Abathur"),
-    recognizedTextsRight = listOf<String>("Abathur"),
-    recognizedTextsTop = listOf<String>("Hanamura"),
-    stopFrameProcessing = {},
-    startFrameProcessing = {},
-    stopStreaming = {},
-    startStreaming = {}
+        onRecognizedMapsText = {},
+        playerInstance = null,
+        isPlayerActuallyPlaying = true,
+        isStreaming = true,
+        errorMessage = "Alles kaputt",
+        featureMatchResults = emptyMap(),
+        playerViewRef = null,
+        recognizedTexts = listOf<String>("Abathur"),
+        recognizedTextsLeft = listOf<String>("Abathur"),
+        recognizedTextsRight = listOf<String>("Abathur"),
+        recognizedTextsTop = listOf<String>("Hanamura"),
+        stopFrameProcessing = {},
+        startFrameProcessing = {},
+        stopStreaming = {},
+        startStreaming = {}
     )
 }
