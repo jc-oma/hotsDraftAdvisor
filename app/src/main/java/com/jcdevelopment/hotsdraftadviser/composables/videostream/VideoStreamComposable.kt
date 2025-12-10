@@ -46,6 +46,7 @@ fun VideoStreamComposable(
     val recognizedTextsLeft by viewModel.recognizedTextsLeft.collectAsState()
     val recognizedTextsRight by viewModel.recognizedTextsRight.collectAsState()
     val recognizedTextsTop by viewModel.recognizedTextsTop.collectAsState()
+
     VideoStreamComposable(
         onRecognizedTeamPicks = { it -> onRecognizedTeamPicks(it) },
         onRecognizedMapsText = { it -> onRecognizedMapsText(it) },
@@ -275,4 +276,22 @@ fun VideoStreamComposable(
 @Preview(showBackground = true)
 @Composable
 private fun VideoStreamViewModelPreview() {
+    VideoStreamComposable(
+        onRecognizedTeamPicks = {},
+    onRecognizedMapsText  = {},
+    playerInstance = null,
+    isPlayerActuallyPlaying = true,
+    isStreaming = true,
+    errorMessage = "Alles kaputt",
+    featureMatchResults = emptyMap(),
+    playerViewRef = null,
+    recognizedTexts = listOf<String>("Abathur"),
+    recognizedTextsLeft = listOf<String>("Abathur"),
+    recognizedTextsRight = listOf<String>("Abathur"),
+    recognizedTextsTop = listOf<String>("Hanamura"),
+    stopFrameProcessing = {},
+    startFrameProcessing = {},
+    stopStreaming = {},
+    startStreaming = {}
+    )
 }
