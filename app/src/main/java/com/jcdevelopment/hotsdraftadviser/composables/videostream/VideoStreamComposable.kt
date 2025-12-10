@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -160,10 +162,28 @@ fun VideoStreamComposable(
     }
 
     val isCollapsed = remember { mutableStateOf(false) }
-    val modifier = Modifier.drawWithContent {
-        if (!isCollapsed.value) { // Nur zeichnen, wenn nicht eingeklappt
-            drawContent()
-        }
+    val boxModifier = if (isCollapsed.value) {
+        Modifier
+            .fillMaxWidth()
+            .layout { measurable, constraints ->
+                // 1. Messe das Composable mit den gegebenen Constraints.
+                // Es wird intern seine volle Größe berechnen.
+                val placeable = measurable.measure(constraints)
+
+                // 2. Platziere das Composable im Layout, aber gib ihm eine Höhe von 0.
+                // Es wird platziert (und ist daher aktiv), nimmt aber keinen vertikalen Platz ein.
+                layout(placeable.width, 0) {
+                    // Platziere den Inhalt an der Position (0, 0) relativ zu seinem neuen leeren Raum.
+                    // Das ist wichtig, damit die View weiterhin existiert.
+                    placeable.placeRelative(0, 0)
+                }
+            }
+            .drawWithContent {}
+    } else {
+        // Der normale, sichtbare Zustand
+        Modifier
+            .fillMaxWidth()
+            .aspectRatio(16 / 9f)
     }
 
     Column(
@@ -171,12 +191,15 @@ fun VideoStreamComposable(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+
+
+        Spacer(modifier = Modifier.height(48.dp))
+        Row(horizontalArrangement = Arrangement.Center) {
+            Text("Currently Streaming Mode")
+        }
         // PlayerView einbetten
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(16 / 9f)
-                .padding(8.dp)
+            modifier = boxModifier
         ) {
             if (playerInstance != null) {
                 AndroidView(
@@ -201,7 +224,7 @@ fun VideoStreamComposable(
                         view.player = playerInstance
                         // Kein direkter Start mehr hier, LaunchedEffect übernimmt das
                     },
-                    modifier = modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize()
                 )
             } else {
                 Text("Player wird initialisiert...")
@@ -216,7 +239,7 @@ fun VideoStreamComposable(
         ) {
             Spacer(modifier = Modifier.weight(0.1f))
             Icon(
-                imageVector = Icons.Default.ArrowDropUp,
+                imageVector = if (!isCollapsed.value) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
                 contentDescription = "Description of your image",
                 modifier = Modifier
                     .clickable(
@@ -238,7 +261,7 @@ fun VideoStreamComposable(
                 enabled = playerInstance != null
             ) {
                 Text(
-                    text = if (playerInstance?.isPlaying == true) "Stop Streaming" else "Start Streaming",
+                    text = if (playerInstance?.isPlaying == true) "Stop" else "Start",
                     textAlign = TextAlign.Center
                 )
             }

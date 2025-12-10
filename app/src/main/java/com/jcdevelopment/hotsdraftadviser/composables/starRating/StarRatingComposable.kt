@@ -30,7 +30,10 @@ fun StarRatingComposable(
     starColorEmpty: Color = Color.Black.copy(alpha = 0f),
     starSize: Dp = Dp.Unspecified
 ) {
-    val rating = (ratingFloat * (maxRating)).roundToInt().coerceAtLeast(1)
+    val ratingFloattmp = if (ratingFloat.isNaN()) {
+        0.0f
+    } else { ratingFloat}
+    val rating = (ratingFloattmp * (maxRating)).roundToInt().coerceAtLeast(1)
     val starPadding = 8.dp
     Row(modifier = modifier.padding(starPadding)) {
         for (i in 1..maxRating) {

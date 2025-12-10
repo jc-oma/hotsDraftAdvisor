@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jcdevelopment.hotsdraftadviser.R
+import com.jcdevelopment.hotsdraftadviser.Utilitys.mapChampNameToRoundPortraitDrawable
 import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
 import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataSgtHammer
 
@@ -51,7 +52,7 @@ fun ChampLitePortraitItemComposable(
         ) {
 
             Image(
-                painter = painterResource(R.drawable.round_portrait_chen),
+                painter = painterResource(mapChampNameToRoundPortraitDrawable(chosableChamp.ChampName)!!),
                 contentDescription = "Abathur",
                 modifier = Modifier
                     .size(69.dp)

@@ -52,7 +52,7 @@ fun ChampListItemComposable(
     ) {
         Text(
             modifier = Modifier.weight(1f),
-            text = chosableChamp.localName!!,
+            text = chosableChamp.localName ?: "",
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
@@ -184,7 +184,7 @@ private fun ChampListItemPreview() {
     val textColor = "f8f8f9ff"
     val composeTextColor = getColorByHexString(textColor)
 
-    Row (modifier = Modifier.height(32.dp)) {
+    Row(modifier = Modifier.height(32.dp)) {
         ChampListItemComposable(
             chosableChamp = exampleChampDataSgtHammer,
             index = 1,

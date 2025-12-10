@@ -72,6 +72,7 @@ import com.jcdevelopment.hotsdraftadviser.composables.menus.MenuComposable
 import com.jcdevelopment.hotsdraftadviser.composables.menus.tutorial.TutorialCarouselComposable
 import com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.ListOfBannedChampItem
 import com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.ListOfPickedChampsComposable
+import com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.ListOfPickedChampsLiteComposable
 import com.jcdevelopment.hotsdraftadviser.composables.searchbar.MapSearchBar
 import com.jcdevelopment.hotsdraftadviser.composables.videostream.VideoStreamComposable
 import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
@@ -328,17 +329,72 @@ fun MainActivityComposable(
     if ((minVersionCode.minVersionCode ?: currentAppVersion) <= currentAppVersion) {
         //VIDEO STREAM
         if (isStreamingEnabled) {
-            VideoStreamComposable(
-                onRecognizedTeamPicks = { champList ->
-                    pickByTextRecognition(champList)
-                },
-                onRecognizedMapsText = { mapList ->
-                    if (mapList.isNotEmpty()) {
-                        setChosenMapByTextRecognition(mapList.first())
-                    }
-                },
-                toggleStreaming = { toggleStreaming() }
-            )
+            Column {
+                VideoStreamComposable(
+                    onRecognizedTeamPicks = { champList ->
+                        pickByTextRecognition(champList)
+                    },
+                    onRecognizedMapsText = { mapList ->
+                        if (mapList.isNotEmpty()) {
+                            setChosenMapByTextRecognition(mapList.first())
+                        }
+                    },
+                    toggleStreaming = { toggleStreaming() }
+                )
+                Text(choosenMap)
+                ListOfPickedChampsLiteComposable(
+                    ownPickedChamps = ownPickedChamps,
+                    theirPickedChamps = theirPickedChamps,
+                    composeTextColor = composeTextColor,
+                    removePick = { i, teamSide ->
+                        removePick(
+                            i,
+                            teamSide
+                        )
+                    },
+                    ownPickScore = ownPickScore,
+                    theirPickScore = theirPickScore,
+                    isStarrating = isStarRatingMode
+                )
+                SearchAndFilterRowForChampsSmall(
+                    searchQueryOwnTChamps = searchQueryOwnTChamps,
+                    roleFilter = roleFilter,
+                    favFilter = favFilter,
+                    setRoleFilter = { roleEnum -> setRoleFilter(roleEnum) },
+                    updateChampSearchQuery = { queryString ->
+                        updateChampSearchQuery(queryString)
+                    },
+                    toggleFavFilter = { toggleFavFilter() },
+                    isTablet = isTablet
+                )
+                if (chosableChampList.isEmpty()) {
+                    Text(stringResource(R.string.loading_state_champs))
+                } else {
+                    AvailableChampListComposable(
+                        sortState = sortState,
+                        composeTextColor = composeTextColor,
+                        chosableChampList = chosableChampList,
+                        setSortState = { sortState ->
+                            setSortState(sortState)
+                        },
+                        onButtonClick = { lazyListState, coroutineScope ->
+                            scrollList(lazyListState, coroutineScope)
+                        },
+                        pickChampForTeam = { i, teamSide ->
+                            pickChampForTeam(i, teamSide)
+                        },
+                        setBansPerTeam = { i, teamSide ->
+                            setBansPerTeam(i, teamSide)
+                        },
+                        updateChampSearchQuery = { string ->
+                            updateChampSearchQuery(string)
+                        },
+                        isStarRatingMode = isStarRatingMode,
+                        ownScoreMax = ownScoreMax,
+                        theirScoreMax = theirScoreMax
+                    )
+                }
+            }
         }
         // MANUAL INPUT
         else {
@@ -823,16 +879,16 @@ fun MainActivityPreview() {
             updateMapsSearchQuery = {},
             setChosenMapByName = {},
             clearChoosenMap = {},
-            removeBan = {_,_ ->},
-            removePick = {_,_ ->},
-            setRoleFilter = {_ ->},
-            updateChampSearchQuery = {_ ->},
-            setSortState = {_ ->},
+            removeBan = { _, _ -> },
+            removePick = { _, _ -> },
+            setRoleFilter = { _ -> },
+            updateChampSearchQuery = { _ -> },
+            setSortState = { _ -> },
             toggleFavFilter = {},
-            scrollList = {_,_ ->},
-            pickChampForTeam =  {_,_ ->},
-            setBansPerTeam =  {_,_ ->},
-            toggleFavoriteStatus =  {_ ->}
+            scrollList = { _, _ -> },
+            pickChampForTeam = { _, _ -> },
+            setBansPerTeam = { _, _ -> },
+            toggleFavoriteStatus = { _ -> }
         )
     }
 }
