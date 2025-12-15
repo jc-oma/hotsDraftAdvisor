@@ -8,6 +8,7 @@ import android.util.Log
 import kotlinx.coroutines.tasks.await
 import android.view.PixelCopy
 import android.view.SurfaceView
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.exoplayer2.DefaultLoadControl
@@ -47,9 +48,9 @@ import org.opencv.features2d.ORB
 import org.opencv.imgproc.Imgproc
 */
 import androidx.core.graphics.createBitmap
-import com.jcdevelopment.hotsdraftadviser.R
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
@@ -88,12 +89,12 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
 
     // StateFlow für die erkannten Texte (z.B. eine Liste von Strings oder strukturiertere Daten)
     private val _recognizedTexts = MutableStateFlow<List<String>>(emptyList())
-    private val _recognizedTextsLeft = MutableStateFlow<List<String>>(emptyList())
-    private val _recognizedTextsRight = MutableStateFlow<List<String>>(emptyList())
+    private val _recognizedTextsLeft = MutableStateFlow<List<List<String>>>(emptyList())
+    private val _recognizedTextsRight = MutableStateFlow<List<List<String>>>(emptyList())
     private val _recognizedMap = MutableStateFlow<List<String>>(emptyList())
     val recognizedTexts: StateFlow<List<String>> = _recognizedTexts.asStateFlow()
-    val recognizedTextsLeft: StateFlow<List<String>> = _recognizedTextsLeft.asStateFlow()
-    val recognizedTextsRight: StateFlow<List<String>> = _recognizedTextsRight.asStateFlow()
+    val recognizedTextsLeft: StateFlow<List<List<String>>> = _recognizedTextsLeft.asStateFlow()
+    val recognizedTextsRight: StateFlow<List<List<String>>> = _recognizedTextsRight.asStateFlow()
     val recognizedTextsTop: StateFlow<List<String>> = _recognizedMap.asStateFlow()
 
 
@@ -385,23 +386,113 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
         try {
             val result = textRecognizer.process(image).await()
 
-            val ownChampsTexts = mutableListOf<String>()
-            val theirChampsTexts = mutableListOf<String>()
+            /*val ownChampsTexts = mutableListOf<String>()
+            val theirChampsTexts = mutableListOf<String>()*/
+            val theirFirstChampTexts = mutableListOf<String>()
+            val theirSecChampTexts = mutableListOf<String>()
+            val theirThirdChampTexts = mutableListOf<String>()
+            val theirFourthChampTexts = mutableListOf<String>()
+            val theirFifthChampTexts = mutableListOf<String>()
+            val ownFirstChampTexts = mutableListOf<String>()
+            val ownSecChampTexts = mutableListOf<String>()
+            val ownThirdChampTexts = mutableListOf<String>()
+            val ownFourthChampTexts = mutableListOf<String>()
+            val ownFifthChampTexts = mutableListOf<String>()
             val mapText = mutableListOf<String>()
 
             for (block in result.textBlocks) {
                 // Hole den Begrenzungsrahmen (Bounding Box) des Blocks
                 val blockBoundingBox = block.boundingBox
                 if (blockBoundingBox != null) {
-                    // Prüfe, ob die Mitte des Textblocks links oder rechts von der Bildmitte liegt
-                    if (blockBoundingBox.centerX() < imageCenterX && blockBoundingBox.centerY() > mapBoundaryY) {
-                        // Dieser Block ist auf der linken Seite
-                        block.lines.forEach { line -> ownChampsTexts.add(line.text) }
-                    } else if (blockBoundingBox.centerX() > imageCenterX && blockBoundingBox.centerY() > mapBoundaryY) {
-                        // Dieser Block ist auf der rechten Seite
-                        block.lines.forEach { line -> theirChampsTexts.add(line.text) }
+                    val centerY = blockBoundingBox.centerY()
+                    val isInBetweenFirstPick = centerY > pick0BoundaryY && centerY < pick1BoundaryY
+                    val isInBetweenSecPick = centerY > pick1BoundaryY && centerY < pick2BoundaryY
+                    val isInBetweenThirdPick = centerY > pick2BoundaryY && centerY < pick3BoundaryY
+                    val isInBetweenFourthPick = centerY > pick3BoundaryY && centerY < pick4BoundaryY
+                    val isInBetweenFifthPick = centerY > pick4BoundaryY
+                    val highestConfInd = getHighestConfedenceIndex(block)
+
+                    fun addLineOfText(recTexts: MutableList<String>, index: Int) {
+                        block.lines[index].elements.forEach { element ->
+                            recTexts.add(element.text)
+                        }
+                    }
+
+                    if (centerY > mapBoundaryY) {
+                        // LEFT / OWN PICKS
+                        if (blockBoundingBox.centerX() < imageCenterX) {
+                            //addLineOfText(ownChampsTexts, highestConfInd)
+
+                            if (isInBetweenFirstPick) {
+                                block.lines.forEach { line -> line
+                                    block.lines[highestConfInd].elements.forEach { element ->
+                                        ownFirstChampTexts.add(element.text)
+                                    }
+                                }
+                            } else if (isInBetweenSecPick) {
+                                block.lines.forEach { line -> line
+                                    block.lines[highestConfInd].elements.forEach { element ->
+                                        ownSecChampTexts.add(element.text)
+                                    }
+                                }
+                            } else if (isInBetweenThirdPick) {
+                                block.lines.forEach { line -> line
+                                    block.lines[highestConfInd].elements.forEach { element ->
+                                        ownThirdChampTexts.add(element.text)
+                                    }
+                                }
+                            } else if (isInBetweenFourthPick) {
+                                block.lines.forEach { line -> line
+                                    block.lines[highestConfInd].elements.forEach { element ->
+                                        ownFourthChampTexts.add(element.text)
+                                    }
+                                }
+                            } else if (isInBetweenFifthPick) {
+                                block.lines.forEach { line -> line
+                                    block.lines[highestConfInd].elements.forEach { element ->
+                                        ownFifthChampTexts.add(element.text)
+                                    }
+                                }
+                            }
+                            // RIGHT / THEIR PICKS
+                        } else if (blockBoundingBox.centerX() > imageCenterX) {
+                            //addLineOfText(theirChampsTexts, highestConfInd)
+
+                            if (isInBetweenFirstPick) {
+                                block.lines.forEach { line -> line
+                                    block.lines[highestConfInd].elements.forEach { element ->
+                                        theirFirstChampTexts.add(element.text)
+                                    }
+                                }
+                            } else if (isInBetweenSecPick) {
+                                block.lines.forEach { line -> line
+                                    block.lines[highestConfInd].elements.forEach { element ->
+                                        theirSecChampTexts.add(element.text)
+                                    }
+                                }
+                            } else if (isInBetweenThirdPick) {
+                                block.lines.forEach { line -> line
+                                    block.lines[highestConfInd].elements.forEach { element ->
+                                        theirThirdChampTexts.add(element.text)
+                                    }
+                                }
+                            } else if (isInBetweenFourthPick) {
+                                block.lines.forEach { line -> line
+                                    block.lines[highestConfInd].elements.forEach { element ->
+                                        theirFourthChampTexts.add(element.text)
+                                    }
+                                }
+                            } else if (isInBetweenFifthPick) {
+                                block.lines.forEach { line -> line
+                                    block.lines[highestConfInd].elements.forEach { element ->
+                                        theirFifthChampTexts.add(element.text)
+                                        theirFifthChampTexts
+                                    }
+                                }
+                            }
+                        }
                     } else {
-                        block.lines.forEach { line -> mapText.add(line.text) }
+                        addLineOfText(mapText, highestConfInd)
                     }
                 }
             }
@@ -409,8 +500,8 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                 //TODO ohne delay
                 delay(1550)
                 // Aktualisiere die entsprechenden StateFlows
-                _recognizedTextsLeft.value = ownChampsTexts
-                _recognizedTextsRight.value = theirChampsTexts
+                _recognizedTextsLeft.value = listOf(ownFirstChampTexts,ownSecChampTexts,ownThirdChampTexts,ownFourthChampTexts, ownFifthChampTexts)
+                _recognizedTextsRight.value = listOf(theirFirstChampTexts,theirSecChampTexts,theirThirdChampTexts,theirFourthChampTexts, theirFifthChampTexts)
             }
             _recognizedMap.value = mapText
 
@@ -429,6 +520,22 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
             TAG,
             "processFrame: Finished processing bitmap ${System.identityHashCode(frameBitmap)}"
         )
+    }
+
+    private fun getHighestConfedenceIndex(block: Text.TextBlock): Int {
+        var i = 0
+        var highestConfInd = 0
+        var highestConf = 0.0f
+        for (line in block.lines) {
+            for (element in line.elements) {
+                if (element.confidence > highestConf) {
+                    highestConf = element.confidence
+                    highestConfInd = i
+                }
+            }
+            i++
+        }
+        return highestConfInd
     }
 
     fun stopFrameProcessing() {

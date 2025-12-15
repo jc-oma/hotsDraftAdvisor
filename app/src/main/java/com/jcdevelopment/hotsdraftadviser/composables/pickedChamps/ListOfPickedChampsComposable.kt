@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jcdevelopment.hotsdraftadviser.MainActivityViewModel
 import com.jcdevelopment.hotsdraftadviser.TeamSide
 import com.jcdevelopment.hotsdraftadviser.Utilitys
 import com.jcdevelopment.hotsdraftadviser.composables.utilitiComposables.getColorByHexString

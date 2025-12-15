@@ -40,7 +40,6 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
 import java.io.IOException
 import kotlin.collections.List
-import kotlin.math.min
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
     private val db = AppDatabase.getDatabase(application)
@@ -161,13 +160,13 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val filterOwnChampString: StateFlow<String> = _filterChampString.asStateFlow()
     val sortState: StateFlow<SortState> = _sortState.asStateFlow()
 
-    val pickedTheirTeamChamps: StateFlow<List<ChampData>> = getPickedTheirTeamChamps(TeamSide.THEIR)
-    val pickedOwnTeamChamps: StateFlow<List<ChampData>> = getPickedTheirTeamChamps(TeamSide.OWN)
+    val pickedTheirTeamChamps: StateFlow<List<ChampData>> = getPickedChamps(TeamSide.THEIR)
+    val pickedOwnTeamChamps: StateFlow<List<ChampData>> = getPickedChamps(TeamSide.OWN)
 
     val minVersionCode: StateFlow<MinVerionCode> = _minVersionCode.asStateFlow()
 
 
-    private fun getPickedTheirTeamChamps(team: TeamSide): StateFlow<List<ChampData>> =
+    private fun getPickedChamps(team: TeamSide): StateFlow<List<ChampData>> =
         _allChampsData.map { champs -> champs.filter { it.pickedBy == team } }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
@@ -300,11 +299,11 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun setChosenMapByTextRecognition(name: String) {
         if (/*_choosenMap.value.isEmpty() && */name.isNotEmpty()) {
-            val match = findClosestMatch(name.lowercase(), _mapList.value)
+            val match = findClosestMatch(listOf(name.lowercase()), _mapList.value)
             if (match != null) {
                 viewModelScope.launch {
                     delay(550)
-                    _choosenMap.value = match
+                    _choosenMap.value = match.first
                 }
             }
 
@@ -861,7 +860,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     isPicked = false,
                     pickedBy = TeamSide.NONE,
                     scoreOwn = 0,
-                    scoreTheir = 0
+                    scoreTheir = 0,
+                    pickPos = -1
                 )
             }
         }
@@ -922,17 +922,104 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    fun pickByTextRecognition(teamPairs: List<Pair<String, TeamSide>>) {
-        teamPairs.forEach { teamPair ->
-            //TODO "WÄHLT", "PICKING" usw. returnen
-            if (teamPair.first == "WÄHLT") return@forEach
-            val champNames = _allChampsData.value.map { it.ChampName }
-            val match = findClosestMatch(teamPair.first.lowercase(), champNames)
-            val index = _distinctchoosableChampList.value.indexOfFirst { it.ChampName == match }
-            val teamSide = teamPair.second
+    //TODO
+    var theirpicks: MutableList<ChampData?> =
+        listOf<ChampData?>(null, null, null, null, null).toMutableList()
+    var ownpicks: MutableList<ChampData?> =
+        listOf<ChampData?>(null, null, null, null, null).toMutableList()
+
+    fun pickByTextRecognition(possibleChamps: List<List<String>>, teamSide: TeamSide) {
+        //List1 = Positionen der Picks
+        //List2 = mögliche gefundene Texte
+
+        val currentPicked = _allChampsData.value.filter { it.isPicked }.map { it.ChampName }
+
+        possibleChamps.withIndex().forEach { (recognizedPickPos, champTexts) ->
+            if (champTexts.isEmpty()) {
+                _allChampsData.value = _allChampsData.value.map { champ ->
+                    val isCurrentTeamSide = champ.pickedBy == teamSide
+                    val isChampPosition = recognizedPickPos == champ.pickPos && isCurrentTeamSide
+                    champ.copy(
+                        isPicked = if (isChampPosition) false else champ.isPicked,
+                        pickedBy = if (isChampPosition) TeamSide.NONE else champ.pickedBy,
+                        pickPos = if (isChampPosition) -1 else champ.pickPos
+                    )
+                }
+                if (teamSide == TeamSide.OWN) ownpicks[recognizedPickPos] = null
+                if (teamSide == TeamSide.THEIR) theirpicks[recognizedPickPos] = null
+                return@forEach
+            }
+
+            val falsePick = "WÄHLT"
+            val champNames = _allChampsData.value.map { it.ChampName }.toMutableList()
+            champNames.add(falsePick)
+            val match = findClosestMatch(champTexts.map { it.lowercase() }, champNames)
+
+            val index =
+                _distinctchoosableChampList.value.indexOfFirst { it.ChampName == match.first }
 
             if (index != -1) {
-                pickChampForTeam(index = index, teamSide = teamSide)
+                val data = _distinctchoosableChampList.value[index]
+                if (teamSide == TeamSide.OWN) {
+                    ownpicks[recognizedPickPos] = data
+                }
+                if (teamSide == TeamSide.THEIR) {
+                    theirpicks[recognizedPickPos] = data
+                }
+                /*//pickChampForTeam(index = index, teamSide = teamSide)
+                _allChampsData.value = _allChampsData.value.map { champ ->
+                    val isCurrentTeamSide = champ.pickedBy == teamSide
+                    val isRecognizedChamp = champ.ChampName == match.first
+                    val isRecognizedPos = champ.pickPos == recognizedPickPos
+                    val hasChanged = !isRecognizedChamp && isRecognizedPos
+                    champ.copy(
+                        isPicked = (isRecognizedChamp || champ.isPicked) && !hasChanged,
+                        pickedBy = if (isRecognizedChamp) teamSide else if (hasChanged) TeamSide.NONE else champ.pickedBy,
+                        pickPos = if (isRecognizedChamp) recognizedPickPos else -1,
+                        /*
+                        isPicked = isRecognizedChamp, // champ.isPicked || isRecognizedChamp || !hasChanged,
+                        pickedBy = if (isRecognizedChamp) teamSide /*else if (hasChanged) TeamSide.NONE*/ else champ.pickedBy,
+                        pickPos = if (isRecognizedChamp) recognizedPickPos else if (hasChanged) -1 else -1
+                         */
+                    )
+                 */
+            }
+        }
+        if (ownpicks.isNotEmpty()) {
+            val namesownPicks = ownpicks.map { it?.ChampName }
+            _allChampsData.value = _allChampsData.value.map { champ ->
+                if (namesownPicks.contains(champ.ChampName)) {
+                    champ.copy(
+                        isPicked = true,
+                        pickedBy = TeamSide.OWN,
+                        pickPos = ownpicks.indexOf(champ)
+                    )
+                } else {
+                    champ.copy(
+                        isPicked = false,
+                        pickedBy = if (champ.pickedBy == TeamSide.OWN) TeamSide.NONE else champ.pickedBy,
+                        pickPos = if (champ.pickedBy == TeamSide.OWN) -1 else champ.pickPos
+                    )
+                }
+            }
+        }
+
+        if (theirpicks.isNotEmpty()) {
+            val namesTheriPicks = theirpicks.map { it?.ChampName }
+            _allChampsData.value = _allChampsData.value.map { champ ->
+                if (namesTheriPicks.contains(champ.ChampName)) {
+                    champ.copy(
+                        isPicked = true,
+                        pickedBy = TeamSide.THEIR,
+                        pickPos = theirpicks.indexOf(champ)
+                    )
+                } else {
+                    champ.copy(
+                        isPicked = false,
+                        pickedBy = if (champ.pickedBy == TeamSide.THEIR) TeamSide.NONE else champ.pickedBy,
+                        pickPos = if (champ.pickedBy == TeamSide.THEIR) -1 else champ.pickPos
+                    )
+                }
             }
         }
     }
@@ -961,27 +1048,49 @@ enum class Difficulty {
     EASY, MEDIUM, HARD, EXTREME
 }
 
-fun levenshtein(a: String, b: String): Int {
-    val dp = Array(a.length + 1) { IntArray(b.length + 1) }
+fun findClosestMatch(
+    target: List<String>,
+    candidate: List<String>
+): Pair<String, Double> {
 
-    for (i in 0..a.length) dp[i][0] = i
-    for (j in 0..b.length) dp[0][j] = j
+    fun levenshteinDistance(a: String, b: String): Int {
+        val dp = Array(a.length + 1) { IntArray(b.length + 1) }
 
-    for (i in 1..a.length) {
-        for (j in 1..b.length) {
-            val cost = if (a[i - 1] == b[j - 1]) 0 else 1
-            dp[i][j] = min(
-                min(dp[i - 1][j] + 1, dp[i][j - 1] + 1),
-                dp[i - 1][j - 1] + cost
-            )
+        for (i in 0..a.length) dp[i][0] = i
+        for (j in 0..b.length) dp[0][j] = j
+
+        for (i in 1..a.length) {
+            for (j in 1..b.length) {
+                val cost = if (a[i - 1] == b[j - 1]) 0 else 1
+                dp[i][j] = minOf(
+                    dp[i - 1][j] + 1,
+                    dp[i][j - 1] + 1,
+                    dp[i - 1][j - 1] + cost
+                )
+            }
+        }
+        return dp[a.length][b.length]
+    }
+
+    fun similarity(a: String, b: String): Double {
+        if (a.isEmpty() && b.isEmpty()) return 1.0
+        val maxLen = maxOf(a.length, b.length)
+        return 1.0 - (levenshteinDistance(a, b).toDouble() / maxLen)
+    }
+
+    var bestMatch = ""
+    var bestScore = Double.NEGATIVE_INFINITY
+
+    for (b in candidate) {
+        val totalScore = target.sumOf { a ->
+            similarity(a.lowercase(), b.lowercase())
+        }
+
+        if (totalScore > bestScore) {
+            bestScore = totalScore
+            bestMatch = b
         }
     }
-    return dp[a.length][b.length]
-}
 
-// Function to find the closest match from a list
-fun findClosestMatch(target: String, candidates: List<String>): String? {
-    if (candidates.isEmpty()) return null
-
-    return candidates.minByOrNull { levenshtein(target.lowercase(), it.lowercase()) }
+    return bestMatch to bestScore
 }

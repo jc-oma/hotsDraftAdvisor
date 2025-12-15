@@ -81,6 +81,7 @@ import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataAbathur
 import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataAuriel
 import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataSgtHammer
 import com.jcdevelopment.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
+import com.jcdevelopment.hotsdraftadviser.MainActivityViewModel.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -225,7 +226,12 @@ fun MainActivityComposable(
         favFilter = favFilter,
         fitTeamMax = fitTeamMax,
         goodAgainstTeamMax = goodAgainstTeamMax,
-        pickByTextRecognition = { champList -> viewModel.pickByTextRecognition(champList) },
+        pickByTextRecognition = { champList, teamSide ->
+            viewModel.pickByTextRecognition(
+                champList,
+                teamSide
+            )
+        },
         setChosenMapByTextRecognition = { maplist -> viewModel.setChosenMapByTextRecognition(mapList.first()) },
         toggleDisclaymer = { viewModel.toggleDisclaymer() },
         toggleListMode = { viewModel.toggleDisclaymer() },
@@ -287,7 +293,7 @@ fun MainActivityComposable(
     isFirstStart: Boolean,
     isStarRatingMode: Boolean,
     favFilter: Boolean,
-    pickByTextRecognition: (teamPairs: List<Pair<String, TeamSide>>) -> Unit,
+    pickByTextRecognition: (possibleRecognitions: List<List<String>>, teamSide: TeamSide) -> Unit,
     setChosenMapByTextRecognition: (String) -> Unit,
     toggleFavoriteStatus: (String) -> Unit,
     toggleDisclaymer: () -> Unit,
@@ -331,8 +337,11 @@ fun MainActivityComposable(
         if (isStreamingEnabled) {
             Column {
                 VideoStreamComposable(
-                    onRecognizedTeamPicks = { champList ->
-                        pickByTextRecognition(champList)
+                    onRecognizedOwnTeamPicks = { champList ->
+                        pickByTextRecognition(champList, TeamSide.OWN)
+                    },
+                    onRecognizedTheirTeamPicks = { champList ->
+                        pickByTextRecognition(champList, TeamSide.THEIR)
                     },
                     onRecognizedMapsText = { mapList ->
                         if (mapList.isNotEmpty()) {
@@ -345,7 +354,6 @@ fun MainActivityComposable(
                 ListOfPickedChampsLiteComposable(
                     ownPickedChamps = ownPickedChamps,
                     theirPickedChamps = theirPickedChamps,
-                    composeTextColor = composeTextColor,
                     removePick = { i, teamSide ->
                         removePick(
                             i,
@@ -354,7 +362,7 @@ fun MainActivityComposable(
                     },
                     ownPickScore = ownPickScore,
                     theirPickScore = theirPickScore,
-                    isStarrating = isStarRatingMode
+                    isStarRating = isStarRatingMode
                 )
                 SearchAndFilterRowForChampsSmall(
                     searchQueryOwnTChamps = searchQueryOwnTChamps,
@@ -869,7 +877,7 @@ fun MainActivityPreview() {
             favFilter = false,
             fitTeamMax = 100,
             goodAgainstTeamMax = 100,
-            pickByTextRecognition = {},
+            pickByTextRecognition = { _, _ -> },
             setChosenMapByTextRecognition = {},
             toggleDisclaymer = {},
             toggleListMode = {},

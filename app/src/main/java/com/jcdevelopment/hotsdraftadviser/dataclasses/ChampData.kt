@@ -24,6 +24,7 @@ data class ChampData(
     var scoreTheir: Int = 0,
     var isPicked: Boolean = false,
     var pickedBy: TeamSide = TeamSide.NONE,
+    var pickPos: Int = -1,
     var isAFavoriteChamp: Boolean = false,
     var difficulty: Difficulty = Difficulty.EASY,
     var origin: GameOrigin? = null,

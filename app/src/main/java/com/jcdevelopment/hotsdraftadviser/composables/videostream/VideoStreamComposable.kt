@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,7 +32,8 @@ import com.jcdevelopment.hotsdraftadviser.TeamSide
 fun VideoStreamComposable(
     viewModel: VideoStreamViewModel = viewModel(),
     toggleStreaming: () -> Unit = {},
-    onRecognizedTeamPicks: (List<Pair<String, TeamSide>>) -> Unit = {},
+    onRecognizedOwnTeamPicks: (List<List<String>>) -> Unit = {},
+    onRecognizedTheirTeamPicks: (List<List<String>>) -> Unit = {},
     onRecognizedMapsText: (List<String>) -> Unit = {},
 ) {
     // Hole den Player aus dem ViewModel. collectAsState sorgt für Recomposition bei Änderungen.
@@ -52,7 +52,8 @@ fun VideoStreamComposable(
     val recognizedTextsTop by viewModel.recognizedTextsTop.collectAsState()
 
     VideoStreamComposable(
-        onRecognizedTeamPicks = { it -> onRecognizedTeamPicks(it) },
+        onRecognizedOwnTeamPicks = { it -> onRecognizedOwnTeamPicks(it) },
+        onRecognizedTheirTeamPicks = { it -> onRecognizedTheirTeamPicks(it) },
         onRecognizedMapsText = { it -> onRecognizedMapsText(it) },
         playerInstance = playerInstance,
         isPlayerActuallyPlaying = isPlayerActuallyPlaying,
@@ -74,7 +75,8 @@ fun VideoStreamComposable(
 
 @Composable
 fun VideoStreamComposable(
-    onRecognizedTeamPicks: (List<Pair<String, TeamSide>>) -> Unit = {},
+    onRecognizedOwnTeamPicks: (List<List<String>>) -> Unit = {},
+    onRecognizedTheirTeamPicks: (List<List<String>>) -> Unit = {},
     onRecognizedMapsText: (List<String>) -> Unit = {},
     playerInstance: ExoPlayer?,
     isPlayerActuallyPlaying: Boolean,
@@ -83,8 +85,8 @@ fun VideoStreamComposable(
     featureMatchResults: Map<String, Int>,
     playerViewRef: PlayerView?,
     recognizedTexts: List<String>,
-    recognizedTextsLeft: List<String>,
-    recognizedTextsRight: List<String>,
+    recognizedTextsLeft: List<List<String>>,
+    recognizedTextsRight: List<List<String>>,
     recognizedTextsTop: List<String>,
     stopFrameProcessing: () -> Unit,
     startFrameProcessing: (PlayerView) -> Unit,
@@ -95,10 +97,8 @@ fun VideoStreamComposable(
     var playerViewRefTmp by remember { mutableStateOf(playerViewRef) }
 
     LaunchedEffect(recognizedTextsLeft, recognizedTextsRight, recognizedTextsTop) {
-        val combinedList = mutableListOf<Pair<String, TeamSide>>()
-        combinedList.addAll(recognizedTextsLeft.map { it to TeamSide.OWN })
-        combinedList.addAll(recognizedTextsRight.map { it to TeamSide.THEIR })
-        onRecognizedTeamPicks(combinedList)
+        onRecognizedOwnTeamPicks(recognizedTextsLeft)
+        onRecognizedTheirTeamPicks(recognizedTextsRight)
         onRecognizedMapsText(recognizedTextsTop)
     }
 
@@ -297,7 +297,8 @@ fun VideoStreamComposable(
 @Composable
 private fun VideoStreamViewModelPreview() {
     VideoStreamComposable(
-        onRecognizedTeamPicks = {},
+        onRecognizedOwnTeamPicks = {},
+        onRecognizedTheirTeamPicks = {},
         onRecognizedMapsText = {},
         playerInstance = null,
         isPlayerActuallyPlaying = true,
@@ -306,8 +307,8 @@ private fun VideoStreamViewModelPreview() {
         featureMatchResults = emptyMap(),
         playerViewRef = null,
         recognizedTexts = listOf<String>("Abathur"),
-        recognizedTextsLeft = listOf<String>("Abathur"),
-        recognizedTextsRight = listOf<String>("Abathur"),
+        recognizedTextsLeft = listOf(listOf("Abathur")),
+        recognizedTextsRight = listOf(listOf("Abathur")),
         recognizedTextsTop = listOf<String>("Hanamura"),
         stopFrameProcessing = {},
         startFrameProcessing = {},

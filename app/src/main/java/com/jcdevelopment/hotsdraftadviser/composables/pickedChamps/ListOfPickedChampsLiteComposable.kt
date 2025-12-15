@@ -1,24 +1,17 @@
 package com.jcdevelopment.hotsdraftadviser.composables.pickedChamps
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,13 +21,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jcdevelopment.hotsdraftadviser.R
-import com.jcdevelopment.hotsdraftadviser.TeamSide
-import com.jcdevelopment.hotsdraftadviser.Utilitys
+import com.jcdevelopment.hotsdraftadviser.*
 import com.jcdevelopment.hotsdraftadviser.Utilitys.mapChampNameToRoundPortraitDrawable
-import com.jcdevelopment.hotsdraftadviser.composables.champListPortraitItem.ChampLitePortraitItemComposable
 import com.jcdevelopment.hotsdraftadviser.composables.starRating.StarRatingComposable
-import com.jcdevelopment.hotsdraftadviser.composables.utilitiComposables.getColorByHexString
 import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
 import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataAbathur
 import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataAuriel
@@ -45,11 +34,10 @@ import kotlin.math.max
 fun ListOfPickedChampsLiteComposable(
     ownPickedChamps: List<ChampData>,
     theirPickedChamps: List<ChampData>,
-    composeTextColor: Color,
     removePick: (Int, TeamSide) -> Unit,
     ownPickScore: Int,
     theirPickScore: Int,
-    isStarrating: Boolean
+    isStarRating: Boolean
 ) {
     val aggrScore = ownPickScore + theirPickScore
     val ownScorePercent = max((ownPickScore.toFloat() / aggrScore.toFloat() * 100).toInt(), 0)
@@ -73,7 +61,8 @@ fun ListOfPickedChampsLiteComposable(
                             )!!
                         ),
                         contentDescription = ownPickedChamps[i].ChampName
-                    )
+                    ) //TODO remove
+                    Text(text = ownPickedChamps[i].pickPos.toString(), color = Color.White)
                 }
             }
             LazyVerticalGrid(
@@ -81,7 +70,7 @@ fun ListOfPickedChampsLiteComposable(
                 columns = GridCells.Adaptive(48.dp),
                 contentPadding = PaddingValues(4.dp)
             ) {
-                items(ownPickedChamps.size) { i ->
+                items(theirPickedChamps.size) { i ->
                     Image(
                         modifier = Modifier
                             .weight(0.1f)
@@ -91,8 +80,9 @@ fun ListOfPickedChampsLiteComposable(
                                 theirPickedChamps[i].ChampName
                             )!!
                         ),
-                        contentDescription = ownPickedChamps[i].ChampName
+                        contentDescription = theirPickedChamps[i].ChampName
                     )
+                    Text(text = ownPickedChamps[i].pickPos.toString(), color = Color.White)
                 }
             }
         }
@@ -101,7 +91,7 @@ fun ListOfPickedChampsLiteComposable(
                 .height(32.dp)
                 .padding(top = 2.dp)
         ) {
-            if (isStarrating) {
+            if (isStarRating) {
 
                 val ownScoreFlaot = ownPickScore.toFloat()
                 val theirScoreFlaot = theirPickScore.toFloat()
@@ -154,11 +144,6 @@ fun ListOfPickedChampsLiteComposable(
 @Preview
 @Composable
 private fun ListOfPickedChampsLiteComposablePreview() {
-    val textColor = "f8f8f9ff"
-    val headlineColor = "6e35d8ff"
-    val theirTeamColor = "5C1A1BFF"
-    val ownTeamColor = "533088ff"
-
     ListOfPickedChampsLiteComposable(
         ownPickedChamps = listOf(
             exampleChampDataSgtHammer, exampleChampDataAbathur,
@@ -168,10 +153,9 @@ private fun ListOfPickedChampsLiteComposablePreview() {
             exampleChampDataSgtHammer, exampleChampDataAbathur,
             exampleChampDataAuriel, exampleChampDataSgtHammer, exampleChampDataAbathur
         ),
-        composeTextColor = getColorByHexString(textColor),
         removePick = { _, _ -> {} },
         ownPickScore = 321,
         theirPickScore = 83,
-        isStarrating = true
+        isStarRating = true
     )
 }
