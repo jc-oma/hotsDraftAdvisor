@@ -61,8 +61,7 @@ fun ListOfPickedChampsLiteComposable(
                             )!!
                         ),
                         contentDescription = ownPickedChamps[i].ChampName
-                    ) //TODO remove
-                    Text(text = ownPickedChamps[i].pickPos.toString(), color = Color.White)
+                    )
                 }
             }
             LazyVerticalGrid(
@@ -82,7 +81,6 @@ fun ListOfPickedChampsLiteComposable(
                         ),
                         contentDescription = theirPickedChamps[i].ChampName
                     )
-                    Text(text = ownPickedChamps[i].pickPos.toString(), color = Color.White)
                 }
             }
         }
