@@ -232,7 +232,7 @@ fun MainActivityComposable(
                 teamSide
             )
         },
-        setChosenMapByTextRecognition = { maplist -> viewModel.setChosenMapByTextRecognition(mapList.first()) },
+        setChosenMapByTextRecognition = { mapReclist -> viewModel.setChosenMapByTextRecognition(mapReclist) },
         toggleDisclaymer = { viewModel.toggleDisclaymer() },
         toggleListMode = { viewModel.toggleDisclaymer() },
         toggleStarRateMode = { viewModel.toggleStarRateMode() },

@@ -486,13 +486,16 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                                 block.lines.forEach { line -> line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         theirFifthChampTexts.add(element.text)
-                                        theirFifthChampTexts
                                     }
                                 }
                             }
                         }
                     } else {
-                        addLineOfText(mapText, highestConfInd)
+                        block.lines.forEach { line -> line
+                            block.lines.forEach { element ->
+                                mapText.add(element.text)
+                            }
+                        }
                     }
                 }
             }
