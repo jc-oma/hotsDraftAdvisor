@@ -71,7 +71,8 @@ val exampleChampDataSgtHammer = ChampData(
     isAFavoriteChamp = true,
     origin = GameOrigin.STARCRAFT,
     localName = "Seargent Hammer",
-    difficulty = Difficulty.MEDIUM
+    difficulty = Difficulty.MEDIUM,
+    pickPos = 1
 )
 
 val exampleChampDataAbathur = ChampData(
@@ -103,7 +104,8 @@ val exampleChampDataAbathur = ChampData(
     isAFavoriteChamp = true,
     origin = GameOrigin.STARCRAFT,
     localName = "Abathur",
-    difficulty = Difficulty.EXTREME
+    difficulty = Difficulty.EXTREME,
+    pickPos = 2
 )
 
 val exampleChampDataAuriel = ChampData(
@@ -135,5 +137,39 @@ val exampleChampDataAuriel = ChampData(
     isAFavoriteChamp = true,
     origin = GameOrigin.DIABLO,
     localName = "Auriel",
-    difficulty = Difficulty.HARD
+    difficulty = Difficulty.HARD,
+    pickPos = 5
+)
+
+val exampleChampDataAnubarak = ChampData(
+    key = 4,
+    ChampName = "Anubarak",
+    ChampRole = listOf("support"),
+    ChampRoleAlt = listOf(RoleEnum.support),
+    StrongAgainst = listOf(
+        StrongAgainstData("Hanzo", 123),
+        StrongAgainstData("SgtHammer", 423)
+    ),
+    WeakAgainst = listOf(
+        WeakAgainstData("Genji", 42),
+        WeakAgainstData("Tyrande", 43)
+    ),
+    GoodTeamWith = listOf(
+        GoodTeamWith("Illidan", 23),
+        GoodTeamWith("Tyrael", 43)
+    ),
+    MapScore = listOf(
+        MapScoreData("Verfluchtes Tal", 80),
+        MapScoreData("Türme des Unheils", 75),
+        MapScoreData("Schlachtfeld der Ewigkeit", 70)
+    ),
+    scoreOwn = 34,
+    scoreTheir = 23,
+    isPicked = false,
+    pickedBy = TeamSide.NONE,
+    isAFavoriteChamp = true,
+    origin = GameOrigin.WARCRAFT,
+    localName = "Anubarak",
+    difficulty = Difficulty.EXTREME,
+    pickPos = -1
 )

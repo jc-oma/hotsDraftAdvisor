@@ -1,6 +1,10 @@
 package com.jcdevelopment.hotsdraftadviser.composables.videostream
 
+import android.graphics.Bitmap
+import android.os.Build
 import android.util.Log
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -14,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,6 +32,7 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerView
 import com.jcdevelopment.hotsdraftadviser.TeamSide
+
 
 @Composable
 fun VideoStreamComposable(
@@ -51,6 +57,8 @@ fun VideoStreamComposable(
     val recognizedTextsRight by viewModel.recognizedTextsRight.collectAsState()
     val recognizedTextsTop by viewModel.recognizedTextsTop.collectAsState()
 
+    //val debugBitmap by viewModel.debugMaskedBitmap.collectAsState()
+
     VideoStreamComposable(
         onRecognizedOwnTeamPicks = { it -> onRecognizedOwnTeamPicks(it) },
         onRecognizedTheirTeamPicks = { it -> onRecognizedTheirTeamPicks(it) },
@@ -65,6 +73,7 @@ fun VideoStreamComposable(
         recognizedTextsLeft = recognizedTextsLeft,
         recognizedTextsRight = recognizedTextsRight,
         recognizedTextsTop = recognizedTextsTop,
+        debugBitmap = null, //debugBitmap,
         stopFrameProcessing = { viewModel.stopFrameProcessing() },
         startFrameProcessing = { playerView -> viewModel.startFrameProcessing(playerView) },
         stopStreaming = { viewModel.stopStreaming() },
@@ -88,6 +97,7 @@ fun VideoStreamComposable(
     recognizedTextsLeft: List<List<String>>,
     recognizedTextsRight: List<List<String>>,
     recognizedTextsTop: List<String>,
+    debugBitmap: Bitmap?,
     stopFrameProcessing: () -> Unit,
     startFrameProcessing: (PlayerView) -> Unit,
     stopStreaming: () -> Unit,
@@ -193,6 +203,20 @@ fun VideoStreamComposable(
     ) {
 
 
+        debugBitmap?.let { bmp ->
+            Spacer(modifier = Modifier.height(16.dp))
+            Text("Debug-Ansicht (Maskierter Frame):")
+            Image(
+                bitmap = bmp.asImageBitmap(),
+                contentDescription = "Vorschau des maskierten Frames für die Texterkennung",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(16 / 9f) // Seitenverhältnis beibehalten
+                    .padding(8.dp)
+                    .border(1.dp, Color.Gray)
+            )
+        }
+
         Spacer(modifier = Modifier.height(48.dp))
         Row(horizontalArrangement = Arrangement.Center) {
             Text("Currently Streaming Mode")
@@ -283,13 +307,16 @@ fun VideoStreamComposable(
             Log.d("VideoStreamingScreen", "Text recognized: $text")
 
         }
+
+        //TODO Debug Error if necessary
+        /*
         errorMessage?.let {
             Text(
                 text = it,
                 color = Color.Red,
                 modifier = Modifier.padding(top = 8.dp)
             )
-        }
+        }*/
     }
 }
 
@@ -313,6 +340,7 @@ private fun VideoStreamViewModelPreview() {
         stopFrameProcessing = {},
         startFrameProcessing = {},
         stopStreaming = {},
-        startStreaming = {}
+        startStreaming = {},
+        debugBitmap = null
     )
 }

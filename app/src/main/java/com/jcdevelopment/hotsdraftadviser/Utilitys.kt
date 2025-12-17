@@ -345,6 +345,105 @@ object Utilitys {
         }
     }
 
+    fun mapChampNameToPickSlottDrawable(champName: String): Int? {
+        when (champName) {
+            "Abathur" -> return R.drawable.pick_slot_abathur
+            "Alarak" -> return R.drawable.pick_slot_alarak
+            "Alexstrasza" -> return R.drawable.pick_slot_alexstrasza
+            "Ana" -> return R.drawable.pick_slot_ana
+            "Anduin" -> return R.drawable.pick_slot_anduin
+            "Anubarak" -> return R.drawable.pick_slot_anubarak
+            "Artanis" -> return R.drawable.pick_slot_artanis
+            "Arthas" -> return R.drawable.pick_slot_arthas
+            "Auriel" -> return R.drawable.pick_slot_auriel
+            "Azmodan" -> return R.drawable.pick_slot_azmodan
+            "Blaze" -> return R.drawable.pick_slot_blaze
+            "Brightwing" -> return R.drawable.pick_slot_brightwing
+            "Cassia" -> return R.drawable.pick_slot_cassia
+            "Chen" -> return R.drawable.pick_slot_chen
+            "Cho" -> return R.drawable.pick_slot_cho
+            "Chogall" -> return R.drawable.pick_slot_chogall
+            "Chromie" -> return R.drawable.pick_slot_chromie
+            "Deathwing" -> return R.drawable.pick_slot_deathwing
+            "Deckard" -> return R.drawable.pick_slot_deckard
+            "Dehaka" -> return R.drawable.pick_slot_dehaka
+            "Diablo" -> return R.drawable.pick_slot_diablo
+            "DVA" -> return R.drawable.pick_slot_dva
+            "ETC" -> return R.drawable.pick_slot_etc
+            "Falstad" -> return R.drawable.pick_slot_falstad
+            "Fenix" -> return R.drawable.pick_slot_fenix
+            "Gall" -> return R.drawable.pick_slot_gall
+            "Garrosh" -> return R.drawable.pick_slot_garrosh
+            "Gazlowe" -> return R.drawable.pick_slot_gazlowe
+            "Genji" -> return R.drawable.pick_slot_genji
+            "Greymane" -> return R.drawable.pick_slot_greymane
+            "Guldan" -> return R.drawable.pick_slot_guldan
+            "Hanzo" -> return R.drawable.pick_slot_hanzo
+            "Hogger" -> return R.drawable.pick_slot_hogger
+            "Illidan" -> return R.drawable.pick_slot_illidan
+            "Imperius" -> return R.drawable.pick_slot_imperius
+            "Jaina" -> return R.drawable.pick_slot_jaina
+            "Johanna" -> return R.drawable.pick_slot_johanna
+            "Junkrat" -> return R.drawable.pick_slot_junkrat
+            "Kaelthas" -> return R.drawable.pick_slot_kaelthas
+            "Kelthuzad" -> return R.drawable.pick_slot_kelthuzad
+            "Kerrigan" -> return R.drawable.pick_slot_kerrigan
+            "Kharazim" -> return R.drawable.pick_slot_kharazim
+            "Leoric" -> return R.drawable.pick_slot_leoric
+            "Lili" -> return R.drawable.pick_slot_lili
+            "Li-Ming" -> return R.drawable.pick_slot_liming
+            "LtMorales" -> return R.drawable.pick_slot_ltmorales
+            "Lucio" -> return R.drawable.pick_slot_lucio
+            "Lunara" -> return R.drawable.pick_slot_lunara
+            "Maiev" -> return R.drawable.pick_slot_maiev
+            "Malfurion" -> return R.drawable.pick_slot_malfurion
+            "Malganis" -> return R.drawable.pick_slot_malghanis
+            "Malthael" -> return R.drawable.pick_slot_malthael
+            "Medivh" -> return R.drawable.pick_slot_medhiv
+            "Mei" -> return R.drawable.pick_slot_mei
+            "Mephisto" -> return R.drawable.pick_slot_mephisto
+            "Muradin" -> return R.drawable.pick_slot_muradin
+            "Murky" -> return R.drawable.pick_slot_murky
+            "Nazeebo" -> return R.drawable.pick_slot_nazeebo
+            "Nova" -> return R.drawable.pick_slot_nova
+            "Orphea" -> return R.drawable.pick_slot_orphea
+            "Probius" -> return R.drawable.pick_slot_probius
+            "Qhira" -> return R.drawable.pick_slot_qhira
+            "Ragnaros" -> return R.drawable.pick_slot_ragnaros
+            "Raynor" -> return R.drawable.pick_slot_raynor
+            "Rehgar" -> return R.drawable.pick_slot_rehgar
+            "Rexxar" -> return R.drawable.pick_slot_rexxar
+            "Samuro" -> return R.drawable.pick_slot_samuro
+            "SgtHammer" -> return R.drawable.pick_slot_sgthammer
+            "Sonya" -> return R.drawable.pick_slot_sonya
+            "Stitches" -> return R.drawable.pick_slot_stitches
+            "Stukov" -> return R.drawable.pick_slot_stukov
+            "Sylvanas" -> return R.drawable.pick_slot_sylvanas
+            "Tassadar" -> return R.drawable.pick_slot_tassadar
+            "Butcher" -> return R.drawable.pick_slot_the_butcher
+            "LostVikings" -> return R.drawable.pick_slot_the_vikings
+            "Thrall" -> return R.drawable.pick_slot_thrall
+            "Tracer" -> return R.drawable.pick_slot_tracer
+            "Tychus" -> return R.drawable.pick_slot_tychus
+            "Tyrael" -> return R.drawable.pick_slot_tyrael
+            "Tyrande" -> return R.drawable.pick_slot_tyrande
+            "Uther" -> return R.drawable.pick_slot_uther
+            "Valeera" -> return R.drawable.pick_slot_valeera
+            "Valla" -> return R.drawable.pick_slot_valla
+            "Varian" -> return R.drawable.pick_slot_varian
+            "Whitemane" -> return R.drawable.pick_slot_whitemane
+            "Xul" -> return R.drawable.pick_slot_xul
+            "Yrel" -> return R.drawable.pick_slot_yrel
+            "Zagara" -> return R.drawable.pick_slot_zagara
+            "Zeratul" -> return R.drawable.pick_slot_zeratul
+            "Zarya" -> return R.drawable.pick_slot_zarya
+            "Zuljin" -> return R.drawable.pick_slot_zuljin
+
+
+            else -> return null
+        }
+    }
+
     fun mapChampNameToBannedPortraitDrawable(champName: String): Int? {
         when (champName) {
             "Abathur" -> return R.drawable.banned_abathur

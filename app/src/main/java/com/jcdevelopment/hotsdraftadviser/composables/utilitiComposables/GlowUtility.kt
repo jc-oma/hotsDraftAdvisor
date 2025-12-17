@@ -24,7 +24,7 @@ fun Modifier.glow(
 ): Modifier = composed {
     val frameworkPaint = android.graphics.Paint().apply {
         this.style = android.graphics.Paint.Style.STROKE
-        this.strokeWidth = radius.value / 4f // Eine Strichbreite für die "Quelle" des Glühens
+        this.strokeWidth = radius.value / 16f // Eine Strichbreite für die "Quelle" des Glühens
         this.color = color.copy(alpha = alpha).toArgb()
         this.maskFilter = BlurMaskFilter(
             radius.value,

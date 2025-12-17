@@ -55,7 +55,7 @@ fun ChampLitePortraitItemComposable(
                 painter = painterResource(mapChampNameToRoundPortraitDrawable(chosableChamp.ChampName)!!),
                 contentDescription = "Abathur",
                 modifier = Modifier
-                    .size(69.dp)
+                    .size(110.dp)
                     .clip(CircleShape)
                     .drawWithContent {
                         drawContent()
@@ -74,7 +74,7 @@ fun ChampLitePortraitItemComposable(
             CircularProgressIndicator(
                 progress = maxProgress,
                 modifier = Modifier
-                    .size(81.dp)
+                    .size(115.dp)
                     .rotate(-150f),
                 color = Color.Gray,
                 strokeWidth = 4.dp,
@@ -84,7 +84,7 @@ fun ChampLitePortraitItemComposable(
             CircularProgressIndicator(
                 progress = 1f,
                 modifier = Modifier
-                    .size(69.dp)
+                    .size(115.dp)
                     .rotate(-150f),
                 color = Color.Black.copy(alpha = 1f),
                 strokeWidth = 2.dp,
@@ -94,7 +94,7 @@ fun ChampLitePortraitItemComposable(
             CircularProgressIndicator(
                 progress = progress,
                 modifier = Modifier
-                    .size(80.dp)
+                    .size(115.dp)
                     .rotate(-150f),
                 color = colorResource(R.color.my_custom_gold),
                 strokeWidth = 3.dp,
@@ -104,7 +104,7 @@ fun ChampLitePortraitItemComposable(
             CircularProgressIndicator(
                 progress = progress,
                 modifier = Modifier
-                    .size(85.dp)
+                    .size(118.dp)
                     .rotate(-150f),
                 color = Color.Yellow.copy(alpha = 0.3f),
                 strokeWidth = 8.dp,

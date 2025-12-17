@@ -2,6 +2,7 @@ package com.jcdevelopment.hotsdraftadviser
 
 import android.app.Application
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.activity.ComponentActivity
@@ -55,6 +56,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -82,6 +84,7 @@ import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataAuriel
 import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataSgtHammer
 import com.jcdevelopment.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
 import com.jcdevelopment.hotsdraftadviser.MainActivityViewModel.*
+import com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.videoStreamPiicking.AvailableChampListVideoStreamComposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -112,6 +115,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         setContent {
             val resetCounter by viewModel.resetCounter.collectAsState()
             val windowSizeClass =
@@ -232,7 +236,11 @@ fun MainActivityComposable(
                 teamSide
             )
         },
-        setChosenMapByTextRecognition = { mapReclist -> viewModel.setChosenMapByTextRecognition(mapReclist) },
+        setChosenMapByTextRecognition = { mapReclist ->
+            viewModel.setChosenMapByTextRecognition(
+                mapReclist
+            )
+        },
         toggleDisclaymer = { viewModel.toggleDisclaymer() },
         toggleListMode = { viewModel.toggleDisclaymer() },
         toggleStarRateMode = { viewModel.toggleStarRateMode() },
@@ -351,29 +359,24 @@ fun MainActivityComposable(
                     toggleStreaming = { toggleStreaming() }
                 )
                 Text(choosenMap)
-                ListOfPickedChampsLiteComposable(
+                AvailableChampListVideoStreamComposable(
                     ownPickedChamps = ownPickedChamps,
                     theirPickedChamps = theirPickedChamps,
-                    removePick = { i, teamSide ->
-                        removePick(
-                            i,
-                            teamSide
-                        )
+                    sortState = sortState,
+                    chosableChampList = chosableChampList,
+                    setSortState = { sortState ->
+                        setSortState(sortState)
                     },
-                    ownPickScore = ownPickScore,
-                    theirPickScore = theirPickScore,
-                    isStarRating = isStarRatingMode
-                )
-                SearchAndFilterRowForChampsSmall(
-                    searchQueryOwnTChamps = searchQueryOwnTChamps,
+                    isStarRatingMode = isStarRatingMode,
+                    ownScoreMax = ownScoreMax,
+                    theirScoreMax = theirScoreMax,
+                    setRoleFilter = { roleFilter ->
+                        setRoleFilter(roleFilter)
+                    },
                     roleFilter = roleFilter,
                     favFilter = favFilter,
-                    setRoleFilter = { roleEnum -> setRoleFilter(roleEnum) },
-                    updateChampSearchQuery = { queryString ->
-                        updateChampSearchQuery(queryString)
-                    },
+                    isTablet = isTablet,
                     toggleFavFilter = { toggleFavFilter() },
-                    isTablet = isTablet
                 )
                 if (chosableChampList.isEmpty()) {
                     Text(stringResource(R.string.loading_state_champs))

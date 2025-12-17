@@ -35,165 +35,173 @@ fun SearchAndFilterRowForChampsSmall(
     setRoleFilter: (RoleEnum?) -> Unit,
     updateChampSearchQuery: (String) -> Unit,
     toggleFavFilter: () -> Unit,
-    isTablet: Boolean
+    isTablet: Boolean,
+    isSearchbar: Boolean = true,
+    isFilterbar: Boolean = true
 ) {
     Column {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.Bottom
-        ) {
-            ChampSearchBar(
-                modifier = Modifier.weight(2f),
-                searchQueryOwnTChamps,
-                setRoleFilter,
-                updateChampSearchQuery
-            )
+        if (isSearchbar) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.Bottom
+            ) {
+                ChampSearchBar(
+                    modifier = Modifier.weight(2f),
+                    searchQueryOwnTChamps,
+                    setRoleFilter,
+                    updateChampSearchQuery
+                )
+            }
         }
-        Column(
-            verticalArrangement = Arrangement.Top
-        ) {
-            val imagePadding = 8.dp
-            val responsiveFontSize = getResponsiveFontSize()
+        if (isFilterbar) {
+            Column(
+                verticalArrangement = Arrangement.Top
+            ) {
+                val imagePadding = 8.dp
+                val responsiveFontSize = getResponsiveFontSize()
 
-            Row(modifier = Modifier.padding(top = imagePadding)) {
-                val modifier = if (isTablet) Modifier
-                    .weight(0.5f)
-                    .padding(start = imagePadding, end = imagePadding)
-                    .height(48.dp)
-                else
-                    Modifier
+                Row(modifier = Modifier.padding(top = imagePadding)) {
+                    val modifier = if (isTablet) Modifier
                         .weight(0.5f)
                         .padding(start = imagePadding, end = imagePadding)
+                        .height(48.dp)
+                    else
+                        Modifier
+                            .weight(0.5f)
+                            .padding(start = imagePadding, end = imagePadding)
 
-                val modifierIcon = if (isTablet) Modifier.fillMaxSize().padding(4.dp) else
-                    Modifier.size(FilterChipDefaults.IconSize)
+                    val modifierIcon = if (isTablet) Modifier
+                        .fillMaxSize()
+                        .padding(4.dp) else
+                        Modifier.size(FilterChipDefaults.IconSize)
 
-                FilterChip(
-                    modifier = modifier,
-                    leadingIcon = {
-                        Box(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painterResource(id = R.drawable.tank),
-                                contentDescription = "Description of your image",
-                                modifier = modifierIcon
-                            )
-                        }
-                    },
-                    selected = roleFilter.contains(RoleEnum.tank),
-                    onClick = { setRoleFilter(RoleEnum.tank) },
-                    label = {}
-                )
-                FilterChip(
-                    modifier = modifier,
-                    leadingIcon = {
-                        Box(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painterResource(id = R.drawable.icon_ranged),
-                                contentDescription = "Description of your image",
-                                modifier = modifierIcon
-                            )
-                        }
-                    },
-                    selected = roleFilter.contains(RoleEnum.ranged),
-                    onClick = { setRoleFilter(RoleEnum.ranged) },
-                    label = {}
-                )
-                FilterChip(
-                    modifier = modifier,
-                    leadingIcon = {
-                        Box(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painterResource(id = R.drawable.icon_melee),
-                                contentDescription = "Description of your image",
-                                modifier = modifierIcon
-                            )
-                        }
-                    },
-                    selected = roleFilter.contains(RoleEnum.melee),
-                    onClick = { setRoleFilter(RoleEnum.melee) },
-                    label = {}
-                )
-                FilterChip(
-                    modifier = modifier,
-                    leadingIcon = {
-                        Box(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painterResource(id = R.drawable.icon_heiler),
-                                contentDescription = "Description of your image",
-                                modifier = modifierIcon
-                            )
-                        }
-                    },
-                    selected = roleFilter.contains(RoleEnum.heal),
-                    onClick = { setRoleFilter(RoleEnum.heal) },
-                    label = {}
-                )
-                FilterChip(
-                    modifier = modifier,
-                    leadingIcon = {
-                        Box(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painterResource(id = R.drawable.icon_bruiser),
-                                contentDescription = "Description of your image",
-                                modifier = modifierIcon
-                            )
-                        }
-                    },
-                    selected = roleFilter.contains(RoleEnum.bruiser),
-                    onClick = { setRoleFilter(RoleEnum.bruiser) },
-                    label = {}
-                )
-                FilterChip(
-                    modifier = modifier,
-                    leadingIcon = {
-                        Box(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painterResource(id = R.drawable.support),
-                                contentDescription = "Description of your image",
-                                modifier = modifierIcon
-                            )
-                        }
-                    },
-                    selected = roleFilter.contains(RoleEnum.support),
-                    onClick = { setRoleFilter(RoleEnum.support) },
-                    label = {}
-                )
-                FilterChip(
-                    modifier = modifier,
-                    leadingIcon = {
-                        Box(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = (Icons.Filled.Favorite),
-                                contentDescription = "Heart",
-                                modifier = modifierIcon
-                            )
-                        }
-                    },
-                    selected = favFilter,
-                    onClick = { toggleFavFilter() },
-                    label = {}
-                )
+                    FilterChip(
+                        modifier = modifier,
+                        leadingIcon = {
+                            Box(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    painterResource(id = R.drawable.tank),
+                                    contentDescription = "Description of your image",
+                                    modifier = modifierIcon
+                                )
+                            }
+                        },
+                        selected = roleFilter.contains(RoleEnum.tank),
+                        onClick = { setRoleFilter(RoleEnum.tank) },
+                        label = {}
+                    )
+                    FilterChip(
+                        modifier = modifier,
+                        leadingIcon = {
+                            Box(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    painterResource(id = R.drawable.icon_ranged),
+                                    contentDescription = "Description of your image",
+                                    modifier = modifierIcon
+                                )
+                            }
+                        },
+                        selected = roleFilter.contains(RoleEnum.ranged),
+                        onClick = { setRoleFilter(RoleEnum.ranged) },
+                        label = {}
+                    )
+                    FilterChip(
+                        modifier = modifier,
+                        leadingIcon = {
+                            Box(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    painterResource(id = R.drawable.icon_melee),
+                                    contentDescription = "Description of your image",
+                                    modifier = modifierIcon
+                                )
+                            }
+                        },
+                        selected = roleFilter.contains(RoleEnum.melee),
+                        onClick = { setRoleFilter(RoleEnum.melee) },
+                        label = {}
+                    )
+                    FilterChip(
+                        modifier = modifier,
+                        leadingIcon = {
+                            Box(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    painterResource(id = R.drawable.icon_heiler),
+                                    contentDescription = "Description of your image",
+                                    modifier = modifierIcon
+                                )
+                            }
+                        },
+                        selected = roleFilter.contains(RoleEnum.heal),
+                        onClick = { setRoleFilter(RoleEnum.heal) },
+                        label = {}
+                    )
+                    FilterChip(
+                        modifier = modifier,
+                        leadingIcon = {
+                            Box(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    painterResource(id = R.drawable.icon_bruiser),
+                                    contentDescription = "Description of your image",
+                                    modifier = modifierIcon
+                                )
+                            }
+                        },
+                        selected = roleFilter.contains(RoleEnum.bruiser),
+                        onClick = { setRoleFilter(RoleEnum.bruiser) },
+                        label = {}
+                    )
+                    FilterChip(
+                        modifier = modifier,
+                        leadingIcon = {
+                            Box(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    painterResource(id = R.drawable.support),
+                                    contentDescription = "Description of your image",
+                                    modifier = modifierIcon
+                                )
+                            }
+                        },
+                        selected = roleFilter.contains(RoleEnum.support),
+                        onClick = { setRoleFilter(RoleEnum.support) },
+                        label = {}
+                    )
+                    FilterChip(
+                        modifier = modifier,
+                        leadingIcon = {
+                            Box(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = (Icons.Filled.Favorite),
+                                    contentDescription = "Heart",
+                                    modifier = modifierIcon
+                                )
+                            }
+                        },
+                        selected = favFilter,
+                        onClick = { toggleFavFilter() },
+                        label = {}
+                    )
+                }
             }
         }
     }
@@ -209,6 +217,7 @@ fun SearchAndFilterRowForChampsSmallPreview() {
         setRoleFilter = {},
         updateChampSearchQuery = {},
         toggleFavFilter = {},
-        isTablet = true
+        isTablet = true,
+        isSearchbar = true
     )
 }

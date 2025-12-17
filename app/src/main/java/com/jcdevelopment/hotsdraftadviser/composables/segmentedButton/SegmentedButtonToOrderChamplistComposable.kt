@@ -22,7 +22,8 @@ fun SegmentedButtonToOrderChamplistComposable(
     onButtonClick: () -> Unit
 ) {
     var selectedIndex by remember { mutableIntStateOf(sortState.ordinal) }
-    val list = listOf<String>(stringResource(R.string.segment_button_best_pick),
+    val list = listOf<String>(
+        stringResource(R.string.segment_button_best_pick),
         stringResource(R.string.segment_button_best_ban),
         stringResource(R.string.segment_button_name)
     )
@@ -43,7 +44,13 @@ fun SegmentedButtonToOrderChamplistComposable(
                     onButtonClick()
                 },
                 selected = i == selectedIndex,
-                label = { Text(text =list[i], maxLines = 1, overflow = TextOverflow.StartEllipsis) }
+                label = {
+                    Text(
+                        text = list[i],
+                        maxLines = 1,
+                        overflow = TextOverflow.StartEllipsis
+                    )
+                }
             )
         }
     }

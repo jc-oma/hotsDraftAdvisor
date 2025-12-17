@@ -2,6 +2,10 @@ package com.jcdevelopment.hotsdraftadviser.composables.videostream
 
 import android.app.Application
 import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -9,6 +13,8 @@ import kotlinx.coroutines.tasks.await
 import android.view.PixelCopy
 import android.view.SurfaceView
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.exoplayer2.DefaultLoadControl
@@ -48,15 +54,18 @@ import org.opencv.features2d.ORB
 import org.opencv.imgproc.Imgproc
 */
 import androidx.core.graphics.createBitmap
+import androidx.core.graphics.drawable.toBitmap
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.jcdevelopment.hotsdraftadviser.R
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+import androidx.core.graphics.scale
 
 class VideoStreamViewModel(application: Application) : AndroidViewModel(application) {
     private val TAG = "ExoPlayerVM"
@@ -86,6 +95,29 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
         TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
     }
 
+    // Variable für das Original-Masken-Bitmap
+    private var originalMaskBitmap: Bitmap? = null
+
+    init {
+        // Lade die Maske beim Initialisieren des ViewModels
+        loadMask()
+    }
+
+    private fun loadMask() {
+        try {
+            // Lade das Drawable aus den Ressourcen
+            val maskDrawable = ContextCompat.getDrawable(getApplication(), R.drawable.mask_champs_and_map_name_reverse)
+            if (maskDrawable != null) {
+                // Konvertiere das Drawable in ein Bitmap
+                originalMaskBitmap = maskDrawable.toBitmap()
+                Log.i(TAG, "Mask bitmap loaded successfully.")
+            } else {
+                Log.e(TAG, "Failed to load mask drawable.")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error loading mask bitmap", e)
+        }
+    }
 
     // StateFlow für die erkannten Texte (z.B. eine Liste von Strings oder strukturiertere Daten)
     private val _recognizedTexts = MutableStateFlow<List<String>>(emptyList())
@@ -97,6 +129,22 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     val recognizedTextsRight: StateFlow<List<List<String>>> = _recognizedTextsRight.asStateFlow()
     val recognizedTextsTop: StateFlow<List<String>> = _recognizedMap.asStateFlow()
 
+    //TODO REMOVE Debugging frames when sure it works
+    //private val _debugMaskedBitmap = MutableStateFlow<Bitmap?>(null)
+    //val debugMaskedBitmap: StateFlow<Bitmap?> = _debugMaskedBitmap.asStateFlow()
+
+    //TODO REMOVE
+    /*val _1ownTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
+    val _2ownTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
+    val _3ownTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
+    val _4ownTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
+    val _5ownTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
+    val _1theirTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
+    val _2theirTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
+    val _3theirTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
+    val _4theirTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
+    val _5theirTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
+    val _mapCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)*/
 
     init {
         initializePlayer()
@@ -306,6 +354,24 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                             }
 
                             if (copySuccess && isActive) {
+                                // ---- NEUER SCHRITT: MASKE ANWENDEN ----
+                                originalMaskBitmap?.let { mask ->
+                                    Log.d(TAG, "Applying mask to the captured frame.")
+                                    try {
+                                        applyBitmapMask(
+                                            originalBitmap = currentFrameBitmap,
+                                            mask = mask
+                                        )
+                                       /*currentFrameBitmap.config.let { it ->
+                                            _debugMaskedBitmap.value = currentFrameBitmap.copy(
+                                                it!!,
+                                                false
+                                            )
+                                        }*/
+                                    } catch (e: Exception) {
+                                        Log.e(TAG, "Failed to apply mask", e)
+                                    }
+                                }
                                 Log.d(TAG, "PixelCopy success. Processing frame with ML Kit.")
                                 // Directly await the suspend function.
                                 // The bitmap is not recycled until after this function returns.
@@ -427,30 +493,35 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                                 block.lines.forEach { line -> line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         ownFirstChampTexts.add(element.text)
+                                        //_1ownTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenSecPick) {
                                 block.lines.forEach { line -> line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         ownSecChampTexts.add(element.text)
+                                        //_2ownTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenThirdPick) {
                                 block.lines.forEach { line -> line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         ownThirdChampTexts.add(element.text)
+                                        //_3ownTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenFourthPick) {
                                 block.lines.forEach { line -> line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         ownFourthChampTexts.add(element.text)
+                                        //_4ownTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenFifthPick) {
                                 block.lines.forEach { line -> line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         ownFifthChampTexts.add(element.text)
+                                        //_5ownTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             }
@@ -462,30 +533,35 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                                 block.lines.forEach { line -> line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         theirFirstChampTexts.add(element.text)
+                                        //_1theirTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenSecPick) {
                                 block.lines.forEach { line -> line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         theirSecChampTexts.add(element.text)
+                                        //_2theirTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenThirdPick) {
                                 block.lines.forEach { line -> line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         theirThirdChampTexts.add(element.text)
+                                        //_3theirTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenFourthPick) {
                                 block.lines.forEach { line -> line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         theirFourthChampTexts.add(element.text)
+                                        //_4theirTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenFifthPick) {
                                 block.lines.forEach { line -> line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         theirFifthChampTexts.add(element.text)
+                                        //_5theirTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             }
@@ -494,6 +570,7 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                         block.lines.forEach { line -> line
                             block.lines.forEach { element ->
                                 mapText.add(element.text)
+                                //_mapCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                             }
                         }
                     }
@@ -556,5 +633,29 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     private fun cleanUpPlayer() {
         _player.value?.release()
         _player.value = null
+    }
+
+    private fun applyBitmapMask(originalBitmap: Bitmap, mask: Bitmap) {
+        // 1. Skaliere die Maske, damit sie exakt auf das Original-Bitmap passt.
+        // Wir erstellen eine temporäre, skalierte Maske.
+        val relation = mask.density.toFloat() / originalBitmap.density.toFloat()
+        val widthDensed = (originalBitmap.width * relation).toInt()
+        val heightDensed = (originalBitmap.height * relation).toInt()
+        val scaledMask = mask.scale(widthDensed, heightDensed)
+
+        // 2. Erstelle einen Canvas, um auf dem Original-Bitmap zu "zeichnen".
+        val canvas = Canvas(originalBitmap)
+
+        // 3. Konfiguriere einen "Paint", um den Maskierungsmodus zu verwenden.
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+        // DST_IN behält nur die Teile des Ziels (originalBitmap), die sich mit der Quelle (scaledMask) überlappen.
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_IN)
+
+        // 4. Zeichne die skalierte Maske auf das Original-Bitmap.
+        // Dies entfernt alle Pixel, die in der Maske transparent sind.
+        canvas.drawBitmap(scaledMask, 0f, 0f, paint)
+
+        // 5. Die temporär skalierte Maske kann jetzt recycelt werden.
+        scaledMask.recycle()
     }
 }

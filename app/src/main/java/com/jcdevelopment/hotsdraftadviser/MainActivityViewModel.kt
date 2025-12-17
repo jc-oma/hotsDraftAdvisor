@@ -950,9 +950,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 return@forEach
             }
 
-            val falsePick = "WÄHLT"
             val champNames = _allChampsData.value.map { it.ChampName }.toMutableList()
-            champNames.add(falsePick)
+            val falsePick = listOf("WÄHLT", "PICKING")
+            falsePick.forEach { champNames.add(it) }
             val match = findClosestMatch(champTexts.map { it.lowercase() }, champNames)
 
             val index =
@@ -961,38 +961,22 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             if (index != -1) {
                 val data = _distinctchoosableChampList.value[index]
                 if (teamSide == TeamSide.OWN) {
-                    ownpicks[recognizedPickPos] = data
+                    ownpicks[recognizedPickPos] = data.copy(pickPos = recognizedPickPos)
                 }
                 if (teamSide == TeamSide.THEIR) {
-                    theirpicks[recognizedPickPos] = data
+                    theirpicks[recognizedPickPos] = data.copy(pickPos = recognizedPickPos)
                 }
-                /*//pickChampForTeam(index = index, teamSide = teamSide)
-                _allChampsData.value = _allChampsData.value.map { champ ->
-                    val isCurrentTeamSide = champ.pickedBy == teamSide
-                    val isRecognizedChamp = champ.ChampName == match.first
-                    val isRecognizedPos = champ.pickPos == recognizedPickPos
-                    val hasChanged = !isRecognizedChamp && isRecognizedPos
-                    champ.copy(
-                        isPicked = (isRecognizedChamp || champ.isPicked) && !hasChanged,
-                        pickedBy = if (isRecognizedChamp) teamSide else if (hasChanged) TeamSide.NONE else champ.pickedBy,
-                        pickPos = if (isRecognizedChamp) recognizedPickPos else -1,
-                        /*
-                        isPicked = isRecognizedChamp, // champ.isPicked || isRecognizedChamp || !hasChanged,
-                        pickedBy = if (isRecognizedChamp) teamSide /*else if (hasChanged) TeamSide.NONE*/ else champ.pickedBy,
-                        pickPos = if (isRecognizedChamp) recognizedPickPos else if (hasChanged) -1 else -1
-                         */
-                    )
-                 */
             }
         }
         if (ownpicks.isNotEmpty()) {
             val namesownPicks = ownpicks.map { it?.ChampName }
             _allChampsData.value = _allChampsData.value.map { champ ->
                 if (namesownPicks.contains(champ.ChampName)) {
+                    val pickPos = namesownPicks.indexOf(champ.ChampName) + 1
                     champ.copy(
                         isPicked = true,
                         pickedBy = TeamSide.OWN,
-                        pickPos = ownpicks.indexOf(champ)
+                        pickPos = pickPos
                     )
                 } else {
                     champ.copy(
@@ -1005,19 +989,20 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
 
         if (theirpicks.isNotEmpty()) {
-            val namesTheriPicks = theirpicks.map { it?.ChampName }
+            val namesTherePicks = theirpicks.map { it?.ChampName }
             _allChampsData.value = _allChampsData.value.map { champ ->
-                if (namesTheriPicks.contains(champ.ChampName)) {
+                if (namesTherePicks.contains(champ.ChampName)) {
+                    val pickPos = namesTherePicks.indexOf(champ.ChampName) + 1
                     champ.copy(
                         isPicked = true,
                         pickedBy = TeamSide.THEIR,
-                        pickPos = theirpicks.indexOf(champ)
+                        pickPos = pickPos
                     )
                 } else {
                     champ.copy(
                         isPicked = false,
                         pickedBy = if (champ.pickedBy == TeamSide.THEIR) TeamSide.NONE else champ.pickedBy,
-                        pickPos = if (champ.pickedBy == TeamSide.THEIR) -1 else champ.pickPos
+                        pickPos = if (champ.pickedBy == TeamSide.THEIR) - 1 else champ.pickPos
                     )
                 }
             }
