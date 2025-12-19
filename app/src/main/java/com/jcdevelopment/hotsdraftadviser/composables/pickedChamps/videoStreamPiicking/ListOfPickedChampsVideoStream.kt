@@ -42,6 +42,33 @@ fun ListOfPickedChampsWithSlotComposable(
     val scorePercent = max((ownpickScore.toFloat() / aggrScore.toFloat() * 100).toInt(), 0)
 
     Column(modifier = modifier.fillMaxHeight()) {
+        Row(
+            modifier = Modifier
+                .height(32.dp)
+                .padding(top = 2.dp)
+        ) {
+            if (isStarRating) {
+
+                val ownScoreFlaot = ownpickScore.toFloat()
+                val theirScoreFlaot = theirPickScore.toFloat()
+                val maxFloat = ownScoreFlaot.coerceAtLeast(theirScoreFlaot)
+                val starColor = if (!isSystemInDarkTheme()) Color.Black else Color.White
+
+                val ratingFloatOwn = if (maxFloat == 0f) 0f else ownScoreFlaot / maxFloat
+                StarRatingComposable(
+                    ratingFloat = ratingFloatOwn, modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1f), starColorFilled = starColor
+                )
+            } else {
+                Text(
+                    modifier = Modifier,
+                    text = scorePercent.toString(),
+                    textAlign = if (isOwnTeam) TextAlign.Left else TextAlign.Right,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
         Column(
 
         ) {
@@ -71,34 +98,6 @@ fun ListOfPickedChampsWithSlotComposable(
                     )
                 }
                 Spacer(modifier = Modifier.height(4.dp))
-            }
-        }
-        Row(
-            modifier = Modifier
-                .height(32.dp)
-                .padding(top = 2.dp)
-        ) {
-            if (isStarRating) {
-
-                val ownScoreFlaot = ownpickScore.toFloat()
-                val theirScoreFlaot = theirPickScore.toFloat()
-                val maxFloat = ownScoreFlaot.coerceAtLeast(theirScoreFlaot)
-                val starColor = if (!isSystemInDarkTheme()) Color.Black else Color.White
-
-                val ratingFloatOwn = if (maxFloat == 0f) 0f else ownScoreFlaot / maxFloat
-                StarRatingComposable(
-                    ratingFloat = ratingFloatOwn, modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(1f), starColorFilled = starColor
-                )
-            } else {
-                Text(
-                    modifier = Modifier
-                        .padding(8.dp),
-                    text = scorePercent.toString(),
-                    textAlign = if (isOwnTeam) TextAlign.Left else TextAlign.Right,
-                    fontWeight = FontWeight.Bold
-                )
             }
         }
     }
