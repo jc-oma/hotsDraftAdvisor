@@ -55,7 +55,6 @@ fun ListOfPickedChampsWithSlotComposable(
                 val theirScoreFlaot = theirPickScore.toFloat()
                 val maxFloat = Math.max(ownScoreFlaot, theirScoreFlaot)
                 val starColor = if (!isSystemInDarkTheme()) Color.Black else Color.White
-
                 val ratingFloat = if (maxFloat == 0f) 0f else ownScoreFlaot / maxFloat
                 StarRatingComposable(
                     modifier = Modifier
