@@ -1,7 +1,7 @@
 package com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.videoStreamPiicking
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,11 +12,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jcdevelopment.hotsdraftadviser.*
@@ -46,58 +47,70 @@ fun ListOfPickedChampsWithSlotComposable(
             modifier = Modifier
                 .height(32.dp)
                 .padding(top = 2.dp)
+                .align(if (isOwnTeam) Alignment.Start else Alignment.End)
         ) {
             if (isStarRating) {
 
                 val ownScoreFlaot = ownpickScore.toFloat()
                 val theirScoreFlaot = theirPickScore.toFloat()
-                val maxFloat = ownScoreFlaot.coerceAtLeast(theirScoreFlaot)
+                val maxFloat = Math.max(ownScoreFlaot, theirScoreFlaot)
                 val starColor = if (!isSystemInDarkTheme()) Color.Black else Color.White
 
-                val ratingFloatOwn = if (maxFloat == 0f) 0f else ownScoreFlaot / maxFloat
+                val ratingFloat = if (maxFloat == 0f) 0f else ownScoreFlaot / maxFloat
                 StarRatingComposable(
-                    ratingFloat = ratingFloatOwn, modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(1f), starColorFilled = starColor
+                    modifier = Modifier
+                        .fillMaxHeight(),
+                    ratingFloat = ratingFloat,
+                    starColorFilled = starColor
                 )
             } else {
                 Text(
                     modifier = Modifier,
                     text = scorePercent.toString(),
-                    textAlign = if (isOwnTeam) TextAlign.Left else TextAlign.Right,
                     fontWeight = FontWeight.Bold
                 )
             }
         }
-        Column(
-
+        val color = if (isOwnTeam) Color.Blue else Color.Red
+        Box(
+            modifier = Modifier.background(
+                brush = Brush.linearGradient(
+                    colors = listOf(
+                        color.copy(alpha = 0.0f),
+                        color,
+                        color.copy(alpha = 0.0f),
+                    )
+                )
+            )
         ) {
-            for (i in 1..5) {
-                val posChamp = pickedChamps.firstOrNull() { it.pickPos == i }
-                Box {
-                    if (posChamp != null) {
+            Column {
+                for (i in 1..5) {
+                    val posChamp = pickedChamps.firstOrNull() { it.pickPos == i }
+                    Box {
+                        if (posChamp != null) {
+                            Image(
+                                painter = painterResource(
+                                    mapChampNameToPickSlottDrawable(
+                                        posChamp.ChampName
+                                    )!!
+                                ),
+                                contentDescription = posChamp.ChampName
+                            )
+                        }
                         Image(
-                            painter = painterResource(
-                                mapChampNameToPickSlottDrawable(
-                                    posChamp.ChampName
-                                )!!
+                            modifier = if (isOwnTeam) Modifier.glow(
+                                color = Color.Blue
+                            ) else Modifier.glow(
+                                color = Color.Red
                             ),
-                            contentDescription = posChamp.ChampName
+                            painter = painterResource(
+                                R.drawable.pick_slot_empty
+                            ),
+                            contentDescription = ""
                         )
                     }
-                    Image(
-                        modifier = if (isOwnTeam) Modifier.glow(
-                            color = Color.Blue
-                        ) else Modifier.glow(
-                            color = Color.Red
-                        ),
-                        painter = painterResource(
-                            R.drawable.pick_slot_empty
-                        ),
-                        contentDescription = ""
-                    )
+                    Spacer(modifier = Modifier.height(4.dp))
                 }
-                Spacer(modifier = Modifier.height(4.dp))
             }
         }
     }
@@ -114,7 +127,7 @@ private fun ListOfPickedChampsWithSlotComposablePreview() {
         ),
         ownpickScore = 321,
         theirPickScore = 83,
-        isStarRating = false,
+        isStarRating = true,
         isOwnTeam = true
     )
 }
