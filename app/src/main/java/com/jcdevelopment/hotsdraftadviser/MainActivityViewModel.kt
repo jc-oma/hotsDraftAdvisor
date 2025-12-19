@@ -928,13 +928,39 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     var ownpicks: MutableList<ChampData?> =
         listOf<ChampData?>(null, null, null, null, null).toMutableList()
 
+    val theirLastMatches = List(5) { mutableListOf<String>() }.toMutableList()
+    val ownLastMatches = List(5) { mutableListOf<String>() }.toMutableList()
+
     fun pickByTextRecognition(possibleChamps: List<List<String>>, teamSide: TeamSide) {
         //List1 = Positionen der Picks
         //List2 = mögliche gefundene Texte
 
-        val currentPicked = _allChampsData.value.filter { it.isPicked }.map { it.ChampName }
+        //TODO Problem bei KAEL'THAS
+        val handledPossibleChamps = empericErrorHandling(possibleChamps)
+        val champNames = _allChampsData.value.map { it.ChampName }.toMutableList()
 
-        possibleChamps.withIndex().forEach { (recognizedPickPos, champTexts) ->
+        handledPossibleChamps.withIndex().forEach { (recognizedPickPos, champTexts) ->
+            val falsePick = listOf("WÄHLT", "PICKING")
+            falsePick.forEach { champNames.add(it) }
+            val match = findClosestMatch(champTexts.map { it.lowercase() }, champNames)
+
+            val lastMatchOwn = ownLastMatches[recognizedPickPos]
+            val lastMatchtheir = theirLastMatches[recognizedPickPos]
+            if (teamSide == TeamSide.OWN) {
+                if (lastMatchOwn == mutableListOf(match.first)){
+                    return@forEach
+                } else {
+                    ownLastMatches[recognizedPickPos] = mutableListOf(match.first)
+                }
+            } else {
+                if (lastMatchtheir == mutableListOf(match.first)){
+                    return@forEach
+                } else {
+                    theirLastMatches[recognizedPickPos] = mutableListOf(match.first)
+                }
+            }
+
+            //Problem des zappelns hier drunter?
             if (champTexts.isEmpty()) {
                 _allChampsData.value = _allChampsData.value.map { champ ->
                     val isCurrentTeamSide = champ.pickedBy == teamSide
@@ -950,11 +976,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 return@forEach
             }
 
-            val champNames = _allChampsData.value.map { it.ChampName }.toMutableList()
-            val falsePick = listOf("WÄHLT", "PICKING")
-            falsePick.forEach { champNames.add(it) }
-            val match = findClosestMatch(champTexts.map { it.lowercase() }, champNames)
-
             val index =
                 _distinctchoosableChampList.value.indexOfFirst { it.ChampName == match.first }
 
@@ -968,6 +989,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 }
             }
         }
+
         if (ownpicks.isNotEmpty()) {
             val namesownPicks = ownpicks.map { it?.ChampName }
             _allChampsData.value = _allChampsData.value.map { champ ->
@@ -980,7 +1002,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     )
                 } else {
                     champ.copy(
-                        isPicked = false,
+                        isPicked = if (champ.pickedBy == TeamSide.OWN) false else champ.isPicked,
                         pickedBy = if (champ.pickedBy == TeamSide.OWN) TeamSide.NONE else champ.pickedBy,
                         pickPos = if (champ.pickedBy == TeamSide.OWN) -1 else champ.pickPos
                     )
@@ -1000,12 +1022,20 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     )
                 } else {
                     champ.copy(
-                        isPicked = false,
+                        isPicked = if (champ.pickedBy == TeamSide.THEIR) false else champ.isPicked,
                         pickedBy = if (champ.pickedBy == TeamSide.THEIR) TeamSide.NONE else champ.pickedBy,
-                        pickPos = if (champ.pickedBy == TeamSide.THEIR) - 1 else champ.pickPos
+                        pickPos = if (champ.pickedBy == TeamSide.THEIR) -1 else champ.pickPos
                     )
                 }
             }
+        }
+    }
+}
+
+private fun empericErrorHandling(possibleChamps: List<List<String>>): List<List<String>> {
+    return possibleChamps.map { champTexts ->
+        champTexts.map { texts ->
+            if (texts.lowercase() == "thas") "kael'thas" else texts
         }
     }
 }

@@ -38,11 +38,8 @@ import kotlinx.coroutines.CoroutineScope
 @Composable
 fun AvailableChampPortraitLiteComposable(
     modifier: Modifier = Modifier,
-    sortState: SortState,
     distinctChosableChampList: List<ChampData>,
-    ownScoreMax: Int,
-    setSortState: (SortState) -> Unit,
-    scrollList: (LazyListState, CoroutineScope) -> Unit,
+    ownScoreMax: Int
 ) {
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -91,12 +88,9 @@ fun AvailableChampPortraitLiteComposable(
 @Composable
 private fun AvailableChampPortraitComposablePreview() {
     AvailableChampPortraitLiteComposable(
-        sortState = SortState.OWNPOINTS,
         distinctChosableChampList = listOf(exampleChampDataAbathur, exampleChampDataSgtHammer,
             exampleChampDataAuriel, exampleChampDataAnubarak
         ),
         ownScoreMax = 243,
-        setSortState = {},
-        scrollList = { _, _ -> {} }
     )
 }

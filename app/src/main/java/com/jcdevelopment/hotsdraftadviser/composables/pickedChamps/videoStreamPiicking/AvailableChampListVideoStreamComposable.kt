@@ -76,16 +76,8 @@ fun AvailableChampListVideoStreamComposable(
         ) {
             AvailableChampPortraitLiteComposable(
                 modifier = Modifier,
-                sortState = sortState,
                 distinctChosableChampList = chosableChampList,
-                ownScoreMax = ownScoreMax,
-                setSortState = { it -> setSortState(it) },
-                scrollList = { listState, coroutineScope ->
-                    onButtonClick(
-                        listState,
-                        coroutineScope
-                    )
-                }
+                ownScoreMax = ownScoreMax
             )
         }
         ListOfPickedChampsWithSlotComposable(
