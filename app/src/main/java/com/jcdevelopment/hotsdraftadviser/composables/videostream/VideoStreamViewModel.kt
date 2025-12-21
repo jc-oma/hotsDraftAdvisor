@@ -1,32 +1,5 @@
 package com.jcdevelopment.hotsdraftadviser.composables.videostream
 
-import android.app.Application
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
-import kotlinx.coroutines.tasks.await
-import android.view.PixelCopy
-import android.view.SurfaceView
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
-import com.google.android.exoplayer2.DefaultLoadControl
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.PlaybackException
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.ui.PlayerView
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DefaultDataSource
 //TODO CAMERA & TensorFloor
 /*
 import com.google.mlkit.vision.common.InputImage
@@ -34,15 +7,6 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
  */
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 //TODO OPENCV
 /*
 import org.opencv.android.Utils
@@ -53,19 +17,55 @@ import org.opencv.features2d.DescriptorMatcher
 import org.opencv.features2d.ORB
 import org.opencv.imgproc.Imgproc
 */
+import android.app.Application
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
+import android.view.PixelCopy
+import android.view.SurfaceView
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.graphics.scale
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import com.google.android.exoplayer2.DefaultLoadControl
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.PlaybackException
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
+import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.ui.PlayerView
+import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.upstream.DefaultDataSource
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.jcdevelopment.hotsdraftadviser.R
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
-import androidx.core.graphics.scale
 
 class VideoStreamViewModel(application: Application) : AndroidViewModel(application) {
     private val TAG = "ExoPlayerVM"
@@ -130,8 +130,8 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     val recognizedTextsTop: StateFlow<List<String>> = _recognizedMap.asStateFlow()
 
     //TODO REMOVE Debugging frames when sure it works
-    //private val _debugMaskedBitmap = MutableStateFlow<Bitmap?>(null)
-    //val debugMaskedBitmap: StateFlow<Bitmap?> = _debugMaskedBitmap.asStateFlow()
+    private val _debugMaskedBitmap = MutableStateFlow<Bitmap?>(null)
+    val debugMaskedBitmap: StateFlow<Bitmap?> = _debugMaskedBitmap.asStateFlow()
 
     //TODO REMOVE
     /*val _1ownTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
@@ -362,12 +362,24 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                                             originalBitmap = currentFrameBitmap,
                                             mask = mask
                                         )
-                                       /*currentFrameBitmap.config.let { it ->
+                                        normalizeBitmap(bitmap = currentFrameBitmap)
+                                        enhanceBitmapForOcr_grey(bitmap = currentFrameBitmap)
+                                        //TODO minimize contrast or move to before normalization?
+                                        enhanceBitmapForOcr_contrast(bitmap = currentFrameBitmap, contrast = 1.6f)
+                                        /*TODO next image scaling
+                                        To achieve a better performance of OCR, the image should have more than 300 PPI (pixel per inch). So, if the image size is less than 300 PPI, we need to increase it. We can use the Pillow library for this.
+                                         https://nextgeninvent.com/blogs/7-steps-of-image-pre-processing-to-improve-ocr-using-python-2/
+                                         */
+                                        //enhanceBitmapForOcr_monochrome(bitmap = currentFrameBitmap, threshold = 128f)
+
+
+                                        //TODO Debug Frame to see on Screen
+                                       currentFrameBitmap.config.let { it ->
                                             _debugMaskedBitmap.value = currentFrameBitmap.copy(
                                                 it!!,
                                                 false
                                             )
-                                        }*/
+                                        }
                                     } catch (e: Exception) {
                                         Log.e(TAG, "Failed to apply mask", e)
                                     }
@@ -658,4 +670,110 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
         // 5. Die temporär skalierte Maske kann jetzt recycelt werden.
         scaledMask.recycle()
     }
+
+    private fun enhanceBitmapForOcr_grey(bitmap: Bitmap) {
+        val canvas = Canvas(bitmap)
+        val paint = Paint()
+
+        val matrix = ColorMatrix()
+        matrix.setSaturation(0f)
+        //convert into monochrom mit schwelwert?
+
+        paint.colorFilter = ColorMatrixColorFilter(matrix)
+        canvas.drawBitmap(bitmap, 0f, 0f, paint)
+    }
+
+    private fun enhanceBitmapForOcr_contrast(bitmap: Bitmap, contrast: Float = 1.5f, brightness: Float = 0f) {
+        val canvas = Canvas(bitmap)
+        val paint = Paint()
+
+        // ColorMatrix für Kontrast und Helligkeit
+        // contrast: 1.0 ist normal, > 1.0 erhöht den Kontrast
+        // brightness: 0 ist normal, > 0 macht es heller
+        val matrix = ColorMatrix(floatArrayOf(
+            contrast, 0f, 0f, 0f, brightness,
+            0f, contrast, 0f, 0f, brightness,
+            0f, 0f, contrast, 0f, brightness,
+            0f, 0f, 0f, 1f, 0f
+        ))
+        paint.colorFilter = ColorMatrixColorFilter(matrix)
+        canvas.drawBitmap(bitmap, 0f, 0f, paint)
+    }
+
+    private fun normalizeBitmap(bitmap: Bitmap) {
+        val width = bitmap.width
+        val height = bitmap.height
+        val pixels = IntArray(width * height)
+        bitmap.getPixels(pixels, 0, width, 0, 0, width, height)
+
+        var minLuma = 255
+        var maxLuma = 0
+
+        // Find the min and max intensity (Luminance)
+        for (pixel in pixels) {
+            val r = (pixel shr 16) and 0xff
+            val g = (pixel shr 8) and 0xff
+            val b = pixel and 0xff
+            val luma = (0.299 * r + 0.587 * g + 0.114 * b).toInt()
+
+            if (luma < minLuma) minLuma = luma
+            if (luma > maxLuma) maxLuma = luma
+        }
+
+        // If there is no range (pure color), don't normalize
+        if (maxLuma <= minLuma) return
+
+        // Calculate scale and offset for normalization: output = (input - min) * (255 / (max - min))
+        val range = (maxLuma - minLuma).toFloat()
+        val scale = 255f / range
+        val offset = -minLuma * scale
+
+        val canvas = Canvas(bitmap)
+        val paint = Paint()
+
+        // Create a matrix that stretches the values
+        val normalizeMatrix = ColorMatrix(floatArrayOf(
+            scale, 0f, 0f, 0f, offset,
+            0f, scale, 0f, 0f, offset,
+            0f, 0f, scale, 0f, offset,
+            0f, 0f, 0f, 1f, 0f
+        ))
+
+        paint.colorFilter = ColorMatrixColorFilter(normalizeMatrix)
+        canvas.drawBitmap(bitmap, 0f, 0f, paint)
+    }
+
+    private fun enhanceBitmapForOcr_monochrome(bitmap: Bitmap, threshold: Float = 128f) {
+        val canvas = Canvas(bitmap)
+        val paint = Paint()
+
+        // 1. Zuerst in Graustufen umwandeln
+        val colorMatrix = ColorMatrix()
+        colorMatrix.setSaturation(0f)
+
+        // 2. Schwellwert-Logik anwenden:
+        // Wir nutzen eine Matrix, die die RGB-Werte extrem verstärkt.
+        // Ein Schwellwert von 128 (Mitte) bedeutet:
+        // Alles über 128 wird weiß (255), alles darunter schwarz (0).
+
+        // Die Formel für den Kontrast-Faktor, um einen harten Cut zu erzeugen:
+        val m = 255f // Extrem hoher Kontrastfaktor
+        val o = -m * threshold / 255f // Offset basierend auf dem Schwellwert
+
+        val thresholdMatrix = floatArrayOf(
+            m, m, m, 0f, o * 255f, // Rot-Kanal
+            m, m, m, 0f, o * 255f, // Grün-Kanal
+            m, m, m, 0f, o * 255f, // Blau-Kanal
+            0f, 0f, 0f, 1f, 0f      // Alpha-Kanal bleibt gleich
+        )
+
+        // Kombiniere Graustufen und Schwellwert
+        colorMatrix.postConcat(ColorMatrix(thresholdMatrix))
+
+        paint.colorFilter = ColorMatrixColorFilter(colorMatrix)
+
+        // Zeichne das Bitmap auf sich selbst mit dem Filter
+        canvas.drawBitmap(bitmap, 0f, 0f, paint)
+    }
+
 }

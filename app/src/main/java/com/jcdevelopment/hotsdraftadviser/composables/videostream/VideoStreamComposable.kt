@@ -57,7 +57,7 @@ fun VideoStreamComposable(
     val recognizedTextsRight by viewModel.recognizedTextsRight.collectAsState()
     val recognizedTextsTop by viewModel.recognizedTextsTop.collectAsState()
 
-    //val debugBitmap by viewModel.debugMaskedBitmap.collectAsState()
+    val debugBitmap by viewModel.debugMaskedBitmap.collectAsState()
 
     VideoStreamComposable(
         onRecognizedOwnTeamPicks = { it -> onRecognizedOwnTeamPicks(it) },
@@ -73,7 +73,7 @@ fun VideoStreamComposable(
         recognizedTextsLeft = recognizedTextsLeft,
         recognizedTextsRight = recognizedTextsRight,
         recognizedTextsTop = recognizedTextsTop,
-        debugBitmap = null, //debugBitmap,
+        debugBitmap = debugBitmap,
         stopFrameProcessing = { viewModel.stopFrameProcessing() },
         startFrameProcessing = { playerView -> viewModel.startFrameProcessing(playerView) },
         stopStreaming = { viewModel.stopStreaming() },
