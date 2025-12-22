@@ -359,6 +359,11 @@ fun MainActivityComposable(
                     toggleStreaming = { toggleStreaming() }
                 )
                 Text(choosenMap)
+                //TODO Easier ChampDebug
+                /*Row {
+                    ownPickedChamps.forEach { Text(it.ChampName) }
+                    theirPickedChamps.forEach { Text(it.ChampName) }
+                }*/
                 AvailableChampListVideoStreamComposable(
                     ownPickedChamps = ownPickedChamps,
                     theirPickedChamps = theirPickedChamps,
@@ -378,33 +383,6 @@ fun MainActivityComposable(
                     isTablet = isTablet,
                     toggleFavFilter = { toggleFavFilter() },
                 )
-                if (chosableChampList.isEmpty()) {
-                    Text(stringResource(R.string.loading_state_champs))
-                } else {
-                    AvailableChampListComposable(
-                        sortState = sortState,
-                        composeTextColor = composeTextColor,
-                        chosableChampList = chosableChampList,
-                        setSortState = { sortState ->
-                            setSortState(sortState)
-                        },
-                        onButtonClick = { lazyListState, coroutineScope ->
-                            scrollList(lazyListState, coroutineScope)
-                        },
-                        pickChampForTeam = { i, teamSide ->
-                            pickChampForTeam(i, teamSide)
-                        },
-                        setBansPerTeam = { i, teamSide ->
-                            setBansPerTeam(i, teamSide)
-                        },
-                        updateChampSearchQuery = { string ->
-                            updateChampSearchQuery(string)
-                        },
-                        isStarRatingMode = isStarRatingMode,
-                        ownScoreMax = ownScoreMax,
-                        theirScoreMax = theirScoreMax
-                    )
-                }
             }
         }
         // MANUAL INPUT

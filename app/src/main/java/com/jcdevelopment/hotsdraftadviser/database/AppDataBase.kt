@@ -28,6 +28,8 @@ import com.jcdevelopment.hotsdraftadviser.database.isStreamingEnabled.StreamingS
 import com.jcdevelopment.hotsdraftadviser.database.isStreamingEnabled.StreamingSettingDao
 import com.jcdevelopment.hotsdraftadviser.database.resetCounter.ResetCounterDao
 import com.jcdevelopment.hotsdraftadviser.database.resetCounter.ResetCounterEntity
+import com.jcdevelopment.hotsdraftadviser.database.streamingSettings.StreamSourceSettingsDao
+import com.jcdevelopment.hotsdraftadviser.database.streamingSettings.StreamSourceSettingsEntity
 
 
 @Database(
@@ -43,8 +45,9 @@ import com.jcdevelopment.hotsdraftadviser.database.resetCounter.ResetCounterEnti
         RoleEntity::class,
         ChampRoleJunctionEntity::class,
         ChampStringCodeEntity::class,
+        StreamSourceSettingsEntity::class,
         ResetCounterEntity::class],
-    version = 13,
+    version = 14,
     exportSchema = false
 ) // Setze exportSchema = true für Produktions-Apps mit Schema-Export
 @TypeConverters(Converters::class)
@@ -58,6 +61,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun champDao(): ChampDao
     abstract fun champStringCodeDao(): ChampStringCodeDao
     abstract fun resetCounterDao(): ResetCounterDao
+    abstract fun streamSourceSettingsDao(): StreamSourceSettingsDao
 
     companion object {
         // Singleton verhindert, dass mehrere Instanzen der Datenbank gleichzeitig geöffnet werden.

@@ -935,7 +935,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         //List1 = Positionen der Picks
         //List2 = mögliche gefundene Texte
 
-        //TODO Problem bei KAEL'THAS
         val handledPossibleChamps = empericErrorHandling(possibleChamps)
         val champNames = _allChampsData.value.map { it.ChampName }.toMutableList()
 

@@ -38,12 +38,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.Format
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSource
@@ -53,12 +55,16 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.jcdevelopment.hotsdraftadviser.R
+import com.jcdevelopment.hotsdraftadviser.database.AppDatabase
+import com.jcdevelopment.hotsdraftadviser.database.streamingSettings.StreamSourceSettingsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -68,6 +74,17 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class VideoStreamViewModel(application: Application) : AndroidViewModel(application) {
+    private val db = AppDatabase.getDatabase(application)
+
+    private val streamingSettingsRepository: StreamSourceSettingsRepository =
+        StreamSourceSettingsRepository(db.streamSourceSettingsDao())
+
+    val streamImageContrastSetting: StateFlow<Float> = streamingSettingsRepository.getContrastThreshold()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = 1f
+        )
     private val TAG = "ExoPlayerVM"
 
     private val _player = MutableStateFlow<ExoPlayer?>(null)
@@ -103,10 +120,31 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
         loadMask()
     }
 
+    var brightness = 0f
+    var threshold = 128f
+
+    fun onBrightnessChanged(value: Float) {
+        brightness = value
+    }
+
+    fun onContrastChanged(value: Float) {
+        viewModelScope.launch {
+            streamingSettingsRepository.updateContrastThreshold(value)
+            Log.d("VideoStreamSourceViewModel", "Toggled isStreamingEnabled to: $value (saved to DB)")
+        }
+    }
+
+    fun onThresholdChanged(value: Float) {
+        threshold = value
+    }
+
     private fun loadMask() {
         try {
             // Lade das Drawable aus den Ressourcen
-            val maskDrawable = ContextCompat.getDrawable(getApplication(), R.drawable.mask_champs_and_map_name_reverse)
+            val maskDrawable = ContextCompat.getDrawable(
+                getApplication(),
+                R.drawable.mask_champs_and_map_name_reverse
+            )
             if (maskDrawable != null) {
                 // Konvertiere das Drawable in ein Bitmap
                 originalMaskBitmap = maskDrawable.toBitmap()
@@ -167,7 +205,17 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
             .build()
 
         if (_player.value == null) {
-            val newPlayer = ExoPlayer.Builder(getApplication()).setLoadControl(loadControl).build()
+            val trackSelector = DefaultTrackSelector(getApplication()).apply {
+                setParameters(
+                    buildUponParameters()
+                        .setMaxVideoSizeSd() // Falls du sichergehen willst, dass er NICHT SD nimmt
+                        .setForceHighestSupportedBitrate(true) // Immer die beste Qualität
+                )
+            }
+            val newPlayer = ExoPlayer.Builder(getApplication())
+                .setLoadControl(loadControl)
+                .setTrackSelector(trackSelector)
+                .build()
             newPlayer.addListener(object : Player.Listener {
                 override fun onPlaybackStateChanged(playbackState: Int) {
                     when (playbackState) {
@@ -328,11 +376,38 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                             continue
                         }
 
-                        // Create bitmap for each frame
+                        // 1. Hole das Video-Format vom Player (auf dem Main Thread)
+                        var videoWidth = 0
+                        var videoHeight = 0
+
+                        withContext(Dispatchers.Main) {
+                            val exoPlayer = player.value
+                            val videoSize = exoPlayer?.videoSize
+                            if (videoSize != null && videoSize.width > 0 && videoSize.height > 0) {
+                                videoWidth = videoSize.width
+                                videoHeight = videoSize.height
+                                Log.d(TAG, "Using VideoSize: ${videoWidth}x${videoHeight}")
+                            } else {
+                                // Fallback auf das Format
+                                val format = exoPlayer?.videoFormat
+                                if (format != null && format.width != Format.NO_VALUE) {
+                                    videoWidth = format.width
+                                    videoHeight = format.height
+                                    Log.d(TAG, "Using Format: ${videoWidth}x${videoHeight}")
+                                } else {
+                                    // Letzter Fallback
+                                    videoWidth = surfaceView.width
+                                    videoHeight = surfaceView.height
+                                }
+                            }
+                        }
+
+                        // 2. Erstelle das Bitmap in der NATIVEN Stream-Auflösung
                         val currentFrameBitmap = createBitmap(
-                            surfaceView.width.coerceAtLeast(1),
-                            surfaceView.height.coerceAtLeast(1)
+                            videoWidth.coerceAtLeast(1),
+                            videoHeight.coerceAtLeast(1)
                         )
+
 
                         var copySuccess: Boolean = false
 
@@ -365,7 +440,12 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                                         normalizeBitmap(bitmap = currentFrameBitmap)
                                         enhanceBitmapForOcr_grey(bitmap = currentFrameBitmap)
                                         //TODO minimize contrast or move to before normalization?
-                                        enhanceBitmapForOcr_contrast(bitmap = currentFrameBitmap, contrast = 1.6f)
+                                        enhanceBitmapForOcr_contrast(
+                                            bitmap = currentFrameBitmap,
+                                            contrast = streamImageContrastSetting.value,
+                                            brightness = brightness
+                                        )
+                                        //enhanceBitmapForOcr_monochrome(bitmap = currentFrameBitmap, threshold = threshold)
                                         /*TODO next image scaling
                                         To achieve a better performance of OCR, the image should have more than 300 PPI (pixel per inch). So, if the image size is less than 300 PPI, we need to increase it. We can use the Pillow library for this.
                                          https://nextgeninvent.com/blogs/7-steps-of-image-pre-processing-to-improve-ocr-using-python-2/
@@ -374,7 +454,7 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
 
 
                                         //TODO Debug Frame to see on Screen
-                                       currentFrameBitmap.config.let { it ->
+                                        currentFrameBitmap.config.let { it ->
                                             _debugMaskedBitmap.value = currentFrameBitmap.copy(
                                                 it!!,
                                                 false
@@ -502,35 +582,40 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                             //addLineOfText(ownChampsTexts, highestConfInd)
 
                             if (isInBetweenFirstPick) {
-                                block.lines.forEach { line -> line
+                                block.lines.forEach { line ->
+                                    line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         ownFirstChampTexts.add(element.text)
                                         //_1ownTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenSecPick) {
-                                block.lines.forEach { line -> line
+                                block.lines.forEach { line ->
+                                    line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         ownSecChampTexts.add(element.text)
                                         //_2ownTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenThirdPick) {
-                                block.lines.forEach { line -> line
+                                block.lines.forEach { line ->
+                                    line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         ownThirdChampTexts.add(element.text)
                                         //_3ownTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenFourthPick) {
-                                block.lines.forEach { line -> line
+                                block.lines.forEach { line ->
+                                    line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         ownFourthChampTexts.add(element.text)
                                         //_4ownTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenFifthPick) {
-                                block.lines.forEach { line -> line
+                                block.lines.forEach { line ->
+                                    line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         ownFifthChampTexts.add(element.text)
                                         //_5ownTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
@@ -542,35 +627,40 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                             //addLineOfText(theirChampsTexts, highestConfInd)
 
                             if (isInBetweenFirstPick) {
-                                block.lines.forEach { line -> line
+                                block.lines.forEach { line ->
+                                    line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         theirFirstChampTexts.add(element.text)
                                         //_1theirTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenSecPick) {
-                                block.lines.forEach { line -> line
+                                block.lines.forEach { line ->
+                                    line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         theirSecChampTexts.add(element.text)
                                         //_2theirTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenThirdPick) {
-                                block.lines.forEach { line -> line
+                                block.lines.forEach { line ->
+                                    line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         theirThirdChampTexts.add(element.text)
                                         //_3theirTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenFourthPick) {
-                                block.lines.forEach { line -> line
+                                block.lines.forEach { line ->
+                                    line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         theirFourthChampTexts.add(element.text)
                                         //_4theirTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenFifthPick) {
-                                block.lines.forEach { line -> line
+                                block.lines.forEach { line ->
+                                    line
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         theirFifthChampTexts.add(element.text)
                                         //_5theirTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
@@ -579,7 +669,8 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                             }
                         }
                     } else {
-                        block.lines.forEach { line -> line
+                        block.lines.forEach { line ->
+                            line
                             block.lines.forEach { element ->
                                 mapText.add(element.text)
                                 //_mapCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
@@ -592,8 +683,20 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                 //TODO ohne delay
                 delay(1550)
                 // Aktualisiere die entsprechenden StateFlows
-                _recognizedTextsLeft.value = listOf(ownFirstChampTexts,ownSecChampTexts,ownThirdChampTexts,ownFourthChampTexts, ownFifthChampTexts)
-                _recognizedTextsRight.value = listOf(theirFirstChampTexts,theirSecChampTexts,theirThirdChampTexts,theirFourthChampTexts, theirFifthChampTexts)
+                _recognizedTextsLeft.value = listOf(
+                    ownFirstChampTexts,
+                    ownSecChampTexts,
+                    ownThirdChampTexts,
+                    ownFourthChampTexts,
+                    ownFifthChampTexts
+                )
+                _recognizedTextsRight.value = listOf(
+                    theirFirstChampTexts,
+                    theirSecChampTexts,
+                    theirThirdChampTexts,
+                    theirFourthChampTexts,
+                    theirFifthChampTexts
+                )
             }
             _recognizedMap.value = mapText
 
@@ -683,19 +786,25 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
         canvas.drawBitmap(bitmap, 0f, 0f, paint)
     }
 
-    private fun enhanceBitmapForOcr_contrast(bitmap: Bitmap, contrast: Float = 1.5f, brightness: Float = 0f) {
+    private fun enhanceBitmapForOcr_contrast(
+        bitmap: Bitmap,
+        contrast: Float = 1.5f,
+        brightness: Float = 0f
+    ) {
         val canvas = Canvas(bitmap)
         val paint = Paint()
 
         // ColorMatrix für Kontrast und Helligkeit
         // contrast: 1.0 ist normal, > 1.0 erhöht den Kontrast
         // brightness: 0 ist normal, > 0 macht es heller
-        val matrix = ColorMatrix(floatArrayOf(
-            contrast, 0f, 0f, 0f, brightness,
-            0f, contrast, 0f, 0f, brightness,
-            0f, 0f, contrast, 0f, brightness,
-            0f, 0f, 0f, 1f, 0f
-        ))
+        val matrix = ColorMatrix(
+            floatArrayOf(
+                contrast, 0f, 0f, 0f, brightness,
+                0f, contrast, 0f, 0f, brightness,
+                0f, 0f, contrast, 0f, brightness,
+                0f, 0f, 0f, 1f, 0f
+            )
+        )
         paint.colorFilter = ColorMatrixColorFilter(matrix)
         canvas.drawBitmap(bitmap, 0f, 0f, paint)
     }
@@ -732,12 +841,14 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
         val paint = Paint()
 
         // Create a matrix that stretches the values
-        val normalizeMatrix = ColorMatrix(floatArrayOf(
-            scale, 0f, 0f, 0f, offset,
-            0f, scale, 0f, 0f, offset,
-            0f, 0f, scale, 0f, offset,
-            0f, 0f, 0f, 1f, 0f
-        ))
+        val normalizeMatrix = ColorMatrix(
+            floatArrayOf(
+                scale, 0f, 0f, 0f, offset,
+                0f, scale, 0f, 0f, offset,
+                0f, 0f, scale, 0f, offset,
+                0f, 0f, 0f, 1f, 0f
+            )
+        )
 
         paint.colorFilter = ColorMatrixColorFilter(normalizeMatrix)
         canvas.drawBitmap(bitmap, 0f, 0f, paint)
