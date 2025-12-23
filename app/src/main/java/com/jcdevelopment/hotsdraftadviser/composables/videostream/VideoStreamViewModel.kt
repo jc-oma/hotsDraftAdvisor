@@ -437,10 +437,6 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                                 originalMaskBitmap?.let { mask ->
                                     Log.d(TAG, "Applying mask to the captured frame.")
                                     try {
-                                        applyBitmapMask(
-                                            originalBitmap = currentFrameBitmap,
-                                            mask = mask
-                                        )
                                         normalizeBitmap(bitmap = currentFrameBitmap)
                                         enhanceBitmapForOcrScaleDense(bitmap = currentFrameBitmap)
                                         //enhanceBitmapForOcrNoiseRemoval(bitmap = currentFrameBitmap)
@@ -452,21 +448,24 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                                             brightness = brightness
                                         )
 
-                                        //enhanceBitmapForOcr_monochrome(bitmap = currentFrameBitmap, threshold = threshold)
-                                        /*TODO next image scaling
-                                        To achieve a better performance of OCR, the image should have more than 300 PPI (pixel per inch). So, if the image size is less than 300 PPI, we need to increase it. We can use the Pillow library for this.
-                                         https://nextgeninvent.com/blogs/7-steps-of-image-pre-processing-to-improve-ocr-using-python-2/
-                                         */
-                                        //enhanceBitmapForOcr_monochrome(bitmap = currentFrameBitmap, threshold = 128f)
-
-
-                                        //TODO Debug Frame to see on Screen
                                         currentFrameBitmap.config.let { it ->
                                             _debugMaskedBitmap.value = currentFrameBitmap.copy(
                                                 it!!,
                                                 false
                                             )
                                         }
+
+                                        applyBitmapMask(
+                                            originalBitmap = currentFrameBitmap,
+                                            mask = mask
+                                        )
+
+                                        //enhanceBitmapForOcr_monochrome(bitmap = currentFrameBitmap, threshold = threshold)
+                                        /*TODO next image scaling
+                                        To achieve a better performance of OCR, the image should have more than 300 PPI (pixel per inch). So, if the image size is less than 300 PPI, we need to increase it. We can use the Pillow library for this.
+                                         https://nextgeninvent.com/blogs/7-steps-of-image-pre-processing-to-improve-ocr-using-python-2/
+                                         */
+                                        //enhanceBitmapForOcr_monochrome(bitmap = currentFrameBitmap, threshold = 128f)
                                     } catch (e: Exception) {
                                         Log.e(TAG, "Failed to apply mask", e)
                                     }

@@ -14,7 +14,7 @@ class StreamSourceSettingsRepository(
 
     // Liefert den Kontrast Flow, Standardwert 128f falls nichts gespeichert ist
     fun getContrastThreshold(): Flow<Float> {
-        return settingsDao.getFloatSetting(CONTRAST_KEY).map { it ?: 128f }
+        return settingsDao.getFloatSetting(CONTRAST_KEY).map { it ?: 1.88f }
     }
 
     suspend fun updateContrastThreshold(value: Float) {

@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.copy
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -25,6 +26,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
@@ -97,7 +99,7 @@ fun AdjustVideoStreamSettingsComposable(
                 modifier = Modifier
                     .offset(x = -animatedOffsetX, y = -animatedOffsetY) // Animiere zur Mitte
                     .size(animatedSize) // Animiere die Größe
-                    .clip(CircleShape) // Hält die runde Form während der Animation
+                    .clip(RoundedCornerShape(25)) // Hält die runde Form während der Animation
                     .background(MaterialTheme.colorScheme.secondaryContainer),
                 contentAlignment = Alignment.Center
             ) {
@@ -126,11 +128,22 @@ fun AdjustVideoStreamSettingsComposable(
                                     offset = Offset.Zero
                                 }
                             }
-                            Spacer(modifier = Modifier.height(16.dp))
                             Text(
-                                "Debug-Ansicht (Pinch to Zoom):",
+                                text = "Contrast & OCR Tuning",
+                                style = MaterialTheme.typography.headlineSmall,
+                                color = MaterialTheme.typography.headlineSmall.color
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "Adjust the slider until the hero names are clearly visible. A clean, high-contrast image significantly improves recognition accuracy.",
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = "💡 Pro Tip: Use two fingers to pinch and zoom into the name labels of the Heroes for fine-tuning.",
                                 style = MaterialTheme.typography.labelSmall
                             )
+                            Spacer(modifier = Modifier.height(16.dp))
 
                             Column {
                                 Box(
