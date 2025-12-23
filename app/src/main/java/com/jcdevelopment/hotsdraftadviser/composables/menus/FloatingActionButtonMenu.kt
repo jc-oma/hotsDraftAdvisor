@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -66,7 +67,7 @@ fun FloatingActionButtonMenu() {
     )
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().padding(8.dp),
         contentAlignment = Alignment.BottomEnd // FAB-Standardposition
     ) {
         // Der Container, der seine Größe und Position animiert
@@ -105,7 +106,7 @@ fun FloatingActionButtonMenu() {
                 onClick = { isExpanded = true },
                 modifier = Modifier.padding(padding)
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Open Menu")
+                Icon(Icons.Default.Menu, contentDescription = "Open Menu")
             }
         }
     }

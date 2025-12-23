@@ -17,9 +17,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -139,12 +141,21 @@ fun VideoStreamComposable(
     contrast: Float
 ) {
     var playerViewRefTmp by remember { mutableStateOf(playerViewRef) }
+    var isSettingsExpanded by remember { mutableStateOf(false) }
 
     LaunchedEffect(recognizedTextsLeft, recognizedTextsRight, recognizedTextsTop) {
         onRecognizedOwnTeamPicks(recognizedTextsLeft)
         onRecognizedTheirTeamPicks(recognizedTextsRight)
         onRecognizedMapsText(recognizedTextsTop)
     }
+
+    AdjustVideoStreamSettingsComposable(
+        debugBitmap = debugBitmap,
+        isExpanded = isSettingsExpanded,
+        toggleExpanded = { isSettingsExpanded = !isSettingsExpanded },
+        contrast = contrast,
+        onContrastChanged = onContrastChanged
+    )
 
     // Lebenszyklus-Management für den PlayerView und den ExoPlayer
     // (besonders wichtig, wenn der Player nicht im ViewModel wäre, aber gute Praxis)
@@ -230,168 +241,123 @@ fun VideoStreamComposable(
             .aspectRatio(16 / 9f)
     }
 
-    if (!isCollapsed.value) {
-        debugBitmap?.let { bmp ->
-            var scale by remember { mutableFloatStateOf(1f) }
-            var offset by remember { mutableStateOf(Offset.Zero) }
-            val state = rememberTransformableState { zoomChange, offsetChange, _ ->
-                // Skalierung berechnen (Minimum 1x, Maximum z.B. 5x)
-                scale = (scale * zoomChange).coerceIn(1f, 5f)
-                // Verschiebung nur zulassen, wenn gezoomt ist
-                if (scale > 1f) {
-                    offset += offsetChange
-                } else {
-                    offset = Offset.Zero
-                }
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                "Debug-Ansicht (Pinch to Zoom):",
-                style = MaterialTheme.typography.labelSmall
-            )
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(16 / 9f)
-                    .clip(RectangleShape) // Verhindert, dass das Bild über den Rand ragt
-                    .background(Color.Black)
-                    .transformable(state = state) // Gesten-Erkennung aktivieren
-            ) {
-                Image(
-                    bitmap = bmp.asImageBitmap(),
-                    contentDescription = "Vorschau",
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .graphicsLayer(
-                            scaleX = scale,
-                            scaleY = scale,
-                            translationX = offset.x,
-                            translationY = offset.y
-                        )
-                )
-            }
-        }
-    }
-
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-
-        Spacer(modifier = Modifier.height(48.dp))
-        Row(horizontalArrangement = Arrangement.Center) {
-            Text("Currently Streaming Mode")
-        }
-        // PlayerView einbetten
-        Box(
-            modifier = boxModifier
+    Column {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            var sliderContr by remember { mutableFloatStateOf(contrast) }
-            LaunchedEffect(contrast) {
-                sliderContr = contrast
-            }
 
-            if (playerInstance != null) {
-                Column {
-                    AndroidView(
-                        factory = { ctx ->
-                            PlayerView(ctx).apply {
-                                player = playerInstance
-                                useController = false
-                            }.also { view ->
+            Spacer(modifier = Modifier.height(48.dp))
+            Row(horizontalArrangement = Arrangement.Center) {
+                Text("Currently Streaming Mode")
+                Spacer(modifier = Modifier.width(8.dp))
+            }
+            // PlayerView einbetten
+            Box(
+                modifier = boxModifier
+            ) {
+                if (playerInstance != null) {
+                    Column {
+                        AndroidView(
+                            factory = { ctx ->
+                                PlayerView(ctx).apply {
+                                    player = playerInstance
+                                    useController = false
+                                }.also { view ->
+                                    Log.d(
+                                        "VideoStreamingScreen",
+                                        "AndroidView Factory: PlayerView created and ref set."
+                                    )
+                                    playerViewRefTmp = view // WICHTIG: Referenz hier setzen
+                                    // Kein direkter Start mehr hier, LaunchedEffect übernimmt das
+                                }
+                            },
+                            update = { view ->
                                 Log.d(
                                     "VideoStreamingScreen",
-                                    "AndroidView Factory: PlayerView created and ref set."
+                                    "AndroidView Update: view.player = playerInstance."
                                 )
-                                playerViewRefTmp = view // WICHTIG: Referenz hier setzen
+                                view.player = playerInstance
                                 // Kein direkter Start mehr hier, LaunchedEffect übernimmt das
-                            }
-                        },
-                        update = { view ->
-                            Log.d(
-                                "VideoStreamingScreen",
-                                "AndroidView Update: view.player = playerInstance."
-                            )
-                            view.player = playerInstance
-                            // Kein direkter Start mehr hier, LaunchedEffect übernimmt das
-                        },
-                        modifier = Modifier.fillMaxSize()
-                    )
-                    Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
-                        Slider(
-                            value = sliderContr,
-                            onValueChange = {
-                                sliderContr = it
                             },
-                            onValueChangeFinished = { onContrastChanged(sliderContr) },
-                            steps = 100,
-                            valueRange = 0f..10f
+                            modifier = Modifier.fillMaxSize()
                         )
                     }
-                    Text(text = "Contrast$sliderContr")
+                } else {
+                    Text("Player wird initialisiert...")
                 }
-            } else {
-                Text("Player wird initialisiert...")
             }
-        }
 
-        Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Spacer(modifier = Modifier.weight(0.1f))
-            Icon(
-                imageVector = if (!isCollapsed.value) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
-                contentDescription = "Description of your image",
-                modifier = Modifier
-                    .clickable(
-                        onClick = { isCollapsed.value = !isCollapsed.value }
-                    )
-                    .weight(0.4f),
-            )
-            Button(
-                modifier = Modifier.weight(1f),
-                onClick = {
-                    if (playerInstance?.isPlaying == true) {
-                        Log.d("VideoStreamingScreen", "Stop Streaming button clicked.")
-                        stopStreaming() // Stoppt Player, LaunchedEffect stoppt Frame Processing
-                    } else {
-                        Log.d("VideoStreamingScreen", "Start Streaming button clicked.")
-                        startStreaming() // Startet Player, LaunchedEffect startet Frame Processing wenn Bedingungen erfüllt
-                    }
-                },
-                enabled = playerInstance != null
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = if (playerInstance?.isPlaying == true) "Stop" else "Start",
-                    textAlign = TextAlign.Center
+                Spacer(modifier = Modifier.weight(0.1f))
+                Icon(
+                    imageVector = if (!isCollapsed.value) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
+                    contentDescription = "Description of your image",
+                    modifier = Modifier
+                        .clickable(
+                            onClick = { isCollapsed.value = !isCollapsed.value }
+                        )
+                        .weight(0.4f),
                 )
+                Button(
+                    modifier = Modifier.weight(1f),
+                    onClick = {
+                        if (playerInstance?.isPlaying == true) {
+                            Log.d("VideoStreamingScreen", "Stop Streaming button clicked.")
+                            stopStreaming() // Stoppt Player, LaunchedEffect stoppt Frame Processing
+                        } else {
+                            Log.d("VideoStreamingScreen", "Start Streaming button clicked.")
+                            startStreaming() // Startet Player, LaunchedEffect startet Frame Processing wenn Bedingungen erfüllt
+                        }
+                    },
+                    enabled = playerInstance != null
+                ) {
+                    Text(
+                        text = if (playerInstance?.isPlaying == true) "Stop" else "Start",
+                        textAlign = TextAlign.Center
+                    )
+                }
+                Spacer(modifier = Modifier.weight(0.05f))
+                Button(
+                    modifier = Modifier.weight(1f),
+                    onClick = { toggleStreaming() }) {
+                    Text(
+                        text = "Manual Mode",
+                        textAlign = TextAlign.Center
+                    )
+                }
+                Spacer(modifier = Modifier.weight(0.1f))
+                if (playerInstance?.isPlaying == true) {
+                    Icon(
+                        imageVector = Icons.Default.Tune,
+                        contentDescription = "Settings",
+                        modifier = Modifier
+                            .weight(0.4f)
+                            .clickable {
+                                isSettingsExpanded = !isSettingsExpanded
+                            },
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(modifier = Modifier.weight(0.1f))
+                }
             }
-            Spacer(modifier = Modifier.weight(0.05f))
-            Button(
-                modifier = Modifier.weight(1f),
-                onClick = { toggleStreaming() }) {
-                Text(
-                    text = "Manual Mode",
-                    textAlign = TextAlign.Center
-                )
-            }
-            Spacer(modifier = Modifier.weight(0.1f))
-        }
 
-        //TODO Debug Error if necessary
-        /*
-        errorMessage?.let {
-            Text(
-                text = it,
-                color = Color.Red,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-        }*/
+            //TODO Debug Error if necessary
+            /*
+            errorMessage?.let {
+                Text(
+                    text = it,
+                    color = Color.Red,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }*/
+        }
     }
 }
 

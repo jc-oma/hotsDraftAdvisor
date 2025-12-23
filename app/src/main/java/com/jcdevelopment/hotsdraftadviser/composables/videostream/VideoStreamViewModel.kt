@@ -19,6 +19,7 @@ import org.opencv.imgproc.Imgproc
 */
 import android.app.Application
 import android.graphics.Bitmap
+import android.graphics.BlurMaskFilter
 import android.graphics.Canvas
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
@@ -79,12 +80,13 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     private val streamingSettingsRepository: StreamSourceSettingsRepository =
         StreamSourceSettingsRepository(db.streamSourceSettingsDao())
 
-    val streamImageContrastSetting: StateFlow<Float> = streamingSettingsRepository.getContrastThreshold()
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = 1f
-        )
+    val streamImageContrastSetting: StateFlow<Float> =
+        streamingSettingsRepository.getContrastThreshold()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000L),
+                initialValue = 1f
+            )
     private val TAG = "ExoPlayerVM"
 
     private val _player = MutableStateFlow<ExoPlayer?>(null)
@@ -130,7 +132,10 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     fun onContrastChanged(value: Float) {
         viewModelScope.launch {
             streamingSettingsRepository.updateContrastThreshold(value)
-            Log.d("VideoStreamSourceViewModel", "Toggled isStreamingEnabled to: $value (saved to DB)")
+            Log.d(
+                "VideoStreamSourceViewModel",
+                "Toggled isStreamingEnabled to: $value (saved to DB)"
+            )
         }
     }
 
@@ -143,7 +148,7 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
             // Lade das Drawable aus den Ressourcen
             val maskDrawable = ContextCompat.getDrawable(
                 getApplication(),
-                R.drawable.mask_champs_and_map_name_reverse
+                R.drawable.mask_champs_and_map_name_reverse_ink
             )
             if (maskDrawable != null) {
                 // Konvertiere das Drawable in ein Bitmap
@@ -189,10 +194,10 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     private fun initializePlayer() {
-        val minBufferMs = 500 // Beispiel: 0.5 Sekunden
-        val maxBufferMs = 2000 // Beispiel: 2 Sekunden
-        val playbackBufferMs = 200 // Beispiel: 0.2 Sekunden Puffer für Start
-        val playbackAfterRebufferMs = 200 // Beispiel: 0.2 Sekunden Puffer nach Rebuffer
+        val minBufferMs = 30000
+        val maxBufferMs = 60000
+        val playbackBufferMs = 2500
+        val playbackAfterRebufferMs = 5000
 
         val loadControl = DefaultLoadControl.Builder()
             .setBufferDurationsMs(
@@ -208,7 +213,6 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
             val trackSelector = DefaultTrackSelector(getApplication()).apply {
                 setParameters(
                     buildUponParameters()
-                        .setMaxVideoSizeSd() // Falls du sichergehen willst, dass er NICHT SD nimmt
                         .setForceHighestSupportedBitrate(true) // Immer die beste Qualität
                 )
             }
@@ -438,13 +442,16 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                                             mask = mask
                                         )
                                         normalizeBitmap(bitmap = currentFrameBitmap)
+                                        enhanceBitmapForOcrScaleDense(bitmap = currentFrameBitmap)
+                                        //enhanceBitmapForOcrNoiseRemoval(bitmap = currentFrameBitmap)
                                         enhanceBitmapForOcr_grey(bitmap = currentFrameBitmap)
                                         //TODO minimize contrast or move to before normalization?
-                                        enhanceBitmapForOcr_contrast(
+                                        enhanceBitmapForOcrContrast(
                                             bitmap = currentFrameBitmap,
                                             contrast = streamImageContrastSetting.value,
                                             brightness = brightness
                                         )
+
                                         //enhanceBitmapForOcr_monochrome(bitmap = currentFrameBitmap, threshold = threshold)
                                         /*TODO next image scaling
                                         To achieve a better performance of OCR, the image should have more than 300 PPI (pixel per inch). So, if the image size is less than 300 PPI, we need to increase it. We can use the Pillow library for this.
@@ -786,7 +793,33 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
         canvas.drawBitmap(bitmap, 0f, 0f, paint)
     }
 
-    private fun enhanceBitmapForOcr_contrast(
+    private fun enhanceBitmapForOcrScaleDense(bitmap: Bitmap) {
+        val canvas = Canvas(bitmap)
+        val targetPpi = 600f
+        val currentPpi = bitmap.density.toFloat().let { if (it <= 0) 160f else it }
+        val paint = Paint()
+
+        // If the current density is already sufficient, return the original
+        if (currentPpi >= targetPpi) canvas.drawBitmap(bitmap, 0f, 0f, paint)
+
+        val scaleFactor = targetPpi / currentPpi
+
+        val width = (bitmap.width * scaleFactor).toInt()
+        val height = (bitmap.height * scaleFactor).toInt()
+
+        Log.d(TAG, "Upscaling bitmap for OCR: ${bitmap.width}x${bitmap.height} -> ${width}x${height} (Factor: $scaleFactor)")
+
+        // We create a new scaled bitmap.
+        // filter = true uses bilinear filtering, which is better for text than nearest neighbor.
+        val scaledBitmap = bitmap.scale(width, height)
+
+        // Update the density metadata on the new bitmap so ML Kit knows the intended scale
+        scaledBitmap.density = targetPpi.toInt()
+
+        canvas.drawBitmap(bitmap, 0f, 0f, paint)
+    }
+
+    private fun enhanceBitmapForOcrContrast(
         bitmap: Bitmap,
         contrast: Float = 1.5f,
         brightness: Float = 0f
@@ -854,7 +887,7 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
         canvas.drawBitmap(bitmap, 0f, 0f, paint)
     }
 
-    private fun enhanceBitmapForOcr_monochrome(bitmap: Bitmap, threshold: Float = 128f) {
+    private fun enhanceBitmapForOcrMonochrome(bitmap: Bitmap, threshold: Float = 128f) {
         val canvas = Canvas(bitmap)
         val paint = Paint()
 
@@ -887,4 +920,23 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
         canvas.drawBitmap(bitmap, 0f, 0f, paint)
     }
 
+    private fun enhanceBitmapForOcrNoiseRemoval(bitmap: Bitmap) {
+        val canvas = Canvas(bitmap)
+        // Da wir zuvor auf Monochrome (Schwarz/Weiß) umgestellt haben,
+        // hilft ein leichter Blur, "ausgefranste" Kanten und isolierte Pixel zu glätten.val canvas = Canvas(bitmap)
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        // Wir nutzen einen BlurMaskFilter.
+        // 'Normal' glättet innerhalb und außerhalb der Kanten.
+        // Ein Radius von 1.0f - 2.0f reicht meistens aus, um Bildrauschen zu entfernen.
+        paint.maskFilter = BlurMaskFilter(1.5f, BlurMaskFilter.Blur.NORMAL)
+
+        // Wir zeichnen das Bitmap leicht versetzt über sich selbst,
+        // was einen glättenden Effekt auf die binären Pixel hat.
+        canvas.drawBitmap(bitmap, 0f, 0f, paint)
+
+        // Nach dem Blur empfiehlt es sich, den Schwellwert (Monochrome)
+        // erneut ganz hart anzuwenden, um die Kanten wieder scharf zu machen.
+        //enhanceBitmapForOcrMonochrome(bitmap, threshold = 128f)
+    }
 }
