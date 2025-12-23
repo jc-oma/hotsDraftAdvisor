@@ -1,0 +1,9 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/animate_finger_pinch_1">
+    <target
+        android:name="animate_dot1"
+        android:animation="@animator/dot1_down_morph" />
+    <target
+        android:name="animate_dot2"
+        android:animation="@animator/dot2_up_morph" />
+</animated-vector>

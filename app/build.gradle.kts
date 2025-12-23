@@ -17,6 +17,7 @@ android {
         targetSdk = 36
         versionCode = 31
         versionName = "1.1.1"
+        vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -49,6 +50,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.play.services.mlkit.text.recognition.common)
     implementation(libs.play.services.mlkit.text.recognition)
+    implementation(libs.androidx.compose.animation.graphics)
     ksp(libs.hilt.compiler)
 
     implementation(libs.play.services.ads)
