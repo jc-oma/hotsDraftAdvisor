@@ -5,11 +5,9 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.copy
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,6 +15,7 @@ import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,13 +24,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Button
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -50,15 +50,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.createBitmap
-import com.jcdevelopment.hotsdraftadviser.R
+import com.jcdevelopment.hotsdraftadviser.dataStore.GameSettingLanguageEnum
 
 @Composable
 fun AdjustVideoStreamSettingsComposable(
@@ -66,7 +63,9 @@ fun AdjustVideoStreamSettingsComposable(
     isExpanded: Boolean,
     toggleExpanded: () -> Unit,
     contrast: Float,
-    onContrastChanged: (Float) -> Unit
+    onContrastChanged: (Float) -> Unit,
+    currentLanguage: GameSettingLanguageEnum,
+    onLanguageChanged: (String) -> Unit
 ) {
     // Position des FABs (Standard: unten rechts)
     val fabSize = 56.dp
@@ -133,13 +132,13 @@ fun AdjustVideoStreamSettingsComposable(
                                 }
                             }
                             Text(
-                                text = "Contrast & OCR Tuning",
+                                text = "OCR Tuning",
                                 style = MaterialTheme.typography.headlineSmall,
                                 color = MaterialTheme.typography.headlineSmall.color
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
-                                text = "Adjust the slider until the hero names are clearly visible. A clean, high-contrast image significantly improves recognition accuracy.",
+                                text = "First chose the current in game language then adjust the slider until the hero names are clearly visible. A clean, high-contrast image significantly improves recognition accuracy.",
                                 style = MaterialTheme.typography.bodyMedium
                             )
                             Spacer(modifier = Modifier.height(8.dp))
@@ -193,12 +192,52 @@ fun AdjustVideoStreamSettingsComposable(
                         }
 
                         Spacer(modifier = Modifier.height(16.dp))
-                        Button(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .align(Alignment.End),
-                            onClick = { toggleExpanded() }) {
-                            Text(text = "Close")
+                        Row() {
+                            var expanded by remember { mutableStateOf(false) }
+
+                            var selectedLanguageCode by remember { mutableStateOf(currentLanguage.displayName) } // Initial aus DataStore laden
+
+
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier
+                                    .clickable { expanded = !expanded }
+                                    .weight(1f)
+                            ) {
+                                IconButton(onClick = {}) {
+                                    Icon(
+                                        Icons.Default.MoreVert,
+                                        contentDescription = "More options"
+                                    )
+
+                                }
+                                Text(
+                                    text = selectedLanguageCode
+                                )
+                            }
+                            DropdownMenu(
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false }
+                            ) {
+                                GameSettingLanguageEnum.entries.forEach { language ->
+                                    DropdownMenuItem(
+                                        text = { Text(language.displayName) },
+                                        onClick = {
+                                            selectedLanguageCode = language.displayName
+                                            expanded = false
+                                            onLanguageChanged(language.isoCode)
+                                        }
+                                    )
+                                }
+                            }
+
+                            Button(
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .weight(1f),
+                                onClick = { toggleExpanded() }) {
+                                Text(text = "Close")
+                            }
                         }
                     }
                 }
@@ -230,6 +269,8 @@ private fun AdjustVideoStreamSettingsComposablePreview() {
         toggleExpanded = {},
         isExpanded = true,
         contrast = 1.5f,
-        onContrastChanged = {}
+        onContrastChanged = {},
+        onLanguageChanged = {},
+        currentLanguage = GameSettingLanguageEnum.GERMAN
     )
 }

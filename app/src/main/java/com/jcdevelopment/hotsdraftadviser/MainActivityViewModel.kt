@@ -9,6 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
 import com.jcdevelopment.hotsdraftadviser.ApiService.hotsApi
+import com.jcdevelopment.hotsdraftadviser.Utilitys.getLocalizedMapNames
+import com.jcdevelopment.hotsdraftadviser.dataStore.GameSettingLanguageEnum
+import com.jcdevelopment.hotsdraftadviser.dataStore.SettingsRepository
 import com.jcdevelopment.hotsdraftadviser.database.AppDatabase
 import com.jcdevelopment.hotsdraftadviser.database.champPersist.ChampRepository
 import com.jcdevelopment.hotsdraftadviser.database.champPersist.champString.ChampStringCodeEntity
@@ -60,6 +63,23 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     private val resetCounterRepository: ResetCounterRepository =
         ResetCounterRepository(db.resetCounterDao())
+
+    private val settingsRepository: SettingsRepository = SettingsRepository(application)
+
+    val currentLanguage: StateFlow<GameSettingLanguageEnum> = settingsRepository.languageFlow
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = GameSettingLanguageEnum.ENGLISH
+        )
+
+    init {
+        viewModelScope.launch {
+            currentLanguage.collect { language ->
+                Log.d("CurrentLanguage", "isStreamingEnabled from DB (Flow): $language")
+            }
+        }
+    }
 
     // Dein isStreamingEnabled als StateFlow, das von der Datenbank gespeist wird
     val isStreamingEnabled: StateFlow<Boolean> = streamingSettingsRepository.isStreamingEnabled
@@ -153,8 +173,14 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val targetState: StateFlow<Boolean> = _targetState
 
     val allChampsData = _allChampsData.asStateFlow()
-    val mapList: StateFlow<List<String>> = _mapList.asStateFlow()
+    private val mapList: StateFlow<List<String>> = _mapList.asStateFlow()
     val filterMapsString: StateFlow<String> = _filterMapsString.asStateFlow()
+    private val _translatedMapList = MutableStateFlow<List<Pair<String, String>>>(emptyList())
+    private val _translatedChampList = MutableStateFlow<List<Pair<String, String>>>(emptyList())
+    val translatedMapList: StateFlow<List<Pair<String, String>>> = _translatedMapList.asStateFlow()
+    val translatedChampList: StateFlow<List<Pair<String, String>>> =
+        _translatedChampList.asStateFlow()
+
     val filteredMaps: StateFlow<List<String>> = filterMapsByString(mapList, filterMapsString)
 
     val filterOwnChampString: StateFlow<String> = _filterChampString.asStateFlow()
@@ -299,12 +325,21 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun setChosenMapByTextRecognition(name: String) {
         if (/*_choosenMap.value.isEmpty() && */name.isNotEmpty()) {
-            val match = findClosestMatch(listOf(name.lowercase()), _mapList.value)
-            if (match != null) {
-                viewModelScope.launch {
-                    delay(550)
-                    _choosenMap.value = match.first
-                }
+            val mapCandidates = getLocalizedMapNames(
+                context = application,
+                language = currentLanguage.value,
+            )
+
+            val langMatch = findClosestMatch(
+                listOf(name.lowercase()),
+                mapCandidates
+            )
+            viewModelScope.launch {
+                delay(550)
+                if (translatedMapList.value.isEmpty()) return@launch
+                val generalMatch = translatedMapList.value
+                val filteredPair = generalMatch.first { it.second == langMatch.first }.first
+                _choosenMap.value = filteredPair
             }
 
             _targetState.value = false
@@ -655,6 +690,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     init {
         loadJson()
+        observeTranslatedMaps()
     }
 
     private suspend fun checkIfChampIsFavorite() {
@@ -676,7 +712,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    private fun setUniqueCahmpsInChampScores() {
+    private fun setUniqueCahmpsInChampScores(): MutableStateFlow<List<String>> {
         _allChampsData.value = _allChampsData.value.map { champ ->
             val uniqueChampScore = champ.StrongAgainst
                 .groupBy { it.ChampName }
@@ -703,6 +739,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 }
             champ.copy(GoodTeamWith = uniqueChampScore)
         }
+        return _mapList
     }
 
     fun updateMapsSearchQuery(query: String) {
@@ -730,10 +767,41 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                         .distinct()
                 }
                 .distinctUntilChanged()
-                .collect { _mapList.value = it }
+                .collect {
+                    _mapList.value = it
+                }
         }
         return _mapList
     }
+
+    private fun setTranslatedMaps() {
+        val pairs: List<Pair<String, String>> = _mapList.value.map { map ->
+            val localizedMapNames = getLocalizedMapNames(
+                context = application,
+                language = currentLanguage.value,
+                mapKeys = listOf(map)
+            )
+            Pair(map, localizedMapNames.first())
+        }
+    }
+
+    fun observeTranslatedMaps() {
+        viewModelScope.launch {
+            combine(_mapList, currentLanguage) { maps, language ->
+                maps.map { map ->
+                    val localizedMapNames = getLocalizedMapNames(
+                        context = application,
+                        language = language,
+                        mapKeys = listOf(map)
+                    )
+                    Pair(map, localizedMapNames.first())
+                }
+            }.collect { translatedList ->
+                _translatedMapList.value = translatedList
+            }
+        }
+    }
+
 
     private fun filterMapsByString(
         maps: StateFlow<List<String>>,
@@ -745,7 +813,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
             currentMaps.filter { item ->
                 item.lowercase().contains(lowerCaseSearchString) ||
-                        application.getString(Utilitys.mapMapNameToStringRessource(item)!!)
+                        application.getString(Utilitys.mapMapNameToStringResource(item))
                             .lowercase().contains(lowerCaseSearchString)
             }
         }.stateIn(
@@ -797,8 +865,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     checkIfChampIsFavorite()
                     setUniqueMapsInMapScore()
                     setUniqueCahmpsInChampScores()
+                    getSortedUniqueMaps()
+                    setTranslatedMaps()
                     _allChampsData.value = _allChampsData.value.map { champ ->
-                        getSortedUniqueMaps()
                         val application = getApplication<Application>()
                         champ.copy(
                             difficulty = Utilitys.mapDifficultyForChamp(champ.ChampName)!!,
@@ -936,23 +1005,23 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         //List2 = mögliche gefundene Texte
 
         val handledPossibleChamps = empericErrorHandling(possibleChamps)
-        val champNames = _allChampsData.value.map { it.ChampName }.toMutableList()
+        val champNames = _allChampsData.value.map { it.localName }.toMutableList()
 
         handledPossibleChamps.withIndex().forEach { (recognizedPickPos, champTexts) ->
-            val falsePick = listOf("WÄHLT", "PICKING")
+            val falsePick = listOf("WÄHLT", "PICKING", "ELIGIENDO")
             falsePick.forEach { champNames.add(it) }
             val match = findClosestMatch(champTexts.map { it.lowercase() }, champNames)
 
             val lastMatchOwn = ownLastMatches[recognizedPickPos]
             val lastMatchtheir = theirLastMatches[recognizedPickPos]
             if (teamSide == TeamSide.OWN) {
-                if (lastMatchOwn == mutableListOf(match.first)){
+                if (lastMatchOwn == mutableListOf(match.first)) {
                     return@forEach
                 } else {
                     ownLastMatches[recognizedPickPos] = mutableListOf(match.first)
                 }
             } else {
-                if (lastMatchtheir == mutableListOf(match.first)){
+                if (lastMatchtheir == mutableListOf(match.first)) {
                     return@forEach
                 } else {
                     theirLastMatches[recognizedPickPos] = mutableListOf(match.first)
@@ -976,7 +1045,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             }
 
             val index =
-                _distinctchoosableChampList.value.indexOfFirst { it.ChampName == match.first }
+                _distinctchoosableChampList.value.indexOfFirst { it.localName == match.first }
 
             if (index != -1) {
                 val data = _distinctchoosableChampList.value[index]

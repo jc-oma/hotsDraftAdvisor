@@ -2,11 +2,7 @@ package com.jcdevelopment.hotsdraftadviser.composables.videostream
 
 import android.graphics.Bitmap
 import android.util.Log
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.rememberTransformableState
-import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +12,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -25,26 +20,18 @@ import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -57,6 +44,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerView
+import com.jcdevelopment.hotsdraftadviser.dataStore.GameSettingLanguageEnum
 
 
 @Composable
@@ -86,6 +74,8 @@ fun VideoStreamComposable(
 
     val contrast by viewModel.streamImageContrastSetting.collectAsState()
 
+    val currentLanguage by viewModel.currentLanguage.collectAsState()
+
 
     VideoStreamComposable(
         onRecognizedOwnTeamPicks = { it -> onRecognizedOwnTeamPicks(it) },
@@ -106,10 +96,15 @@ fun VideoStreamComposable(
         startFrameProcessing = { playerView -> viewModel.startFrameProcessing(playerView) },
         stopStreaming = { viewModel.stopStreaming() },
         startStreaming = { viewModel.startStreaming() },
-        toggleStreaming = { toggleStreaming() },
+        toggleStreaming = {
+            toggleStreaming()
+            viewModel.stopStreaming()
+        },
         onBrightnessChanged = { viewModel.onBrightnessChanged(it) },
         onContrastChanged = { viewModel.onContrastChanged(it) },
+        currentLanguage = currentLanguage,
         onThresholdChanged = { viewModel.onThresholdChanged(it) },
+        onLanguageChanged = { viewModel.setLanguage(it) },
         contrast = contrast
     )
 }
@@ -138,6 +133,8 @@ fun VideoStreamComposable(
     onBrightnessChanged: (Float) -> Unit = {},
     onContrastChanged: (Float) -> Unit = {},
     onThresholdChanged: (Float) -> Unit = {},
+    currentLanguage: GameSettingLanguageEnum,
+    onLanguageChanged: (String) -> Unit,
     contrast: Float
 ) {
     var playerViewRefTmp by remember { mutableStateOf(playerViewRef) }
@@ -154,7 +151,9 @@ fun VideoStreamComposable(
         isExpanded = isSettingsExpanded,
         toggleExpanded = { isSettingsExpanded = !isSettingsExpanded },
         contrast = contrast,
-        onContrastChanged = onContrastChanged
+        onContrastChanged = onContrastChanged,
+        onLanguageChanged = onLanguageChanged,
+        currentLanguage = currentLanguage
     )
 
     // Lebenszyklus-Management für den PlayerView und den ExoPlayer
@@ -368,6 +367,7 @@ private fun VideoStreamViewModelPreview() {
         onRecognizedOwnTeamPicks = {},
         onRecognizedTheirTeamPicks = {},
         onRecognizedMapsText = {},
+        onLanguageChanged = {},
         playerInstance = null,
         isPlayerActuallyPlaying = true,
         isStreaming = true,
@@ -383,6 +383,7 @@ private fun VideoStreamViewModelPreview() {
         stopStreaming = {},
         startStreaming = {},
         debugBitmap = null,
-        contrast = 1f
+        contrast = 1f,
+        currentLanguage = GameSettingLanguageEnum.ENGLISH
     )
 }

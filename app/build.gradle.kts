@@ -151,4 +151,6 @@ dependencies {
     implementation (libs.exoplayer.ui) // Für PlayerView
 
     //implementation (libs.opencv)
+
+    implementation(libs.androidx.datastore.preferences)
 }

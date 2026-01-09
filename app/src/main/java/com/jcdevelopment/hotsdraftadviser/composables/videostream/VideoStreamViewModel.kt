@@ -56,6 +56,8 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.jcdevelopment.hotsdraftadviser.R
+import com.jcdevelopment.hotsdraftadviser.dataStore.GameSettingLanguageEnum
+import com.jcdevelopment.hotsdraftadviser.dataStore.SettingsRepository
 import com.jcdevelopment.hotsdraftadviser.database.AppDatabase
 import com.jcdevelopment.hotsdraftadviser.database.streamingSettings.StreamSourceSettingsRepository
 import kotlinx.coroutines.Dispatchers
@@ -80,6 +82,8 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     private val streamingSettingsRepository: StreamSourceSettingsRepository =
         StreamSourceSettingsRepository(db.streamSourceSettingsDao())
 
+    private val settingsRepository: SettingsRepository = SettingsRepository(application)
+
     val streamImageContrastSetting: StateFlow<Float> =
         streamingSettingsRepository.getContrastThreshold()
             .stateIn(
@@ -91,6 +95,15 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
 
     private val _player = MutableStateFlow<ExoPlayer?>(null)
     val player: StateFlow<ExoPlayer?> = _player.asStateFlow()
+
+
+    val currentLanguage: StateFlow<GameSettingLanguageEnum> = settingsRepository.languageFlow
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = GameSettingLanguageEnum.ENGLISH
+        )
+
 
     private val _isActuallyPlaying = MutableStateFlow(false)
     val isActuallyPlaying: StateFlow<Boolean> = _isActuallyPlaying.asStateFlow()
@@ -141,6 +154,12 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
 
     fun onThresholdChanged(value: Float) {
         threshold = value
+    }
+
+    fun setLanguage(language: String) {
+        viewModelScope.launch {
+            settingsRepository.saveLanguage(language)
+        }
     }
 
     private fun loadMask() {

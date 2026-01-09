@@ -83,7 +83,7 @@ fun AvailableChampPortraitComposable(
                     mapFloat = distinctAndUnfilteredChosableChampList[i].mapFloat,
                     ownTeamFloat = distinctAndUnfilteredChosableChampList[i].fitTeam / fitTeamMax.toFloat(),
                     theirTeamFloat = distinctAndUnfilteredChosableChampList[i].goodAgainstTeam / goodAgainstTeamMax.toFloat(),
-                    mapName = stringResource(Utilitys.mapMapNameToStringRessource(choosenMap)!!),
+                    mapName = stringResource(Utilitys.mapMapNameToStringResource(choosenMap)!!),
                     maxOwnScore = ownScoreMax,
                     maxTheirScore = theirScoreMax,
                     isStarRating = isStarRatingMode,

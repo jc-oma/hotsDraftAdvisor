@@ -1,5 +1,8 @@
 package com.jcdevelopment.hotsdraftadviser
 
+import android.content.Context
+import com.jcdevelopment.hotsdraftadviser.dataStore.GameSettingLanguageEnum
+
 object Utilitys {
     fun mapDifficultyForChamp(champName: String): Difficulty? {
         when (champName) {
@@ -100,7 +103,7 @@ object Utilitys {
         }
     }
 
-    fun mapMapNameToDrawable(champName: String): Int? {
+    fun mapMapNameToDrawable(champName: String): Int {
         when (champName) {
             "Alterac Pass" -> return R.drawable.map_alteracpass_card
             "Battlefield of Eternity" -> return R.drawable.map_battlefield_of_eternity_card
@@ -123,7 +126,7 @@ object Utilitys {
         }
     }
 
-    fun mapMapNameToStringRessource(mapName: String): Int? {
+    fun mapMapNameToStringResource(mapName: String): Int {
         when (mapName) {
             "Alterac Pass" -> return R.string.map_name_Alterac_Pass
             "Battlefield of Eternity" -> return R.string.map_name_Battlefield_of_Eternity
@@ -144,6 +147,72 @@ object Utilitys {
 
             //TODO FIX
             else -> return R.string.empty_String
+        }
+    }
+
+    private val allMapKeys = listOf(
+        "Alterac Pass", "Battlefield of Eternity", "Black Hearts Bay",
+        "Braxis Holdout", "Cursed Hollow", "Dragonshire",
+        "Garden of Terror", "Hanamura", "Haunted Mines",
+        "Infernal Shrines", "Lost Caverns", "Sky Temple",
+        "Tomb of the Spider Queen", "Towers of Doom",
+        "Volskaya Foundry", "Warhead Junction"
+    )
+
+    /**
+     * Erstellt eine Liste aller Map-Namen als Strings in der Sprache,
+     * die im GameSettingsLanguageEnum definiert ist.
+     */
+    fun getLocalizedMapNames(context: Context, language: GameSettingLanguageEnum, mapKeys: List<String> = allMapKeys): List<String> {
+        // Liste aller Keys, die in deiner mapMapNameToStringResource vorkommen
+
+
+        // Konfiguration für die Zielsprache erstellen
+        val config = android.content.res.Configuration(context.resources.configuration)
+        config.setLocale(language.toLocale())
+        val localizedContext = context.createConfigurationContext(config)
+
+        // Jede Map-ID in den lokalisierten String umwandeln
+        return mapKeys.map { mapKey ->
+            val resId = mapMapNameToStringResource(mapKey)
+            if (resId != R.string.empty_String) {
+                localizedContext.getString(resId)
+            } else {
+                mapKey // Fallback auf den technischen Namen, falls String fehlt
+            }
+        }
+    }
+
+    private val allChampKeys = listOf(
+        "Abathur", "Alarak", "Alexstrasza", "Ana", "Anduin", "Anubarak", "Artanis", "Arthas",
+        "Auriel", "Azmodan", "Blaze", "Brightwing", "Cassia", "Chen", "Cho", "Chogall",
+        "Chromie", "Deathwing", "Deckard", "Dehaka", "Diablo", "DVA", "ETC", "Falstad",
+        "Fenix", "Gall", "Garrosh", "Gazlowe", "Genji", "Greymane", "Guldan", "Hanzo",
+        "Hogger", "Illidan", "Imperius", "Jaina", "Johanna", "Junkrat", "Kaelthas",
+        "Kelthuzad", "Kerrigan", "Kharazim", "Leoric", "Lili", "Li-Ming", "LtMorales",
+        "Lucio", "Lunara", "Maiev", "Malfurion", "Malganis", "Malthael", "Medivh", "Mei",
+        "Mephisto", "Muradin", "Murky", "Nazeebo", "Nova", "Orphea", "Probius", "Qhira",
+        "Ragnaros", "Raynor", "Rehgar", "Rexxar", "Samuro", "SgtHammer", "Sonya", "Stitches",
+        "Stukov", "Sylvanas", "Tassadar", "Butcher", "LostVikings", "Thrall", "Tracer",
+        "Tychus", "Tyrael", "Tyrande", "Uther", "Valeera", "Valla", "Varian", "Whitemane",
+        "Xul", "Yrel", "Zagara", "Zeratul", "Zarya", "Zuljin"
+    )
+
+    fun getLocalizedChampNames(context: Context, language: GameSettingLanguageEnum, champKeys: List<String> = allChampKeys): List<String> {
+        // Liste aller Keys, die in deiner mapMapNameToStringResource vorkommen
+
+        // Konfiguration für die Zielsprache erstellen
+        val config = android.content.res.Configuration(context.resources.configuration)
+        config.setLocale(language.toLocale())
+        val localizedContext = context.createConfigurationContext(config)
+
+        return champKeys.map { champKey ->
+            val resId = mapChampNameToStringRessource(champKey)
+            if (resId != R.string.empty_String) {
+                localizedContext.getString(resId)
+            } else {
+                champKey // Fallback auf den technischen Namen, falls String fehlt
+            }
         }
     }
 
@@ -544,7 +613,7 @@ object Utilitys {
         }
     }
 
-    fun mapChampNameToStringRessource(champName: String): Int? {
+    fun mapChampNameToStringRessource(champName: String): Int {
         when (champName) {
             "Abathur" -> return R.string.champ_name_abathur
             "Alarak" -> return R.string.champ_name_Alarak
@@ -639,7 +708,7 @@ object Utilitys {
             "Zuljin" -> return R.string.champ_name_Zuljin
 
 
-            else -> return null
+            else -> return R.string.empty_String
         }
     }
 

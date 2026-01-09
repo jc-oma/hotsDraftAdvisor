@@ -28,7 +28,7 @@ data class ChampData(
     var isAFavoriteChamp: Boolean = false,
     var difficulty: Difficulty = Difficulty.EASY,
     var origin: GameOrigin? = null,
-    var localName: String? = null
+    var localName: String = ""
 ) {
     companion object {
         private val idCounter = AtomicInteger(0)

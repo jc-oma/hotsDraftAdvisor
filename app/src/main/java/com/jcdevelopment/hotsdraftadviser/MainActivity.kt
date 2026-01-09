@@ -31,11 +31,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
@@ -51,21 +48,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.jcdevelopment.hotsdraftadviser.Utilitys.mapMapNameToStringRessource
+import com.jcdevelopment.hotsdraftadviser.Utilitys.mapMapNameToStringResource
 import com.jcdevelopment.hotsdraftadviser.composables.OutdatedAppComposable
 import com.jcdevelopment.hotsdraftadviser.composables.advertisement.MainWindowAdBanner
 import com.jcdevelopment.hotsdraftadviser.composables.champListPortraitItem.AvailableChampListComposable
@@ -79,7 +73,6 @@ import com.jcdevelopment.hotsdraftadviser.composables.menus.MenuComposable
 import com.jcdevelopment.hotsdraftadviser.composables.menus.tutorial.TutorialCarouselComposable
 import com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.ListOfBannedChampItem
 import com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.ListOfPickedChampsComposable
-import com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.ListOfPickedChampsLiteComposable
 import com.jcdevelopment.hotsdraftadviser.composables.searchbar.MapSearchBar
 import com.jcdevelopment.hotsdraftadviser.composables.videostream.VideoStreamComposable
 import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
@@ -88,7 +81,6 @@ import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataAbathur
 import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataAuriel
 import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataSgtHammer
 import com.jcdevelopment.hotsdraftadviser.ui.theme.HotsDraftAdviserTheme
-import com.jcdevelopment.hotsdraftadviser.MainActivityViewModel.*
 import com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.videoStreamPiicking.AvailableChampListVideoStreamComposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -202,6 +194,9 @@ fun MainActivityComposable(
     val ownScoreMax by viewModel.ownScoreMax.collectAsState(1)
     val theirScoreMax by viewModel.theirScoreMax.collectAsState(1)
     val isStarRatingMode by viewModel.isStarRatingMode.collectAsState()
+
+    val context = LocalContext.current.applicationContext
+
 
     MainActivityComposable(
         isTablet = isTablet,
@@ -519,7 +514,7 @@ fun MainActivityComposable(
                                                             modifier = Modifier
                                                                 .fillMaxWidth(),
                                                             text = stringResource(
-                                                                mapMapNameToStringRessource(
+                                                                mapMapNameToStringResource(
                                                                     map
                                                                 )!!
                                                             ),
@@ -591,7 +586,7 @@ fun MainActivityComposable(
 
                                             Text(
                                                 text = stringResource(
-                                                    mapMapNameToStringRessource(
+                                                    mapMapNameToStringResource(
                                                         targetStateMapName
                                                     )!!
                                                 ),

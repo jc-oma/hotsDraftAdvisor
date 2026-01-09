@@ -2,6 +2,7 @@
 accompanistPermissions = "1.5.0"
 agp = "8.13.2"
 cameraCore = "1.5.2"
+datastorePreferences = "1.2.0"
 exoplayerCore = "2.19.1"
 exoplayerRtsp = "2.19.1"
 exoplayerUi = "2.19.1"
@@ -62,6 +63,7 @@ androidx-compose-material-icons-core = { module = "androidx.compose.material:mat
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-graphics-shapes = { module = "androidx.graphics:graphics-shapes", version.ref = "graphicsShapes" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core" }
