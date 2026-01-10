@@ -178,7 +178,7 @@ object Utilitys {
             if (resId != R.string.empty_String) {
                 localizedContext.getString(resId)
             } else {
-                mapKey // Fallback auf den technischen Namen, falls String fehlt
+                mapKey
             }
         }
     }
@@ -199,9 +199,6 @@ object Utilitys {
     )
 
     fun getLocalizedChampNames(context: Context, language: GameSettingLanguageEnum, champKeys: List<String> = allChampKeys): List<String> {
-        // Liste aller Keys, die in deiner mapMapNameToStringResource vorkommen
-
-        // Konfiguration für die Zielsprache erstellen
         val config = android.content.res.Configuration(context.resources.configuration)
         config.setLocale(language.toLocale())
         val localizedContext = context.createConfigurationContext(config)
@@ -211,7 +208,7 @@ object Utilitys {
             if (resId != R.string.empty_String) {
                 localizedContext.getString(resId)
             } else {
-                champKey // Fallback auf den technischen Namen, falls String fehlt
+                champKey
             }
         }
     }

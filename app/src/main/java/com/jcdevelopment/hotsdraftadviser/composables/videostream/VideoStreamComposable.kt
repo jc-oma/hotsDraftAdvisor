@@ -54,6 +54,7 @@ fun VideoStreamComposable(
     onRecognizedOwnTeamPicks: (List<List<String>>) -> Unit = {},
     onRecognizedTheirTeamPicks: (List<List<String>>) -> Unit = {},
     onRecognizedMapsText: (List<String>) -> Unit = {},
+    onLanguageChanged: (String) -> Unit
 ) {
     // Hole den Player aus dem ViewModel. collectAsState sorgt für Recomposition bei Änderungen.
     val playerInstance by viewModel.player.collectAsState()
@@ -104,7 +105,7 @@ fun VideoStreamComposable(
         onContrastChanged = { viewModel.onContrastChanged(it) },
         currentLanguage = currentLanguage,
         onThresholdChanged = { viewModel.onThresholdChanged(it) },
-        onLanguageChanged = { viewModel.setLanguage(it) },
+        onLanguageChanged = { it -> onLanguageChanged(it) },
         contrast = contrast
     )
 }
@@ -332,19 +333,17 @@ fun VideoStreamComposable(
                     )
                 }
                 Spacer(modifier = Modifier.weight(0.1f))
-                if (playerInstance?.isPlaying == true) {
-                    Icon(
-                        imageVector = Icons.Default.Tune,
-                        contentDescription = "Settings",
-                        modifier = Modifier
-                            .weight(0.4f)
-                            .clickable {
-                                isSettingsExpanded = !isSettingsExpanded
-                            },
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                    Spacer(modifier = Modifier.weight(0.1f))
-                }
+                Icon(
+                    imageVector = Icons.Default.Tune,
+                    contentDescription = "Settings",
+                    modifier = Modifier
+                        .weight(0.4f)
+                        .clickable {
+                            isSettingsExpanded = !isSettingsExpanded
+                        },
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.weight(0.1f))
             }
 
             //TODO Debug Error if necessary

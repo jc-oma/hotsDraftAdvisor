@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
 import com.jcdevelopment.hotsdraftadviser.ApiService.hotsApi
+import com.jcdevelopment.hotsdraftadviser.Utilitys.getLocalizedChampNames
 import com.jcdevelopment.hotsdraftadviser.Utilitys.getLocalizedMapNames
 import com.jcdevelopment.hotsdraftadviser.dataStore.GameSettingLanguageEnum
 import com.jcdevelopment.hotsdraftadviser.dataStore.SettingsRepository
@@ -338,8 +339,11 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 delay(550)
                 if (translatedMapList.value.isEmpty()) return@launch
                 val generalMatch = translatedMapList.value
-                val filteredPair = generalMatch.first { it.second == langMatch.first }.first
-                _choosenMap.value = filteredPair
+                val filteredPair =
+                    generalMatch.firstOrNull() { it.second == langMatch.first }?.first
+                if (filteredPair != null) {
+                    _choosenMap.value = filteredPair
+                }
             }
 
             _targetState.value = false
@@ -472,7 +476,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                         (champ.ChampName.contains(
                             filter,
                             ignoreCase = true
-                        ) || champ.localName!!.contains(
+                        ) || champ.localName.contains(
                             filter,
                             ignoreCase = true
                         )) && !champ.isPicked
@@ -775,7 +779,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private fun setTranslatedMaps() {
-        val pairs: List<Pair<String, String>> = _mapList.value.map { map ->
+        _mapList.value.map { map ->
             val localizedMapNames = getLocalizedMapNames(
                 context = application,
                 language = currentLanguage.value,
@@ -868,15 +872,19 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     getSortedUniqueMaps()
                     setTranslatedMaps()
                     _allChampsData.value = _allChampsData.value.map { champ ->
-                        val application = getApplication<Application>()
                         champ.copy(
                             difficulty = Utilitys.mapDifficultyForChamp(champ.ChampName)!!,
                             origin = Utilitys.mapChampToOrigin(champ.ChampName)!!,
                             localName = application.getString(
                                 Utilitys.mapChampNameToStringRessource(
                                     champ.ChampName
-                                )!!
-                            )
+                                )
+                            ),
+                            gameSettingName = getLocalizedChampNames(
+                                context = application,
+                                language = currentLanguage.value,
+                                champKeys = listOf(champ.ChampName)
+                            ).first()
                         )
                     }
 
@@ -886,6 +894,22 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 }
             } else {
                 Log.e("TAG", "JSON-String konnte nicht aus Assets geladen werden.")
+            }
+        }
+    }
+
+    fun setLanguage(language: String) {
+        val gameStettingLangEnum = GameSettingLanguageEnum.fromIsoCode(language)
+        viewModelScope.launch {
+            settingsRepository.saveLanguage(language)
+            _allChampsData.value = _allChampsData.value.map { champData ->
+                champData.copy(
+                    gameSettingName = getLocalizedChampNames(
+                        context = application,
+                        language = gameStettingLangEnum,
+                        champKeys = listOf(champData.ChampName)
+                    ).first()
+                )
             }
         }
     }
@@ -1005,7 +1029,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         //List2 = mögliche gefundene Texte
 
         val handledPossibleChamps = empericErrorHandling(possibleChamps)
-        val champNames = _allChampsData.value.map { it.localName }.toMutableList()
+        val champNames = _allChampsData.value.map { it.gameSettingName }.toMutableList()
 
         handledPossibleChamps.withIndex().forEach { (recognizedPickPos, champTexts) ->
             val falsePick = listOf("WÄHLT", "PICKING", "ELIGIENDO")
@@ -1045,7 +1069,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             }
 
             val index =
-                _distinctchoosableChampList.value.indexOfFirst { it.localName == match.first }
+                _distinctchoosableChampList.value.indexOfFirst { (it.localName == match.first) || (it.gameSettingName == match.first) }
 
             if (index != -1) {
                 val data = _distinctchoosableChampList.value[index]

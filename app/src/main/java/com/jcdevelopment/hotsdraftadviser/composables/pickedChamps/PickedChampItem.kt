@@ -62,12 +62,7 @@ fun RowScope.PickedChampItem(
             .clickable { removePickForTeam() },
         contentAlignment = Alignment.Center
     ) {
-        val name :String = if (teamPickedChamp.localName == null) {
-            stringResource(
-                id = Utilitys.mapChampNameToStringRessource(teamPickedChamp.ChampName)!!
-            )
-
-        } else teamPickedChamp.localName!!
+        val name :String = teamPickedChamp.localName
 
         Image(
             modifier = Modifier

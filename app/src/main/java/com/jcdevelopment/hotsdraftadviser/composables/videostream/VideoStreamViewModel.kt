@@ -156,12 +156,6 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
         threshold = value
     }
 
-    fun setLanguage(language: String) {
-        viewModelScope.launch {
-            settingsRepository.saveLanguage(language)
-        }
-    }
-
     private fun loadMask() {
         try {
             // Lade das Drawable aus den Ressourcen

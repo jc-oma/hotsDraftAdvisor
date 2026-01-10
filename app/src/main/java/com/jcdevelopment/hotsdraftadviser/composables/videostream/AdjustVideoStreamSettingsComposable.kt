@@ -71,6 +71,14 @@ fun AdjustVideoStreamSettingsComposable(
     val fabSize = 56.dp
     val padding = 16.dp
 
+    var bitmap by remember { mutableStateOf<Bitmap?>(null) }
+
+    if (debugBitmap != null) {
+        bitmap = debugBitmap
+    } else {
+        bitmap = bit
+    }
+
     // Wir animieren die Größe der Box von FAB-Größe zu Bildschirmgröße
     val animatedSize: Dp by animateDpAsState(
         targetValue = if (isExpanded) LocalConfiguration.current.screenHeightDp.dp else fabSize,
@@ -118,7 +126,7 @@ fun AdjustVideoStreamSettingsComposable(
                         sliderContr = contrast
                     }
                     Column(modifier = Modifier.padding(8.dp)) {
-                        debugBitmap?.let { bmp ->
+                        bitmap?.let { bmp ->
                             var scale by remember { mutableFloatStateOf(1f) }
                             var offset by remember { mutableStateOf(Offset.Zero) }
                             val state = rememberTransformableState { zoomChange, offsetChange, _ ->
@@ -246,26 +254,37 @@ fun AdjustVideoStreamSettingsComposable(
     }
 }
 
+private val bit =
+    createBitmap(
+        1920, // Breiter machen für den Text
+        1080
+    ).apply {
+        val canvas = Canvas(this)
+        // 1. Hintergrund zeichnen
+        canvas.drawColor(android.graphics.Color.LTGRAY)
+
+        // 2. Text-Paint konfigurieren
+        val textPaint = Paint().apply {
+            color = android.graphics.Color.DKGRAY // Dunkelgrau für besseren Kontrast
+            textSize = 80f // Größere Schriftart
+            textAlign = Paint.Align.CENTER // Text zentrieren
+            isAntiAlias = true
+        }
+
+        // 3. Text auf den Canvas zeichnen
+        val text = "Currently no stream receiving"
+        val xPos = (canvas.width / 2).toFloat()
+        val yPos =
+            (canvas.height / 2) - ((textPaint.descent() + textPaint.ascent()) / 2) // Vertikal zentrieren
+        canvas.drawText(text, xPos, yPos, textPaint)
+    }
+
+
 @Preview
 @Composable
 private fun AdjustVideoStreamSettingsComposablePreview() {
-    val bit = remember {
-        createBitmap(
-            100,
-            100
-        ).apply {// Optional: Fill with a random color or pattern so you can see it in the preview
-            val canvas = Canvas(this)
-            canvas.drawColor(android.graphics.Color.LTGRAY)
-            val paint = Paint().apply {
-                color = android.graphics.Color.BLUE
-                style = Paint.Style.FILL
-            }
-            canvas.drawCircle(50f, 50f, 30f, paint)
-        }
-    }
-
     AdjustVideoStreamSettingsComposable(
-        debugBitmap = bit,
+        debugBitmap = null,
         toggleExpanded = {},
         isExpanded = true,
         contrast = 1.5f,

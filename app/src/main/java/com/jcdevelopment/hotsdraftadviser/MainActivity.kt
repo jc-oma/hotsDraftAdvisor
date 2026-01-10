@@ -230,6 +230,7 @@ fun MainActivityComposable(
         favFilter = favFilter,
         fitTeamMax = fitTeamMax,
         goodAgainstTeamMax = goodAgainstTeamMax,
+        onLanguageChanged = { viewModel.setLanguage(it) },
         pickByTextRecognition = { champList, teamSide ->
             viewModel.pickByTextRecognition(
                 champList,
@@ -309,6 +310,7 @@ fun MainActivityComposable(
     toggleStarRateMode: () -> Unit,
     toggleTutorial: () -> Unit,
     toggleStreaming: () -> Unit,
+    onLanguageChanged: (String) -> Unit,
     updateMapsSearchQuery: (String) -> Unit,
     setChosenMapByName: (String) -> Unit,
     clearChoosenMap: () -> Unit,
@@ -356,7 +358,8 @@ fun MainActivityComposable(
                             setChosenMapByTextRecognition(mapList.first())
                         }
                     },
-                    toggleStreaming = { toggleStreaming() }
+                    toggleStreaming = { toggleStreaming() },
+                    onLanguageChanged = { onLanguageChanged(it) }
                 )
                 Text(choosenMap)
                 //TODO Easier ChampDebug
@@ -779,7 +782,8 @@ fun MainActivityComposable(
         contentAlignment = Alignment.BottomCenter
     ) {
         Column {
-            MainWindowAdBanner()
+            //TODO
+            //MainWindowAdBanner()
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -814,6 +818,7 @@ fun MainActivityPreview() {
             searchQueryMaps = "",
             searchQueryOwnTChamps = "",
             roleFilter = emptyList(),
+            onLanguageChanged = {},
             ownPickScore = 111,
             theirPickScore = 123,
             theirScoreMax = 156,
