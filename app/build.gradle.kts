@@ -145,10 +145,15 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Optional - Integration with LiveData
     implementation(libs.androidx.runtime.livedata)
-
+    
     implementation (libs.exoplayer.core)
     implementation (libs.exoplayer.rtsp) // Für RTP/RTSP-Quellen
     implementation (libs.exoplayer.ui) // Für PlayerView
+
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.exoplayer.dash)
+    implementation(libs.androidx.media3.ui)
+    implementation(libs.androidx.media3.ui.compose)
 
     //implementation (libs.opencv)
 

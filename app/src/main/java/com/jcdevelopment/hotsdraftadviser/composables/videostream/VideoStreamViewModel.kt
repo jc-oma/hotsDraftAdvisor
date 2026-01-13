@@ -189,19 +189,6 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
     private val _debugMaskedBitmap = MutableStateFlow<Bitmap?>(null)
     val debugMaskedBitmap: StateFlow<Bitmap?> = _debugMaskedBitmap.asStateFlow()
 
-    //TODO REMOVE
-    /*val _1ownTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
-    val _2ownTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
-    val _3ownTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
-    val _4ownTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
-    val _5ownTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
-    val _1theirTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
-    val _2theirTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
-    val _3theirTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
-    val _4theirTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
-    val _5theirTeamCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)
-    val _mapCoordinates = mutableListOf<Pair<Int?, Int?>?>(null)*/
-
     init {
         initializePlayer()
     }
@@ -461,7 +448,7 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                                             brightness = brightness
                                         )
 
-                                        currentFrameBitmap.config.let { it ->
+                                        currentFrameBitmap.config.let {
                                             _debugMaskedBitmap.value = currentFrameBitmap.copy(
                                                 it!!,
                                                 false
@@ -601,40 +588,35 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                             //addLineOfText(ownChampsTexts, highestConfInd)
 
                             if (isInBetweenFirstPick) {
-                                block.lines.forEach { line ->
-                                    line
+                                block.lines.forEach {
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         ownFirstChampTexts.add(element.text)
                                         //_1ownTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenSecPick) {
-                                block.lines.forEach { line ->
-                                    line
+                                block.lines.forEach {
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         ownSecChampTexts.add(element.text)
                                         //_2ownTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenThirdPick) {
-                                block.lines.forEach { line ->
-                                    line
+                                block.lines.forEach {
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         ownThirdChampTexts.add(element.text)
                                         //_3ownTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenFourthPick) {
-                                block.lines.forEach { line ->
-                                    line
+                                block.lines.forEach {
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         ownFourthChampTexts.add(element.text)
                                         //_4ownTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenFifthPick) {
-                                block.lines.forEach { line ->
-                                    line
+                                block.lines.forEach {
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         ownFifthChampTexts.add(element.text)
                                         //_5ownTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
@@ -646,40 +628,35 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                             //addLineOfText(theirChampsTexts, highestConfInd)
 
                             if (isInBetweenFirstPick) {
-                                block.lines.forEach { line ->
-                                    line
+                                block.lines.forEach {
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         theirFirstChampTexts.add(element.text)
                                         //_1theirTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenSecPick) {
-                                block.lines.forEach { line ->
-                                    line
+                                block.lines.forEach {
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         theirSecChampTexts.add(element.text)
                                         //_2theirTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenThirdPick) {
-                                block.lines.forEach { line ->
-                                    line
+                                block.lines.forEach {
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         theirThirdChampTexts.add(element.text)
                                         //_3theirTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenFourthPick) {
-                                block.lines.forEach { line ->
-                                    line
+                                block.lines.forEach {
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         theirFourthChampTexts.add(element.text)
                                         //_4theirTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
                                     }
                                 }
                             } else if (isInBetweenFifthPick) {
-                                block.lines.forEach { line ->
-                                    line
+                                block.lines.forEach {
                                     block.lines[highestConfInd].elements.forEach { element ->
                                         theirFifthChampTexts.add(element.text)
                                         //_5theirTeamCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))
@@ -688,8 +665,7 @@ class VideoStreamViewModel(application: Application) : AndroidViewModel(applicat
                             }
                         }
                     } else {
-                        block.lines.forEach { line ->
-                            line
+                        block.lines.forEach {
                             block.lines.forEach { element ->
                                 mapText.add(element.text)
                                 //_mapCoordinates.add(Pair(element.boundingBox?.centerX(), element.boundingBox?.centerY()))

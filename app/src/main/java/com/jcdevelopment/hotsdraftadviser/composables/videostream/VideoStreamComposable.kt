@@ -164,7 +164,7 @@ fun VideoStreamComposable(
     DisposableEffect(
         lifecycleOwner,
         playerInstance
-    ) { // playerViewRef hier nicht mehr als Key nötig
+    ) {
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
                 Lifecycle.Event.ON_PAUSE -> {
