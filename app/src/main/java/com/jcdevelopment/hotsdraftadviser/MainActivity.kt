@@ -519,7 +519,7 @@ fun MainActivityComposable(
                                                             text = stringResource(
                                                                 mapMapNameToStringResource(
                                                                     map
-                                                                )!!
+                                                                )
                                                             ),
                                                             color = Color.White,
                                                             fontSize = 14.sp,

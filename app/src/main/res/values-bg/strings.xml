@@ -165,5 +165,7 @@
     <string name="outdated_app">Това приложение е остаряло. Моля, посетете Play Store.</string>
 
     <string name="loading_state_maps">Зареждане на карти или не са наме рени карти…</string>
-    <string name="loading_state_champs">Зареждане на шампиони или не са намерени шампиони...</string>
+    <string name="loading_state_champs">Зареждане на шампиони или не са намерени шампиони…</string>
+
+    <string name="draft_me_indicator">АЗ</string>
 </resources>

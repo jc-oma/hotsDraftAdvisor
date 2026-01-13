@@ -165,4 +165,6 @@
     <string name="outdated_app">L\'application doit être mise à jour. Veuillez vous rendre sur le Play Store.</string>
     <string name="loading_state_maps">Chargement des cartes ou aucune carte trouvée…</string>
     <string name="loading_state_champs">Chargement des champions ou aucun champion trouvé…</string>
+
+    <string name="draft_me_indicator">MOI</string>
 </resources>

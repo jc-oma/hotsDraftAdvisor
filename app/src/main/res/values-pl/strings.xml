@@ -165,4 +165,6 @@
     <string name="outdated_app">Ta aplikacja jest nieaktualna. Przejdź do Sklepu Play.</string>
     <string name="loading_state_maps">Ładowanie map lub nie znaleziono map…</string>
     <string name="loading_state_champs">Ładowanie bohaterów lub nie znaleziono bohaterów…</string>
+
+    <string name="draft_me_indicator">JA</string>
 </resources>

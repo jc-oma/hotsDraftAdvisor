@@ -165,4 +165,6 @@
     <string name="outdated_app">Esta aplicação está desatualizada. Por favor, vá à Play Store.</string>
     <string name="loading_state_maps">Carregando mapas ou nenhum mapa encontrado…</string>
     <string name="loading_state_champs">Carregando campeões ou nenhum campeão encontrado…</string>
+
+    <string name="draft_me_indicator">EU</string>
 </resources>

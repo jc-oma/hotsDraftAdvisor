@@ -250,7 +250,7 @@ fun VideoStreamComposable(
 
             Spacer(modifier = Modifier.height(48.dp))
             Row(horizontalArrangement = Arrangement.Center) {
-                Text("Currently Streaming Mode")
+                Text("Currently in ${currentLanguage.displayName} Streaming Mode")
                 Spacer(modifier = Modifier.width(8.dp))
             }
             // PlayerView einbetten

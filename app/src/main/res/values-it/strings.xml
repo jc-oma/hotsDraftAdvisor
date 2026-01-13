@@ -165,4 +165,6 @@
     <string name="outdated_app">Questa app è obsoleta. Per favore, vai al Play Store.</string>
     <string name="loading_state_maps">Caricamento mappe o nessuna mappa trovata…</string>
     <string name="loading_state_champs">Caricamento campioni o nessun campione trovato…</string>
+
+    <string name="draft_me_indicator">IO</string>
 </resources>

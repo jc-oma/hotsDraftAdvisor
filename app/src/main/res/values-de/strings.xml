@@ -164,4 +164,6 @@ HotsDraftAdviser is not associated with or endorsed by Blizzard Entertainment.</
     <string name="outdated_app">Die App muss aktualisiert werden. Bitte geh in den Play Store.</string>
     <string name="loading_state_maps">Lade Maps oder keine Maps gefunden…</string>
     <string name="loading_state_champs">Lade Champs oder keine Champs gefunden…</string>
+
+    <string name="draft_me_indicator">ICH</string>
 </resources>

@@ -166,4 +166,6 @@
     <string name="loading_state_maps">지도 로드 중 또는 지도를 찾을 수 없습니다…</string>
     <string name="loading_state_champs">챔피언 로드 중 또는 챔피언을 찾을 수 없습니다…</string>
 
+    <string name="draft_me_indicator">나</string>
+
 </resources>

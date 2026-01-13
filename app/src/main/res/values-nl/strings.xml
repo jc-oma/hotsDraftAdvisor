@@ -165,4 +165,6 @@
     <string name="outdated_app">Deze app is verouderd. Ga alstublieft naar de Play Store.</string>
     <string name="loading_state_maps">Kaarten laden of geen kaarten gevonden…</string>
     <string name="loading_state_champs">Kampioenen laden of geen kampioenen gevonden…</string>
+
+    <string name="draft_me_indicator">MIJ</string>
 </resources>

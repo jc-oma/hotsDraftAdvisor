@@ -2,6 +2,7 @@ package com.jcdevelopment.hotsdraftadviser.dataStore
 
 enum class GameSettingLanguageEnum(val isoCode: String, val displayName: String) {ENGLISH("en", "English"),
     GERMAN("de", "Deutsch"),
+    ENGLISH_UK("en", "English"),
     FRENCH("fr", "Français"),
     ITALIAN("it", "Italiano"),
     SPANISH("es", "Español");

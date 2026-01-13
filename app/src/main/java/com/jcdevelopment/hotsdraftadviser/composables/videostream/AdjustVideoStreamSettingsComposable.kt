@@ -191,10 +191,10 @@ fun AdjustVideoStreamSettingsComposable(
                                             sliderContr = it
                                         },
                                         onValueChangeFinished = { onContrastChanged(sliderContr) },
-                                        steps = 100,
+                                        steps = 1000,
                                         valueRange = 0f..10f
                                     )
-                                    Text(text = "Contrast $sliderContr")
+                                    Text(text = "Contrast: ${String.format("%.2f", sliderContr)}")
                                 }
                             }
                         }
@@ -287,7 +287,7 @@ private fun AdjustVideoStreamSettingsComposablePreview() {
         debugBitmap = null,
         toggleExpanded = {},
         isExpanded = true,
-        contrast = 1.5f,
+        contrast = 1.5526f,
         onContrastChanged = {},
         onLanguageChanged = {},
         currentLanguage = GameSettingLanguageEnum.GERMAN

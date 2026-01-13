@@ -165,4 +165,6 @@
     <string name="outdated_app">Это приложение устарело. Пожалуйста, перейдите в Play Store.</string>
     <string name="loading_state_maps">Загрузка карт или карты не найдены…</string>
     <string name="loading_state_champs">Загрузка чемпионов или чемпионы не найдены…</string>
+
+    <string name="draft_me_indicator">Я</string>
 </resources>

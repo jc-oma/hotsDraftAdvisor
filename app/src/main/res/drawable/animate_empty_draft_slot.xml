@@ -1,0 +1,26 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="180dp"
+    android:height="205dp"
+    android:viewportWidth="180"
+    android:viewportHeight="205">
+    <group
+        android:name="rotation_group"
+        android:pivotX="90"
+        android:pivotY="102.5">
+        <path
+            android:name="animate_dot1"
+            android:fillColor="#000000"
+            android:pathData="M 72.568258,99.691541 61.611169,69.694267 c 41.403421,-24.339106 64.305541,14.549577 64.305541,14.549577 0,0 -34.308267,-22.722487 -53.348452,15.447697 z"
+            android:strokeWidth="0.264583" />
+        <path
+            android:name="animate_dot2"
+            android:fillColor="#000000"
+            android:pathData="M 95.200932,120.7076 77.687553,143.25046 C 30.446336,120.97704 56.491874,82.761942 56.491874,82.761942 c 0,0 -3.323051,38.304898 38.709058,37.945658 z"
+            android:strokeWidth="0.264583" />
+        <path
+            android:name="animate_dot3"
+            android:fillColor="#000000"
+            android:pathData="m 103.29305,90.34469 30.13706,4.40718 c 1.44152,46.0841 -44.007204,48.02774 -44.007204,48.02774 0,0 33.405944,-12.6839 13.870144,-52.43492 z"
+            android:strokeWidth="0.264583" />
+    </group>
+</vector>

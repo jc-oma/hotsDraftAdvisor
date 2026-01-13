@@ -1,5 +1,8 @@
 package com.jcdevelopment.hotsdraftadviser.composables.pickedChamps.videoStreamPiicking
 
+import androidx.compose.animation.graphics.res.animatedVectorResource
+import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
+import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -12,8 +15,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -34,13 +43,13 @@ import kotlin.math.max
 fun ListOfPickedChampsWithSlotComposable(
     modifier: Modifier = Modifier,
     pickedChamps: List<ChampData>,
-    ownpickScore: Int,
+    ownPickScore: Int,
     theirPickScore: Int,
     isStarRating: Boolean,
     isOwnTeam: Boolean,
 ) {
-    val aggrScore = ownpickScore + theirPickScore
-    val scorePercent = max((ownpickScore.toFloat() / aggrScore.toFloat() * 100).toInt(), 0)
+    val aggrScore = ownPickScore + theirPickScore
+    val scorePercent = max((ownPickScore.toFloat() / aggrScore.toFloat() * 100).toInt(), 0)
 
     Column(modifier = modifier.fillMaxHeight()) {
         Row(
@@ -51,11 +60,11 @@ fun ListOfPickedChampsWithSlotComposable(
         ) {
             if (isStarRating) {
 
-                val ownScoreFlaot = ownpickScore.toFloat()
-                val theirScoreFlaot = theirPickScore.toFloat()
-                val maxFloat = Math.max(ownScoreFlaot, theirScoreFlaot)
+                val ownScoreFloat = ownPickScore.toFloat()
+                val theirScoreFloat = theirPickScore.toFloat()
+                val maxFloat = Math.max(ownScoreFloat, theirScoreFloat)
                 val starColor = if (!isSystemInDarkTheme()) Color.Black else Color.White
-                val ratingFloat = if (maxFloat == 0f) 0f else ownScoreFlaot / maxFloat
+                val ratingFloat = if (maxFloat == 0f) 0f else ownScoreFloat / maxFloat
                 StarRatingComposable(
                     modifier = Modifier
                         .fillMaxHeight(),
@@ -84,18 +93,31 @@ fun ListOfPickedChampsWithSlotComposable(
         ) {
             Column {
                 for (i in 1..5) {
+                    val image =
+                        AnimatedImageVector.animatedVectorResource(R.drawable.avd_rotating_draft_slot)
                     val posChamp = pickedChamps.firstOrNull() { it.pickPos == i }
+                    var atEnd by remember { mutableStateOf(false) }
+
+                    LaunchedEffect(Unit) {
+                        atEnd = true
+                    }
+
                     Box {
-                        if (posChamp != null) {
-                            Image(
-                                painter = painterResource(
-                                    mapChampNameToPickSlottDrawable(
-                                        posChamp.ChampName
-                                    )!!
-                                ),
-                                contentDescription = posChamp.ChampName
-                            )
-                        }
+                        Image(
+                            modifier = if (posChamp == null) Modifier
+                                .alpha(0.6f)
+                                else Modifier.alpha(1f)
+                            /*TODO
+                            .clickable(
+                                onClick = { isOwnPick.value = !isOwnPick.value }
+                            )*/,
+                            painter = if (posChamp != null) painterResource(
+                                mapChampNameToPickSlottDrawable(
+                                    posChamp.ChampName
+                                )!!
+                            ) else rememberAnimatedVectorPainter(image, atEnd),
+                            contentDescription = posChamp?.ChampName
+                        )
                         Image(
                             modifier = if (isOwnTeam) Modifier.glow(
                                 color = Color.Blue
@@ -107,6 +129,16 @@ fun ListOfPickedChampsWithSlotComposable(
                             ),
                             contentDescription = ""
                         )
+                        //TODO
+                        /*if (isOwnPick.value) {
+                            Text(
+                               stringResource(
+                                   R.string.draft_me_indicator
+                               ),
+                                color = Color.Magenta,
+                                modifier = Modifier.align(Alignment.TopStart)
+                            )
+                        }*/
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                 }
@@ -122,9 +154,9 @@ private fun ListOfPickedChampsWithSlotComposablePreview() {
     ListOfPickedChampsWithSlotComposable(
         pickedChamps = listOf(
             exampleChampDataSgtHammer, exampleChampDataAbathur,
-            exampleChampDataAuriel, exampleChampDataSgtHammer, exampleChampDataAbathur
+            exampleChampDataAuriel
         ),
-        ownpickScore = 321,
+        ownPickScore = 321,
         theirPickScore = 83,
         isStarRating = true,
         isOwnTeam = true

@@ -7,16 +7,13 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.jcdevelopment.hotsdraftadviser.RoleEnum
 import com.jcdevelopment.hotsdraftadviser.SortState
-import com.jcdevelopment.hotsdraftadviser.TeamSide
 import com.jcdevelopment.hotsdraftadviser.composables.champListPortraitItem.AvailableChampPortraitLiteComposable
 import com.jcdevelopment.hotsdraftadviser.composables.filter.SearchAndFilterRowForChampsSmall
 import com.jcdevelopment.hotsdraftadviser.composables.segmentedButton.SegmentedButtonToOrderChamplistComposable
 import com.jcdevelopment.hotsdraftadviser.composables.utilitiComposables.getColorByHexStringForET
-import com.jcdevelopment.hotsdraftadviser.composables.utilitiComposables.glow
 import com.jcdevelopment.hotsdraftadviser.dataclasses.ChampData
 import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataAbathur
 import com.jcdevelopment.hotsdraftadviser.dataclasses.exampleChampDataAuriel
@@ -66,7 +63,7 @@ fun AvailableChampListVideoStreamComposable(
         ListOfPickedChampsWithSlotComposable(
             modifier = Modifier.weight(1f),
             pickedChamps = ownPickedChamps,
-            ownpickScore = ownScoreMax,
+            ownPickScore = ownScoreMax,
             theirPickScore = theirScoreMax,
             isStarRating = isStarRatingMode,
             isOwnTeam = true
@@ -83,7 +80,7 @@ fun AvailableChampListVideoStreamComposable(
         ListOfPickedChampsWithSlotComposable(
             modifier = Modifier.weight(1f),
             pickedChamps = theirPickedChamps,
-            ownpickScore = theirScoreMax,
+            ownPickScore = theirScoreMax,
             theirPickScore = ownScoreMax,
             isStarRating = isStarRatingMode,
             isOwnTeam = false

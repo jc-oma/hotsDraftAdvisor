@@ -166,4 +166,6 @@
     <string name="outdated_app">Esta aplicación está desactualizada. Por favor, ve a Play Store.</string>
     <string name="loading_state_maps">Cargando mapas o no se encontraron mapas…</string>
     <string name="loading_state_champs">Cargando campeones o no se encontraron campeones…</string>
+
+    <string name="draft_me_indicator">YO</string>
 </resources>

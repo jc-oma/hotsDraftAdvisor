@@ -19,11 +19,13 @@ fun FloatingActionButtonMainActivity(
     resetSelections: () -> Unit
 ) {
     val freeResetCount = 5
-    val adPeriod = 3
+    //TODO
+    val adPeriod = 300
     val context = LocalContext.current
 
     MainWindowAdInterstitial { showAd ->
         FloatingActionButton(
+            //TODO
             modifier = Modifier.padding(bottom = 90.dp),
             onClick = {
                 resetSelections()
